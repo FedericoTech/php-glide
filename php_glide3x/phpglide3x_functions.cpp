@@ -238,7 +238,7 @@ PHP_FUNCTION(grGet)
 	case 5:	// n/4n
 		array_init(params_zval);
 
-		for (FxU32 i = 0; i < plength; i++) {
+		for (FxI32 i = 0; i < plength; i++) {
 			add_next_index_long(params_zval, paramValue.dynamic[i]); // Fill the array with output values
 		}
 
