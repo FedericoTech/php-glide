@@ -1,4 +1,3 @@
-#define __MSC__
 #include <glide.h>
 
 #include "phpglide3x_grDraw.h"
@@ -12,7 +11,7 @@ ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grDrawTriangle)
 {
-	zval *a = nullptr, *b = nullptr, *c = nullptr;
+	zval *a = NULL, *b = NULL, *c = NULL;
 	zend_class_entry* ce;
 
 	ZEND_PARSE_PARAMETERS_START(3, 3)

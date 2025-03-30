@@ -2,7 +2,6 @@
 
 #include <php.h>
 #include <Zend/zend_enum.h>
-#define __MSC__
 #include <glide.h>
 
 #define SET_PROPERTY(ce, v) \

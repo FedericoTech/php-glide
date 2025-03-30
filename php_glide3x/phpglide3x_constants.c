@@ -2,7 +2,6 @@
 #include "phpglide3x_constants.h"
 
 #include <php.h>
-#define __MSC__
 #include <glide.h>
 
 #define CREATE_CONSTANT(v) REGISTER_LONG_CONSTANT(#v, v, CONST_CS | CONST_PERSISTENT)

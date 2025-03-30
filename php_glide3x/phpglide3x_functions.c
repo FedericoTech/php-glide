@@ -1,5 +1,3 @@
-
-#define __MSC__
 #include <glide.h>
 
 #include "phpglide3x_functions.h"
@@ -37,7 +35,7 @@ ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grVertexLayout)
 {
-	zval* param = nullptr, * mode = nullptr;
+	zval* param = NULL, * mode = NULL;
 	zend_long offset;
 
 	// Start parsing parameters using modern macros
@@ -89,11 +87,11 @@ PHP_FUNCTION(grGet)
 
 	ParamValue paramValue;
 
-	FxI32* params = nullptr;
+	FxI32* params = NULL;
 
-	zval* pname = nullptr;
+	zval* pname = NULL;
 	zend_long plength = 1;
-	zval* params_zval = nullptr;
+	zval* params_zval = NULL;
 		
 	FxU32 result;
 
@@ -255,7 +253,7 @@ ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grGetString)
 {
-	zval* name = nullptr;
+	zval* name = NULL;
 
 	/* Use modern parameter parsing */
 	ZEND_PARSE_PARAMETERS_START(1, 1)

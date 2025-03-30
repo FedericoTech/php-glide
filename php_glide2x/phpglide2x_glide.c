@@ -1,10 +1,9 @@
-#define __MSC__
 #include <glide.h>
 
 #include "phpglide2x_glide.h"
 
 //prototype of function grGlideInit;
-ZEND_BEGIN_ARG_INFO(arginfo_grGlideInit, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideInit, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grGlideInit) {
@@ -15,7 +14,7 @@ PHP_FUNCTION(grGlideInit) {
 }
 
 //prototype of function grGlideShutdown;
-ZEND_BEGIN_ARG_INFO(arginfo_grGlideShutdown, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideShutdown, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grGlideShutdown) {

@@ -1,4 +1,3 @@
-#define __MSC__
 #include <glide.h>
 
 #include "phpglide3x_grSst.h"
@@ -54,10 +53,10 @@ PHP_FUNCTION(grSstWinOpen)
 {
 
 	zend_long hWin;
-	zval* res = nullptr;
-	zval* ref = nullptr;
-	zval* cFormat = nullptr;
-	zval* org_loc = nullptr;
+	zval* res = NULL;
+	zval* ref = NULL;
+	zval* cFormat = NULL;
+	zval* org_loc = NULL;
 	zend_long num_buffers;
 	zend_long num_aux_buffers;
 

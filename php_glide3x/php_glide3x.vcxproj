@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{4c896523-7ea8-4737-8025-bfb1c87920d8}</ProjectGuid>
+    <RootNamespace>php_glide3x</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>php_glide3x</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)</OutDir>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\main;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\win32;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)</OutDir>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\main;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\win32;$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.16-devel-vs16-x64\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;__MSC__;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>php8ts.lib;glide3x.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;__MSC__;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>php8ts.lib;glide3x.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST;ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>php8ts.lib;glide3x.lib;%(AdditionalDependencies);php8ts.lib;glide3x.lib;php8ts.lib;glide3x.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST;ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>php8ts.lib;glide3x.lib;%(AdditionalDependencies);php8ts.lib;glide3x.lib;php8ts.lib;glide3x.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="phpglide3x.c" />
+    <ClCompile Include="phpglide3x_constants.c" />
+    <ClCompile Include="phpglide3x_enums.c" />
+    <ClCompile Include="phpglide3x_functions.c" />
+    <ClCompile Include="phpglide3x_grBuffer.c" />
+    <ClCompile Include="phpglide3x_grColor.c" />
+    <ClInclude Include="phpglide3x_grColor.h" />
+    <ClCompile Include="phpglide3x_grDraw.c" />
+    <ClCompile Include="phpglide3x_grSst.c" />
+    <ClInclude Include="phpglide3x_grSst.h" />
+    <ClCompile Include="phpglide3x_Vec2.c" />
+    <ClInclude Include="phpglide3x_Vec2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="phpglide3x_constants.h" />
+    <ClInclude Include="phpglide3x_enums.h" />
+    <ClInclude Include="phpglide3x_functions.h" />
+    <ClInclude Include="phpglide3x_grBuffer.h" />
+    <ClInclude Include="phpglide3x_grDraw.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

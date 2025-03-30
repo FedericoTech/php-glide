@@ -1,7 +1,17 @@
 #include <php.h>
 #include <ext/standard/info.h>
 
+#include <glide.h>
+
+#include "phpglide2x_enums.h"
+#include "phpglide2x_structs.h"
+#include "phpglide2x_sst.h"
 #include "phpglide2x_glide.h"
+#include "phpglide2x_color.h"
+#include "phpglide2x_buffer.h"
+#include "phpglide2x_draw.h"
+#include "phpglide2x_functions.h"
+
 
 
 # define PHP_TEST_VERSION "0.1.0"
@@ -24,8 +34,14 @@ PHP_MINIT_FUNCTION(phpglide2x)
 {
 	REGISTER_INI_ENTRIES();
 
-
+	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_structs(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_gr_sst_module(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_gr_glide_module(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_gr_color_module(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_gr_buffer_module(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_gr_draw_module(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_functions(INIT_FUNC_ARGS_PASSTHRU);
 	
 	return SUCCESS;
 }
@@ -59,7 +75,8 @@ PHP_RINIT_FUNCTION(phpglide2x)
 PHP_RSHUTDOWN_FUNCTION(phpglide2x)
 {
 	// destruct registered callbacks
-	//phpglide2x_shutdown_callbacks();
+
+	grGlideShutdown();
 
 	return SUCCESS;
 }

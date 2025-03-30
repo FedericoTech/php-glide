@@ -1,11 +1,10 @@
-#define __MSC__
 #include <glide.h>
 
 #include "phpglide3x_grColor.h"
 #include "phpglide3x_enums.h"
 #include <Zend/zend_enum.h>
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_grColorCombine, 0, 0, 5)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grColorCombine, 0, 5, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, func, GrCombineFunction_t, 0)
 	ZEND_ARG_OBJ_INFO(0, factor, GrCombineFactor_t, 0)
 	ZEND_ARG_OBJ_INFO(0, local, GrCombineLocal_t, 0)
@@ -16,10 +15,10 @@ ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grColorCombine)
 {
-	zval* func = nullptr;
-	zval* factor = nullptr;
-	zval* local = nullptr;
-	zval* other = nullptr;
+	zval* func = NULL;
+	zval* factor = NULL;
+	zval* local = NULL;
+	zval* other = NULL;
 
 	bool invert;
 
