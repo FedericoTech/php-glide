@@ -1,8 +1,7 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-#include <php.h>
-
+#include "stdafx.h"
 
 extern zend_class_entry* grDepth_ce;
 extern zend_class_entry* grEvenOdd_ce;
@@ -19,7 +18,6 @@ extern zend_class_entry* grBuffer_ce;
 extern zend_class_entry* grChromakeyMode_ce;
 extern zend_class_entry* grCmpFnc_ce;
 extern zend_class_entry* grColorFormat_ce;
-
 extern zend_class_entry* grCullMode_ce;
 extern zend_class_entry* grDepthBufferMode_ce;
 extern zend_class_entry* grDitherMode_ce;
@@ -27,7 +25,6 @@ extern zend_class_entry* grFogMode_ce;
 extern zend_class_entry* grLock_ce;
 extern zend_class_entry* grLfbBypassMode_ce;
 extern zend_class_entry* grLfbWriteMode_ce;
-
 extern zend_class_entry* grOriginLocation_ce;
 extern zend_class_entry* grLOD_ce;
 extern zend_class_entry* grMipMapMode_ce;
@@ -39,12 +36,11 @@ extern zend_class_entry* grTextureFormat_ce;
 extern zend_class_entry* grTexTable_ce;
 extern zend_class_entry* grNCCTable_ce;
 extern zend_class_entry* grTexBaseRange_ce;
-
 extern zend_class_entry* grSstType_ce;
-
 extern zend_class_entry* grScreenRefresh_ce;
 extern zend_class_entry* grScreenResolution_ce;
 
+int enum_to_int(zend_object* enum_obj);
 
 
 void phpglide2x_register_enums(INIT_FUNC_ARGS);

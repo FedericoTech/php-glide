@@ -1,13 +1,9 @@
 
-#include <glide.h>
-
-#include "phpglide2x_glide.h"
+#include "phpglide2x_functions.h"
+#include "phpglide2x_structs.h"
 
 #include <conio.h>
 
-//prototype of function grGlideInit;
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_kbhit, 0, 0, IS_LONG, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(_kbhit) {
 	ZEND_PARSE_PARAMETERS_NONE();
@@ -15,15 +11,15 @@ PHP_FUNCTION(_kbhit) {
 }
 
 
+PHP_FUNCTION(testObject) {
 
-void phpglide2x_register_functions(INIT_FUNC_ARGS)
-{
+	zend_object* obj = NULL;
 
-	const zend_function_entry gr_functions_functions[] = {
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ(obj)
+	ZEND_PARSE_PARAMETERS_END();
 
-		PHP_FE(_kbhit, arginfo_kbhit)
-		PHP_FE_END
-	};
+	_GrSST* config = O_EMBEDDED_P(_GrSST, obj);
 
-	zend_register_functions(NULL, gr_functions_functions, NULL, MODULE_PERSISTENT);
+	php_printf("ello %d\n", config->SST.type);
 }

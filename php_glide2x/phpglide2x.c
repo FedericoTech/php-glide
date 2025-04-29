@@ -1,16 +1,18 @@
-#include <php.h>
-#include <ext/standard/info.h>
+#include "stdafx.h"
 
-#include <glide.h>
+#include <ext/standard/info.h>
 
 #include "phpglide2x_enums.h"
 #include "phpglide2x_structs.h"
+
 #include "phpglide2x_sst.h"
 #include "phpglide2x_glide.h"
 #include "phpglide2x_color.h"
 #include "phpglide2x_buffer.h"
 #include "phpglide2x_draw.h"
 #include "phpglide2x_functions.h"
+
+
 
 
 
@@ -33,15 +35,17 @@ PHP_INI_END()
 PHP_MINIT_FUNCTION(phpglide2x)
 {
 	REGISTER_INI_ENTRIES();
-
+	
 	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_structs(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gr_sst_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gr_glide_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gr_color_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gr_buffer_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gr_draw_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_functions(INIT_FUNC_ARGS_PASSTHRU);
+
+	phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grSst96Config(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grSST(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
 	
 	return SUCCESS;
 }
@@ -93,7 +97,7 @@ PHP_MINFO_FUNCTION(phpglide2x)
 extern zend_module_entry  phpglide2x_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"PHP Glide2x",				/* Extension name */
-	NULL,						/* zend_function_entry. No global function table, functions are registered separately */
+	ext_functions,				/* zend_function_entry. No global function table, functions are registered separately */
 	PHP_MINIT(phpglide2x),		/* PHP_MINIT - Module initialization */
 	PHP_MSHUTDOWN(phpglide2x),	/* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(phpglide2x),		/* PHP_RINIT - Request initialization */

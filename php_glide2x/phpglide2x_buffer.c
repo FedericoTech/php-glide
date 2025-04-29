@@ -1,35 +1,21 @@
-#include <glide.h>
 
-
-#include "phpglide2x_buffer.h"
 #include "phpglide2x_enums.h"
-
-#include <Zend/zend_enum.h>
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferClear, 0, 3, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, alpha, IS_LONG, 0)
-	ZEND_ARG_OBJ_INFO(0, depth, GrDepth_t, 0)
-ZEND_END_ARG_INFO()
+#include "phpglide2x_buffer.h"
 
 PHP_FUNCTION(grBufferClear) 
 {
 	zend_long color;
 	zend_long alpha;
-	zend_object* depth_obj = NULL;
+	zend_object* depth = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_LONG(color)
 		Z_PARAM_LONG(alpha)
-		Z_PARAM_OBJ_OF_CLASS(depth_obj, grDepth_ce)
+		Z_PARAM_OBJ_OF_CLASS(depth, grDepth_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grBufferClear((GrColor_t) color, (GrAlpha_t) alpha, Z_LVAL_P(zend_enum_fetch_case_value(depth_obj)));
+	grBufferClear((GrColor_t) color, (GrAlpha_t) alpha, enum_to_int(depth));
 }
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferSwap, 0, 1, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(0, swap_interval, IS_LONG, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grBufferSwap)
 {

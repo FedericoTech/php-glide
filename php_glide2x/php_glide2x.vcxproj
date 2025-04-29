@@ -71,26 +71,27 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Release_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=1;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glide2x.lib;php8ts.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glide2x.lib;php8ts_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,6 +110,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glide2x.lib;php8ts.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,10 +149,20 @@
     <ClCompile Include="phpglide2x_functions.c" />
     <ClCompile Include="phpglide2x_glide.c" />
     <ClCompile Include="phpglide2x_enums.c" />
+    <ClCompile Include="phpglide2x_gr_at3d.c" />
+    <ClCompile Include="phpglide2x_gr_hardware_configuration.c" />
+    <ClCompile Include="phpglide2x_gr_sst_96.c" />
+    <ClCompile Include="phpglide2x_gr_tmu.c" />
+    <ClCompile Include="phpglide2x_gr_tmu_vertex.c" />
+    <ClCompile Include="phpglide2x_gr_vertex.c" />
+    <ClCompile Include="phpglide2x_gr_voodoo.c" />
     <ClCompile Include="phpglide2x_sst.c" />
+    <ClCompile Include="phpglide2x_gr_sst.c" />
     <ClCompile Include="phpglide2x_structs.c" />
+    <ClCompile Include="stdafx.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="phpglide2x_arginfo.h" />
     <ClInclude Include="phpglide2x_buffer.h" />
     <ClInclude Include="phpglide2x_color.h" />
     <ClInclude Include="phpglide2x_draw.h" />
@@ -158,6 +171,7 @@
     <ClInclude Include="phpglide2x_glide.h" />
     <ClInclude Include="phpglide2x_sst.h" />
     <ClInclude Include="phpglide2x_structs.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

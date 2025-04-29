@@ -6,6 +6,7 @@ grGlideInit();
 
 $hwConfig = new GrHwConfiguration;
 
+
 if(!grSstQueryHardware($hwConfig)){
 	echo 'ERROR: grSstQueryHardware din\'t work!' . PHP_EOL;
 	grGlideShutdown();
@@ -16,6 +17,8 @@ if(!$hwConfig->num_sst){
 	grGlideShutdown();
 	return -1;
 }
+
+
 
 switch($hwConfig->SSTs[0]->type){
 	case GrSstType::GR_SSTTYPE_VOODOO:

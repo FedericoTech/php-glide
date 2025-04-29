@@ -1,17 +1,6 @@
-#include <glide.h>
-
 
 #include "phpglide2x_draw.h"
 #include "phpglide2x_structs.h"
-#include "phpglide2x_enums.h"
-
-#include <Zend/zend_enum.h>
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx1, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx2, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx3, GrVertex, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grDrawTriangle)
 {
@@ -47,16 +36,4 @@ PHP_FUNCTION(grDrawTriangle)
 	}
 	
 	grDrawTriangle(&vtx0, &vtx1, &vtx2);
-}
-
-void phpglide2x_register_gr_draw_module(INIT_FUNC_ARGS)
-{
-
-	const zend_function_entry gr_draw_functions[] = {
-
-		PHP_FE(grDrawTriangle, arginfo_grDrawTriangle)
-		PHP_FE_END
-	};
-
-	zend_register_functions(NULL, gr_draw_functions, NULL, MODULE_PERSISTENT);
 }
