@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 53d27f82f437324cde5afbc37c0f2f01e453e1a7 */
+ * Stub hash: 551e7d6e6718686ade734d092b98f4cbf7e6bf70 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -28,6 +28,14 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrHwConfiguration, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, chc, GrHwConfiguration, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTmuVertex, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, gtv, GrTmuVertex, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrVertex, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, chc, GrVertex, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
@@ -163,6 +171,8 @@ ZEND_FUNCTION(testGrSst96Config_t);
 ZEND_FUNCTION(testGrAT3DConfig_t);
 ZEND_FUNCTION(testSST_t);
 ZEND_FUNCTION(testGrHwConfiguration);
+ZEND_FUNCTION(testGrTmuVertex);
+ZEND_FUNCTION(testGrVertex);
 ZEND_FUNCTION(testObject);
 #endif
 ZEND_FUNCTION(_kbhit);
@@ -222,6 +232,8 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrAT3DConfig_t, arginfo_testGrAT3DConfig_t)
 	ZEND_FE(testSST_t, arginfo_testSST_t)
 	ZEND_FE(testGrHwConfiguration, arginfo_testGrHwConfiguration)
+	ZEND_FE(testGrTmuVertex, arginfo_testGrTmuVertex)
+	ZEND_FE(testGrVertex, arginfo_testGrVertex)
 	ZEND_FE(testObject, arginfo_testObject)
 #endif
 	ZEND_FE(_kbhit, arginfo__kbhit)

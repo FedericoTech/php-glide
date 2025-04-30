@@ -2,6 +2,26 @@
 
 zend_class_entry* grTmuVertex_ce;
 
+#ifdef _DEBUG
+ZEND_FUNCTION(testGrTmuVertex)
+{
+    zend_object* grTmuVertex_zo = NULL;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_OBJ_OF_CLASS(grTmuVertex_zo, grTmuVertex_ce)
+        ZEND_PARSE_PARAMETERS_END();
+
+    _GrTmuVertex* config = O_EMBEDDED_P(_GrTmuVertex, grTmuVertex_zo);
+
+    php_printf(
+        "sow: %f, tow: %f, oow: %f\n",
+        config->grTmuVertex.sow,
+        config->grTmuVertex.tow,
+        config->grTmuVertex.oow
+    );
+}
+#endif // _DEBUG
+
 static zend_object_handlers grTmuVertex_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
@@ -21,73 +41,23 @@ zend_object* GrTmuVertex_new(zend_class_entry* ce)
     return &grTmuVertex->std;
 }
 
-static zval* gr_read_property(zend_object* object, zend_string* member, int type, void** cache_slot, zval* rv)
-{
-    /*
-    //if (zend_string_equals_literal(object->ce->name, "GrAT3DConfig_t")) {
-
-        zend_class_entry* ce = object->ce;
-        zend_property_info* prop_info = zend_get_property_info(ce, member, 1);
-
-        zval* prop_zv = OBJ_PROP(object, prop_info->offset);
-
-        if (Z_TYPE_P(prop_zv) != IS_UNDEF) {
-            return prop_zv;
-        }
-
-        _GrAT3DConfig_t* config = O_EMBEDDED_P(_GrAT3DConfig_t, object);
-
-        if (zend_string_equals_literal(member, "rev")) {
-            zend_update_property_long(
-                ce, object,
-                ZSTR_VAL(member), ZSTR_LEN(member),
-                config->grAT3DConfig.rev
-            );
-        }
-
-    //}
-    */
-    return zend_std_read_property(object, member, type, cache_slot, rv);
-}
-/*
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrAT3DConfig_t")) {
+    if (zend_string_equals_literal(object->ce->name, "GrTmuVertex")) {
+        
+        const char* properties[] = { "sow", "tow", "oow"};
 
-        _GrAT3DConfig_t* config = O_EMBEDDED_P(_GrAT3DConfig_t, object);  // Get your embedded struct from the object
+        _GrTmuVertex* config = O_EMBEDDED_P(_GrTmuVertex, object);  // Get your embedded struct from the object
 
-        if (zend_string_equals_literal(member, "rev")) {
-            config->grAT3DConfig.rev = Z_LVAL_P(value);
+        for (int cont = 0; cont < 3; cont++) {
+            if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
+                *((float*)&config->grTmuVertex + cont) = Z_DVAL_P(value);
+                break;
+            }
         }
     }
 
     return zend_std_write_property(object, member, value, cache_slot);
-}
-*/
-
-static HashTable* get_properties(zend_object* object)
-{
-    /*
-    zend_class_entry* ce = object->ce;
-    _GrAT3DConfig_t* config = O_EMBEDDED_P(_GrAT3DConfig_t, object);
-
-    zend_string* member = zend_string_init("rev", strlen("rev"), 0);
-
-    zend_property_info* prop_info = zend_get_property_info(ce, member, 1);
-    zval* prop_zv = OBJ_PROP(object, prop_info->offset);
-
-    //if the property is not yet defined...
-    if (Z_TYPE_P(prop_zv) == IS_UNDEF) {
-        zend_update_property_long(
-            ce, object,
-            ZSTR_VAL(member), ZSTR_LEN(member),
-            config->grAT3DConfig.rev
-        );
-    }
-
-    zend_string_release(member);
-    */
-    return zend_std_get_properties(object);
 }
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
@@ -103,7 +73,5 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grTmuVertex_object_handlers.offset = XtOffsetOf(_GrTmuVertex, std);
-    //grTmuVertex_object_handlers.read_property = gr_read_property;
-    //grTmuVertex_object_handlers.get_properties = get_properties;
-    //grTmuVertex_object_handlers.write_property = gr_write_property;
+    grTmuVertex_object_handlers.write_property = gr_write_property;
 }

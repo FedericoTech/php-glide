@@ -561,6 +561,10 @@ class GrTmuVertex {
 	public float  $oow;
 }
 
+#ifdef _DEBUG
+function testGrTmuVertex(GrTmuVertex $gtv) : void {};
+#endif
+
 class GrVertex {
 	public float $x;
 	public float $y;
@@ -576,8 +580,11 @@ class GrVertex {
 	
 	/** @var GrTmuVertex[] */
 	public array $tmuvtx;
-	
 }
+
+#ifdef _DEBUG
+function testGrVertex(GrVertex $chc) : void {};
+#endif
 
 #ifdef _DEBUG
 function testObject(object $obj) : void {};
