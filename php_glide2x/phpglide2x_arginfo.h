@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 551e7d6e6718686ade734d092b98f4cbf7e6bf70 */
+ * Stub hash: 39293a312866d4ae653f2e17739207c3bb20fef8 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -60,9 +60,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstSelect, 0, 1, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx1, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx2, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, vtx3, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, c, GrVertex, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)

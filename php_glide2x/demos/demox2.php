@@ -68,19 +68,19 @@ $vtx1->g = 0;
 $vtx1->b = 0;
 $vtx1->a = 0;
 
-$vtx2->x = 480;
-$vtx2->y = 180;
+$vtx2->x = '480.0';
+$vtx2->y = '180';
 $vtx2->r = 0;
 $vtx2->g = $color;
 $vtx2->b = 0;
-$vtx2->a = 128;
+$vtx2->a = 128.0;
 
-$vtx3->x = 320;
-$vtx3->y = 360;
+$vtx3->x = 320.0;
+$vtx3->y = 360.0;
 $vtx3->r = 0;
 $vtx3->g = 0;
 $vtx3->b = $color;
-$vtx3->a = 255;
+$vtx3->a = 255.0;
 
 while (!_kbhit()) {
 

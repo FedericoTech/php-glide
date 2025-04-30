@@ -598,7 +598,7 @@ function grGlideShutdown() : void {};
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};
 
-function grDrawTriangle(GrVertex $vtx1, GrVertex $vtx2, GrVertex $vtx3) : void {};
+function grDrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c) : void {};
 
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 

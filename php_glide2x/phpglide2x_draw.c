@@ -4,36 +4,29 @@
 
 PHP_FUNCTION(grDrawTriangle)
 {
-	zend_object* vtx_obj[3] = { NULL };
+	zend_object* a = NULL;
+	zend_object* b = NULL;
+	zend_object* c = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJ_OF_CLASS(vtx_obj[0], grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(vtx_obj[1], grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(vtx_obj[2], grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(a, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(b, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(c, grVertex_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	const char* properties[] = { "x", "y", "z", "r", "g", "b", "ooz", "a", "oow"};
+	GrVertex* vtx0 = NULL, * vtx1 = NULL, * vtx2 = NULL;
 
-	GrVertex vtx0, vtx1, vtx2;
-
-	float* f[3] = { (float*)&vtx0, (float*)&vtx1, (float*)&vtx2 };
-
-	//we go property by property
-	for (int cont = 0; cont < 9; cont++) {
-		//we get the property name
-		zend_string* property_name = zend_string_init_interned(properties[cont], strlen(properties[cont]), 1);
-
-		//we go object by object
-		for (int cont2 = 0; cont2 < 3; cont2++) {
-			//we caputre the property
-			zval* ello = zend_read_property_ex(grVertex_ce, vtx_obj[cont2], property_name, 1, NULL);
-			//if the value is set...
-			if (Z_TYPE_P(ello) == IS_DOUBLE) {
-				//we copy the value
-				*(f[cont2] + cont) = (float)Z_DVAL_P(ello);
-			}
-		}
+	if (a) {
+		vtx0 = &O_EMBEDDED_P(_GrVertex, a)->grVertex;
 	}
-	
-	grDrawTriangle(&vtx0, &vtx1, &vtx2);
+
+	if (b) {
+		vtx1 = &O_EMBEDDED_P(_GrVertex, b)->grVertex;
+	}
+
+	if (c) {
+		vtx2 = &O_EMBEDDED_P(_GrVertex, c)->grVertex;
+	}
+
+	grDrawTriangle(vtx0, vtx1, vtx2);
 }

@@ -51,7 +51,18 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
 
         for (int cont = 0; cont < 3; cont++) {
             if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
-                *((float*)&config->grTmuVertex + cont) = Z_DVAL_P(value);
+                
+                
+                switch (Z_TYPE_P(value))
+                {
+                case IS_STRING:
+                    if (!is_numeric_string(Z_STRVAL_P(value), Z_STRLEN_P(value), NULL, NULL, 0)) {
+                        break;
+                    }
+                case IS_DOUBLE:
+                case IS_LONG:
+                    *((float*)&config->grTmuVertex + cont) = (float)zval_get_double(value);
+                }
                 break;
             }
         }
