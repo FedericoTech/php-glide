@@ -8,15 +8,15 @@ $gtv = new GrTmuVertex;
 var_dump($gtv);
 testGrTmuVertex($gtv);
 
-$gtv->sow = 0.0;
+$gtv->sow = 0;
 $gtv->tow = 0.1;
-$gtv->oow = 0.2;
+$gtv->oow = '0.2';
 
 var_dump($gtv);
 testGrTmuVertex($gtv);
 
 $gtv2 = new GrTmuVertex;
-$gtv2->sow = 0.3;
+$gtv2->sow = '0.3';
 $gtv2->tow = 0.4;
 $gtv2->oow = 0.5;
 
@@ -27,17 +27,17 @@ $vertex = new GrVertex;
 var_dump($vertex);
 testGrVertex($vertex);
 
-$vertex->x = 0.0;
+$vertex->x = 0;
 $vertex->y = 0.1;
 $vertex->z = 0.2;
 
 $vertex->r = 0.3;
 $vertex->g = 0.4;
-$vertex->b = 0.5;
+$vertex->b = '0.5';
 
 $vertex->ooz = 0.6;
 $vertex->a = 0.7;
-$vertex->oow = 0.8;
+$vertex->oow = '0.8';
 
 $vertex->tmuvtx = [$gtv, $gtv2];
 

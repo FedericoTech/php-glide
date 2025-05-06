@@ -12,14 +12,10 @@
 #include "phpglide2x_draw.h"
 #include "phpglide2x_functions.h"
 
-
-
-
-
 # define PHP_TEST_VERSION "0.1.0"
 
 //if Zend Thread Safe is active and also compiled as a Dynamic Library...
-# if defined(ZTS) && defined(COMPILE_DL_TEST)
+# if defined(ZTS) && defined(COMPILE_DL_GLIDE2X)
 ZEND_TSRMLS_CACHE_EXTERN()
 # endif
 
@@ -66,7 +62,7 @@ PHP_MSHUTDOWN_FUNCTION(phpglide2x)
 
 PHP_RINIT_FUNCTION(phpglide2x)
 {
-#if defined(ZTS) && defined(COMPILE_DL_TEST)
+#if defined(ZTS) && defined(COMPILE_DL_GLIDE2X)
 	ZEND_TSRMLS_CACHE_UPDATE();
 #endif
 	return SUCCESS;
@@ -108,7 +104,7 @@ extern zend_module_entry  phpglide2x_module_entry = {
 };
 
 //if compiled as a Dynamic Library...
-#ifdef COMPILE_DL_TEST
+#ifdef COMPILE_DL_GLIDE2X
 	//if compiled as thread safe...
 #ifdef ZTS
 ZEND_TSRMLS_CACHE_DEFINE()

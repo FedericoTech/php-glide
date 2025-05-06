@@ -1,7 +1,7 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-#include <zend_API.h>
+#include "stdafx.h"
 
 extern zend_class_entry* grCombineFunction_ce;
 extern zend_class_entry* grCombineFactor_ce;
@@ -45,6 +45,8 @@ extern zend_class_entry* grGet_ce;
 extern zend_class_entry* grString_ce;
 extern zend_class_entry* grScreenRefresh_ce;
 extern zend_class_entry* grScreenResolution_ce;
+
+int enum_to_int(zend_object* enum_obj);
 
 void phpglide3x_register_enums(INIT_FUNC_ARGS);
 

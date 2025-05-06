@@ -1,12 +1,9 @@
-#include <glide.h>
 
 #include "phpglide3x_functions.h"
 #include "phpglide3x_enums.h"
-#include <Zend/zend_enum.h>
 
-//prototype of function grGlideInit;
-ZEND_BEGIN_ARG_INFO(arginfo_grGlideInit, 0)
-ZEND_END_ARG_INFO()
+#include <conio.h>
+
 
 PHP_FUNCTION(grGlideInit) {
 
@@ -15,10 +12,6 @@ PHP_FUNCTION(grGlideInit) {
 	grGlideInit();
 }
 
-//prototype of function grGlideShutdown;
-ZEND_BEGIN_ARG_INFO(arginfo_grGlideShutdown, 0)
-ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(grGlideShutdown) {
 
 	ZEND_PARSE_PARAMETERS_NONE();
@@ -26,37 +19,25 @@ PHP_FUNCTION(grGlideShutdown) {
 	grGlideShutdown();
 }
 
-//prototype of function grVertexLayout;
-ZEND_BEGIN_ARG_INFO_EX(arginfo_grVertexLayout, 0, 0, 3)
-	ZEND_ARG_OBJ_INFO(0, param, GrParams_t, 0)
-	ZEND_ARG_TYPE_INFO(0, offset, IS_LONG, 0)
-	ZEND_ARG_OBJ_INFO(0, mode, GrMode_t, 0)
-ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(grVertexLayout)
 {
-	zval* param = NULL, * mode = NULL;
+	zend_object* param = NULL, * mode = NULL;
 	zend_long offset;
 
 	// Start parsing parameters using modern macros
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJECT_OF_CLASS(param, grParams_ce)
+		Z_PARAM_OBJ_OF_CLASS(param, grParams_ce)
 		Z_PARAM_LONG(offset)
-		Z_PARAM_OBJECT_OF_CLASS(mode, grMode_ce)
+		Z_PARAM_OBJ_OF_CLASS(mode, grMode_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
 	// Call the actual C function
 	grVertexLayout(
-		(FxU32)Z_LVAL_P(zend_enum_fetch_case_value(Z_OBJ_P(param))),
+		(FxU32)enum_to_int(param),
 		(FxI32)offset, 
-		(FxU32)Z_LVAL_P(zend_enum_fetch_case_value(Z_OBJ_P(mode)))
+		(FxU32)enum_to_int(mode)
 	);
 }
-
-//prototype of function grConstantColorValue;
-ZEND_BEGIN_ARG_INFO_EX(arginfo_grConstantColorValue, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
-ZEND_END_ARG_INFO()
 
 PHP_FUNCTION(grConstantColorValue)
 {
@@ -71,13 +52,6 @@ PHP_FUNCTION(grConstantColorValue)
 	grConstantColorValue((GrColor_t) color);
 }
 
-//prototype of function grGet;
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGet, 0, 2, IS_LONG, 0)
-	ZEND_ARG_OBJ_INFO(0, pname, GrGet_t, 0)
-	ZEND_ARG_INFO(1, params)  // "1" means it's passed by reference
-	ZEND_ARG_TYPE_INFO(0, plength, IS_LONG, 1)
-ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(grGet)
 {
 	typedef union {
@@ -89,7 +63,7 @@ PHP_FUNCTION(grGet)
 
 	FxI32* params = NULL;
 
-	zval* pname = NULL;
+	zend_object* pname = NULL;
 	zend_long plength = 1;
 	zval* params_zval = NULL;
 		
@@ -97,7 +71,7 @@ PHP_FUNCTION(grGet)
 
 	// Start parsing parameters using modern macros
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_OBJECT_OF_CLASS(pname, grGet_ce) // First param: pname (integer)	
+		Z_PARAM_OBJ_OF_CLASS(pname, grGet_ce) // First param: pname (integer)	
 		Z_PARAM_ZVAL_EX(params_zval, 0, 1)	// Third param: zval (output)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(plength)		// Second param: plength (integer)
@@ -107,7 +81,7 @@ PHP_FUNCTION(grGet)
 
 	int returnType = 0;
 
-	int pname_int = Z_LVAL_P(zend_enum_fetch_case_value(Z_OBJ_P(pname)));
+	int pname_int = enum_to_int(pname);
 
 	switch (pname_int) {
 	// 1/4 return a number
@@ -247,21 +221,17 @@ PHP_FUNCTION(grGet)
 	RETURN_LONG(result); // Return the function's result
 }
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGetString, 0, 1, IS_STRING, 1)
-	ZEND_ARG_OBJ_INFO(0, name, GrString_t, 0)
-ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(grGetString)
 {
-	zval* name = NULL;
+	zend_object* name = NULL;
 
 	/* Use modern parameter parsing */
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(name, grString_ce) // First param: pname (integer)
+		Z_PARAM_OBJ_OF_CLASS(name, grString_ce) // First param: pname (integer)
 		ZEND_PARSE_PARAMETERS_END();
 
 	/* Convert to unsigned 32-bit */
-	FxU32 fx_name = (FxU32)(Z_LVAL_P(zend_enum_fetch_case_value(Z_OBJ_P(name))) & 0xFFFFFFFF);
+	FxU32 fx_name = (FxU32)(enum_to_int(name) & 0xFFFFFFFF);
 
 	/* Call the C function */
 	const char* result = grGetString(fx_name);
@@ -275,23 +245,10 @@ PHP_FUNCTION(grGetString)
 	}
 }
 
-void phpglide3x_register_gr_functions_module(INIT_FUNC_ARGS)
-{
-
-	const zend_function_entry gr_functions_functions[] = {
-
-		PHP_FE(grGlideInit, arginfo_grGlideInit)
-		PHP_FE(grGlideShutdown, arginfo_grGlideShutdown)
-		PHP_FE(grVertexLayout, arginfo_grVertexLayout)
-		PHP_FE(grConstantColorValue, arginfo_grConstantColorValue)
-		PHP_FE(grGet, arginfo_grGet)
-		PHP_FE(grGetString, arginfo_grGetString)
-		PHP_FE_END
-	};
-
-	zend_register_functions(NULL, gr_functions_functions, NULL, MODULE_PERSISTENT);
+PHP_FUNCTION(_kbhit) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_LONG(_kbhit());
 }
-
 
 void phpglide3x_init_callbacks()
 {

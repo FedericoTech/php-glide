@@ -2,13 +2,6 @@
 
 #include "phpglide3x_grDraw.h"
 
-//prototype of function multiply;
-ZEND_BEGIN_ARG_INFO(arginfo_grDrawTriangle, 0)
-	ZEND_ARG_TYPE_INFO(0, a, IS_OBJECT, 0)
-	ZEND_ARG_TYPE_INFO(0, b, IS_OBJECT, 0)
-	ZEND_ARG_TYPE_INFO(0, c, IS_OBJECT, 0)
-ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(grDrawTriangle)
 {
 	zval *a = NULL, *b = NULL, *c = NULL;
@@ -63,16 +56,4 @@ PHP_FUNCTION(grDrawTriangle)
 	}
 
 	grDrawTriangle(&aCU, &bCU, &cCU);
-}
-
-
-void phpglide3x_register_gr_draw_module(INIT_FUNC_ARGS)
-{
-
-	const zend_function_entry gr_draw_functions[] = {
-		PHP_FE(grDrawTriangle, arginfo_grDrawTriangle)
-		PHP_FE_END
-	};
-
-	zend_register_functions(NULL, gr_draw_functions, NULL, MODULE_PERSISTENT);
 }

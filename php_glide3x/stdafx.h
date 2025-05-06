@@ -6,6 +6,6 @@
 #include <php.h>
 #include <Zend/zend_enum.h>
 
-#include "phpglide2x_arginfo.h"
+#include "phpglide3x_arginfo.h"
 
 #endif

@@ -1,7 +1,7 @@
-#include <php.h>
+#include "stdafx.h"
+
 #include <ext/standard/info.h>
 
-#include "phpglide3x_constants.h"
 #include "phpglide3x_enums.h"
 #include "phpglide3x_functions.h"
 #include "phpglide3x_grBuffer.h"
@@ -14,7 +14,7 @@
 # define PHP_TEST_VERSION "0.1.0"
 
 //if Zend Thread Safe is active and also compiled as a Dynamic Library...
-# if defined(ZTS) && defined(COMPILE_DL_TEST)
+# if defined(ZTS) && defined(COMPILE_DL_GLIDE3X)
 ZEND_TSRMLS_CACHE_EXTERN()
 # endif
 
@@ -31,18 +31,12 @@ PHP_MINIT_FUNCTION(phpglide3x)
 	REGISTER_INI_ENTRIES();
 	
 	// callbacks
-	phpglide3x_init_callbacks();
+	//phpglide3x_init_callbacks();
 
 	// grDraw module
-	phpglide3x_register_constants(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide3x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_functions_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_buffer_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_color_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_draw_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_sst_module(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide3x_register_gr_vec2_module(INIT_FUNC_ARGS_PASSTHRU);
 
+	phpglide3x_register_gr_vec2_module(INIT_FUNC_ARGS_PASSTHRU);
 
 	return SUCCESS;
 }
@@ -62,7 +56,7 @@ PHP_MSHUTDOWN_FUNCTION(phpglide3x)
 
 PHP_RINIT_FUNCTION(phpglide3x)
 {
-#if defined(ZTS) && defined(COMPILE_DL_TEST)
+#if defined(ZTS) && defined(COMPILE_DL_GLIDE3X)
 	ZEND_TSRMLS_CACHE_UPDATE();
 #endif
 	return SUCCESS;
@@ -71,7 +65,8 @@ PHP_RINIT_FUNCTION(phpglide3x)
 PHP_RSHUTDOWN_FUNCTION(phpglide3x)
 {
 	// destruct registered callbacks
-	phpglide3x_shutdown_callbacks();
+
+	grGlideShutdown();
 
 	return SUCCESS;
 }
@@ -92,7 +87,7 @@ PHP_MINFO_FUNCTION(phpglide3x)
 extern zend_module_entry  phpglide3x_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"PHP Glide3x",				/* Extension name */
-	NULL,						/* zend_function_entry. No global function table, functions are registered separately */
+	ext_functions,				/* zend_function_entry. No global function table, functions are registered separately */
 	PHP_MINIT(phpglide3x),		/* PHP_MINIT - Module initialization */
 	PHP_MSHUTDOWN(phpglide3x),	/* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(phpglide3x),		/* PHP_RINIT - Request initialization */
@@ -103,7 +98,7 @@ extern zend_module_entry  phpglide3x_module_entry = {
 };
 
 //if compiled as a Dynamic Library...
-#ifdef COMPILE_DL_TEST
+#ifdef COMPILE_DL_GLIDE3X
 	//if compiled as thread safe...
 	#ifdef ZTS
 		ZEND_TSRMLS_CACHE_DEFINE()

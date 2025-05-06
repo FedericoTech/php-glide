@@ -84,7 +84,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=1;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=1;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

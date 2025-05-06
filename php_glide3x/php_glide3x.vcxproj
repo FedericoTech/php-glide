@@ -84,8 +84,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide3x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide3x\sst1\glide3\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -97,13 +97,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;__MSC__;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=1;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE3X;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>php8ts.lib;glide3x.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glide3x.lib;php8ts_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,20 +155,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="phpglide3x.c" />
-    <ClCompile Include="phpglide3x_constants.c" />
     <ClCompile Include="phpglide3x_enums.c" />
     <ClCompile Include="phpglide3x_functions.c" />
     <ClCompile Include="phpglide3x_grBuffer.c" />
     <ClCompile Include="phpglide3x_grColor.c" />
+    <ClCompile Include="stdafx.c" />
+    <ClInclude Include="phpglide3x_arginfo.h" />
     <ClInclude Include="phpglide3x_grColor.h" />
     <ClCompile Include="phpglide3x_grDraw.c" />
     <ClCompile Include="phpglide3x_grSst.c" />
     <ClInclude Include="phpglide3x_grSst.h" />
     <ClCompile Include="phpglide3x_Vec2.c" />
     <ClInclude Include="phpglide3x_Vec2.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="phpglide3x_constants.h" />
     <ClInclude Include="phpglide3x_enums.h" />
     <ClInclude Include="phpglide3x_functions.h" />
     <ClInclude Include="phpglide3x_grBuffer.h" />

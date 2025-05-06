@@ -16,7 +16,7 @@ PHP_METHOD(Vec2, __construct)
         Z_PARAM_DOUBLE(x) // Expect a double parameter
         Z_PARAM_DOUBLE(y) // Expect a double parameter
     ZEND_PARSE_PARAMETERS_END();
-
+    /*
     zend_update_property_double(
         vec2_ce, 
         Z_OBJ_P(getThis()), 
@@ -32,7 +32,7 @@ PHP_METHOD(Vec2, __construct)
         sizeof("y") - 1,
         y
     );
-
+    */
     //php_printf("Vec2 constructor\n");
 }
 
