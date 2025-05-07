@@ -27,8 +27,8 @@ PHP_FUNCTION(grDrawTriangle)
 		zval* x = zend_read_property(Z_OBJCE_P(a), Z_OBJ_P(a), "x", sizeof("x") - 1, 1, NULL);
 		zval* y = zend_read_property(Z_OBJCE_P(a), Z_OBJ_P(a), "y", sizeof("y") - 1, 1, NULL);
 
-		aCU.x = (float) Z_DVAL_P(x);
-		aCU.y = (float) Z_DVAL_P(y);
+		aCU.x = (float)zval_get_double(x);
+		aCU.y = (float)zval_get_double(y);
 
 		php_printf("param $a is Vec2. x: %f, y: %f\n", aCU.x, aCU.y);
 	}
@@ -38,8 +38,8 @@ PHP_FUNCTION(grDrawTriangle)
 		zval* x = zend_read_property(Z_OBJCE_P(b), Z_OBJ_P(b), "x", sizeof("x") - 1, 1, NULL);
 		zval* y = zend_read_property(Z_OBJCE_P(b), Z_OBJ_P(b), "y", sizeof("y") - 1, 1, NULL);
 
-		bCU.x = (float) Z_DVAL_P(x);
-		bCU.y = (float) Z_DVAL_P(y);
+		bCU.x = (float)zval_get_double(x);
+		bCU.y = (float)zval_get_double(y);
 
 		php_printf("param $b is Vec2. x: %f, y: %f\n", bCU.x, bCU.y);
 	}
@@ -49,8 +49,8 @@ PHP_FUNCTION(grDrawTriangle)
 		zval* x = zend_read_property(Z_OBJCE_P(c), Z_OBJ_P(c), "x", sizeof("x") - 1, 1, NULL);
 		zval* y = zend_read_property(Z_OBJCE_P(c), Z_OBJ_P(c), "y", sizeof("y") - 1, 1, NULL);
 
-		cCU.x = (float) Z_DVAL_P(x);
-		cCU.y = (float) Z_DVAL_P(y);
+		cCU.x = (float)zval_get_double(x);
+		cCU.y = (float)zval_get_double(y);
 
 		php_printf("param $c is Vec2. x: %f, y: %f\n", cCU.x, cCU.y);
 	}

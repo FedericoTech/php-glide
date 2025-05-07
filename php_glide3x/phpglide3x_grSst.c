@@ -32,7 +32,7 @@ PHP_FUNCTION(grSstWinClose)
 
 PHP_FUNCTION(grSstWinOpen)
 {
-
+	bool hWin_is_null = true;
 	zend_long hWin;
 	zend_object* res = NULL;
 	zend_object* ref = NULL;
@@ -44,7 +44,7 @@ PHP_FUNCTION(grSstWinOpen)
 	GrContext_t result;
 
 	ZEND_PARSE_PARAMETERS_START(7, 7)
-		Z_PARAM_LONG(hWin)
+		Z_PARAM_LONG_OR_NULL(hWin, hWin_is_null)
 		Z_PARAM_OBJ_OF_CLASS(res, grScreenResolution_ce)
 		Z_PARAM_OBJ_OF_CLASS(ref, grScreenRefresh_ce)
 		Z_PARAM_OBJ_OF_CLASS(cFormat, grColorFormat_ce)
@@ -54,7 +54,7 @@ PHP_FUNCTION(grSstWinOpen)
 	ZEND_PARSE_PARAMETERS_END();
 
 	result = grSstWinOpen(
-		(FxU32) hWin,
+		hWin_is_null ? 0 : (FxU32) hWin,
 		(GrScreenResolution_t)enum_to_int(res),
 		(GrScreenRefresh_t)enum_to_int(ref),
 		(GrColorFormat_t)enum_to_int(cFormat),

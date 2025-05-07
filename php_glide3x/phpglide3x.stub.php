@@ -606,4 +606,4 @@ function grSstSelect(int $which_sst) : void {};
 
 function grSstWinClose(int $context): bool {};
 
-function grSstWinOpen(int $hWin, GrScreenResolution_t $res, GrScreenRefresh_t $ref, GrColorFormat_t $cFormat, GrOriginLocation_t $org_loc, int $num_buffers, int $num_aux_buffers) : int {};
+function grSstWinOpen(?int $hWin, GrScreenResolution_t $res, GrScreenRefresh_t $ref, GrColorFormat_t $cFormat, GrOriginLocation_t $org_loc, int $num_buffers, int $num_aux_buffers) : int {};

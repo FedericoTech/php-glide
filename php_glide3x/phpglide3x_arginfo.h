@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 4e37d9a5c92f86b65a3e63f23fabdc29370c7a30 */
+ * Stub hash: f6abecac0b8b90ef6392811fd4b6b1284163db50 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo__kbhit, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -67,7 +67,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinClose, 0, 1, _IS_BOOL, 0
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, hWin, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, hWin, IS_LONG, 1)
 	ZEND_ARG_OBJ_INFO(0, res, GrScreenResolution_t, 0)
 	ZEND_ARG_OBJ_INFO(0, ref, GrScreenRefresh_t, 0)
 	ZEND_ARG_OBJ_INFO(0, cFormat, GrColorFormat_t, 0)
