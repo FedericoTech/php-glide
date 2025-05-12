@@ -100,7 +100,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

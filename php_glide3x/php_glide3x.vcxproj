@@ -90,8 +90,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\lib;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\main;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\TSRM;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\win32;$(SolutionDir)..\..\SDK\php-8.1.31-devel-vs16-x86\include\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Release_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\3Dfx\Sdk\Glide3x\Src\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,7 +112,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;__MSC__;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_TEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);ZEND_DEBUG=0;ZTS=1;ZEND_WIN32;PHP_WIN32;COMPILE_DL_TEST</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE3X;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
