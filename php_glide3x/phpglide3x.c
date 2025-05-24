@@ -8,7 +8,7 @@
 #include "phpglide3x_grColor.h"
 #include "phpglide3x_grDraw.h"
 #include "phpglide3x_grSst.h"
-#include "phpglide3x_Vec2.h"
+#include "phpglide3x_abstractVertex.h"
 
 
 # define PHP_TEST_VERSION "0.1.0"
@@ -35,6 +35,8 @@ PHP_MINIT_FUNCTION(phpglide3x)
 
 	// grDraw module
 	phpglide3x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
+
+	phpglide3x_register_abstractVertex(INIT_FUNC_ARGS_PASSTHRU);
 
 	phpglide3x_register_gr_vec2_module(INIT_FUNC_ARGS_PASSTHRU);
 

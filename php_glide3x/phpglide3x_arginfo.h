@@ -1,5 +1,11 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: f6abecac0b8b90ef6392811fd4b6b1284163db50 */
+ * Stub hash: 3baeefea6b1239a1daf13c1670a8e3f0e817ab8c */
+
+#if defined(_DEBUG)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testAbstractVertex, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, av, AbstractVertex, 0)
+ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo__kbhit, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
@@ -160,6 +166,9 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrScreenResolution_t_toInt arginfo__kbhit
 
+#if defined(_DEBUG)
+ZEND_FUNCTION(testAbstractVertex);
+#endif
 ZEND_FUNCTION(_kbhit);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
@@ -219,6 +228,9 @@ ZEND_METHOD(GrScreenRefresh_t, toInt);
 ZEND_METHOD(GrScreenResolution_t, toInt);
 
 static const zend_function_entry ext_functions[] = {
+#if defined(_DEBUG)
+	ZEND_FE(testAbstractVertex, arginfo_testAbstractVertex)
+#endif
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
@@ -1184,6 +1196,28 @@ static zend_class_entry *register_class_GrMode_t(void)
 	zend_enum_add_case_cstr(class_entry, "GR_PARAM_DISABLE", NULL);
 
 	zend_enum_add_case_cstr(class_entry, "GR_PARAM_ENABLE", NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_AbstractVertex(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "AbstractVertex", NULL);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_ABSTRACT);
+
+	zval property_x_default_value;
+	ZVAL_UNDEF(&property_x_default_value);
+	zend_string *property_x_name = zend_string_init("x", sizeof("x") - 1, 1);
+	zend_declare_typed_property(class_entry, property_x_name, &property_x_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
+	zend_string_release(property_x_name);
+
+	zval property_y_default_value;
+	ZVAL_UNDEF(&property_y_default_value);
+	zend_string *property_y_name = zend_string_init("y", sizeof("y") - 1, 1);
+	zend_declare_typed_property(class_entry, property_y_name, &property_y_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
+	zend_string_release(property_y_name);
 
 	return class_entry;
 }

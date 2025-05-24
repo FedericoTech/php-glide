@@ -61,7 +61,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                     }
                 case IS_DOUBLE:
                 case IS_LONG:
-                    *((float*)&config->grTmuVertex + cont) = (float)zval_get_double(value);
+                    *((FxFloat*)&config->grTmuVertex + cont) = (FxFloat)zval_get_double(value);
                 }
                 break;
             }

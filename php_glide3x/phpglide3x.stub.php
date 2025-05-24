@@ -463,6 +463,15 @@ enum GrMode_t {
 	public function toInt() : int;
 }
 
+abstract class AbstractVertex {
+	public float $x;
+	public float $y;
+}
+
+#ifdef _DEBUG
+function testAbstractVertex(AbstractVertex $av) : void {};
+#endif
+
 enum GrVertex_t {
 	//grDrawVertexArray/grDrawVertexArrayContiguous primitive type
 	case GR_POINTS;

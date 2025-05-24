@@ -1,6 +1,10 @@
 
 #include "phpglide2x_enums.h"
 
+#define SET_CASE(c) {#c, c}
+
+#define CREATE_CONSTANT(v) REGISTER_LONG_CONSTANT(#v, v, CONST_CS | CONST_PERSISTENT)
+
 zend_class_entry* grDepth_ce;
 zend_class_entry* grEvenOdd_ce;
 zend_class_entry* grChipID_ce;
@@ -38,306 +42,500 @@ zend_class_entry* grSstType_ce;
 zend_class_entry* grScreenRefresh_ce;
 zend_class_entry* grScreenResolution_ce;
 
+typedef struct {
+	const char* name;
+	int value;
+} EnumValue;
+
+struct {
+	zend_class_entry* enum_entry;
+	EnumValue* values;  // NULL-terminated (or name==NULL) sentinel array
+} grouped_enums[] = {
+	{
+		NULL, //grDepth_ce
+		(EnumValue[]) {
+			//typedef FxI32 GrChipID_ce;
+			SET_CASE(GR_ZDEPTHVALUE_NEAREST),
+			SET_CASE(GR_ZDEPTHVALUE_FARTHEST),
+			SET_CASE(GR_WDEPTHVALUE_NEAREST),
+			SET_CASE(GR_WDEPTHVALUE_FARTHEST),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grEvenOdd_ce
+		(EnumValue[]) {
+			SET_CASE(GR_MIPMAPLEVELMASK_EVEN),
+			SET_CASE(GR_MIPMAPLEVELMASK_ODD),
+			SET_CASE(GR_MIPMAPLEVELMASK_BOTH),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grChipID_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TMU0),
+			SET_CASE(GR_TMU1),
+			SET_CASE(GR_TMU2),
+			SET_CASE(GR_FBI),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCombineFunction_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COMBINE_FUNCTION_ZERO),
+			SET_CASE(GR_COMBINE_FUNCTION_NONE),
+			SET_CASE(GR_COMBINE_FUNCTION_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_LOCAL_ALPHA),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER),
+			SET_CASE(GR_COMBINE_FUNCTION_BLEND_OTHER),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL_ALPHA),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_BLEND),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL_ALPHA),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_BLEND_LOCAL),
+			SET_CASE(GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL_ALPHA),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCombineFactor_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COMBINE_FACTOR_ZERO),
+			SET_CASE(GR_COMBINE_FACTOR_NONE),
+			SET_CASE(GR_COMBINE_FACTOR_LOCAL),
+			SET_CASE(GR_COMBINE_FACTOR_OTHER_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_LOCAL_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_TEXTURE_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_TEXTURE_RGB),
+			SET_CASE(GR_COMBINE_FACTOR_DETAIL_FACTOR),
+			SET_CASE(GR_COMBINE_FACTOR_LOD_FRACTION),
+			SET_CASE(GR_COMBINE_FACTOR_ONE),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_LOCAL),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_OTHER_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_LOCAL_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_TEXTURE_ALPHA),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_DETAIL_FACTOR),
+			SET_CASE(GR_COMBINE_FACTOR_ONE_MINUS_LOD_FRACTION),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCombineLocal_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COMBINE_LOCAL_ITERATED),
+			SET_CASE(GR_COMBINE_LOCAL_CONSTANT),
+			SET_CASE(GR_COMBINE_LOCAL_NONE),
+			SET_CASE(GR_COMBINE_LOCAL_DEPTH),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCombineOther_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COMBINE_OTHER_ITERATED),
+			SET_CASE(GR_COMBINE_OTHER_TEXTURE),
+			SET_CASE(GR_COMBINE_OTHER_CONSTANT),
+			SET_CASE(GR_COMBINE_OTHER_NONE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grAlphaSource_ce
+		(EnumValue[]) {
+			SET_CASE(GR_ALPHASOURCE_CC_ALPHA),
+			SET_CASE(GR_ALPHASOURCE_ITERATED_ALPHA),
+			SET_CASE(GR_ALPHASOURCE_TEXTURE_ALPHA),
+			SET_CASE(GR_ALPHASOURCE_TEXTURE_ALPHA_TIMES_ITERATED_ALPHA),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grColorCombineFnc_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COLORCOMBINE_ZERO),
+			SET_CASE(GR_COLORCOMBINE_CCRGB),
+			SET_CASE(GR_COLORCOMBINE_ITRGB),
+			SET_CASE(GR_COLORCOMBINE_ITRGB_DELTA0),
+			SET_CASE(GR_COLORCOMBINE_DECAL_TEXTURE),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_CCRGB),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_DELTA0),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_ADD_ALPHA),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA_ADD_ITRGB),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_ADD_ITRGB),
+			SET_CASE(GR_COLORCOMBINE_TEXTURE_SUB_ITRGB),
+			SET_CASE(GR_COLORCOMBINE_CCRGB_BLEND_ITRGB_ON_TEXALPHA),
+			SET_CASE(GR_COLORCOMBINE_DIFF_SPEC_A),
+			SET_CASE(GR_COLORCOMBINE_DIFF_SPEC_B),
+			SET_CASE(GR_COLORCOMBINE_ONE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grAlphaBlendFnc_ce
+		(EnumValue[]) {
+			SET_CASE(GR_BLEND_ZERO),
+			SET_CASE(GR_BLEND_SRC_ALPHA),
+			SET_CASE(GR_BLEND_SRC_COLOR),
+			SET_CASE(GR_BLEND_DST_COLOR),
+			SET_CASE(GR_BLEND_DST_ALPHA),
+			SET_CASE(GR_BLEND_ONE),
+			SET_CASE(GR_BLEND_ONE_MINUS_SRC_ALPHA),
+			SET_CASE(GR_BLEND_ONE_MINUS_SRC_COLOR),
+			SET_CASE(GR_BLEND_ONE_MINUS_DST_COLOR),
+			SET_CASE(GR_BLEND_ONE_MINUS_DST_ALPHA),
+			SET_CASE(GR_BLEND_RESERVED_8),
+			SET_CASE(GR_BLEND_RESERVED_9),
+			SET_CASE(GR_BLEND_RESERVED_A),
+			SET_CASE(GR_BLEND_RESERVED_B),
+			SET_CASE(GR_BLEND_RESERVED_C),
+			SET_CASE(GR_BLEND_RESERVED_D),
+			SET_CASE(GR_BLEND_RESERVED_E),
+			SET_CASE(GR_BLEND_ALPHA_SATURATE),
+			SET_CASE(GR_BLEND_PREFOG_COLOR),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grAspectRatio_ce
+		(EnumValue[]) {
+			SET_CASE(GR_ASPECT_8x1),
+			SET_CASE(GR_ASPECT_4x1),
+			SET_CASE(GR_ASPECT_2x1),
+			SET_CASE(GR_ASPECT_1x1),
+			SET_CASE(GR_ASPECT_1x2),
+			SET_CASE(GR_ASPECT_1x4),
+			SET_CASE(GR_ASPECT_1x8),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grBuffer_ce
+		(EnumValue[]) {
+			SET_CASE(GR_BUFFER_FRONTBUFFER),
+			SET_CASE(GR_BUFFER_BACKBUFFER),
+			SET_CASE(GR_BUFFER_AUXBUFFER),
+			SET_CASE(GR_BUFFER_DEPTHBUFFER),
+			SET_CASE(GR_BUFFER_ALPHABUFFER),
+			SET_CASE(GR_BUFFER_TRIPLEBUFFER),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grChromakeyMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_CHROMAKEY_DISABLE),
+			SET_CASE(GR_CHROMAKEY_ENABLE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCmpFnc_ce
+		(EnumValue[]) {
+			SET_CASE(GR_CMP_NEVER),
+			SET_CASE(GR_CMP_LESS),
+			SET_CASE(GR_CMP_EQUAL),
+			SET_CASE(GR_CMP_LEQUAL),
+			SET_CASE(GR_CMP_GREATER),
+			SET_CASE(GR_CMP_NOTEQUAL),
+			SET_CASE(GR_CMP_GEQUAL),
+			SET_CASE(GR_CMP_ALWAYS),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grColorFormat_ce
+		(EnumValue[]) {
+			SET_CASE(GR_COLORFORMAT_ARGB),
+			SET_CASE(GR_COLORFORMAT_ABGR),
+			SET_CASE(GR_COLORFORMAT_RGBA),
+			SET_CASE(GR_COLORFORMAT_BGRA),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grCullMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_CULL_DISABLE),
+			SET_CASE(GR_CULL_NEGATIVE),
+			SET_CASE(GR_CULL_POSITIVE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grDepthBufferMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_DEPTHBUFFER_DISABLE),
+			SET_CASE(GR_DEPTHBUFFER_ZBUFFER),
+			SET_CASE(GR_DEPTHBUFFER_WBUFFER),
+			SET_CASE(GR_DEPTHBUFFER_ZBUFFER_COMPARE_TO_BIAS),
+			SET_CASE(GR_DEPTHBUFFER_WBUFFER_COMPARE_TO_BIAS),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grDitherMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_DITHER_DISABLE),
+			SET_CASE(GR_DITHER_2x2),
+			SET_CASE(GR_DITHER_4x4),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grFogMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_FOG_DISABLE),
+			SET_CASE(GR_FOG_WITH_ITERATED_ALPHA),
+			SET_CASE(GR_FOG_WITH_TABLE),
+			SET_CASE(GR_FOG_WITH_ITERATED_Z),
+			SET_CASE(GR_FOG_MULT2),
+			SET_CASE(GR_FOG_ADD2),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grLock_ce
+		(EnumValue[]) {
+			SET_CASE(GR_LFB_READ_ONLY),
+			SET_CASE(GR_LFB_WRITE_ONLY),
+			SET_CASE(GR_LFB_IDLE),
+			SET_CASE(GR_LFB_NOIDLE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grLfbBypassMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_LFBBYPASS_DISABLE),
+			SET_CASE(GR_LFBBYPASS_ENABLE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grLfbWriteMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_LFBWRITEMODE_565),
+			SET_CASE(GR_LFBWRITEMODE_555),
+			SET_CASE(GR_LFBWRITEMODE_1555),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED1),
+			SET_CASE(GR_LFBWRITEMODE_888),
+			SET_CASE(GR_LFBWRITEMODE_8888),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED2),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED3),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED4),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED5),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED6),
+			SET_CASE(GR_LFBWRITEMODE_RESERVED7),
+			SET_CASE(GR_LFBWRITEMODE_565_DEPTH),
+			SET_CASE(GR_LFBWRITEMODE_555_DEPTH),
+			SET_CASE(GR_LFBWRITEMODE_1555_DEPTH),
+			SET_CASE(GR_LFBWRITEMODE_ZA16),
+			SET_CASE(GR_LFBWRITEMODE_ANY),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grOriginLocation_ce
+		(EnumValue[]) {
+			SET_CASE(GR_ORIGIN_UPPER_LEFT),
+			SET_CASE(GR_ORIGIN_LOWER_LEFT),
+			SET_CASE(GR_ORIGIN_ANY),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grLOD_ce
+		(EnumValue[]) {
+			SET_CASE(GR_LOD_256),
+			SET_CASE(GR_LOD_128),
+			SET_CASE(GR_LOD_64),
+			SET_CASE(GR_LOD_32),
+			SET_CASE(GR_LOD_16),
+			SET_CASE(GR_LOD_8),
+			SET_CASE(GR_LOD_4),
+			SET_CASE(GR_LOD_2),
+			SET_CASE(GR_LOD_1),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grMipMapMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_MIPMAP_DISABLE),
+			SET_CASE(GR_MIPMAP_NEAREST),
+			SET_CASE(GR_MIPMAP_NEAREST_DITHER),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grSmoothingMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_SMOOTHING_DISABLE),
+			SET_CASE(GR_SMOOTHING_ENABLE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTextureClampMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXTURECLAMP_WRAP),
+			SET_CASE(GR_TEXTURECLAMP_CLAMP),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTextureCombineFnc_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXTURECOMBINE_ZERO),
+			SET_CASE(GR_TEXTURECOMBINE_DECAL),
+			SET_CASE(GR_TEXTURECOMBINE_OTHER),
+			SET_CASE(GR_TEXTURECOMBINE_ADD),
+			SET_CASE(GR_TEXTURECOMBINE_MULTIPLY),
+			SET_CASE(GR_TEXTURECOMBINE_SUBTRACT),
+			SET_CASE(GR_TEXTURECOMBINE_DETAIL),
+			SET_CASE(GR_TEXTURECOMBINE_DETAIL_OTHER),
+			SET_CASE(GR_TEXTURECOMBINE_TRILINEAR_ODD),
+			SET_CASE(GR_TEXTURECOMBINE_TRILINEAR_EVEN),
+			SET_CASE(GR_TEXTURECOMBINE_ONE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTextureFilterMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXTUREFILTER_POINT_SAMPLED),
+			SET_CASE(GR_TEXTUREFILTER_BILINEAR),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTextureFormat_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXFMT_8BIT),
+			SET_CASE(GR_TEXFMT_RGB_332),
+			SET_CASE(GR_TEXFMT_YIQ_422),
+			SET_CASE(GR_TEXFMT_ALPHA_8),
+			SET_CASE(GR_TEXFMT_INTENSITY_8),
+			SET_CASE(GR_TEXFMT_ALPHA_INTENSITY_44),
+			SET_CASE(GR_TEXFMT_P_8),
+			SET_CASE(GR_TEXFMT_RSVD0),
+			SET_CASE(GR_TEXFMT_RSVD1),
+			SET_CASE(GR_TEXFMT_16BIT),
+			SET_CASE(GR_TEXFMT_ARGB_8332),
+			SET_CASE(GR_TEXFMT_AYIQ_8422),
+			SET_CASE(GR_TEXFMT_RGB_565),
+			SET_CASE(GR_TEXFMT_ARGB_1555),
+			SET_CASE(GR_TEXFMT_ARGB_4444),
+			SET_CASE(GR_TEXFMT_ALPHA_INTENSITY_88),
+			SET_CASE(GR_TEXFMT_AP_88),
+			SET_CASE(GR_TEXFMT_RSVD2),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTexTable_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXTABLE_NCC0),
+			SET_CASE(GR_TEXTABLE_NCC1),
+			SET_CASE(GR_TEXTABLE_PALETTE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grNCCTable_ce
+		(EnumValue[]) {
+			SET_CASE(GR_NCCTABLE_NCC0),
+			SET_CASE(GR_NCCTABLE_NCC1),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grTexBaseRange_ce
+		(EnumValue[]) {
+			SET_CASE(GR_TEXBASE_256),
+			SET_CASE(GR_TEXBASE_128),
+			SET_CASE(GR_TEXBASE_64),
+			SET_CASE(GR_TEXBASE_32_TO_1),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grSstType_ce
+		(EnumValue[]) {
+			SET_CASE(GR_SSTTYPE_VOODOO),
+			SET_CASE(GR_SSTTYPE_SST96),
+			SET_CASE(GR_SSTTYPE_AT3D),
+			SET_CASE(GR_SSTTYPE_Voodoo2),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grScreenRefresh_ce
+		(EnumValue[]) {
+			SET_CASE(GR_REFRESH_60Hz),
+			SET_CASE(GR_REFRESH_70Hz),
+			SET_CASE(GR_REFRESH_72Hz),
+			SET_CASE(GR_REFRESH_75Hz),
+			SET_CASE(GR_REFRESH_80Hz),
+			SET_CASE(GR_REFRESH_90Hz),
+			SET_CASE(GR_REFRESH_100Hz),
+			SET_CASE(GR_REFRESH_85Hz),
+			SET_CASE(GR_REFRESH_120Hz),
+			SET_CASE(GR_REFRESH_NONE),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{
+		NULL, //grScreenResolution_ce
+		(EnumValue[]) {
+			SET_CASE(GR_RESOLUTION_320x200),
+			SET_CASE(GR_RESOLUTION_320x240),
+			SET_CASE(GR_RESOLUTION_400x256),
+			SET_CASE(GR_RESOLUTION_512x384),
+			SET_CASE(GR_RESOLUTION_640x200),
+			SET_CASE(GR_RESOLUTION_640x350),
+			SET_CASE(GR_RESOLUTION_640x400),
+			SET_CASE(GR_RESOLUTION_640x480),
+			SET_CASE(GR_RESOLUTION_800x600),
+			SET_CASE(GR_RESOLUTION_960x720),
+			SET_CASE(GR_RESOLUTION_856x480),
+			SET_CASE(GR_RESOLUTION_512x256),
+			SET_CASE(GR_RESOLUTION_1024x768),
+			SET_CASE(GR_RESOLUTION_1280x1024),
+			SET_CASE(GR_RESOLUTION_1600x1200),
+			SET_CASE(GR_RESOLUTION_400x300),
+			SET_CASE(GR_RESOLUTION_NONE),
+			SET_CASE(GR_RESOLUTION_MIN),
+			SET_CASE(GR_RESOLUTION_MAX),
+			{ NULL, 0 } // sentinel
+		}
+	},
+	{ NULL, NULL }
+};
+
 int enum_to_int(zend_object* enum_obj) {
-	zend_string* case_name = Z_STR_P(zend_enum_fetch_case_name(enum_obj));
+	for (int i = 0; grouped_enums[i].enum_entry != NULL; i++) {
+		if (grouped_enums[i].enum_entry == enum_obj->ce) {
+			const char* case_name = ZSTR_VAL(Z_STR_P(zend_enum_fetch_case_name(enum_obj)));
+			int len = strlen(case_name);
 
-	static const struct {
-		const char* name;
-		int value;
-	} map[] = {
-		{ "GR_ZDEPTHVALUE_NEAREST",		GR_ZDEPTHVALUE_NEAREST },
-		{ "GR_ZDEPTHVALUE_FARTHEST",	GR_ZDEPTHVALUE_FARTHEST },
-		{ "GR_WDEPTHVALUE_NEAREST",		GR_ZDEPTHVALUE_NEAREST },
-		{ "GR_WDEPTHVALUE_FARTHEST",	GR_ZDEPTHVALUE_FARTHEST },
+			for (int j = 0; grouped_enums[i].values[j].name != NULL; j++) {
+				if (len == strlen(grouped_enums[i].values[j].name)
+					&& memcmp(case_name, grouped_enums[i].values[j].name, len) == 0
+					) {
+					return grouped_enums[i].values[j].value;
+				}
+			}
 
-		{ "GR_MIPMAPLEVELMASK_EVEN",	GR_MIPMAPLEVELMASK_EVEN },
-		{ "GR_MIPMAPLEVELMASK_ODD",		GR_MIPMAPLEVELMASK_ODD },
-		{ "GR_MIPMAPLEVELMASK_BOTH",	GR_MIPMAPLEVELMASK_BOTH },
-
-		{ "GR_TMU0",	GR_TMU0 },
-		{ "GR_TMU1",	GR_TMU1 },
-		{ "GR_TMU2",	GR_TMU2 },
-		{ "GR_FBI",		GR_FBI },
-
-		{ "GR_COMBINE_FUNCTION_ZERO",	GR_COMBINE_FUNCTION_ZERO },
-		{ "GR_COMBINE_FUNCTION_NONE",	GR_COMBINE_FUNCTION_NONE },
-		{ "GR_COMBINE_FUNCTION_LOCAL",	GR_COMBINE_FUNCTION_LOCAL },
-		{ "GR_COMBINE_FUNCTION_LOCAL_ALPHA",	GR_COMBINE_FUNCTION_LOCAL_ALPHA },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER",	GR_COMBINE_FUNCTION_SCALE_OTHER },
-		{ "GR_COMBINE_FUNCTION_BLEND_OTHER",	GR_COMBINE_FUNCTION_BLEND_OTHER },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL",	GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL_ALPHA",	GR_COMBINE_FUNCTION_SCALE_OTHER_ADD_LOCAL_ALPHA },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL",	GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL",	GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL },
-		{ "GR_COMBINE_FUNCTION_BLEND",	GR_COMBINE_FUNCTION_BLEND },
-		{ "GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL_ALPHA",	GR_COMBINE_FUNCTION_SCALE_OTHER_MINUS_LOCAL_ADD_LOCAL_ALPHA },
-		{ "GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL",	GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL },
-		{ "GR_COMBINE_FUNCTION_BLEND_LOCAL",	GR_COMBINE_FUNCTION_BLEND_LOCAL },
-		{ "GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL_ALPHA",	GR_COMBINE_FUNCTION_SCALE_MINUS_LOCAL_ADD_LOCAL_ALPHA },
-
-		{ "GR_COMBINE_FACTOR_ZERO",	GR_COMBINE_FACTOR_ZERO },
-		{ "GR_COMBINE_FACTOR_NONE",	GR_COMBINE_FACTOR_NONE },
-		{ "GR_COMBINE_FACTOR_LOCAL",	GR_COMBINE_FACTOR_LOCAL },
-		{ "GR_COMBINE_FACTOR_OTHER_ALPHA",	GR_COMBINE_FACTOR_OTHER_ALPHA },
-		{ "GR_COMBINE_FACTOR_LOCAL_ALPHA",	GR_COMBINE_FACTOR_LOCAL_ALPHA },
-		{ "GR_COMBINE_FACTOR_TEXTURE_ALPHA",	GR_COMBINE_FACTOR_TEXTURE_ALPHA },
-		{ "GR_COMBINE_FACTOR_TEXTURE_RGB",	GR_COMBINE_FACTOR_TEXTURE_RGB },
-		{ "GR_COMBINE_FACTOR_DETAIL_FACTOR",	GR_COMBINE_FACTOR_DETAIL_FACTOR },
-		{ "GR_COMBINE_FACTOR_LOD_FRACTION",	GR_COMBINE_FACTOR_LOD_FRACTION },
-		{ "GR_COMBINE_FACTOR_ONE",	GR_COMBINE_FACTOR_ONE },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_LOCAL",	GR_COMBINE_FACTOR_ONE_MINUS_LOCAL },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_OTHER_ALPHA",	GR_COMBINE_FACTOR_ONE_MINUS_OTHER_ALPHA },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_LOCAL_ALPHA",	GR_COMBINE_FACTOR_ONE_MINUS_LOCAL_ALPHA },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_TEXTURE_ALPHA",	GR_COMBINE_FACTOR_ONE_MINUS_TEXTURE_ALPHA },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_DETAIL_FACTOR",	GR_COMBINE_FACTOR_ONE_MINUS_DETAIL_FACTOR },
-		{ "GR_COMBINE_FACTOR_ONE_MINUS_LOD_FRACTION",	GR_COMBINE_FACTOR_ONE_MINUS_LOD_FRACTION },
-
-		{ "GR_COMBINE_LOCAL_ITERATED",	GR_COMBINE_LOCAL_ITERATED },
-		{ "GR_COMBINE_LOCAL_CONSTANT",	GR_COMBINE_LOCAL_CONSTANT },
-		{ "GR_COMBINE_LOCAL_NONE",	GR_COMBINE_LOCAL_NONE },
-		{ "GR_COMBINE_LOCAL_DEPTH",	GR_COMBINE_LOCAL_DEPTH },
-
-		{ "GR_COMBINE_OTHER_ITERATED",	GR_COMBINE_OTHER_ITERATED },
-		{ "GR_COMBINE_OTHER_TEXTURE",	GR_COMBINE_OTHER_TEXTURE },
-		{ "GR_COMBINE_OTHER_CONSTANT",	GR_COMBINE_OTHER_CONSTANT },
-		{ "GR_COMBINE_OTHER_NONE",	GR_COMBINE_OTHER_NONE },
-
-		{ "GR_ALPHASOURCE_CC_ALPHA",	GR_ALPHASOURCE_CC_ALPHA },
-		{ "GR_ALPHASOURCE_ITERATED_ALPHA",	GR_ALPHASOURCE_ITERATED_ALPHA },
-		{ "GR_ALPHASOURCE_TEXTURE_ALPHA",	GR_ALPHASOURCE_TEXTURE_ALPHA },
-		{ "GR_ALPHASOURCE_TEXTURE_ALPHA_TIMES_ITERATED_ALPHA",	GR_ALPHASOURCE_TEXTURE_ALPHA_TIMES_ITERATED_ALPHA },
-
-		{ "GR_COLORCOMBINE_ZERO",	GR_COLORCOMBINE_ZERO },
-		{ "GR_COLORCOMBINE_CCRGB",	GR_COLORCOMBINE_CCRGB },
-		{ "GR_COLORCOMBINE_ITRGB",	GR_COLORCOMBINE_ITRGB },
-		{ "GR_COLORCOMBINE_ITRGB_DELTA0",	GR_COLORCOMBINE_ITRGB_DELTA0 },
-		{ "GR_COLORCOMBINE_DECAL_TEXTURE",	GR_COLORCOMBINE_DECAL_TEXTURE },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_CCRGB",	GR_COLORCOMBINE_TEXTURE_TIMES_CCRGB },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB",	GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_DELTA0",	GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_DELTA0 },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_ADD_ALPHA",	GR_COLORCOMBINE_TEXTURE_TIMES_ITRGB_ADD_ALPHA },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA",	GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA },
-		{ "GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA_ADD_ITRGB",	GR_COLORCOMBINE_TEXTURE_TIMES_ALPHA_ADD_ITRGB },
-		{ "GR_COLORCOMBINE_TEXTURE_ADD_ITRGB",	GR_COLORCOMBINE_TEXTURE_ADD_ITRGB },
-		{ "GR_COLORCOMBINE_TEXTURE_SUB_ITRGB",	GR_COLORCOMBINE_TEXTURE_SUB_ITRGB },
-		{ "GR_COLORCOMBINE_CCRGB_BLEND_ITRGB_ON_TEXALPHA",	GR_COLORCOMBINE_CCRGB_BLEND_ITRGB_ON_TEXALPHA },
-		{ "GR_COLORCOMBINE_DIFF_SPEC_A",	GR_COLORCOMBINE_DIFF_SPEC_A },
-		{ "GR_COLORCOMBINE_DIFF_SPEC_B",	GR_COLORCOMBINE_DIFF_SPEC_B },
-		{ "GR_COLORCOMBINE_ONE",	GR_COLORCOMBINE_ONE },
-
-		{ "GR_BLEND_ZERO",	GR_BLEND_ZERO },
-		{ "GR_BLEND_SRC_ALPHA",	GR_BLEND_SRC_ALPHA },
-		{ "GR_BLEND_SRC_COLOR",	GR_BLEND_SRC_COLOR },
-		{ "GR_BLEND_DST_COLOR",	GR_BLEND_DST_COLOR },
-		{ "GR_BLEND_DST_ALPHA",	GR_BLEND_DST_ALPHA },
-		{ "GR_BLEND_ONE",	GR_BLEND_ONE },
-		{ "GR_BLEND_ONE_MINUS_SRC_ALPHA",	GR_BLEND_ONE_MINUS_SRC_ALPHA },
-		{ "GR_BLEND_ONE_MINUS_SRC_COLOR",	GR_BLEND_ONE_MINUS_SRC_COLOR },
-		{ "GR_BLEND_ONE_MINUS_DST_COLOR",	GR_BLEND_ONE_MINUS_DST_COLOR },
-		{ "GR_BLEND_ONE_MINUS_DST_ALPHA",	GR_BLEND_ONE_MINUS_DST_ALPHA },
-		{ "GR_BLEND_RESERVED_8",	GR_BLEND_RESERVED_8 },
-		{ "GR_BLEND_RESERVED_9",	GR_BLEND_RESERVED_9 },
-		{ "GR_BLEND_RESERVED_A",	GR_BLEND_RESERVED_A },
-		{ "GR_BLEND_RESERVED_B",	GR_BLEND_RESERVED_B },
-		{ "GR_BLEND_RESERVED_C",	GR_BLEND_RESERVED_C },
-		{ "GR_BLEND_RESERVED_D",	GR_BLEND_RESERVED_D },
-		{ "GR_BLEND_RESERVED_E",	GR_BLEND_RESERVED_E },
-		{ "GR_BLEND_ALPHA_SATURATE",	GR_BLEND_ALPHA_SATURATE },
-		{ "GR_BLEND_PREFOG_COLOR",	GR_BLEND_PREFOG_COLOR },
-
-		{ "GR_ASPECT_8x1",	GR_ASPECT_8x1 },
-		{ "GR_ASPECT_4x1",	GR_ASPECT_4x1 },
-		{ "GR_ASPECT_2x1",	GR_ASPECT_2x1 },
-		{ "GR_ASPECT_1x1",	GR_ASPECT_1x1 },
-		{ "GR_ASPECT_1x2",	GR_ASPECT_1x2 },
-		{ "GR_ASPECT_1x4",	GR_ASPECT_1x4 },
-		{ "GR_ASPECT_1x8",	GR_ASPECT_1x8 },
-
-		{ "GR_BUFFER_FRONTBUFFER",	GR_BUFFER_FRONTBUFFER },
-		{ "GR_BUFFER_BACKBUFFER",	GR_BUFFER_BACKBUFFER },
-		{ "GR_BUFFER_AUXBUFFER",	GR_BUFFER_AUXBUFFER },
-		{ "GR_BUFFER_DEPTHBUFFER",	GR_BUFFER_DEPTHBUFFER },
-		{ "GR_BUFFER_ALPHABUFFER",	GR_BUFFER_ALPHABUFFER },
-		{ "GR_BUFFER_TRIPLEBUFFER",	GR_BUFFER_TRIPLEBUFFER },
-
-		{ "GR_CHROMAKEY_DISABLE",	GR_CHROMAKEY_DISABLE },
-		{ "GR_CHROMAKEY_ENABLE",	GR_CHROMAKEY_ENABLE },
-
-		{ "GR_CMP_NEVER",		GR_CMP_NEVER },
-		{ "GR_CMP_LESS",		GR_CMP_LESS },
-		{ "GR_CMP_EQUAL",		GR_CMP_EQUAL },
-		{ "GR_CMP_LEQUAL",		GR_CMP_LEQUAL },
-		{ "GR_CMP_GREATER",		GR_CMP_GREATER },
-		{ "GR_CMP_NOTEQUAL",	GR_CMP_NOTEQUAL },
-		{ "GR_CMP_GEQUAL",		GR_CMP_GEQUAL },
-		{ "GR_CMP_ALWAYS",		GR_CMP_ALWAYS },
-
-		{ "GR_COLORFORMAT_ARGB",	GR_COLORFORMAT_ARGB },
-		{ "GR_COLORFORMAT_ABGR",	GR_COLORFORMAT_ABGR },
-		{ "GR_COLORFORMAT_RGBA",	GR_COLORFORMAT_RGBA },
-		{ "GR_COLORFORMAT_BGRA",	GR_COLORFORMAT_BGRA },
-
-		{ "GR_CULL_DISABLE",	GR_CULL_DISABLE },
-		{ "GR_CULL_NEGATIVE",	GR_CULL_NEGATIVE },
-		{ "GR_CULL_POSITIVE",	GR_CULL_POSITIVE },
-
-		{ "GR_DEPTHBUFFER_DISABLE",	GR_DEPTHBUFFER_DISABLE },
-		{ "GR_DEPTHBUFFER_ZBUFFER",	GR_DEPTHBUFFER_ZBUFFER },
-		{ "GR_DEPTHBUFFER_WBUFFER",	GR_DEPTHBUFFER_WBUFFER },
-		{ "GR_DEPTHBUFFER_ZBUFFER_COMPARE_TO_BIAS",	GR_DEPTHBUFFER_ZBUFFER_COMPARE_TO_BIAS },
-		{ "GR_DEPTHBUFFER_WBUFFER_COMPARE_TO_BIAS",	GR_DEPTHBUFFER_WBUFFER_COMPARE_TO_BIAS },
-
-		{ "GR_DITHER_DISABLE",	GR_DITHER_DISABLE },
-		{ "GR_DITHER_2x2",	GR_DITHER_2x2 },
-		{ "GR_DITHER_4x4",	GR_DITHER_4x4 },
-
-		{ "GR_FOG_DISABLE",	GR_FOG_DISABLE },
-		{ "GR_FOG_WITH_ITERATED_ALPHA",	GR_FOG_WITH_ITERATED_ALPHA },
-		{ "GR_FOG_WITH_TABLE",	GR_FOG_WITH_TABLE },
-		{ "GR_FOG_WITH_ITERATED_Z",	GR_FOG_WITH_ITERATED_Z },
-		{ "GR_FOG_MULT2",	GR_FOG_MULT2 },
-		{ "GR_FOG_ADD2",	GR_FOG_ADD2 },
-
-		{ "GR_LFB_READ_ONLY",	GR_LFB_READ_ONLY },
-		{ "GR_LFB_WRITE_ONLY",	GR_LFB_WRITE_ONLY },
-		{ "GR_LFB_IDLE",	GR_LFB_IDLE },
-		{ "GR_LFB_NOIDLE",	GR_LFB_NOIDLE },
-
-		{ "GR_LFBBYPASS_DISABLE",	GR_LFBBYPASS_DISABLE },
-		{ "GR_LFBBYPASS_ENABLE",	GR_LFBBYPASS_ENABLE },
-
-		{ "GR_LFBWRITEMODE_565",	GR_LFBWRITEMODE_565 },
-		{ "GR_LFBWRITEMODE_555",	GR_LFBWRITEMODE_555 },
-		{ "GR_LFBWRITEMODE_1555",	GR_LFBWRITEMODE_1555 },
-		{ "GR_LFBWRITEMODE_RESERVED1",	GR_LFBWRITEMODE_RESERVED1 },
-		{ "GR_LFBWRITEMODE_888",	GR_LFBWRITEMODE_888 },
-		{ "GR_LFBWRITEMODE_8888",	GR_LFBWRITEMODE_8888 },
-		{ "GR_LFBWRITEMODE_RESERVED2",	GR_LFBWRITEMODE_RESERVED2 },
-		{ "GR_LFBWRITEMODE_RESERVED3",	GR_LFBWRITEMODE_RESERVED3 },
-		{ "GR_LFBWRITEMODE_RESERVED4",	GR_LFBWRITEMODE_RESERVED4 },
-		{ "GR_LFBWRITEMODE_RESERVED5",	GR_LFBWRITEMODE_RESERVED5 },
-		{ "GR_LFBWRITEMODE_RESERVED6",	GR_LFBWRITEMODE_RESERVED6 },
-		{ "GR_LFBWRITEMODE_RESERVED7",	GR_LFBWRITEMODE_RESERVED7 },
-		{ "GR_LFBWRITEMODE_565_DEPTH",	GR_LFBWRITEMODE_565_DEPTH },
-		{ "GR_LFBWRITEMODE_555_DEPTH",	GR_LFBWRITEMODE_555_DEPTH },
-		{ "GR_LFBWRITEMODE_1555_DEPTH",	GR_LFBWRITEMODE_1555_DEPTH },
-		{ "GR_LFBWRITEMODE_ZA16",	GR_LFBWRITEMODE_ZA16 },
-		{ "GR_LFBWRITEMODE_ANY",	GR_LFBWRITEMODE_ANY },
-
-		{ "GR_ORIGIN_UPPER_LEFT",	GR_ORIGIN_UPPER_LEFT },
-		{ "GR_ORIGIN_LOWER_LEFT",	GR_ORIGIN_LOWER_LEFT },
-		{ "GR_ORIGIN_ANY",	GR_ORIGIN_ANY },
-
-		{ "GR_LOD_256",	GR_LOD_256 },
-		{ "GR_LOD_128",	GR_LOD_128 },
-		{ "GR_LOD_64",	GR_LOD_64 },
-		{ "GR_LOD_32",	GR_LOD_32 },
-		{ "GR_LOD_16",	GR_LOD_16 },
-		{ "GR_LOD_8",	GR_LOD_8 },
-		{ "GR_LOD_4",	GR_LOD_4 },
-		{ "GR_LOD_2",	GR_LOD_2 },
-		{ "GR_LOD_1",	GR_LOD_1 },
-
-		{ "GR_MIPMAP_DISABLE",	GR_MIPMAP_DISABLE },
-		{ "GR_MIPMAP_NEAREST",	GR_MIPMAP_NEAREST },
-		{ "GR_MIPMAP_NEAREST_DITHER",	GR_MIPMAP_NEAREST_DITHER },
-
-		{ "GR_SMOOTHING_DISABLE",	GR_SMOOTHING_DISABLE },
-		{ "GR_SMOOTHING_ENABLE",	GR_SMOOTHING_ENABLE },
-
-		{ "GR_TEXTURECLAMP_WRAP",	GR_TEXTURECLAMP_WRAP },
-		{ "GR_TEXTURECLAMP_CLAMP",	GR_TEXTURECLAMP_CLAMP },
-
-		{ "GR_TEXTURECOMBINE_ZERO",	GR_TEXTURECOMBINE_ZERO },
-		{ "GR_TEXTURECOMBINE_DECAL",	GR_TEXTURECOMBINE_DECAL },
-		{ "GR_TEXTURECOMBINE_OTHER",	GR_TEXTURECOMBINE_OTHER },
-		{ "GR_TEXTURECOMBINE_ADD",	GR_TEXTURECOMBINE_ADD },
-		{ "GR_TEXTURECOMBINE_MULTIPLY",	GR_TEXTURECOMBINE_MULTIPLY },
-		{ "GR_TEXTURECOMBINE_SUBTRACT",	GR_TEXTURECOMBINE_SUBTRACT },
-		{ "GR_TEXTURECOMBINE_DETAIL",	GR_TEXTURECOMBINE_DETAIL },
-		{ "GR_TEXTURECOMBINE_DETAIL_OTHER",	GR_TEXTURECOMBINE_DETAIL_OTHER },
-		{ "GR_TEXTURECOMBINE_TRILINEAR_ODD",	GR_TEXTURECOMBINE_TRILINEAR_ODD },
-		{ "GR_TEXTURECOMBINE_TRILINEAR_EVEN",	GR_TEXTURECOMBINE_TRILINEAR_EVEN },
-		{ "GR_TEXTURECOMBINE_ONE",	GR_TEXTURECOMBINE_ONE },
-
-		{ "GR_TEXTUREFILTER_POINT_SAMPLED",	GR_TEXTUREFILTER_POINT_SAMPLED },
-		{ "GR_TEXTUREFILTER_BILINEAR",	GR_TEXTUREFILTER_BILINEAR },
-
-		{ "GR_TEXFMT_8BIT", GR_TEXFMT_8BIT },
-		{ "GR_TEXFMT_RGB_332", GR_TEXFMT_RGB_332 },
-		{ "GR_TEXFMT_YIQ_422", GR_TEXFMT_YIQ_422 },
-		{ "GR_TEXFMT_ALPHA_8", GR_TEXFMT_ALPHA_8 },
-		{ "GR_TEXFMT_INTENSITY_8", GR_TEXFMT_INTENSITY_8 },
-		{ "GR_TEXFMT_ALPHA_INTENSITY_44", GR_TEXFMT_ALPHA_INTENSITY_44 },
-		{ "GR_TEXFMT_P_8", GR_TEXFMT_P_8 },
-		{ "GR_TEXFMT_RSVD0", GR_TEXFMT_RSVD0 },
-		{ "GR_TEXFMT_RSVD1", GR_TEXFMT_RSVD1 },
-		{ "GR_TEXFMT_16BIT", GR_TEXFMT_16BIT },
-		{ "GR_TEXFMT_ARGB_8332", GR_TEXFMT_ARGB_8332 },
-		{ "GR_TEXFMT_AYIQ_8422", GR_TEXFMT_AYIQ_8422 },
-		{ "GR_TEXFMT_RGB_565", GR_TEXFMT_RGB_565 },
-		{ "GR_TEXFMT_ARGB_1555", GR_TEXFMT_ARGB_1555 },
-		{ "GR_TEXFMT_ARGB_4444", GR_TEXFMT_ARGB_4444 },
-		{ "GR_TEXFMT_ALPHA_INTENSITY_88", GR_TEXFMT_ALPHA_INTENSITY_88 },
-		{ "GR_TEXFMT_AP_88", GR_TEXFMT_AP_88 },
-		{ "GR_TEXFMT_RSVD2", GR_TEXFMT_RSVD2 },
-
-
-		{ "GR_TEXTABLE_NCC0", GR_TEXTABLE_NCC0 },
-		{ "GR_TEXTABLE_NCC1", GR_TEXTABLE_NCC1 },
-		{ "GR_TEXTABLE_PALETTE", GR_TEXTABLE_PALETTE },
-
-		{ "GR_NCCTABLE_NCC0", GR_NCCTABLE_NCC0 },
-		{ "GR_NCCTABLE_NCC1", GR_NCCTABLE_NCC1 },
-
-		{ "GR_TEXBASE_256", GR_TEXBASE_256 },
-		{ "GR_TEXBASE_128", GR_TEXBASE_128 },
-		{ "GR_TEXBASE_64", GR_TEXBASE_64 },
-		{ "GR_TEXBASE_32_TO_1", GR_TEXBASE_32_TO_1 },
-
-		{ "GR_SSTTYPE_VOODOO",			GR_SSTTYPE_VOODOO },
-		{ "GR_SSTTYPE_SST96",			GR_SSTTYPE_SST96 },
-		{ "GR_SSTTYPE_AT3D",			GR_SSTTYPE_AT3D },
-		{ "GR_SSTTYPE_Voodoo2",			GR_SSTTYPE_Voodoo2 },
-
-		{ "GR_REFRESH_60Hz", GR_REFRESH_60Hz },
-		{ "GR_REFRESH_70Hz", GR_REFRESH_70Hz },
-		{ "GR_REFRESH_72Hz", GR_REFRESH_72Hz },
-		{ "GR_REFRESH_75Hz", GR_REFRESH_75Hz },
-		{ "GR_REFRESH_80Hz", GR_REFRESH_80Hz },
-		{ "GR_REFRESH_90Hz", GR_REFRESH_90Hz },
-		{ "GR_REFRESH_100Hz", GR_REFRESH_100Hz },
-		{ "GR_REFRESH_85Hz", GR_REFRESH_85Hz },
-		{ "GR_REFRESH_120Hz", GR_REFRESH_120Hz },
-		{ "GR_REFRESH_NONE", GR_REFRESH_NONE },
-
-		{ "GR_RESOLUTION_320x200", GR_RESOLUTION_320x200 },
-		{ "GR_RESOLUTION_320x240", GR_RESOLUTION_320x240 },
-		{ "GR_RESOLUTION_400x256", GR_RESOLUTION_400x256 },
-		{ "GR_RESOLUTION_512x384", GR_RESOLUTION_512x384 },
-		{ "GR_RESOLUTION_640x200", GR_RESOLUTION_640x200 },
-		{ "GR_RESOLUTION_640x350", GR_RESOLUTION_640x350 },
-		{ "GR_RESOLUTION_640x400", GR_RESOLUTION_640x400 },
-		{ "GR_RESOLUTION_640x480", GR_RESOLUTION_640x480 },
-		{ "GR_RESOLUTION_800x600", GR_RESOLUTION_800x600 },
-		{ "GR_RESOLUTION_960x720", GR_RESOLUTION_960x720 },
-		{ "GR_RESOLUTION_856x480", GR_RESOLUTION_856x480 },
-		{ "GR_RESOLUTION_512x256", GR_RESOLUTION_512x256 },
-		{ "GR_RESOLUTION_1024x768", GR_RESOLUTION_1024x768 },
-		{ "GR_RESOLUTION_1280x1024", GR_RESOLUTION_1280x1024 },
-		{ "GR_RESOLUTION_1600x1200", GR_RESOLUTION_1600x1200 },
-		{ "GR_RESOLUTION_400x300", GR_RESOLUTION_400x300 },
-		{ "GR_RESOLUTION_NONE", GR_RESOLUTION_NONE },
-		{ "GR_RESOLUTION_MIN", GR_RESOLUTION_MIN },
-		{ "GR_RESOLUTION_MAX", GR_RESOLUTION_MAX },
-
-		{ NULL, 0 }
-	};
-
-	for (int i = 0; map[i].name != NULL; i++) {
-		if (ZSTR_LEN(case_name) == strlen(map[i].name) &&
-			memcmp(ZSTR_VAL(case_name), map[i].name, ZSTR_LEN(case_name)) == 0) {
-			return map[i].value;
+			zend_throw_error(NULL, "Unknown enum case");
+			return 0;
 		}
 	}
 
@@ -384,72 +582,72 @@ ZEND_METHOD(GrScreenResolution_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_
 
 void phpglide2x_register_enums(INIT_FUNC_ARGS)
 {
-	grDepth_ce = register_class_GrDepth_t();
+	grDepth_ce = grouped_enums[0].enum_entry = register_class_GrDepth_t();
 
-	grEvenOdd_ce = register_class_GrEvenOdd_t();
+	grEvenOdd_ce = grouped_enums[1].enum_entry = register_class_GrEvenOdd_t();
 
 	//typedef FxI32 GrChipID_ce;
-	grChipID_ce = register_class_GrChipID_t();
+	grChipID_ce = grouped_enums[2].enum_entry = register_class_GrChipID_t();
 
 	//typedef FxI32 GrCombineFunction_ce;
-	grCombineFunction_ce = register_class_GrCombineFunction_t();
+	grCombineFunction_ce = grouped_enums[3].enum_entry = register_class_GrCombineFunction_t();
 
 	//typedef FxI32 GrCombineFactor_ce;
-	grCombineFactor_ce = register_class_GrCombineFactor_t();
+	grCombineFactor_ce = grouped_enums[4].enum_entry = register_class_GrCombineFactor_t();
 
 	//typedef FxI32 GrCombineLocal_ce;
-	grCombineLocal_ce = register_class_GrCombineLocal_t();
+	grCombineLocal_ce = grouped_enums[5].enum_entry = register_class_GrCombineLocal_t();
 
 	//typedef FxI32 GrCombineOther_ce;
-	grCombineOther_ce = register_class_GrCombineOther_t();
+	grCombineOther_ce = grouped_enums[6].enum_entry = register_class_GrCombineOther_t();
 
 	//typedef FxI32 GrAlphaSource_ce;
-	grAlphaSource_ce = register_class_GrAlphaSource_t();
+	grAlphaSource_ce = grouped_enums[7].enum_entry = register_class_GrAlphaSource_t();
 
 	//typedef FxI32 GrColorCombineFnc_ce;
-	grColorCombineFnc_ce = register_class_GrColorCombineFnc_t();
+	grColorCombineFnc_ce = grouped_enums[8].enum_entry = register_class_GrColorCombineFnc_t();
 
 	//typedef FxI32 GrAlphaBlendFnc_ce;
-	grAlphaBlendFnc_ce = register_class_GrAlphaBlendFnc_t();
+	grAlphaBlendFnc_ce = grouped_enums[9].enum_entry = register_class_GrAlphaBlendFnc_t();
 
 	//typedef FxI32 GrAspectRatio_ce;
-	grAspectRatio_ce = register_class_GrAspectRatio_t();
+	grAspectRatio_ce = grouped_enums[10].enum_entry = register_class_GrAspectRatio_t();
 
 	//typedef FxI32 GrBuffer_ce;
-	grBuffer_ce = register_class_GrBuffer_t();
+	grBuffer_ce = grouped_enums[11].enum_entry = register_class_GrBuffer_t();
 
 	//typedef FxI32 GrChromakeyMode_ce;
-	grChromakeyMode_ce = register_class_GrChromakeyMode_t();
+	grChromakeyMode_ce = grouped_enums[12].enum_entry = register_class_GrChromakeyMode_t();
 
 	//typedef FxI32 GrCmpFnc_ce;
-	grCmpFnc_ce = register_class_GrCmpFnc_t();
+	grCmpFnc_ce = grouped_enums[13].enum_entry = register_class_GrCmpFnc_t();
 
 	//typedef FxI32 GrColorFormat_ce;
-	grColorFormat_ce = register_class_GrColorFormat_t();
+	grColorFormat_ce = grouped_enums[14].enum_entry = register_class_GrColorFormat_t();
 
 	//typedef FxI32 GrCullMode_ce;
-	grCullMode_ce = register_class_GrCullMode_t();
+	grCullMode_ce = grouped_enums[15].enum_entry = register_class_GrCullMode_t();
 
 	//typedef FxI32 GrDepthBufferMode_ce;
-	grDepthBufferMode_ce = register_class_GrDepthBufferMode_t();
+	grDepthBufferMode_ce = grouped_enums[16].enum_entry = register_class_GrDepthBufferMode_t();
 
 	//typedef FxI32 GrDitherMode_ce;
-	grDitherMode_ce = register_class_GrDitherMode_t();
+	grDitherMode_ce = grouped_enums[17].enum_entry = register_class_GrDitherMode_t();
 
 	//typedef FxI32 GrFogMode_ce;
-	grFogMode_ce = register_class_GrFogMode_t();
+	grFogMode_ce = grouped_enums[18].enum_entry = register_class_GrFogMode_t();
 
 	//typedef FxU32 GrLock_ce;
-	grLock_ce = register_class_GrLock_t();
+	grLock_ce = grouped_enums[19].enum_entry = register_class_GrLock_t();
 
 	//typedef FxI32 GrLfbBypassMode_ce;
-	grLfbBypassMode_ce = register_class_GrLfbBypassMode_t();
+	grLfbBypassMode_ce = grouped_enums[20].enum_entry = register_class_GrLfbBypassMode_t();
 
 	//typedef FxI32 GrLfbWriteMode_ce;
-	grLfbWriteMode_ce = register_class_GrLfbWriteMode_t();
+	grLfbWriteMode_ce = grouped_enums[21].enum_entry = register_class_GrLfbWriteMode_t();
 
 	//typedef FxI32 GrOriginLocation_ce;
-	grOriginLocation_ce = register_class_GrOriginLocation_t();
+	grOriginLocation_ce = grouped_enums[22].enum_entry = register_class_GrOriginLocation_t();
 
 	/*
 	typedef struct {
@@ -461,36 +659,36 @@ void phpglide2x_register_enums(INIT_FUNC_ARGS)
 	} GrLfbInfo_ce;
 	*/
 
-	typedef FxI32 GrLOD_ce;
-	grLOD_ce = register_class_GrLOD_t();
+	//typedef FxI32 GrLOD_ce;
+	grLOD_ce = grouped_enums[23].enum_entry = register_class_GrLOD_t();
 
-	typedef FxI32 GrMipMapMode_ce;
-	grMipMapMode_ce = register_class_GrMipMapMode_t();
+	//typedef FxI32 GrMipMapMode_ce;
+	grMipMapMode_ce = grouped_enums[24].enum_entry = register_class_GrMipMapMode_t();
 
-	typedef FxI32 GrSmoothingMode_ce;
-	grSmoothingMode_ce = register_class_GrSmoothingMode_t();
+	//typedef FxI32 GrSmoothingMode_ce;
+	grSmoothingMode_ce = grouped_enums[25].enum_entry = register_class_GrSmoothingMode_t();
 
 	//typedef FxI32 GrTextureClampMode_ce;
-	grTextureClampMode_ce = register_class_GrTextureClampMode_t();
+	grTextureClampMode_ce = grouped_enums[26].enum_entry = register_class_GrTextureClampMode_t();
 
 	//typedef FxI32 GrTextureCombineFnc_ce;
-	grTextureCombineFnc_ce = register_class_GrTextureCombineFnc_t();
+	grTextureCombineFnc_ce = grouped_enums[27].enum_entry = register_class_GrTextureCombineFnc_t();
 	
 
 	//typedef FxI32 GrTextureFilterMode_ce;
-	grTextureFilterMode_ce = register_class_GrTextureFilterMode_t();
+	grTextureFilterMode_ce = grouped_enums[28].enum_entry = register_class_GrTextureFilterMode_t();
 	
 	//typedef FxI32 GrTextureFormat_ce;
-	grTextureFormat_ce = register_class_GrTextureFormat_t();
+	grTextureFormat_ce = grouped_enums[29].enum_entry = register_class_GrTextureFormat_t();
 
 	//typedef FxU32 GrTexTable_ce;
-	grTexTable_ce = register_class_GrTexTable_t();
+	grTexTable_ce = grouped_enums[30].enum_entry = register_class_GrTexTable_t();
 	
 	//typedef FxU32 GrNCCTable_ce;
-	grNCCTable_ce = register_class_GrNCCTable_t();
+	grNCCTable_ce = grouped_enums[31].enum_entry = register_class_GrNCCTable_t();
 
 	//typedef FxU32 GrTexBaseRange_ce;
-	grTexBaseRange_ce = register_class_GrTexBaseRange_t();
+	grTexBaseRange_ce = grouped_enums[32].enum_entry = register_class_GrTexBaseRange_t();
 
 	/*
 	typedef struct _GrState_s {
@@ -509,11 +707,11 @@ void phpglide2x_register_enums(INIT_FUNC_ARGS)
 	*/
 
 	//typedef int GrSstType;
-	grSstType_ce = register_class_GrSstType();
+	grSstType_ce = grouped_enums[33].enum_entry = register_class_GrSstType();
 
 
-	grScreenRefresh_ce = register_class_GrScreenRefresh_t();
+	grScreenRefresh_ce = grouped_enums[34].enum_entry = register_class_GrScreenRefresh_t();
 
 	//typedef FxI32 GrScreenResolution_ce;
-	grScreenResolution_ce = register_class_GrScreenResolution_t();
+	grScreenResolution_ce = grouped_enums[35].enum_entry = register_class_GrScreenResolution_t();
 }

@@ -155,17 +155,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="phpglide3x.c" />
+    <ClCompile Include="phpglide3x_abstractVertex.c" />
     <ClCompile Include="phpglide3x_enums.c" />
     <ClCompile Include="phpglide3x_functions.c" />
     <ClCompile Include="phpglide3x_grBuffer.c" />
     <ClCompile Include="phpglide3x_grColor.c" />
+    <ClCompile Include="phpglide3x_Vec2.c" />
     <ClCompile Include="stdafx.c" />
+    <ClInclude Include="phpglide3x_abstractVertex.h" />
     <ClInclude Include="phpglide3x_arginfo.h" />
     <ClInclude Include="phpglide3x_grColor.h" />
     <ClCompile Include="phpglide3x_grDraw.c" />
     <ClCompile Include="phpglide3x_grSst.c" />
     <ClInclude Include="phpglide3x_grSst.h" />
-    <ClCompile Include="phpglide3x_Vec2.c" />
     <ClInclude Include="phpglide3x_Vec2.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
