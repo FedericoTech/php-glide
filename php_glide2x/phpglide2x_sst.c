@@ -182,7 +182,7 @@ PHP_FUNCTION(grSstQueryHardware) {
 
 			ZVAL_LONG(&val_zv, ghcf.SSTs[cont].sstBoard.AT3DConfig.rev);
 			zend_update_property(grAT3DConfig_ce, sst_board_zo, "rev", sizeof("rev") - 1, &val_zv);
-
+			  
 			break;
 		}		
 		
