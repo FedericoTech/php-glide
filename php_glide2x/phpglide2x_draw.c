@@ -61,6 +61,60 @@ PHP_FUNCTION(grAADrawPoint)
 
 PHP_FUNCTION(grAADrawPolygon)
 {
+	zend_long nVerts;
+	zval* ilist = NULL;
+	zval* vlist = NULL;
+	
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_LONG(nVerts)
+		Z_PARAM_ARRAY(ilist)
+		Z_PARAM_ARRAY(vlist)
+	ZEND_PARSE_PARAMETERS_END();
+
+	// Allocate memory
+	int* indices = emalloc(sizeof(int) * nVerts);
+	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+
+	zval* val;
+	zend_ulong i = 0;
+
+	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(ilist), val) {
+		if (Z_TYPE_P(val) != IS_LONG
+			|| (
+				Z_TYPE_P(val) == IS_STRING 
+				&& !is_numeric_string(Z_STRVAL_P(val), Z_STRLEN_P(val), NULL, NULL, 0)
+			)
+		) {
+			efree(indices);
+			efree(vertices);
+			zend_throw_exception(NULL, "ilist must contain only integers", 0);
+			return;
+		}
+
+		indices[i++] = zval_get_long(val);
+
+	} ZEND_HASH_FOREACH_END();
+
+	i = 0;
+
+	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+		if (Z_TYPE_P(val) != IS_OBJECT || !instanceof_function(Z_OBJCE_P(val), grVertex_ce)) {
+			efree(indices);
+			efree(vertices);
+			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
+			return;
+		}
+
+		GrVertex* vtx = &Z_EMBEDDED_P(_GrVertex, val)->grVertex;
+		memcpy(&vertices[i++], vtx, sizeof(GrVertex));
+
+	} ZEND_HASH_FOREACH_END();
+
+	grAADrawPolygon(nVerts, indices, vertices);
+
+	efree(indices);
+	efree(vertices);
 }
 
 
