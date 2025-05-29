@@ -64,9 +64,9 @@ zend_object* GrVertex_new(zend_class_entry* ce)
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
     if (zend_string_equals_literal(object->ce->name, "GrVertex")) {
-
         _GrVertex* config = O_EMBEDDED_P(_GrVertex, object);  // Get your embedded struct from the object
 
+        //if the property tmuvtx
         if (zend_string_equals_literal(member, "tmuvtx")) {
             zval* entry = NULL;
             zend_string* key = NULL;
@@ -84,13 +84,13 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                 }
             }
         }
+        //if the other properties...
         else {
 
             const char* properties[] = { "x", "y", "z", "r", "g", "b", "ooz", "a", "oow" };
 
             for (int cont = 0; cont < 9; cont++) {
                 if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
-
                     switch (Z_TYPE_P(value))
                     {
                     case IS_STRING:
@@ -99,7 +99,8 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                         }
                     case IS_DOUBLE:
                     case IS_LONG:
-                        *((FxFloat*)&config->grVertex + cont) = (FxFloat)zval_get_double(value);
+                        //*((FxFloat*)&config->grVertex + cont) = (FxFloat)zval_get_double(value);
+                        ((FxFloat*)&config->grVertex.x)[cont] = (FxFloat)zval_get_double(value);
                     }
                     break;
                 }
@@ -108,6 +109,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     }
 
     return zend_std_write_property(object, member, value, cache_slot);
+}
+
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrVertex_new(object->ce);
+    
+       
+    _GrVertex* clone = O_EMBEDDED_P(_GrVertex, new_obj);
+    _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
+        
+    memcpy(&clone->grVertex, &orig->grVertex, sizeof(GrVertex));
+            
+    return new_obj;
 }
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
@@ -124,4 +139,5 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grVertex_object_handlers.offset = XtOffsetOf(_GrVertex, std);
     grVertex_object_handlers.write_property = gr_write_property;
+    grVertex_object_handlers.clone_obj = gr_clone_obj;
 }

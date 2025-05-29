@@ -144,6 +144,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrSst96Config_new(object->ce);
+
+
+    _GrSst96Config_t* clone = O_EMBEDDED_P(_GrSst96Config_t, new_obj);
+    _GrSst96Config_t* orig = O_EMBEDDED_P(_GrSst96Config_t, object);
+
+    memcpy(&clone->grSst96Config, &orig->grSst96Config, sizeof(GrSst96Config_t));
+
+    return new_obj;
+}
+
 static HashTable* get_properties(zend_object* object) 
 {
     /*
@@ -225,5 +239,6 @@ void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS)
     //grSst96Config_object_handlers.read_property = gr_read_property;
     //grSst96Config_object_handlers.get_properties = get_properties;
     grSst96Config_object_handlers.write_property = gr_write_property;
+    grSst96Config_object_handlers.clone_obj = gr_clone_obj;
     //grSst96Config_object_handlers.free_obj = free_obj;
 }

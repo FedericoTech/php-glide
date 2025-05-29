@@ -3,7 +3,7 @@
  * @generate-class-entries 
  * @undocumentable
  */
-
+ 
 /**
  * @var int
  * @cvalue MAX_NUM_SST
@@ -565,7 +565,7 @@ class GrTmuVertex {
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
-class GrVertex {
+final class GrVertex {
 	public float $x;
 	public float $y;
 	public float $z;
@@ -590,7 +590,13 @@ function testGrVertex(GrVertex $chc) : void {};
 function testObject(object $obj) : void {};
 #endif
 
-function _kbhit() : int {};
+function grAADrawLine(GrVertex $va, GrVertex $vb) : void {};
+
+function grAADrawPoint(GrVertex $p) : void {};
+
+function grAADrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
+
+
 
 function grGlideInit() : void {};
 function grGlideShutdown() : void {};
@@ -614,6 +620,11 @@ function grSstWinOpen(
 
 function grSstWinClose() : void {};
 
+function grSstIdle() : void {};
+
 function grBufferClear(int $color, int $alpha, GrDepth_t $depth) : void {};
 
 function grBufferSwap(int $swap_interval) : void {};
+
+// other functions
+function _kbhit() : int {};

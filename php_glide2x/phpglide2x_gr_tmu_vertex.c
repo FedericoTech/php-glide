@@ -71,6 +71,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrTmuVertex_new(object->ce);
+
+
+    _GrTmuVertex* clone = O_EMBEDDED_P(_GrTmuVertex, new_obj);
+    _GrTmuVertex* orig = O_EMBEDDED_P(_GrTmuVertex, object);
+
+    memcpy(&clone->grTmuVertex, &orig->grTmuVertex, sizeof(GrTmuVertex));
+
+    return new_obj;
+}
+
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 {
     grTmuVertex_ce = register_class_GrTmuVertex();
@@ -85,4 +99,5 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grTmuVertex_object_handlers.offset = XtOffsetOf(_GrTmuVertex, std);
     grTmuVertex_object_handlers.write_property = gr_write_property;
+    grTmuVertex_object_handlers.clone_obj = gr_clone_obj;
 }

@@ -166,6 +166,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrSST_new(object->ce);
+
+
+    _GrSST* clone = O_EMBEDDED_P(_GrSST, new_obj);
+    _GrSST* orig = O_EMBEDDED_P(_GrSST, object);
+
+    memcpy(&clone->SST, &orig->SST, sizeof orig->SST);
+
+    return new_obj;
+}
+
 void phpglide2x_register_grSST(INIT_FUNC_ARGS)
 {
     grSST_ce = register_class_SST_t();
@@ -180,4 +194,5 @@ void phpglide2x_register_grSST(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grSST_object_handlers.offset = XtOffsetOf(_GrSST, std);
     grSST_object_handlers.write_property = gr_write_property;
+    grSST_object_handlers.clone_obj = gr_clone_obj;
 }

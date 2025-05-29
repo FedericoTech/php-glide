@@ -270,3 +270,8 @@ PHP_FUNCTION(grSstWinClose) {
 	ZEND_PARSE_PARAMETERS_NONE();
 	grSstWinClose();
 }
+
+PHP_FUNCTION(grSstIdle) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	grSstIdle();
+}

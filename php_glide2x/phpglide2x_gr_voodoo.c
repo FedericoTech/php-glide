@@ -228,13 +228,45 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    zend_object* new_obj = NULL;
+
+    if (zend_string_equals_literal(object->ce->name, "GrVoodooConfig_t")) {
+
+        // Step 1: Call the default clone handler
+        zend_object* new_obj = GrVoodooConfig_new(object->ce);
+
+
+        _GrVoodooConfig_t* clone = O_EMBEDDED_P(_GrVoodooConfig_t, new_obj);
+        _GrVoodooConfig_t* orig = O_EMBEDDED_P(_GrVoodooConfig_t, object);
+
+        memcpy(&clone->grVoodooConfig, &orig->grVoodooConfig, sizeof(GrVoodooConfig_t));
+
+    }
+    else if (zend_string_equals_literal(object->ce->name, "GrVoodoo2Config_t")) {
+
+        // Step 1: Call the default clone handler
+        zend_object* new_obj = GrVoodoo2Config_new(object->ce);
+
+
+        _GrVoodoo2Config_t* clone = O_EMBEDDED_P(_GrVoodoo2Config_t, new_obj);
+        _GrVoodoo2Config_t* orig = O_EMBEDDED_P(_GrVoodoo2Config_t, object);
+
+        memcpy(&clone->grVoodoo2Config, &orig->grVoodoo2Config, sizeof(GrVoodooConfig_t));
+
+    }
+
+    return new_obj;
+}
+
 void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS)
 {
     grVoodooConfig_ce = register_class_GrVoodooConfig_t();
     grVoodooConfig_ce->create_object = GrVoodooConfig_new; //asign an internal constructor
 
     grVoodoo2Config_ce = register_class_GrVoodoo2Config_t();
-    grVoodoo2Config_ce->create_object = GrVoodooConfig_new; //asign an internal constructor
+    grVoodoo2Config_ce->create_object = GrVoodoo2Config_new; //asign an internal constructor
 
     memcpy(
         &grVoodooConfig_object_handlers,	// our handler 
@@ -251,7 +283,9 @@ void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grVoodooConfig_object_handlers.offset = XtOffsetOf(_GrVoodooConfig_t, std);
     grVoodooConfig_object_handlers.write_property = gr_write_property;
+    grVoodooConfig_object_handlers.clone_obj = gr_clone_obj;
 
     grVoodoo2Config_object_handlers.offset = XtOffsetOf(_GrVoodoo2Config_t, std);
     grVoodoo2Config_object_handlers.write_property = gr_write_property;
+    grVoodoo2Config_object_handlers.clone_obj = gr_clone_obj;
 }

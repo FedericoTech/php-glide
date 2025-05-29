@@ -64,6 +64,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrTMUConfig_new(object->ce);
+
+
+    _GrTMUConfig_t* clone = O_EMBEDDED_P(_GrTMUConfig_t, new_obj);
+    _GrTMUConfig_t* orig = O_EMBEDDED_P(_GrTMUConfig_t, object);
+
+    memcpy(&clone->grTMUConfig, &orig->grTMUConfig, sizeof(GrTMUConfig_t));
+
+    return new_obj;
+}
+
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
 {
     grTMUConfig_ce = register_class_GrTMUConfig_t();
@@ -79,4 +93,5 @@ void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
     grTMUConfig_object_handlers.offset = XtOffsetOf(_GrTMUConfig_t, std);
 
     grTMUConfig_object_handlers.write_property = gr_write_property;
+    grTMUConfig_object_handlers.clone_obj = gr_clone_obj;
 }

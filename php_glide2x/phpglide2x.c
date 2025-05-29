@@ -12,7 +12,7 @@
 #include "phpglide2x_draw.h"
 #include "phpglide2x_functions.h"
 
-# define PHP_TEST_VERSION "0.1.0"
+# define PHP_GLIDE2X_VERSION "0.1.0"
 
 //if Zend Thread Safe is active and also compiled as a Dynamic Library...
 # if defined(ZTS) && defined(COMPILE_DL_GLIDE2X)
@@ -30,7 +30,30 @@ PHP_INI_END()
  */
 PHP_MINIT_FUNCTION(phpglide2x)
 {
+	/*
+	zend_string* key;
+	zend_module_entry* module;
+
+	ZEND_HASH_FOREACH_STR_KEY_PTR(&module_registry, key, module) {
+		if (key && module) {
+			php_printf("Extension 2x: %s (version: %s)\n", ZSTR_VAL(key), module->version);
+		}
+	} ZEND_HASH_FOREACH_END();
+	*/
+
+
+	//if glide3x is present
+	if (zend_hash_exists(&module_registry, zend_string_init("glide3x", strlen("glide3x"), 1))) {
+
+		zend_error_noreturn(E_ERROR, "[glide2x] Conflict detected: both 'glide2x' and 'glide3x' extensions are loaded.\n");
+
+	}
+
 	REGISTER_INI_ENTRIES();
+
+	if (zend_register_functions(NULL, ext_functions, NULL, MODULE_PERSISTENT) != SUCCESS) {
+		return FAILURE;
+	}
 	
 	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
 
@@ -52,6 +75,8 @@ PHP_MINIT_FUNCTION(phpglide2x)
 
 PHP_MSHUTDOWN_FUNCTION(phpglide2x)
 {
+	
+
 	return SUCCESS;
 }
 
@@ -92,14 +117,14 @@ PHP_MINFO_FUNCTION(phpglide2x)
 /* Define the module entry */
 extern zend_module_entry  phpglide2x_module_entry = {
 	STANDARD_MODULE_HEADER,
-	"PHP Glide2x",				/* Extension name */
-	ext_functions,				/* zend_function_entry. No global function table, functions are registered separately */
+	"Glide2x",					/* Extension name */
+	NULL, //ext_functions,		/* zend_function_entry. No global function table, functions are registered separately */
 	PHP_MINIT(phpglide2x),		/* PHP_MINIT - Module initialization */
 	PHP_MSHUTDOWN(phpglide2x),	/* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(phpglide2x),		/* PHP_RINIT - Request initialization */
 	PHP_RSHUTDOWN(phpglide2x),	/* PHP_RSHUTDOWN - Request shutdown */
 	PHP_MINFO(phpglide2x),		/* PHP_MINFO - Module info (PHP Info) */
-	"1.0",						/* Version */
+	PHP_GLIDE2X_VERSION,						/* Version */
 	STANDARD_MODULE_PROPERTIES
 };
 

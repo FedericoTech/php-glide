@@ -137,6 +137,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrHwConfiguration_new(object->ce);
+
+
+    _GrHwConfiguration* clone = O_EMBEDDED_P(_GrHwConfiguration, new_obj);
+    _GrHwConfiguration* orig = O_EMBEDDED_P(_GrHwConfiguration, object);
+
+    memcpy(&clone->grHwConfiguration, &orig->grHwConfiguration, sizeof(GrHwConfiguration));
+
+    return new_obj;
+}
+
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
 {
     grHwConfiguration_ce = register_class_GrHwConfiguration();
@@ -151,4 +165,5 @@ void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grHwConfiguration_object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
     grHwConfiguration_object_handlers.write_property = gr_write_property;
+    grHwConfiguration_object_handlers.clone_obj = gr_clone_obj;
 }

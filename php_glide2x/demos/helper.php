@@ -1,6 +1,49 @@
-<?php
+<?php 
 
-$color = 255.0;
+function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
+    
+	if ($origin === null) {
+		$origin = new GrVertex;
+		$origin->x = 0.0;
+		$origin->y = 0.0;
+    }
+
+    $sin = sin($angle_rad);
+    $cos = cos($angle_rad);
+
+    // Translate point back to origin
+    $x = $point->x - $origin->x;
+    $y = $point->y - $origin->y;
+
+    // Rotate
+    $x_new = $x * $cos - $y * $sin;
+    $y_new = $x * $sin + $y * $cos;
+	
+	$new = clone $point;
+	
+
+	$new->x = $x_new + $origin->x;
+	$new->y = $y_new + $origin->y;
+	
+    // Translate back
+    return $new;
+}
+
+//this handler is to gracefully close the script when CTRL+C
+function ctrl_handler(int $event)
+{
+    switch ($event) {
+        case PHP_WINDOWS_EVENT_CTRL_C:
+            grGlideShutdown();
+			exit();
+            break;
+        case PHP_WINDOWS_EVENT_CTRL_BREAK:
+            echo "You have pressed CTRL+BREAK\n";
+            break;
+    }
+}
+
+sapi_windows_set_ctrl_handler('ctrl_handler');
 
 grGlideInit();
 
@@ -17,8 +60,6 @@ if(!$hwConfig->num_sst){
 	grGlideShutdown();
 	return -1;
 }
-
-
 
 switch($hwConfig->SSTs[0]->type){
 	case GrSstType::GR_SSTTYPE_VOODOO:
@@ -54,47 +95,3 @@ if(!grSstWinOpen(
     grGlideShutdown();
     return -1;
 };
-
-$vtx1 = new GrVertex;
-$vtx2 = new GrVertex;
-$vtx3 = new GrVertex;
-
-guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
-
-$vtx1->x = 160;
-$vtx1->y = 120;
-$vtx1->r = $color;
-$vtx1->g = 0;
-$vtx1->b = 0;
-$vtx1->a = 0;
-
-$vtx2->x = '480.0';
-$vtx2->y = '180';
-$vtx2->r = 0;
-$vtx2->g = $color;
-$vtx2->b = 0;
-$vtx2->a = 128.0;
-
-$vtx3->x = 320.0;
-$vtx3->y = 360.0;
-$vtx3->r = 0;
-$vtx3->g = 0;
-$vtx3->b = $color;
-$vtx3->a = 255.0;
-
-while (!_kbhit()) {
-
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
-
-	grDrawTriangle($vtx1, $vtx2, $vtx3);
-	
-	grBufferSwap(1);
-	
-	usleep(1000); // Reduce CPU usage
-}
-
-grSstWinClose();
-
-grGlideShutdown();
-
-echo 'done';

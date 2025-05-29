@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 39293a312866d4ae653f2e17739207c3bb20fef8 */
+ * Stub hash: 070f328aaeb2552df70add0baa2fb7dd8a5f2826 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -43,7 +43,19 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 #endif
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo__kbhit, 0, 0, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawLine, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, va, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, vb, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawPoint, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, p, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawPolygon, 0, 3, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, nVerts, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, ilist, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, vlist, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideInit, 0, 0, IS_VOID, 0)
@@ -81,6 +93,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grSstWinClose arginfo_grGlideInit
 
+#define arginfo_grSstIdle arginfo_grGlideInit
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferClear, 0, 3, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, alpha, IS_LONG, 0)
@@ -89,6 +103,9 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferSwap, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, swap_interval, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo__kbhit, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrDepth_t_toInt arginfo__kbhit
@@ -175,7 +192,9 @@ ZEND_FUNCTION(testGrTmuVertex);
 ZEND_FUNCTION(testGrVertex);
 ZEND_FUNCTION(testObject);
 #endif
-ZEND_FUNCTION(_kbhit);
+ZEND_FUNCTION(grAADrawLine);
+ZEND_FUNCTION(grAADrawPoint);
+ZEND_FUNCTION(grAADrawPolygon);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -184,8 +203,10 @@ ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grSstWinClose);
+ZEND_FUNCTION(grSstIdle);
 ZEND_FUNCTION(grBufferClear);
 ZEND_FUNCTION(grBufferSwap);
+ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
 ZEND_METHOD(GrEvenOdd_t, toInt);
 ZEND_METHOD(GrChipID_t, toInt);
@@ -236,7 +257,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrVertex, arginfo_testGrVertex)
 	ZEND_FE(testObject, arginfo_testObject)
 #endif
-	ZEND_FE(_kbhit, arginfo__kbhit)
+	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
+	ZEND_FE(grAADrawPoint, arginfo_grAADrawPoint)
+	ZEND_FE(grAADrawPolygon, arginfo_grAADrawPolygon)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
@@ -245,8 +268,10 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
+	ZEND_FE(grSstIdle, arginfo_grSstIdle)
 	ZEND_FE(grBufferClear, arginfo_grBufferClear)
 	ZEND_FE(grBufferSwap, arginfo_grBufferSwap)
+	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
 };
 
@@ -1424,7 +1449,7 @@ static zend_class_entry *register_class_GrVertex(void)
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVertex", NULL);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, 0);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
 
 	zval property_x_default_value;
 	ZVAL_UNDEF(&property_x_default_value);

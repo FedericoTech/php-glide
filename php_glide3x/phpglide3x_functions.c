@@ -245,6 +245,11 @@ PHP_FUNCTION(grGetString)
 	}
 }
 
+PHP_FUNCTION(grFinish) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	grFinish();
+}
+
 PHP_FUNCTION(_kbhit) {
 	ZEND_PARSE_PARAMETERS_NONE();
 	RETURN_LONG(_kbhit());

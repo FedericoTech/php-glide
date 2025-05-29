@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 3baeefea6b1239a1daf13c1670a8e3f0e817ab8c */
+ * Stub hash: f9f0b8033eeb9fc59df72b5f76984bcfddd147c7 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testAbstractVertex, 0, 1, IS_VOID, 0)
@@ -71,6 +71,8 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinClose, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, context, IS_LONG, 0)
 ZEND_END_ARG_INFO()
+
+#define arginfo_grFinish arginfo_grGlideInit
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, hWin, IS_LONG, 1)
@@ -183,6 +185,7 @@ ZEND_FUNCTION(grColorCombine);
 ZEND_FUNCTION(grColorMask);
 ZEND_FUNCTION(grSstSelect);
 ZEND_FUNCTION(grSstWinClose);
+ZEND_FUNCTION(grFinish);
 ZEND_FUNCTION(grSstWinOpen);
 ZEND_METHOD(GrCombineFunction_t, toInt);
 ZEND_METHOD(GrCombineFactor_t, toInt);
@@ -245,6 +248,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grColorMask, arginfo_grColorMask)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
+	ZEND_FE(grFinish, arginfo_grFinish)
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE_END
 };
@@ -458,6 +462,11 @@ static const zend_function_entry class_GrScreenResolution_t_methods[] = {
 	ZEND_ME(GrScreenResolution_t, toInt, arginfo_class_GrScreenResolution_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
+static void register_phpglide3x_symbols(int module_number)
+{
+	REGISTER_BOOL_CONSTANT("GLIDE3X", true, CONST_PERSISTENT);
+}
 
 static zend_class_entry *register_class_GrCombineFunction_t(void)
 {

@@ -4,7 +4,7 @@
  * @generate-class-entries
  * @undocumentable
  */
-
+ 
 enum GrCombineFunction_t {
 	case GR_COMBINE_FUNCTION_ZERO;
 	case GR_COMBINE_FUNCTION_NONE;
@@ -614,5 +614,7 @@ function grColorMask(bool $rgb, bool $alpha) : void {};
 function grSstSelect(int $which_sst) : void {};
 
 function grSstWinClose(int $context): bool {};
+
+function grFinish() : void {};
 
 function grSstWinOpen(?int $hWin, GrScreenResolution_t $res, GrScreenRefresh_t $ref, GrColorFormat_t $cFormat, GrOriginLocation_t $org_loc, int $num_buffers, int $num_aux_buffers) : int {};

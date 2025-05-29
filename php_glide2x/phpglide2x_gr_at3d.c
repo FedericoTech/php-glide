@@ -54,6 +54,20 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
     return zend_std_write_property(object, member, value, cache_slot);
 }
 
+static zend_object* gr_clone_obj(zend_object* object)
+{
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = GrAT3DConfig_new(object->ce);
+
+
+    _GrAT3DConfig_t* clone = O_EMBEDDED_P(_GrAT3DConfig_t, new_obj);
+    _GrAT3DConfig_t* orig = O_EMBEDDED_P(_GrAT3DConfig_t, object);
+
+    memcpy(&clone->grAT3DConfig, &orig->grAT3DConfig, sizeof(GrAT3DConfig_t));
+
+    return new_obj;
+}
+
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
 {
 	grAT3DConfig_ce = register_class_GrAT3DConfig_t();
@@ -68,4 +82,5 @@ void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grAT3DConfig_object_handlers.offset = XtOffsetOf(_GrAT3DConfig_t, std);
     grAT3DConfig_object_handlers.write_property = gr_write_property;
+    grAT3DConfig_object_handlers.clone_obj = gr_clone_obj;
 }
