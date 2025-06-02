@@ -103,7 +103,7 @@ zend_object* GrVoodoo2Config_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrVoodooConfig_t")) {
+    if (object->ce == grVoodooConfig_ce) {
 
         _GrVoodooConfig_t* config = O_EMBEDDED_P(_GrVoodooConfig_t, object);  // Get your embedded struct from the object
 
@@ -150,7 +150,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
             zval* entry = NULL;
             zend_string* key = NULL;
 
-            for (int cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
+            for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
                 
                 if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
                     _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(entry));
@@ -163,7 +163,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                 }
             }
         }
-    } else if (zend_string_equals_literal(object->ce->name, "GrVoodoo2Config_t")) {
+    } else if (object->ce == grVoodoo2Config_ce) {
 
         _GrVoodoo2Config_t* config = O_EMBEDDED_P(_GrVoodoo2Config_t, object);  // Get your embedded struct from the object
         
@@ -210,7 +210,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
             zval* entry = NULL;
             zend_string* key = NULL;
 
-            for (int cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
+            for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
 
                 if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
                     _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(entry));
@@ -232,7 +232,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 {
     zend_object* new_obj = NULL;
 
-    if (zend_string_equals_literal(object->ce->name, "GrVoodooConfig_t")) {
+    if (object->ce == grVoodooConfig_ce) {
 
         // Step 1: Call the default clone handler
         zend_object* new_obj = GrVoodooConfig_new(object->ce);
@@ -244,7 +244,7 @@ static zend_object* gr_clone_obj(zend_object* object)
         memcpy(&clone->grVoodooConfig, &orig->grVoodooConfig, sizeof(GrVoodooConfig_t));
 
     }
-    else if (zend_string_equals_literal(object->ce->name, "GrVoodoo2Config_t")) {
+    else if (object->ce == grVoodoo2Config_ce) {
 
         // Step 1: Call the default clone handler
         zend_object* new_obj = GrVoodoo2Config_new(object->ce);

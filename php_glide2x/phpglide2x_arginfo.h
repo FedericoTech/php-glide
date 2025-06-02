@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 070f328aaeb2552df70add0baa2fb7dd8a5f2826 */
+ * Stub hash: 53939af5584bb082dceeb7ffb3b982fba002dc6d */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -55,6 +55,11 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawPolygon, 0, 3, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, nVerts, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, ilist, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, vlist, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawPolygonVertexList, 0, 2, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, nVerts, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, vlist, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
@@ -195,6 +200,7 @@ ZEND_FUNCTION(testObject);
 ZEND_FUNCTION(grAADrawLine);
 ZEND_FUNCTION(grAADrawPoint);
 ZEND_FUNCTION(grAADrawPolygon);
+ZEND_FUNCTION(grAADrawPolygonVertexList);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -260,6 +266,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
 	ZEND_FE(grAADrawPoint, arginfo_grAADrawPoint)
 	ZEND_FE(grAADrawPolygon, arginfo_grAADrawPolygon)
+	ZEND_FE(grAADrawPolygonVertexList, arginfo_grAADrawPolygonVertexList)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)

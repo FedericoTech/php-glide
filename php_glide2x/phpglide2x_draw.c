@@ -99,7 +99,9 @@ PHP_FUNCTION(grAADrawPolygon)
 	i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
-		if (Z_TYPE_P(val) != IS_OBJECT || !instanceof_function(Z_OBJCE_P(val), grVertex_ce)) {
+		if (Z_TYPE_P(val) != IS_OBJECT 
+			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
+		) {
 			efree(indices);
 			efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
@@ -117,6 +119,41 @@ PHP_FUNCTION(grAADrawPolygon)
 	efree(vertices);
 }
 
+PHP_FUNCTION(grAADrawPolygonVertexList)
+{
+	zend_long nVerts;
+	zval* vlist = NULL;
+
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_LONG(nVerts)
+		Z_PARAM_ARRAY(vlist)
+		ZEND_PARSE_PARAMETERS_END();
+
+	// Allocate memory
+	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+
+	zval* val;
+	zend_ulong i = 0;
+	
+	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+		if (Z_TYPE_P(val) != IS_OBJECT
+			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
+		) {
+			efree(vertices);
+			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
+			return;
+		}
+
+		GrVertex* vtx = &Z_EMBEDDED_P(_GrVertex, val)->grVertex;
+		memcpy(&vertices[i++], vtx, sizeof(GrVertex));
+
+	} ZEND_HASH_FOREACH_END();
+
+	grAADrawPolygonVertexList(nVerts, vertices);
+
+	efree(vertices);
+}
 
 
 PHP_FUNCTION(grDrawTriangle)

@@ -104,7 +104,7 @@ static zval* gr_read_property(zend_object* object, zend_string* member, int type
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrSst96Config_t")) {
+    if (object->ce == grSst96Config_ce) {
 
         _GrSst96Config_t* config = O_EMBEDDED_P(_GrSst96Config_t, object);  // Get your embedded struct from the object
 
@@ -154,6 +154,8 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrSst96Config_t* orig = O_EMBEDDED_P(_GrSst96Config_t, object);
 
     memcpy(&clone->grSst96Config, &orig->grSst96Config, sizeof(GrSst96Config_t));
+
+    zend_objects_clone_members(&clone->std, &orig->std);
 
     return new_obj;
 }

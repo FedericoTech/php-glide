@@ -43,7 +43,7 @@ zend_object* GrTmuVertex_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrTmuVertex")) {
+    if (object->ce == grTmuVertex_ce) {
         
         const char* properties[] = { "sow", "tow", "oow"};
 
@@ -76,12 +76,13 @@ static zend_object* gr_clone_obj(zend_object* object)
     // Step 1: Call the default clone handler
     zend_object* new_obj = GrTmuVertex_new(object->ce);
 
-
     _GrTmuVertex* clone = O_EMBEDDED_P(_GrTmuVertex, new_obj);
     _GrTmuVertex* orig = O_EMBEDDED_P(_GrTmuVertex, object);
 
     memcpy(&clone->grTmuVertex, &orig->grTmuVertex, sizeof(GrTmuVertex));
-
+    
+    zend_objects_clone_members(&clone->std, &orig->std);
+    
     return new_obj;
 }
 

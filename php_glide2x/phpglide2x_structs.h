@@ -96,6 +96,7 @@ typedef struct _GrTmuVertex {
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
 typedef struct _GrVertex {
+    uint16_t initialized_flags;
     GrVertex grVertex;
     zend_object std;
 } _GrVertex;

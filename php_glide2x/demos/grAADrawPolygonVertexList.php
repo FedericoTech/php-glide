@@ -76,11 +76,10 @@ while (!_kbhit()) {
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
 	
-	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+	$vertices = [$centre, $vtr1, $vtr2, $centre, $vtr3, $vtr4, $vtr5, $vtr6, $centre];
 
-	grAADrawPolygon(
-		count($indices), 	//whatever is highter whether indices or vertices
-		$indices, 
+	grAADrawPolygonVertexList(
+		count($vertices), 	//whatever is highter whether indices or vertices
 		$vertices
 	);
 
@@ -92,7 +91,7 @@ while (!_kbhit()) {
     $vtr5 = rotate_point($vtx5, $angle, $centre);
     $vtr6 = rotate_point($vtx6, $angle, $centre);
 		
-	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $centre, $vtr5, $vtr6, $centre];
 	
 	//echo "angle: $angle $vtr1->x, $vtr1->y\n";
 	/*
@@ -103,9 +102,8 @@ while (!_kbhit()) {
 	testGrVertex($vertices[1]);
 	*/
 	
-	grAADrawPolygon(
-		count($indices), 	//whatever is highter whether indices or vertices
-		$indices, 
+	grAADrawPolygonVertexList(
+		count($vertices), 	//whatever is highter whether indices or vertices
 		$vertices
 	);
 

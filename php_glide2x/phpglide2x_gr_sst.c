@@ -105,8 +105,7 @@ zend_object* GrSST_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-
-    if (zend_string_equals_literal(object->ce->name, "SST_t")) {
+    if (object->ce == grSST_ce) {
         _GrSST* sst = O_EMBEDDED_P(_GrSST, object);
 
         if (zend_string_equals_literal(member, "type")) {
@@ -171,11 +170,12 @@ static zend_object* gr_clone_obj(zend_object* object)
     // Step 1: Call the default clone handler
     zend_object* new_obj = GrSST_new(object->ce);
 
-
     _GrSST* clone = O_EMBEDDED_P(_GrSST, new_obj);
     _GrSST* orig = O_EMBEDDED_P(_GrSST, object);
 
     memcpy(&clone->SST, &orig->SST, sizeof orig->SST);
+
+    zend_objects_clone_members(&clone->std, &orig->std);
 
     return new_obj;
 }

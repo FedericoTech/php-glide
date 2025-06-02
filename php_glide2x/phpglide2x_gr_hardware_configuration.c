@@ -107,7 +107,7 @@ zend_object* GrHwConfiguration_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrHwConfiguration")) {
+    if (object->ce == grHwConfiguration_ce) {
 
         _GrHwConfiguration* config = O_EMBEDDED_P(_GrHwConfiguration, object);  // Get your embedded struct from the object
 
@@ -147,6 +147,8 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrHwConfiguration* orig = O_EMBEDDED_P(_GrHwConfiguration, object);
 
     memcpy(&clone->grHwConfiguration, &orig->grHwConfiguration, sizeof(GrHwConfiguration));
+
+    zend_objects_clone_members(&clone->std, &orig->std);
 
     return new_obj;
 }

@@ -20,10 +20,22 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
     $y_new = $x * $sin + $y * $cos;
 	
 	$new = clone $point;
+	//$new = new GrVertex;
 	
-
 	$new->x = $x_new + $origin->x;
 	$new->y = $y_new + $origin->y;
+	
+	//echo "[$new->r]" . PHP_EOL;
+	/*
+	// Copy all other relevant properties
+    //$new->z = $point->z;
+    $new->r = $point->r;
+    $new->g = $point->g;
+    $new->b = $point->b;
+    //$new->ooz = $point->ooz;
+    $new->a = $point->a;
+    //$new->oow = $point->oow;
+	*/
 	
     // Translate back
     return $new;

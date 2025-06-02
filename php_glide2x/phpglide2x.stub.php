@@ -596,6 +596,8 @@ function grAADrawPoint(GrVertex $p) : void {};
 
 function grAADrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
 
+function grAADrawPolygonVertexList(int $nVerts, array $vlist) : void {};
+
 
 
 function grGlideInit() : void {};

@@ -42,7 +42,7 @@ zend_object* GrAT3DConfig_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (zend_string_equals_literal(object->ce->name, "GrAT3DConfig_t")) {
+    if (object->ce == grAT3DConfig_ce) {
 
         _GrAT3DConfig_t* config = O_EMBEDDED_P(_GrAT3DConfig_t, object);  // Get your embedded struct from the object
 
@@ -59,11 +59,12 @@ static zend_object* gr_clone_obj(zend_object* object)
     // Step 1: Call the default clone handler
     zend_object* new_obj = GrAT3DConfig_new(object->ce);
 
-
     _GrAT3DConfig_t* clone = O_EMBEDDED_P(_GrAT3DConfig_t, new_obj);
     _GrAT3DConfig_t* orig = O_EMBEDDED_P(_GrAT3DConfig_t, object);
 
     memcpy(&clone->grAT3DConfig, &orig->grAT3DConfig, sizeof(GrAT3DConfig_t));
+
+    zend_objects_clone_members(&clone->std, &orig->std);
 
     return new_obj;
 }
