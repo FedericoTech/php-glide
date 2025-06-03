@@ -74,11 +74,13 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                 if (cont < 9) {
                     switch (Z_TYPE_P(value))
                     {
+                    case IS_DOUBLE:
+                        ((FxFloat*)&config->grVertex.x)[cont] = (FxFloat) Z_DVAL_P(value);
+                        break;
                     case IS_STRING:
                         if (!is_numeric_string(Z_STRVAL_P(value), Z_STRLEN_P(value), NULL, NULL, 0)) {
                             break;
                         }
-                    case IS_DOUBLE:
                     case IS_LONG:
                         ((FxFloat*)&config->grVertex.x)[cont] = (FxFloat)zval_get_double(value);
                     }
@@ -88,16 +90,19 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
                     zval* entry = NULL;
                     zend_string* key = NULL;
 
-                    for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
+                    for (uint32_t cont2 = 0; cont2 < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont2++) {
 
-                        if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
+                        //if we find an element...
+                        if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont2)) != NULL) {
                             _GrTmuVertex* gtv = O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(entry));
 
                             memcpy(
-                                &config->grVertex.tmuvtx[cont],
+                                &config->grVertex.tmuvtx[cont2],
                                 &gtv->grTmuVertex,
                                 sizeof(GrTmuVertex)
                             );
+
+                            config->initialized_flags |= (1 << (cont + cont2 + 1));
                         }
                     }
                 }
@@ -127,23 +132,22 @@ static zval* gr_read_property(zend_object* object, zend_string* member, int type
                 }
                 //if tmuvtx...
                 else {
-                    /*
-                    zval* entry = NULL;
-                    zend_string* key = NULL;
 
-                    for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
+                    array_init_size(rv, GLIDE_NUM_TMU);
 
-                        if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
-                            _GrTmuVertex* gtv = O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(entry));
-
-                            memcpy(
-                                &config->grVertex.tmuvtx[cont],
-                                &gtv->grTmuVertex,
-                                sizeof(GrTmuVertex)
-                            );
+                    for (uint32_t cont2 = 0; cont2 < GLIDE_NUM_TMU; cont2++) {
+                        if ((config->initialized_flags & (1 << (cont + cont2 + 1))) == 0) {
+                            continue;   //we skip it
                         }
+
+                        zval obj;
+                        object_init_ex(&obj, grTmuVertex_ce);
+                        zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "sow", sizeof("sow") - 1, (double)config->grVertex.tmuvtx[cont2].sow);
+                        zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "tow", sizeof("tow") - 1, (double)config->grVertex.tmuvtx[cont2].tow);
+                        zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "oow", sizeof("oow") - 1, (double)config->grVertex.tmuvtx[cont2].oow);
+
+                        add_index_zval(rv, cont2, &obj);
                     }
-                    */
                 }
 
                 return rv;
@@ -179,7 +183,14 @@ int gr_has_property(zend_object* object, zend_string* member, int has_set_exists
             case ZEND_PROPERTY_ISSET:
                 return 1;
             case ZEND_PROPERTY_NOT_EMPTY:
-                return ((FxFloat*)&config->grVertex.x)[cont] != 0.0;
+                if (cont < 9) {
+                    return ((FxFloat*)&config->grVertex.x)[cont] != 0.0;
+                }
+                else {
+                    return (config->initialized_flags & (3 << (cont + 1))) != 0;
+                }
+
+                
             }
 
             break;
@@ -202,10 +213,17 @@ static void gr_unset_property(zend_object* object, zend_string* member, void** c
             }
             //if tmuvtx...
             else {
-
+                memset(&config->grVertex.tmuvtx, 0, sizeof(GrTmuVertex) * 2);
+                //config->initialized_flags &= ~(3 << (cont + 1));
             }
 
             config->initialized_flags &= ~(1 << cont);
+            /*
+            if (object->properties) {
+                zend_hash_del(object->properties, member);
+            }
+            */
+
             break;
         }
     }
@@ -218,27 +236,44 @@ static HashTable* gr_get_properties(zend_object* object)
 {
     _GrVertex* config = O_EMBEDDED_P(_GrVertex, object);  // Get your embedded struct from the object
 
-    HashTable* props;
-    zval zv;
-
     // Allocate and initialize HashTable if not done
-    props = zend_std_get_properties(object);
+    HashTable* props = zend_std_get_properties(object);
 
+    zval zv;
+    
     for (int cont = 0; cont < 10; cont++) {
         //if the current property isn't initialized...
         if ((config->initialized_flags & (1 << cont)) == 0) {
+            zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &EG(uninitialized_zval));
             continue;   //we skip it
         }
+
+        
 
         //from x to woo
         if (cont < 9) {
             ZVAL_DOUBLE(&zv, ((FxFloat*)&config->grVertex.x)[cont]);
-            zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &zv);
         }
         //if tmuvtx...
         else {
+            array_init_size(&zv, GLIDE_NUM_TMU);
 
+            for (uint32_t cont2 = 0; cont2 < GLIDE_NUM_TMU; cont2++) {
+                if ((config->initialized_flags & (1 << (cont + cont2 + 1))) == 0) {
+                    continue;   //we skip it
+                }
+                
+                zval obj;
+                object_init_ex(&obj, grTmuVertex_ce);
+                zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "sow", sizeof("sow") - 1, (double)config->grVertex.tmuvtx[cont2].sow);
+                zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "tow", sizeof("tow") - 1, (double)config->grVertex.tmuvtx[cont2].tow);
+                zend_update_property_double(grTmuVertex_ce, Z_OBJ_P(&obj), "oow", sizeof("oow") - 1, (double)config->grVertex.tmuvtx[cont2].oow);
+                
+                add_index_zval(&zv, cont2, &obj);
+            }
         }
+
+        zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &zv);
     }
 
     return props;

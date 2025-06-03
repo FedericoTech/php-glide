@@ -65,7 +65,6 @@ PHP_FUNCTION(grAADrawPolygon)
 	zval* ilist = NULL;
 	zval* vlist = NULL;
 	
-
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_LONG(nVerts)
 		Z_PARAM_ARRAY(ilist)
@@ -74,25 +73,46 @@ PHP_FUNCTION(grAADrawPolygon)
 
 	// Allocate memory
 	int* indices = emalloc(sizeof(int) * nVerts);
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+
+	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
+
+	GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
 
 	zval* val;
 	zend_ulong i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(ilist), val) {
-		if (Z_TYPE_P(val) != IS_LONG
-			|| (
-				Z_TYPE_P(val) == IS_STRING 
-				&& !is_numeric_string(Z_STRVAL_P(val), Z_STRLEN_P(val), NULL, NULL, 0)
-			)
+
+		int index;
+
+		//if it's an integer...
+		if (Z_TYPE_P(val) == IS_LONG) {
+			index = Z_LVAL_P(val);
+
+		//we check whether the element isn't an integer
+		} else if (
+			Z_TYPE_P(val) == IS_STRING 
+			&& !is_numeric_string(Z_STRVAL_P(val), Z_STRLEN_P(val), NULL, NULL, 0)
 		) {
+			//we release the resources
 			efree(indices);
 			efree(vertices);
 			zend_throw_exception(NULL, "ilist must contain only integers", 0);
 			return;
+		//we make it integer
+		}
+		else {
+			index = zval_get_long(val);
 		}
 
-		indices[i++] = zval_get_long(val);
+		//we check the index is valid
+		if (index < 0 || index > nVerts || index > vertex_count) {
+			efree(indices);
+			efree(vertices);
+			zend_throw_exception(NULL, "ilist must contain invalid number. must be between 0 to nVerts", 0);
+		}
+
+		indices[i++] = index;
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -128,7 +148,12 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_LONG(nVerts)
 		Z_PARAM_ARRAY(vlist)
-		ZEND_PARSE_PARAMETERS_END();
+	ZEND_PARSE_PARAMETERS_END();
+
+	if (nVerts < 0 || nVerts > zend_array_count(Z_ARRVAL_P(vlist))) {
+		zend_throw_exception(NULL, "nVerts must be between 0 to vList count", 0);
+		return;
+	}
 
 	// Allocate memory
 	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
