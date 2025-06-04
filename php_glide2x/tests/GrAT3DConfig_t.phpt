@@ -5,6 +5,7 @@ GrAT3DConfig_t
 grGlideInit();
 
 $ga3dc = new GrAT3DConfig_t;
+$ga3dc->flush();
 var_dump($ga3dc);
 
 try{
@@ -18,7 +19,7 @@ testGrAT3DConfig_t($ga3dc);
 echo PHP_EOL;
 
 $ga3dc->rev = 1;
-
+$ga3dc->flush();
 var_dump(
 	$ga3dc,
 	$ga3dc->rev
@@ -28,6 +29,7 @@ testGrAT3DConfig_t($ga3dc);
 echo PHP_EOL;
 
 $ga3dc->rev = 2;
+$ga3dc->flush();
 
 var_dump(
 	$ga3dc,
@@ -35,9 +37,21 @@ var_dump(
 );
 testGrAT3DConfig_t($ga3dc);
 
+$ga3dc2 = clone $ga3dc;
+
+var_dump(
+	$ga3dc2,
+	$ga3dc2 == $ga3dc,
+	$ga3dc2 === $ga3dc
+);
+
+testGrAT3DConfig_t($ga3dc2);
 
 $reflection = new ReflectionClass(GrAT3DConfig_t::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 ?>
@@ -62,4 +76,12 @@ object(GrAT3DConfig_t)#1 (1) {
 }
 int(2)
 rev: 2
+object(GrAT3DConfig_t)#3 (1) {
+  ["rev"]=>
+  int(2)
+}
+bool(true)
+bool(false)
+rev: 2
+bool(true)
 bool(true)

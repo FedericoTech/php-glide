@@ -471,19 +471,25 @@ enum GrScreenResolution_t {
 	public function toInt() : int;
 }
 
+interface flushable {
+	public function flush() : string;
+}
 
-final class GrTMUConfig_t
+final class GrTMUConfig_t implements flushable
 {
 	public int $tmuRev;
 	public int $tmuRam;
 	//public function __construct(int $tmuRev, int $tmuRam){}
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testGrTMUConfig_t(GrTMUConfig_t $gtmu) : void {};
 #endif
 
-final class GrVoodooConfig_t
+
+
+final class GrVoodooConfig_t implements flushable
 {
 	public int $fbRam;
 	public int $fbiRev;
@@ -492,13 +498,15 @@ final class GrVoodooConfig_t
 	
 	/** @var GrTMUConfig_t[] */
 	public array $tmuConfig;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testGrVoodooConfig_t(GrVoodooConfig_t $gvc) : void {};
 #endif
 
-final class GrVoodoo2Config_t
+final class GrVoodoo2Config_t implements flushable
 {
 	public int $fbRam;
 	public int $fbiRev;
@@ -507,26 +515,31 @@ final class GrVoodoo2Config_t
 	
 	/** @var GrTMUConfig_t[] */
 	public array $tmuConfig;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testGrVoodoo2Config_t(GrVoodoo2Config_t $gv2c) : void {};
 #endif
 
-final class GrSst96Config_t
+final class GrSst96Config_t implements flushable
 {
 	public int $fbRam;
 	public int $nTexelfx;
 	public GrTMUConfig_t $tmuConfig;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testGrSst96Config_t(GrSst96Config_t $gs9c) : void {};
 #endif
 
-final class GrAT3DConfig_t
+final class GrAT3DConfig_t implements flushable
 {
 	public int $rev;
+	public function flush() : string;
 }
 
 #ifdef _DEBUG

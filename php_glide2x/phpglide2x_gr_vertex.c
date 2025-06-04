@@ -239,19 +239,37 @@ static HashTable* gr_get_properties(zend_object* object)
     // Allocate and initialize HashTable if not done
     HashTable* props = zend_std_get_properties(object);
 
+    zval* val;
+    zend_string* key;
+    zend_ulong index;
+
+    ZEND_HASH_FOREACH_KEY_VAL(props, index, key, val) {
+        if (key) {
+            // string key
+            php_printf("Key: %s\n", ZSTR_VAL(key));
+        }
+        else {
+            // numeric index
+            php_printf("Index: %lu\n", index);
+        }
+
+        // Use *val here
+        php_printf("Value type: %d\n", Z_TYPE_P(val));
+
+    } ZEND_HASH_FOREACH_END();
+
+
     zval zv;
     
     for (int cont = 0; cont < 10; cont++) {
         //if the current property isn't initialized...
         if ((config->initialized_flags & (1 << cont)) == 0) {
-            zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &EG(uninitialized_zval));
-            continue;   //we skip it
-        }
+            //ZVAL_UNDEF(&zv);
 
-        
+            Z_TYPE_INFO(zv) = IS_CALLABLE;
 
         //from x to woo
-        if (cont < 9) {
+        } else if (cont < 9) {
             ZVAL_DOUBLE(&zv, ((FxFloat*)&config->grVertex.x)[cont]);
         }
         //if tmuvtx...

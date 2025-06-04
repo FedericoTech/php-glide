@@ -20,6 +20,27 @@ ZEND_FUNCTION(testGrAT3DConfig_t)
 }
 #endif // _DEBUG
 
+PHP_METHOD(GrAT3DConfig_t, flush)
+{
+    ZEND_PARSE_PARAMETERS_NONE();
+
+    _GrAT3DConfig_t* obj = O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(ZEND_THIS));
+
+    flush_GrAT3DConfig(obj);
+
+    zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t) + 1, 0);
+
+    memcpy(
+        ZSTR_VAL(bin),
+        &obj->grAT3DConfig,
+        sizeof(GrAT3DConfig_t) + 1
+    );
+
+    ZSTR_VAL(bin)[sizeof(GrAT3DConfig_t) + 1] = '\0'; // null terminator (optional for binary)
+
+    RETURN_STR(bin);
+}
+
 static zend_object_handlers grAT3DConfig_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
@@ -39,7 +60,7 @@ zend_object* GrAT3DConfig_new(zend_class_entry* ce)
     return &grAT3DConfig->std;
 }
 
-
+/*
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
     if (object->ce == grAT3DConfig_ce) {
@@ -53,6 +74,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
 
     return zend_std_write_property(object, member, value, cache_slot);
 }
+*/
 
 static zend_object* gr_clone_obj(zend_object* object)
 {
@@ -61,6 +83,8 @@ static zend_object* gr_clone_obj(zend_object* object)
 
     _GrAT3DConfig_t* clone = O_EMBEDDED_P(_GrAT3DConfig_t, new_obj);
     _GrAT3DConfig_t* orig = O_EMBEDDED_P(_GrAT3DConfig_t, object);
+
+    flush_GrAT3DConfig(orig);
 
     memcpy(&clone->grAT3DConfig, &orig->grAT3DConfig, sizeof(GrAT3DConfig_t));
 
@@ -71,7 +95,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
 {
-	grAT3DConfig_ce = register_class_GrAT3DConfig_t();
+	grAT3DConfig_ce = register_class_GrAT3DConfig_t(gr_flushable_ce);
     grAT3DConfig_ce->create_object = GrAT3DConfig_new; //asign an internal constructor
 
     memcpy(
@@ -82,6 +106,20 @@ void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grAT3DConfig_object_handlers.offset = XtOffsetOf(_GrAT3DConfig_t, std);
-    grAT3DConfig_object_handlers.write_property = gr_write_property;
+    //grAT3DConfig_object_handlers.write_property = gr_write_property;
     grAT3DConfig_object_handlers.clone_obj = gr_clone_obj;
+}
+
+void flush_GrAT3DConfig(_GrAT3DConfig_t* obj)
+{
+    zval* value = zend_read_property(
+        obj->std.ce,            // zend_class_entry* of the object
+        &obj->std,           // zval* or zend_object* (see below)
+        "rev",   // property name
+        sizeof("rev") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    obj->grAT3DConfig.rev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 }

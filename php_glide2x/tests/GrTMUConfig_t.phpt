@@ -6,6 +6,7 @@ grGlideInit();
 
 //show the object empty. 
 $gtmc = new GrTMUConfig_t;
+$gtmc->flush();
 var_dump($gtmc);	//it shows uninitialized properties
 
 try{
@@ -25,19 +26,31 @@ testGrTMUConfig_t($gtmc); //it shows zero as in C it's zero initialized
 echo PHP_EOL;
 
 $gtmc->tmuRev = 1;
-$gtmc->tmuRam = 2;
+//$gtmc->tmuRam = 2;
+
+$gtmc->flush();
 
 var_dump(
 	$gtmc,
 	$gtmc->tmuRev,
-	$gtmc->tmuRam
+	//$gtmc->tmuRam
 );
 testGrTMUConfig_t($gtmc);
+
+$gtmc2 = clone $gtmc;
+
+var_dump(
+	$gtmc2,
+	$gtmc == $gtmc2,
+	$gtmc === $gtmc2,
+);
+testGrTMUConfig_t($gtmc2);
 
 echo PHP_EOL;
 
 $gtmc->tmuRev = 3;
 $gtmc->tmuRam = 4;
+$gtmc->flush();
 
 var_dump(
 	$gtmc,
@@ -47,6 +60,7 @@ var_dump(
 testGrTMUConfig_t($gtmc);
 
 $reflection = new ReflectionClass(GrTMUConfig_t::class);
+var_dump($reflection->isInternal());	//we test that the class is final
 var_dump($reflection->isFinal());	//we test that the class is final
 
 grGlideShutdown();
@@ -62,15 +76,23 @@ string(80) "Typed property GrTMUConfig_t::$tmuRev must not be accessed before in
 string(80) "Typed property GrTMUConfig_t::$tmuRam must not be accessed before initialization"
 tmuRev: 0, tmuRam: 0
 
-object(GrTMUConfig_t)#1 (2) {
+object(GrTMUConfig_t)#1 (1) {
   ["tmuRev"]=>
   int(1)
   ["tmuRam"]=>
-  int(2)
+  uninitialized(int)
 }
 int(1)
-int(2)
-tmuRev: 1, tmuRam: 2
+tmuRev: 1, tmuRam: 0
+object(GrTMUConfig_t)#2 (1) {
+  ["tmuRev"]=>
+  int(1)
+  ["tmuRam"]=>
+  uninitialized(int)
+}
+bool(true)
+bool(false)
+tmuRev: 1, tmuRam: 0
 
 object(GrTMUConfig_t)#1 (2) {
   ["tmuRev"]=>
@@ -81,4 +103,5 @@ object(GrTMUConfig_t)#1 (2) {
 int(3)
 int(4)
 tmuRev: 3, tmuRam: 4
+bool(true)
 bool(true)

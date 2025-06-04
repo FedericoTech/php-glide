@@ -158,6 +158,7 @@
     <ClCompile Include="phpglide2x_gr_voodoo.c" />
     <ClCompile Include="phpglide2x_sst.c" />
     <ClCompile Include="phpglide2x_gr_sst.c" />
+    <ClCompile Include="phpglide2x_structs.c" />
     <ClCompile Include="stdafx.c" />
   </ItemGroup>
   <ItemGroup>

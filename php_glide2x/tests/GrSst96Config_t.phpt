@@ -6,6 +6,7 @@ grGlideInit();
 
 //show the object empty. 
 $gs9c = new GrSst96Config_t;
+$gs9c->flush();
 var_dump($gs9c);	//it shows uninitialized properties
 
 try{
@@ -38,6 +39,8 @@ $gs9c->fbRam = 3;
 $gs9c->nTexelfx = 4;
 $gs9c->tmuConfig = $gtmc;
 
+$gs9c->flush();
+
 var_dump(
 	$gs9c,
 	$gs9c->fbRam,
@@ -54,6 +57,8 @@ $gs9c->nTexelfx = 6;
 $gs9c->tmuConfig->tmuRev = 7;	//the change is not being communicated to GrSst96Config_t
 $gs9c->tmuConfig->tmuRam = 8;	//the change is not being communicated to GrSst96Config_t
 
+$gs9c->flush();
+
 var_dump(
 	$gs9c,
 	$gs9c->fbRam,
@@ -63,8 +68,21 @@ var_dump(
 );
 testGrSst96Config_t($gs9c);
 
+$gs9c2 = clone $gs9c;
+
+var_dump(
+	$gs9c,
+	$gs9c2,
+	$gs9c == $gs9c2,
+	$gs9c === $gs9c2
+);
+testGrSst96Config_t($gs9c2);
+
 $reflection = new ReflectionClass(GrTMUConfig_t::class);
-var_dump($reflection->isFinal());	//we test that the class is final
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()	//we test that the class is final
+);	
 
 grGlideShutdown();
 ?>
@@ -118,5 +136,35 @@ int(5)
 int(6)
 int(7)
 int(8)
-fbRam: 5, nTexelfx: 6, tmuConfig: [tmuRev: 1, tmuRam: 2]
+fbRam: 5, nTexelfx: 6, tmuConfig: [tmuRev: 7, tmuRam: 8]
+object(GrSst96Config_t)#1 (3) {
+  ["fbRam"]=>
+  int(5)
+  ["nTexelfx"]=>
+  int(6)
+  ["tmuConfig"]=>
+  object(GrTMUConfig_t)#3 (2) {
+    ["tmuRev"]=>
+    int(7)
+    ["tmuRam"]=>
+    int(8)
+  }
+}
+object(GrSst96Config_t)#4 (3) {
+  ["fbRam"]=>
+  int(5)
+  ["nTexelfx"]=>
+  int(6)
+  ["tmuConfig"]=>
+  object(GrTMUConfig_t)#3 (2) {
+    ["tmuRev"]=>
+    int(7)
+    ["tmuRam"]=>
+    int(8)
+  }
+}
+bool(true)
+bool(false)
+fbRam: 5, nTexelfx: 6, tmuConfig: [tmuRev: 7, tmuRam: 8]
+bool(true)
 bool(true)

@@ -5,7 +5,7 @@ GrVoodoo2Config_t
 grGlideInit();
 
 $gvc = new GrVoodoo2Config_t;
-
+$gvc->flush();
 var_dump($gvc);
 
 try{
@@ -55,7 +55,7 @@ $gvc->fbiRev = 4;
 $gvc->sliDetect = true;
 $gvc->tmuConfig = [$gtmc, $gtmc2];
 $gvc->nTexelfx = count($gvc->tmuConfig);
-
+$gvc->flush();
 var_dump(
 	$gvc,
 	$gvc->fbRam,
@@ -70,8 +70,23 @@ testGrVoodoo2Config_t($gvc);
 
 echo PHP_EOL;
 
+$gvc2 = clone $gvc;
+
+var_dump(
+	$gvc2,
+	$gvc == $gvc2,
+	$gvc === $gvc2
+);
+
+testGrVoodoo2Config_t($gvc2);
+
+echo PHP_EOL;
+
 $reflection = new ReflectionClass(GrVoodoo2Config_t::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 ?>
@@ -145,8 +160,42 @@ array(2) {
 }
 int(1)
 int(2)
-fbRam: 3, fbiRev: 4, nTexelfx: 2, sliDetect: 0
+fbRam: 3, fbiRev: 4, nTexelfx: 2, sliDetect: 1
 [0] tmuRev: 0, tmuRam: 0
 [1] tmuRev: 1, tmuRam: 2
 
+object(GrVoodoo2Config_t)#5 (5) {
+  ["fbRam"]=>
+  int(3)
+  ["fbiRev"]=>
+  int(4)
+  ["nTexelfx"]=>
+  int(2)
+  ["sliDetect"]=>
+  bool(true)
+  ["tmuConfig"]=>
+  array(2) {
+    [0]=>
+    object(GrTMUConfig_t)#2 (0) {
+      ["tmuRev"]=>
+      uninitialized(int)
+      ["tmuRam"]=>
+      uninitialized(int)
+    }
+    [1]=>
+    object(GrTMUConfig_t)#4 (2) {
+      ["tmuRev"]=>
+      int(1)
+      ["tmuRam"]=>
+      int(2)
+    }
+  }
+}
+bool(true)
+bool(false)
+fbRam: 3, fbiRev: 4, nTexelfx: 2, sliDetect: 1
+[0] tmuRev: 0, tmuRam: 0
+[1] tmuRev: 1, tmuRam: 2
+
+bool(true)
 bool(true)

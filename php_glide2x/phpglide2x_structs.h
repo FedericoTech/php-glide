@@ -3,18 +3,6 @@
 
 #include "stdafx.h"
 
-extern zend_class_entry* grTMUConfig_ce;
-extern zend_class_entry* grVoodooConfig_ce;
-extern zend_class_entry* grVoodoo2Config_ce;
-
-extern zend_class_entry* grSst96Config_ce;
-extern zend_class_entry* grAT3DConfig_ce;
-extern zend_class_entry* grSST_ce;
-extern zend_class_entry* grHwConfiguration_ce;
-
-extern zend_class_entry* grTmuVertex_ce;
-extern zend_class_entry* grVertex_ce;
-
 static void handle_property_error(zend_object* object, zend_string* member) {
     zend_throw_error(NULL, "Typed property %s::$%s must not be accessed before initialization", ZSTR_VAL(object->ce->name), ZSTR_VAL(member));
 }
@@ -26,44 +14,72 @@ static void handle_property_error(zend_object* object, zend_string* member) {
 #define Z_EMBEDDED_P(t, zv) \
 	O_EMBEDDED_P(t, Z_OBJ_P(zv))
 
+zend_class_entry* gr_flushable_ce;
+
+void phpglide2x_register_gr_flushable(INIT_FUNC_ARGS);
+
+extern zend_class_entry* grTMUConfig_ce;
+
 typedef struct _GrTMUConfig_t {
     GrTMUConfig_t grTMUConfig;	// the embeded data
     //HashTable field_map;
     zend_object std;	// it is important that the zend_object goes last
 } _GrTMUConfig_t;
 
+void flush_grTMUConfig(_GrTMUConfig_t* grTMUConfig);
+
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS);
+
+
+
+extern zend_class_entry* grVoodooConfig_ce;
+extern zend_class_entry* grVoodoo2Config_ce;
 
 typedef struct _GrVoodooConfig_t {
     GrVoodooConfig_t grVoodooConfig;	// the embeded data
-    //HashTable field_map;
     zend_object std;	// it is important that the zend_object goes last
 } _GrVoodooConfig_t;
 
+typedef struct _GrVoodoo2Config_t {
+    GrVoodoo2Config_t grVoodoo2Config;	// the embeded data
+    zend_object std;	// it is important that the zend_object goes last
+} _GrVoodoo2Config_t;
+
+void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS);
+
+void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig);
+
+void flush_grVoodoo2Config(_GrVoodoo2Config_t* grVoodoo2Config);
+
+
+
+extern zend_class_entry* grSst96Config_ce;
+
 typedef struct _GrSst96Config_t {
     GrSst96Config_t grSst96Config;	// the embeded data
-    //HashTable field_map;
     zend_object std;	// it is important that the zend_object goes last
 } _GrSst96Config_t;
 
+void flush_GrSst96Config(_GrSst96Config_t* grSst96Config);
+
 void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS);
+
+
+
+extern zend_class_entry* grAT3DConfig_ce;
 
 typedef struct _GrAT3DConfig_t {
     GrAT3DConfig_t grAT3DConfig;	// the embeded data
     zend_object std;	// it is important that the zend_object goes last
 } _GrAT3DConfig_t;
 
-// typedef _GrVoodooConfig_t _GrVoodoo2Config_t;
-
-typedef struct _GrVoodoo2Config_t {
-    GrVoodoo2Config_t grVoodoo2Config;	// the embeded data
-    //HashTable field_map;
-    zend_object std;	// it is important that the zend_object goes last
-} _GrVoodoo2Config_t;
-
-void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS);
+void flush_GrAT3DConfig(_GrAT3DConfig_t* grAT3DConfig);
 
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS);
+
+
+
+extern zend_class_entry* grSST_ce;
 
 typedef struct _GrSST {
     struct SST {
@@ -81,12 +97,18 @@ typedef struct _GrSST {
 
 void phpglide2x_register_grSST(INIT_FUNC_ARGS);
 
+
+
+extern zend_class_entry* grHwConfiguration_ce;
+
 typedef struct _GrHwConfiguration {
     GrHwConfiguration grHwConfiguration;
     zend_object std;
 } _GrHwConfiguration;
 
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS);
+
+extern zend_class_entry* grTmuVertex_ce;
 
 typedef struct _GrTmuVertex {
     GrTmuVertex grTmuVertex;
@@ -95,6 +117,9 @@ typedef struct _GrTmuVertex {
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
+
+extern zend_class_entry* grVertex_ce;
+
 typedef struct _GrVertex {
     uint16_t initialized_flags;
     GrVertex grVertex;
@@ -102,6 +127,8 @@ typedef struct _GrVertex {
 } _GrVertex;
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
+
+
 
 void phpglide2x_register_structs(INIT_FUNC_ARGS);
 

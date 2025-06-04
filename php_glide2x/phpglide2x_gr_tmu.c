@@ -21,6 +21,27 @@ ZEND_FUNCTION(testGrTMUConfig_t)
 }
 #endif // _DEBUG
 
+PHP_METHOD(GrTMUConfig_t, flush)
+{
+    ZEND_PARSE_PARAMETERS_NONE();
+
+    _GrTMUConfig_t* obj = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(ZEND_THIS));
+
+    flush_grTMUConfig(obj);
+
+    zend_string* bin = zend_string_alloc(sizeof(GrTMUConfig_t) + 1, 0);
+    
+    memcpy(
+        ZSTR_VAL(bin), 
+        &obj->grTMUConfig,
+        sizeof(GrTMUConfig_t) + 1
+    );
+
+    ZSTR_VAL(bin)[sizeof(GrTMUConfig_t)+1] = '\0'; // null terminator (optional for binary)
+    
+    RETURN_STR(bin);
+}
+
 static zend_object_handlers grTMUConfig_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
@@ -39,7 +60,7 @@ zend_object* GrTMUConfig_new(zend_class_entry* ce)
     //it returns the zend object
     return &grTMUConfig->std;
 }
-
+/*
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
     if (object->ce == grTMUConfig_ce) {
@@ -63,6 +84,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
 
     return zend_std_write_property(object, member, value, cache_slot);
 }
+*/
 
 static zend_object* gr_clone_obj(zend_object* object)
 {
@@ -71,6 +93,8 @@ static zend_object* gr_clone_obj(zend_object* object)
 
     _GrTMUConfig_t* clone = O_EMBEDDED_P(_GrTMUConfig_t, new_obj);
     _GrTMUConfig_t* orig = O_EMBEDDED_P(_GrTMUConfig_t, object);
+
+    flush_grTMUConfig(orig);
 
     memcpy(&clone->grTMUConfig, &orig->grTMUConfig, sizeof(GrTMUConfig_t));
 
@@ -81,7 +105,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
 {
-    grTMUConfig_ce = register_class_GrTMUConfig_t();
+    grTMUConfig_ce = register_class_GrTMUConfig_t(gr_flushable_ce);
     grTMUConfig_ce->create_object = GrTMUConfig_new; //asign an internal constructor
 
     memcpy(
@@ -93,6 +117,31 @@ void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     grTMUConfig_object_handlers.offset = XtOffsetOf(_GrTMUConfig_t, std);
 
-    grTMUConfig_object_handlers.write_property = gr_write_property;
+    //grTMUConfig_object_handlers.write_property = gr_write_property;
     grTMUConfig_object_handlers.clone_obj = gr_clone_obj;
+}
+
+void flush_grTMUConfig(_GrTMUConfig_t *obj)
+{
+    zval* value = zend_read_property(
+        obj->std.ce,            // zend_class_entry* of the object
+        &obj->std,           // zval* or zend_object* (see below)
+        "tmuRev",   // property name
+        sizeof("tmuRev") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    obj->grTMUConfig.tmuRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+
+    value = zend_read_property(
+        obj->std.ce,            // zend_class_entry* of the object
+        &obj->std,           // zval* or zend_object* (see below)
+        "tmuRam",   // property name
+        sizeof("tmuRam") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    obj->grTMUConfig.tmuRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 }

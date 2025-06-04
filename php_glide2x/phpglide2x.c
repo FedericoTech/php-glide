@@ -57,6 +57,7 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	
 	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
 
+	phpglide2x_register_gr_flushable(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grSst96Config(INIT_FUNC_ARGS_PASSTHRU);
