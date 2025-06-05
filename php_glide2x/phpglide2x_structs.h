@@ -26,7 +26,7 @@ typedef struct _GrTMUConfig_t {
     zend_object std;	// it is important that the zend_object goes last
 } _GrTMUConfig_t;
 
-void flush_grTMUConfig(_GrTMUConfig_t* grTMUConfig);
+void flush_grTMUConfig(const _GrTMUConfig_t* grTMUConfig, GrTMUConfig_t* buffer);
 
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS);
 
@@ -47,9 +47,9 @@ typedef struct _GrVoodoo2Config_t {
 
 void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS);
 
-void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig);
+void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfig_t* buffer);
 
-void flush_grVoodoo2Config(_GrVoodoo2Config_t* grVoodoo2Config);
+void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t* buffer);
 
 
 
@@ -60,7 +60,7 @@ typedef struct _GrSst96Config_t {
     zend_object std;	// it is important that the zend_object goes last
 } _GrSst96Config_t;
 
-void flush_GrSst96Config(_GrSst96Config_t* grSst96Config);
+void flush_GrSst96Config(const _GrSst96Config_t* grSst96Config, GrSst96Config_t* buffer);
 
 void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS);
 
@@ -73,27 +73,30 @@ typedef struct _GrAT3DConfig_t {
     zend_object std;	// it is important that the zend_object goes last
 } _GrAT3DConfig_t;
 
-void flush_GrAT3DConfig(_GrAT3DConfig_t* grAT3DConfig);
+void flush_GrAT3DConfig(const _GrAT3DConfig_t* grAT3DConfig, GrAT3DConfig_t* buffer);
 
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS);
 
 
+extern zend_class_entry* sST_ce;
 
-extern zend_class_entry* grSST_ce;
+typedef struct SST_t {
+    GrSstType type;             /* Which hardware is it? */
+    union {
+        GrVoodooConfig_t  VoodooConfig;
+        GrSst96Config_t   SST96Config;
+        GrAT3DConfig_t    AT3DConfig;
+        GrVoodoo2Config_t Voodoo2Config;
+    } sstBoard;
+} SST_t;
 
-typedef struct _GrSST {
-    struct SST {
-        GrSstType type;             /* Which hardware is it? */
-        union {
-            GrVoodooConfig_t  VoodooConfig;
-            GrSst96Config_t   SST96Config;
-            GrAT3DConfig_t    AT3DConfig;
-            GrVoodoo2Config_t Voodoo2Config;
-        } sstBoard;
-    } SST;	// the embeded data
+typedef struct _SST_t {
+    SST_t SST;	// the embeded data
     //HashTable field_map;
     zend_object std;	// it is important that the zend_object goes last
-} _GrSST;
+} _SST_t;
+
+void flush_SST(const _SST_t* sST, SST_t* buffer);
 
 void phpglide2x_register_grSST(INIT_FUNC_ARGS);
 

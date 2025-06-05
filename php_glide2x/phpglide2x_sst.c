@@ -34,7 +34,7 @@ PHP_FUNCTION(grSstQueryHardware) {
 		zend_object *enum_case = NULL, *sst_board_zo = NULL;
 
 		//we instantiate the SST_t class
-		object_init_ex(&sst_obj, grSST_ce);
+		object_init_ex(&sst_obj, sST_ce);
 
 		switch (ghcf.SSTs[cont].type)
 		{
@@ -189,13 +189,13 @@ PHP_FUNCTION(grSstQueryHardware) {
 		
 		ZVAL_OBJ(&val_zv, enum_case);
 		zend_update_property(
-			grSST_ce, Z_OBJ_P(&sst_obj), 
+			sST_ce, Z_OBJ_P(&sst_obj),
 			"type", sizeof("type") - 1, 
 			&val_zv
 		);
 		
 		zend_update_property(
-			grSST_ce, Z_OBJ_P(&sst_obj),
+			sST_ce, Z_OBJ_P(&sst_obj),
 			"sstBoard", sizeof("sstBoard") - 1,
 			&sst_board
 		);

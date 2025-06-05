@@ -27,7 +27,7 @@ PHP_METHOD(GrTMUConfig_t, flush)
 
     _GrTMUConfig_t* obj = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(ZEND_THIS));
 
-    flush_grTMUConfig(obj);
+    flush_grTMUConfig(obj, &obj->grTMUConfig);
 
     zend_string* bin = zend_string_alloc(sizeof(GrTMUConfig_t) + 1, 0);
     
@@ -94,7 +94,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrTMUConfig_t* clone = O_EMBEDDED_P(_GrTMUConfig_t, new_obj);
     _GrTMUConfig_t* orig = O_EMBEDDED_P(_GrTMUConfig_t, object);
 
-    flush_grTMUConfig(orig);
+    //flush_grTMUConfig(orig, &orig->grTMUConfig);
 
     memcpy(&clone->grTMUConfig, &orig->grTMUConfig, sizeof(GrTMUConfig_t));
 
@@ -121,27 +121,27 @@ void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
     grTMUConfig_object_handlers.clone_obj = gr_clone_obj;
 }
 
-void flush_grTMUConfig(_GrTMUConfig_t *obj)
+void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
 {
     zval* value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "tmuRev",   // property name
         sizeof("tmuRev") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    obj->grTMUConfig.tmuRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->tmuRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "tmuRam",   // property name
         sizeof("tmuRam") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    obj->grTMUConfig.tmuRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->tmuRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 }

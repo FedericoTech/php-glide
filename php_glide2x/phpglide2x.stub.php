@@ -546,22 +546,26 @@ final class GrAT3DConfig_t implements flushable
 function testGrAT3DConfig_t(GrAT3DConfig_t $ga4dc) : void {};
 #endif
 
-final class SST_t
+final class SST_t implements flushable
 {
 	public GrSstType $type;
 	public GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t $sstBoard;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testSST_t(SST_t $sst) : void {};
 #endif
 
-final class GrHwConfiguration
+final class GrHwConfiguration implements flushable
 {
 	public int $num_sst;
 	
 	/** @var SST_t[] */
 	public array $SSTs;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG

@@ -1,18 +1,18 @@
 #include "phpglide2x_structs.h"
 #include "phpglide2x_enums.h"
 
-zend_class_entry* grSST_ce;
+zend_class_entry* sST_ce;
 
 #ifdef _DEBUG
 ZEND_FUNCTION(testSST_t)
 {
-    zend_object* grSST_zo = NULL;
+    zend_object* sST_zo = NULL;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
-        Z_PARAM_OBJ_OF_CLASS(grSST_zo, grSST_ce)
+        Z_PARAM_OBJ_OF_CLASS(sST_zo, sST_ce)
         ZEND_PARSE_PARAMETERS_END();
 
-    _GrSST* config = O_EMBEDDED_P(_GrSST, grSST_zo);
+    _SST_t* config = O_EMBEDDED_P(_SST_t, sST_zo);
 
     switch (config->SST.type) {
     case GR_SSTTYPE_VOODOO:
@@ -77,18 +77,37 @@ ZEND_FUNCTION(testSST_t)
 
         break;
     }
-
-    
 }
 #endif // _DEBUG
+
+PHP_METHOD(SST_t, flush)
+{
+    ZEND_PARSE_PARAMETERS_NONE();
+
+    _SST_t* obj = O_EMBEDDED_P(_SST_t, Z_OBJ_P(ZEND_THIS));
+
+    flush_SST(obj, &obj->SST);
+
+    zend_string* bin = zend_string_alloc(sizeof(_SST_t) + 1, 0);
+
+    memcpy(
+        ZSTR_VAL(bin),
+        &obj->SST,
+        sizeof(_SST_t) + 1
+    );
+
+    ZSTR_VAL(bin)[sizeof(_SST_t) + 1] = '\0'; // null terminator (optional for binary)
+
+    RETURN_STR(bin);
+}
 
 static zend_object_handlers grSST_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrSST_new(zend_class_entry* ce)
+zend_object* SST_new(zend_class_entry* ce)
 {
     //it allocates memory
-    _GrSST* sST = zend_object_alloc(sizeof(_GrSST), ce);
+    _SST_t* sST = zend_object_alloc(sizeof(_SST_t), ce);
 
     //it initializes the object
     zend_object_std_init(&sST->std, ce);
@@ -105,8 +124,8 @@ zend_object* GrSST_new(zend_class_entry* ce)
 
 static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
 {
-    if (object->ce == grSST_ce) {
-        _GrSST* sst = O_EMBEDDED_P(_GrSST, object);
+    if (object->ce == sST_ce) {
+        _SST_t* sst = O_EMBEDDED_P(_SST_t, object);
 
         if (zend_string_equals_literal(member, "type")) {
 
@@ -168,10 +187,10 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrSST_new(object->ce);
+    zend_object* new_obj = SST_new(object->ce);
 
-    _GrSST* clone = O_EMBEDDED_P(_GrSST, new_obj);
-    _GrSST* orig = O_EMBEDDED_P(_GrSST, object);
+    _SST_t* clone = O_EMBEDDED_P(_SST_t, new_obj);
+    _SST_t* orig = O_EMBEDDED_P(_SST_t, object);
 
     memcpy(&clone->SST, &orig->SST, sizeof orig->SST);
 
@@ -182,8 +201,8 @@ static zend_object* gr_clone_obj(zend_object* object)
 
 void phpglide2x_register_grSST(INIT_FUNC_ARGS)
 {
-    grSST_ce = register_class_SST_t();
-    grSST_ce->create_object = GrSST_new; //asign an internal constructor
+    sST_ce = register_class_SST_t(gr_flushable_ce);
+    sST_ce->create_object = SST_new; //asign an internal constructor
 
     memcpy(
         &grSST_object_handlers,	// our handler 
@@ -192,7 +211,52 @@ void phpglide2x_register_grSST(INIT_FUNC_ARGS)
     );
 
     //we set the address of the beginning of the whole embedded data
-    grSST_object_handlers.offset = XtOffsetOf(_GrSST, std);
-    grSST_object_handlers.write_property = gr_write_property;
+    grSST_object_handlers.offset = XtOffsetOf(_SST_t, std);
+    //grSST_object_handlers.write_property = gr_write_property;
     grSST_object_handlers.clone_obj = gr_clone_obj;
+}
+
+void flush_SST(const _SST_t* sST, SST_t* buffer)
+{
+    zval* value = zend_read_property(
+        sST->std.ce,      // zend_class_entry* of the object
+        (zend_object*)&sST->std,        // zval* or zend_object* (see below)
+        "type",             // property name
+        sizeof("type") - 1,
+        1,                  // silent (1 = don't emit notice if not found)
+        NULL                // Optional return zval ptr, or NULL
+    );
+
+    buffer->type = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+
+    value = zend_read_property(
+        sST->std.ce,      // zend_class_entry* of the object
+        (zend_object*)&sST->std,        // zval* or zend_object* (see below)
+        "sstBoard",             // property name
+        sizeof("sstBoard") - 1,
+        1,                  // silent (1 = don't emit notice if not found)
+        NULL                // Optional return zval ptr, or NULL
+    );
+
+    if (Z_TYPE_P(value) == IS_NULL) {
+        memset(&buffer->sstBoard, 0, sizeof(SST_t));
+    }
+    else {
+        switch (buffer->type) {
+        case GR_SSTTYPE_VOODOO:
+            flush_grVoodooConfig(O_EMBEDDED_P(_GrVoodooConfig_t, Z_OBJ_P(value)), &buffer->sstBoard.VoodooConfig);
+            break;
+        case GR_SSTTYPE_SST96:
+            flush_GrSst96Config(O_EMBEDDED_P(_GrSst96Config_t, Z_OBJ_P(value)), &buffer->sstBoard.SST96Config);
+            break;
+        case GR_SSTTYPE_AT3D:
+            flush_GrAT3DConfig(O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(value)), &buffer->sstBoard.AT3DConfig);
+            break;
+        case GR_SSTTYPE_Voodoo2:
+            flush_grVoodoo2Config(O_EMBEDDED_P(_GrVoodoo2Config_t, Z_OBJ_P(value)), &buffer->sstBoard.Voodoo2Config);
+            break;
+        }
+    }
+    
+    
 }

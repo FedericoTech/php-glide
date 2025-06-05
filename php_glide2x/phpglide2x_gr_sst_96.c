@@ -29,7 +29,7 @@ PHP_METHOD(GrSst96Config_t, flush)
 
     _GrSst96Config_t* obj = O_EMBEDDED_P(_GrSst96Config_t, Z_OBJ_P(ZEND_THIS));
 
-    flush_GrSst96Config(obj);
+    flush_GrSst96Config(obj, &obj->grSst96Config);
 
     zend_string* bin = zend_string_alloc(sizeof(GrSst96Config_t) + 1, 0);
 
@@ -151,7 +151,6 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
         else if (zend_string_equals_literal(member, "tmuConfig")
             && Z_TYPE_P(value) == IS_OBJECT //not really neccesary
         ) {
-
             _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(value));
 
             memcpy(
@@ -174,7 +173,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrSst96Config_t* clone = O_EMBEDDED_P(_GrSst96Config_t, new_obj);
     _GrSst96Config_t* orig = O_EMBEDDED_P(_GrSst96Config_t, object);
 
-    flush_GrSst96Config(orig);
+    //flush_GrSst96Config(orig, &clone->grSst96Config);
 
     memcpy(&clone->grSst96Config, &orig->grSst96Config, sizeof(GrSst96Config_t));
 
@@ -268,33 +267,33 @@ void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS)
     //grSst96Config_object_handlers.free_obj = free_obj;
 }
 
-void flush_GrSst96Config(_GrSst96Config_t* obj)
+void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
 {
     zval* value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "fbRam",   // property name
         sizeof("fbRam") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    obj->grSst96Config.fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "nTexelfx",   // property name
         sizeof("nTexelfx") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    obj->grSst96Config.nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "tmuConfig",   // property name
         sizeof("tmuConfig") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -302,17 +301,11 @@ void flush_GrSst96Config(_GrSst96Config_t* obj)
     );
 
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&obj->grSst96Config.tmuConfig, 0, sizeof(GrTMUConfig_t));
+        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t));
     }
     else {
         _GrTMUConfig_t* grTMUConfig_t = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(value));
 
-        flush_grTMUConfig(grTMUConfig_t);
-
-        memcpy(
-            &obj->grSst96Config.tmuConfig,
-            &grTMUConfig_t->grTMUConfig,
-            sizeof(GrTMUConfig_t)
-        );
+        flush_grTMUConfig(grTMUConfig_t, &buffer->tmuConfig);
     }
 }

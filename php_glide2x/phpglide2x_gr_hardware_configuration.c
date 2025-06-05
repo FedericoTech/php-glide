@@ -118,16 +118,16 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
             zval* entry = NULL;
             zend_string* key = NULL;
 
-            for (int cont = 0; cont < min(MAX_NUM_SST, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
+            for (uint32_t cont = 0; cont < min(MAX_NUM_SST, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
 
                 if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
 
-                    _GrSST* grSST = O_EMBEDDED_P(_GrSST, Z_OBJ_P(entry));
+                    _SST_t* sST = O_EMBEDDED_P(_SST_t, Z_OBJ_P(entry));
 
                     memcpy(
                         &config->grHwConfiguration.SSTs[cont],
-                        &grSST->SST,
-                        (size_t) & (((_GrSST*)0)->std) - (size_t) & (((_GrSST*)0)->SST)
+                        &sST->SST,
+                        (size_t) & (((_SST_t*)0)->std) - (size_t) & (((_SST_t*)0)->SST)
                     );
                 }
             } // for

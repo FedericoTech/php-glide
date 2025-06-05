@@ -70,7 +70,7 @@ PHP_METHOD(GrVoodooConfig_t, flush)
 
     _GrVoodooConfig_t* obj = O_EMBEDDED_P(_GrVoodooConfig_t, Z_OBJ_P(ZEND_THIS));
 
-    flush_grVoodooConfig(obj);
+    flush_grVoodooConfig(obj, &obj->grVoodooConfig);
 
     zend_string* bin = zend_string_alloc(sizeof(_GrVoodooConfig_t) + 1, 0);
 
@@ -91,7 +91,7 @@ PHP_METHOD(GrVoodoo2Config_t, flush)
 
     _GrVoodoo2Config_t* obj = O_EMBEDDED_P(_GrVoodoo2Config_t, Z_OBJ_P(ZEND_THIS));
 
-    flush_grVoodoo2Config(obj);
+    flush_grVoodoo2Config(obj, &obj->grVoodoo2Config);
 
     zend_string* bin = zend_string_alloc(sizeof(_GrVoodoo2Config_t) + 1, 0);
 
@@ -283,7 +283,7 @@ static zend_object* gr_clone_obj(zend_object* object)
         _GrVoodooConfig_t* clone = O_EMBEDDED_P(_GrVoodooConfig_t, new_obj);
         _GrVoodooConfig_t* orig = O_EMBEDDED_P(_GrVoodooConfig_t, object);
 
-        flush_grVoodooConfig(orig);
+        //flush_grVoodooConfig(orig);
 
         memcpy(&clone->grVoodooConfig, &orig->grVoodooConfig, sizeof(GrVoodooConfig_t));
 
@@ -297,7 +297,7 @@ static zend_object* gr_clone_obj(zend_object* object)
         _GrVoodoo2Config_t* clone = O_EMBEDDED_P(_GrVoodoo2Config_t, new_obj);
         _GrVoodoo2Config_t* orig = O_EMBEDDED_P(_GrVoodoo2Config_t, object);
 
-        flush_grVoodoo2Config(orig);
+        //flush_grVoodoo2Config(orig);
 
         memcpy(&clone->grVoodoo2Config, &orig->grVoodoo2Config, sizeof(GrVoodooConfig_t));
 
@@ -337,54 +337,54 @@ void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS)
     grVoodoo2Config_object_handlers.clone_obj = gr_clone_obj;
 }
 
-void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig) {
+void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfig_t* buffer) {
     zval* value = zend_read_property(
         grVoodooConfig->std.ce,            // zend_class_entry* of the object
-        &grVoodooConfig->std,           // zval* or zend_object* (see below)
+        (zend_object*) &grVoodooConfig->std,           // zval* or zend_object* (see below)
         "fbRam",   // property name
         sizeof("fbRam") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodooConfig->grVoodooConfig.fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
     
     value = zend_read_property(
         grVoodooConfig->std.ce,            // zend_class_entry* of the object
-        &grVoodooConfig->std,           // zval* or zend_object* (see below)
+        (zend_object*) &grVoodooConfig->std,           // zval* or zend_object* (see below)
         "fbiRev",   // property name
         sizeof("fbiRev") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodooConfig->grVoodooConfig.fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
     
     value = zend_read_property(
         grVoodooConfig->std.ce,            // zend_class_entry* of the object
-        &grVoodooConfig->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodooConfig->std,           // zval* or zend_object* (see below)
         "nTexelfx",   // property name
         sizeof("nTexelfx") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodooConfig->grVoodooConfig.nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
     
     value = zend_read_property(
         grVoodooConfig->std.ce,            // zend_class_entry* of the object
-        &grVoodooConfig->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodooConfig->std,           // zval* or zend_object* (see below)
         "sliDetect",   // property name
         sizeof("sliDetect") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodooConfig->grVoodooConfig.sliDetect = Z_TYPE_P(value) == IS_TRUE;
+    buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE;
     
     value = zend_read_property(
         grVoodooConfig->std.ce,            // zend_class_entry* of the object
-        &grVoodooConfig->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodooConfig->std,           // zval* or zend_object* (see below)
         "tmuConfig",   // property name
         sizeof("tmuConfig") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -393,7 +393,7 @@ void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig) {
     
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&grVoodooConfig->grVoodooConfig.tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
+        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
         zval* val;
@@ -408,13 +408,8 @@ void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig) {
 
                 _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(val));
 
-                flush_grTMUConfig(grTMUConfig);
+                flush_grTMUConfig(grTMUConfig, &buffer->tmuConfig[cont++]);
 
-                memcpy(
-                    &grVoodooConfig->grVoodooConfig.tmuConfig[cont++],
-                    &grTMUConfig->grTMUConfig,
-                    sizeof(GrTMUConfig_t)
-                );
             }
                 
         } ZEND_HASH_FOREACH_END();
@@ -422,54 +417,54 @@ void flush_grVoodooConfig(_GrVoodooConfig_t* grVoodooConfig) {
     }    
 }
 
-void flush_grVoodoo2Config(_GrVoodoo2Config_t* grVoodoo2Config) {
+void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t *buffer) {
     zval* value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
-        &grVoodoo2Config->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodoo2Config->std,           // zval* or zend_object* (see below)
         "fbRam",   // property name
         sizeof("fbRam") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodoo2Config->grVoodoo2Config.fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
-        &grVoodoo2Config->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodoo2Config->std,           // zval* or zend_object* (see below)
         "fbiRev",   // property name
         sizeof("fbiRev") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodoo2Config->grVoodoo2Config.fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
-        &grVoodoo2Config->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodoo2Config->std,           // zval* or zend_object* (see below)
         "nTexelfx",   // property name
         sizeof("nTexelfx") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodoo2Config->grVoodoo2Config.nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
-        &grVoodoo2Config->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodoo2Config->std,           // zval* or zend_object* (see below)
         "sliDetect",   // property name
         sizeof("sliDetect") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    grVoodoo2Config->grVoodoo2Config.sliDetect = Z_TYPE_P(value) == IS_TRUE;
+    buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE;
 
     value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
-        &grVoodoo2Config->std,           // zval* or zend_object* (see below)
+        (zend_object*)&grVoodoo2Config->std,           // zval* or zend_object* (see below)
         "tmuConfig",   // property name
         sizeof("tmuConfig") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -478,7 +473,7 @@ void flush_grVoodoo2Config(_GrVoodoo2Config_t* grVoodoo2Config) {
 
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&grVoodoo2Config->grVoodoo2Config.tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
+        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
         zval* val;
@@ -493,13 +488,7 @@ void flush_grVoodoo2Config(_GrVoodoo2Config_t* grVoodoo2Config) {
 
                 _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(val));
 
-                flush_grTMUConfig(grTMUConfig);
-
-                memcpy(
-                    &grVoodoo2Config->grVoodoo2Config.tmuConfig[cont++],
-                    &grTMUConfig->grTMUConfig,
-                    sizeof(GrTMUConfig_t)
-                );
+                flush_grTMUConfig(grTMUConfig, &buffer->tmuConfig[cont++]);
             }
 
         } ZEND_HASH_FOREACH_END();

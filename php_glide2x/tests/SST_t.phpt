@@ -5,6 +5,7 @@ SST_t
 grGlideInit();
 
 $sst = new SST_t;
+$sst->flush();
 
 var_dump($sst);
 
@@ -41,6 +42,7 @@ $gvc->tmuConfig = [$gtmc, $gtmc2];
 
 $sst->type = GrSstType::GR_SSTTYPE_VOODOO;
 $sst->sstBoard = $gvc;
+$sst->flush();
 
 var_dump($sst);
 testSST_t($sst);
@@ -55,6 +57,7 @@ $gs9c->tmuConfig = $gtmc2;
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_SST96;
 $sst->sstBoard = $gs9c;
+$sst->flush();
 
 var_dump($sst);
 testSST_t($sst);
@@ -67,6 +70,7 @@ $ga3c->rev = 1;
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_AT3D;
 $sst->sstBoard = $ga3c;
+$sst->flush();
 
 var_dump($sst);
 testSST_t($sst);
@@ -84,12 +88,25 @@ $gv2c->tmuConfig = [$gtmc, $gtmc2];
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_Voodoo2;
 $sst->sstBoard = $gv2c;
+$sst->flush();
 
 var_dump($sst);
 testSST_t($sst);
 
+$sst2 = clone $sst;
+
+var_dump(
+	$sst2,
+	$sst2 == $sst,
+	$sst2 === $sst
+);
+testSST_t($sst2);
+
 $reflection = new ReflectionClass(SST_t::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 ?>
@@ -136,7 +153,7 @@ object(SST_t)#1 (2) {
     }
   }
 }
-type: 0, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 0, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+type: 0, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
 
 object(SST_t)#8 (2) {
   ["type"]=>
@@ -201,5 +218,41 @@ object(SST_t)#12 (2) {
     }
   }
 }
-type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 0, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+object(SST_t)#13 (2) {
+  ["type"]=>
+  enum(GrSstType::GR_SSTTYPE_Voodoo2)
+  ["sstBoard"]=>
+  object(GrVoodoo2Config_t)#11 (5) {
+    ["fbRam"]=>
+    int(2)
+    ["fbiRev"]=>
+    int(1)
+    ["nTexelfx"]=>
+    int(3)
+    ["sliDetect"]=>
+    bool(true)
+    ["tmuConfig"]=>
+    array(2) {
+      [0]=>
+      object(GrTMUConfig_t)#2 (0) {
+        ["tmuRev"]=>
+        uninitialized(int)
+        ["tmuRam"]=>
+        uninitialized(int)
+      }
+      [1]=>
+      object(GrTMUConfig_t)#4 (2) {
+        ["tmuRev"]=>
+        int(5)
+        ["tmuRam"]=>
+        int(6)
+      }
+    }
+  }
+}
+bool(true)
+bool(false)
+type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+bool(true)
 bool(true)

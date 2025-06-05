@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: f1d795625a6f807550b49578a5c009a62a1294b9 */
+ * Stub hash: 38b3a7c0b005342cad55290f5d1bd72c163489bd */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -198,6 +198,10 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrAT3DConfig_t_flush arginfo_class_flushable_flush
 
+#define arginfo_class_SST_t_flush arginfo_class_flushable_flush
+
+#define arginfo_class_GrHwConfiguration_flush arginfo_class_flushable_flush
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrTMUConfig_t);
 ZEND_FUNCTION(testGrVoodooConfig_t);
@@ -267,6 +271,8 @@ ZEND_METHOD(GrVoodooConfig_t, flush);
 ZEND_METHOD(GrVoodoo2Config_t, flush);
 ZEND_METHOD(GrSst96Config_t, flush);
 ZEND_METHOD(GrAT3DConfig_t, flush);
+ZEND_METHOD(SST_t, flush);
+ZEND_METHOD(GrHwConfiguration, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
@@ -507,6 +513,16 @@ static const zend_function_entry class_GrSst96Config_t_methods[] = {
 
 static const zend_function_entry class_GrAT3DConfig_t_methods[] = {
 	ZEND_ME(GrAT3DConfig_t, flush, arginfo_class_GrAT3DConfig_t_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_SST_t_methods[] = {
+	ZEND_ME(SST_t, flush, arginfo_class_SST_t_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrHwConfiguration_methods[] = {
+	ZEND_ME(GrHwConfiguration, flush, arginfo_class_GrHwConfiguration_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1432,12 +1448,13 @@ static zend_class_entry *register_class_GrAT3DConfig_t(zend_class_entry *class_e
 	return class_entry;
 }
 
-static zend_class_entry *register_class_SST_t(void)
+static zend_class_entry *register_class_SST_t(zend_class_entry *class_entry_flushable)
 {
 	zend_class_entry ce, *class_entry;
 
-	INIT_CLASS_ENTRY(ce, "SST_t", NULL);
+	INIT_CLASS_ENTRY(ce, "SST_t", class_SST_t_methods);
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_type_default_value;
 	ZVAL_UNDEF(&property_type_default_value);
@@ -1464,12 +1481,13 @@ static zend_class_entry *register_class_SST_t(void)
 	return class_entry;
 }
 
-static zend_class_entry *register_class_GrHwConfiguration(void)
+static zend_class_entry *register_class_GrHwConfiguration(zend_class_entry *class_entry_flushable)
 {
 	zend_class_entry ce, *class_entry;
 
-	INIT_CLASS_ENTRY(ce, "GrHwConfiguration", NULL);
+	INIT_CLASS_ENTRY(ce, "GrHwConfiguration", class_GrHwConfiguration_methods);
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_num_sst_default_value;
 	ZVAL_UNDEF(&property_num_sst_default_value);

@@ -19,7 +19,7 @@ PHP_FUNCTION(testObject) {
 		Z_PARAM_OBJ(obj)
 	ZEND_PARSE_PARAMETERS_END();
 
-	_GrSST* config = O_EMBEDDED_P(_GrSST, obj);
+	_SST_t* config = O_EMBEDDED_P(_SST_t, obj);
 
 	php_printf("ello %d\n", config->SST.type);
 }

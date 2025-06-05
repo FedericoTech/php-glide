@@ -26,7 +26,7 @@ PHP_METHOD(GrAT3DConfig_t, flush)
 
     _GrAT3DConfig_t* obj = O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(ZEND_THIS));
 
-    flush_GrAT3DConfig(obj);
+    flush_GrAT3DConfig(obj, &obj->grAT3DConfig);
 
     zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t) + 1, 0);
 
@@ -84,8 +84,6 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrAT3DConfig_t* clone = O_EMBEDDED_P(_GrAT3DConfig_t, new_obj);
     _GrAT3DConfig_t* orig = O_EMBEDDED_P(_GrAT3DConfig_t, object);
 
-    flush_GrAT3DConfig(orig);
-
     memcpy(&clone->grAT3DConfig, &orig->grAT3DConfig, sizeof(GrAT3DConfig_t));
 
     zend_objects_clone_members(&clone->std, &orig->std);
@@ -110,16 +108,16 @@ void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
     grAT3DConfig_object_handlers.clone_obj = gr_clone_obj;
 }
 
-void flush_GrAT3DConfig(_GrAT3DConfig_t* obj)
+void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
 {
     zval* value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
-        &obj->std,           // zval* or zend_object* (see below)
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "rev",   // property name
         sizeof("rev") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    obj->grAT3DConfig.rev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->rev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 }
