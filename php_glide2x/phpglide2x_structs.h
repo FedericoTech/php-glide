@@ -109,6 +109,8 @@ typedef struct _GrHwConfiguration {
     zend_object std;
 } _GrHwConfiguration;
 
+void flush_GrHwConfiguration(const _GrHwConfiguration* sST, GrHwConfiguration* buffer);
+
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS);
 
 extern zend_class_entry* grTmuVertex_ce;

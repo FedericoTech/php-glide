@@ -72,15 +72,15 @@ PHP_METHOD(GrVoodooConfig_t, flush)
 
     flush_grVoodooConfig(obj, &obj->grVoodooConfig);
 
-    zend_string* bin = zend_string_alloc(sizeof(_GrVoodooConfig_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrVoodooConfig_t) + 1, 0);
 
     memcpy(
         ZSTR_VAL(bin),
         &obj->grVoodooConfig,
-        sizeof(_GrVoodooConfig_t) + 1
+        sizeof(GrVoodooConfig_t) + 1
     );
 
-    ZSTR_VAL(bin)[sizeof(_GrVoodooConfig_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrVoodooConfig_t) + 1] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -93,15 +93,15 @@ PHP_METHOD(GrVoodoo2Config_t, flush)
 
     flush_grVoodoo2Config(obj, &obj->grVoodoo2Config);
 
-    zend_string* bin = zend_string_alloc(sizeof(_GrVoodoo2Config_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrVoodoo2Config_t) + 1, 0);
 
     memcpy(
         ZSTR_VAL(bin),
         &obj->grVoodoo2Config,
-        sizeof(_GrVoodoo2Config_t) + 1
+        sizeof(GrVoodoo2Config_t) + 1
     );
 
-    ZSTR_VAL(bin)[sizeof(_GrVoodoo2Config_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrVoodoo2Config_t) + 1] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -411,6 +411,9 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfi
                 flush_grTMUConfig(grTMUConfig, &buffer->tmuConfig[cont++]);
 
             }
+            else {
+                memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
+            }
                 
         } ZEND_HASH_FOREACH_END();
 
@@ -489,6 +492,9 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2C
                 _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(val));
 
                 flush_grTMUConfig(grTMUConfig, &buffer->tmuConfig[cont++]);
+            }
+            else {
+                memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
             }
 
         } ZEND_HASH_FOREACH_END();

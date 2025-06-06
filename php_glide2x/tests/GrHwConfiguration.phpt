@@ -5,6 +5,7 @@ GrHwConfiguration
 grGlideInit();
 
 $ghc = new GrHwConfiguration;
+$ghc->flush();
 var_dump($ghc);
 testGrHwConfiguration($ghc);
 
@@ -35,6 +36,7 @@ $arr[] = $sst;
 $ghc->num_sst = count($arr);
 $ghc->SSTs = $arr;
 
+$ghc->flush();
 var_dump($ghc);
 testGrHwConfiguration($ghc);
 
@@ -102,13 +104,18 @@ $arr[] = $sst;
 $ghc->num_sst = count($arr);
 $ghc->SSTs = $arr;
 
+$ghc->flush();
+
 var_dump($ghc);
 testGrHwConfiguration($ghc);
 
 echo PHP_EOL;
 
 $reflection = new ReflectionClass(GrHwConfiguration::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 ?>
@@ -195,10 +202,10 @@ board n: 0: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuR
 board n: 1, type: 1
 board n: 1, [fbRam: 0, nTexelfx: 0, [tmuRev: 0, tmuRam: 0]]
 
-board n: 2, type: 2
-board n: 2, [rev: 0]
+board n: 2, type: 0
+board n: 2: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
 
-board n: 3, type: 3
+board n: 3, type: 0
 board n: 3: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
 
 
@@ -311,11 +318,12 @@ board n: 0: [fbiRev: 3, fbRam: 4, nTexelfx: 5, sliDetect: 0, [0][tmuRev: 1, tmuR
 board n: 1, type: 1
 board n: 1, [fbRam: 6, nTexelfx: 7, [tmuRev: 1, tmuRam: 2]]
 
-board n: 2, type: 2
-board n: 2, [rev: 8]
+board n: 2, type: 0
+board n: 2: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
 
-board n: 3, type: 3
-board n: 3: [fbiRev: 9, fbRam: 10, nTexelfx: 11, sliDetect: 0, [0][tmuRev: 1, tmuRam: 2], [1][tmuRev: 0, tmuRam: 0]]
+board n: 3, type: 0
+board n: 3: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
 
 
+bool(true)
 bool(true)

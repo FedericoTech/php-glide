@@ -86,6 +86,27 @@ ZEND_FUNCTION(testGrHwConfiguration)
 }
 #endif // _DEBUG
 
+PHP_METHOD(GrHwConfiguration, flush)
+{
+    ZEND_PARSE_PARAMETERS_NONE();
+
+    _GrHwConfiguration* obj = O_EMBEDDED_P(_GrHwConfiguration, Z_OBJ_P(ZEND_THIS));
+
+    flush_GrHwConfiguration(obj, &obj->grHwConfiguration);
+
+    zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration) + 1, 0);
+
+    memcpy(
+        ZSTR_VAL(bin),
+        &obj->grHwConfiguration,
+        sizeof(GrHwConfiguration) + 1
+    );
+
+    ZSTR_VAL(bin)[sizeof(GrHwConfiguration) + 1] = '\0'; // null terminator (optional for binary)
+
+    RETURN_STR(bin);
+}
+
 static zend_object_handlers grHwConfiguration_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
@@ -155,7 +176,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
 {
-    grHwConfiguration_ce = register_class_GrHwConfiguration();
+    grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
     grHwConfiguration_ce->create_object = GrHwConfiguration_new; //asign an internal constructor
 
     memcpy(
@@ -166,6 +187,55 @@ void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grHwConfiguration_object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
-    grHwConfiguration_object_handlers.write_property = gr_write_property;
+    //grHwConfiguration_object_handlers.write_property = gr_write_property;
     grHwConfiguration_object_handlers.clone_obj = gr_clone_obj;
+}
+
+void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwConfiguration* buffer)
+{
+    zval* value = zend_read_property(
+        grHwConfiguration->std.ce,            // zend_class_entry* of the object
+        (zend_object*)&grHwConfiguration->std,           // zval* or zend_object* (see below)
+        "num_sst",   // property name
+        sizeof("num_sst") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    buffer->num_sst = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+
+    value = zend_read_property(
+        grHwConfiguration->std.ce,            // zend_class_entry* of the object
+        (zend_object*)&grHwConfiguration->std,           // zval* or zend_object* (see below)
+        "SSTs",   // property name
+        sizeof("SSTs") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    //the array is not initialized...
+    if (Z_TYPE_P(value) == IS_NULL) {
+        memset(&buffer->SSTs, 0, sizeof(SST_t) * 2);
+    }
+    else {
+        zval* val;
+        HashTable* ht = Z_ARRVAL_P(value); // array_zval is a zval* pointing to the PHP array
+        int cont = 0;
+        ZEND_HASH_FOREACH_VAL(ht, val) {
+            if (cont >= GLIDE_NUM_TMU) {
+                break;
+            }
+
+            if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), sST_ce)) {
+
+                _SST_t* sST = O_EMBEDDED_P(_SST_t, Z_OBJ_P(val));
+
+                flush_SST(sST, (SST_t*) &buffer->SSTs[cont++]);
+            }
+            else {
+                memset(&buffer->SSTs[cont++], 0, sizeof(SST_t));
+            }
+
+        } ZEND_HASH_FOREACH_END();
+    }
 }

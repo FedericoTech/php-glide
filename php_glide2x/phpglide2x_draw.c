@@ -150,7 +150,7 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 		Z_PARAM_ARRAY(vlist)
 	ZEND_PARSE_PARAMETERS_END();
 
-	if (nVerts < 0 || nVerts > zend_array_count(Z_ARRVAL_P(vlist))) {
+	if (nVerts < 0 || nVerts > (zend_long) zend_array_count(Z_ARRVAL_P(vlist))) {
 		zend_throw_exception(NULL, "nVerts must be between 0 to vList count", 0);
 		return;
 	}
