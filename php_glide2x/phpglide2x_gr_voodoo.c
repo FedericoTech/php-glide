@@ -420,6 +420,44 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfi
     }    
 }
 
+void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfig_t* grVoodooConfig)
+{
+    zval val_zv;
+
+    zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbRam", sizeof("fbRam") - 1, voodooConfig->fbRam);
+
+    zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbiRev", sizeof("fbiRev") - 1, voodooConfig->fbiRev);
+
+    zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "nTexelfx", sizeof("nTexelfx") - 1, voodooConfig->nTexelfx);
+
+    zend_update_property_bool(grVoodooConfig_ce, &grVoodooConfig->std, "sliDetect", sizeof("sliDetect") - 1, voodooConfig->sliDetect);
+
+    {
+        zval tmuConfig_arr_zval;
+        array_init_size(&tmuConfig_arr_zval, voodooConfig->nTexelfx);
+
+        for (int cont2 = 0; cont2 < voodooConfig->nTexelfx; cont2++) {
+            zval grTMUConfig_t;
+
+            object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
+
+            hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
+
+            add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
+        }
+
+        zend_update_property(
+            grVoodooConfig_ce,
+            &grVoodooConfig->std,
+            "tmuConfig",
+            sizeof("tmuConfig") - 1,
+            &tmuConfig_arr_zval
+        );
+
+        zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
+    }
+}
+
 void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t *buffer) {
     zval* value = zend_read_property(
         grVoodoo2Config->std.ce,            // zend_class_entry* of the object
@@ -498,5 +536,40 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2C
             }
 
         } ZEND_HASH_FOREACH_END();
+    }
+}
+
+void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* voodoo2Config, _GrVoodoo2Config_t* grVoodoo2Config)
+{
+    zend_update_property_long(grVoodoo2Config_ce, &grVoodoo2Config->std, "fbRam", sizeof("fbRam") - 1, voodoo2Config->fbRam);
+
+    zend_update_property_long(grVoodoo2Config_ce, &grVoodoo2Config->std, "fbiRev", sizeof("fbiRev") - 1, voodoo2Config->fbiRev);
+
+    zend_update_property_long(grVoodoo2Config_ce, &grVoodoo2Config->std, "nTexelfx", sizeof("nTexelfx") - 1, voodoo2Config->nTexelfx);
+
+    zend_update_property_bool(grVoodoo2Config_ce, &grVoodoo2Config->std, "sliDetect", sizeof("sliDetect") - 1, voodoo2Config->sliDetect);
+
+    {
+        zval tmuConfig_arr_zval;
+        array_init_size(&tmuConfig_arr_zval, voodoo2Config->nTexelfx);
+
+        for (int cont2 = 0; cont2 < voodoo2Config->nTexelfx; cont2++) {
+            zval grTMUConfig_t;
+            object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
+
+            hydrate_grTMUConfig(&voodoo2Config->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
+
+            add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
+        }
+
+        zend_update_property(
+            grVoodoo2Config_ce,
+            &grVoodoo2Config->std,
+            "tmuConfig",
+            sizeof("tmuConfig") - 1,
+            &tmuConfig_arr_zval
+        );
+
+        zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
     }
 }

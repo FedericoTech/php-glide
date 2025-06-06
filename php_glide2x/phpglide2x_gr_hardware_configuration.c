@@ -239,3 +239,35 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwCo
         } ZEND_HASH_FOREACH_END();
     }
 }
+
+void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* grHwConfiguration_obj)
+{
+    zend_update_property_long(
+        grHwConfiguration_ce, &grHwConfiguration_obj->std,
+        "num_sst", sizeof("num_sst") - 1,
+        buffer->num_sst
+    );
+
+    zval sSTs_arr_zval;
+    array_init_size(&sSTs_arr_zval, buffer->num_sst);
+        
+    for (int cont = 0; cont < buffer->num_sst; cont++) {
+
+        zval sst_obj;
+
+        //we instantiate the SST_t class
+        object_init_ex(&sst_obj, sST_ce);
+
+        hydrate_SST((SST_t*) &buffer->SSTs[cont], O_EMBEDDED_P(_SST_t, Z_OBJ(sst_obj)));
+
+        add_next_index_zval(&sSTs_arr_zval, &sst_obj);
+    }
+
+    zend_update_property(
+        grHwConfiguration_ce, &grHwConfiguration_obj->std,
+        "SSTs", sizeof("SSTs") - 1,
+        &sSTs_arr_zval
+    );
+
+    zval_ptr_dtor(&sSTs_arr_zval);  //destroy the local pointer
+}

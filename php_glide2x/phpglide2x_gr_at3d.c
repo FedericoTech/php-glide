@@ -121,3 +121,13 @@ void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
 
     buffer->rev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 }
+
+void hydrate_GrAT3DConfig(GrAT3DConfig_t* buffer, _GrAT3DConfig_t* grAT3DConfig)
+{
+    zend_update_property_long(
+        grAT3DConfig_ce, 
+        &grAT3DConfig->std, 
+        "rev", 
+        sizeof("rev") - 1, buffer->rev
+    );
+}

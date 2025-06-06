@@ -304,8 +304,25 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
         memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t));
     }
     else {
-        _GrTMUConfig_t* grTMUConfig_t = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(value));
 
-        flush_grTMUConfig(grTMUConfig_t, &buffer->tmuConfig);
+        flush_grTMUConfig(O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(value)), &buffer->tmuConfig);
     }
+}
+
+void hydrate_GrSst96Config(GrSst96Config_t* sST96Config, _GrSst96Config_t* grSst96Config)
+{
+    zend_update_property_long(grSst96Config_ce, &grSst96Config->std, "fbRam", sizeof("fbRam") - 1, sST96Config->fbRam);
+
+    zend_update_property_long(grSst96Config_ce, &grSst96Config->std, "nTexelfx", sizeof("nTexelfx") - 1, sST96Config->nTexelfx);
+
+    zval grTMUConfig_t;
+
+    object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
+
+    hydrate_grTMUConfig(&sST96Config->tmuConfig, O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
+
+    zend_update_property(grSst96Config_ce, &grSst96Config->std, "tmuConfig", sizeof("tmuConfig") - 1, &grTMUConfig_t);
+
+    //zval_ptr_dtor(&grTMUConfig_t); //destroy the local pointer
+
 }

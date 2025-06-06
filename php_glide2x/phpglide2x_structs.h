@@ -28,6 +28,8 @@ typedef struct _GrTMUConfig_t {
 
 void flush_grTMUConfig(const _GrTMUConfig_t* grTMUConfig, GrTMUConfig_t* buffer);
 
+void hydrate_grTMUConfig(const GrTMUConfig_t* buffer, _GrTMUConfig_t* grTMUConfig);
+
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS);
 
 
@@ -49,7 +51,11 @@ void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS);
 
 void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfig_t* buffer);
 
+void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfig_t* grVoodooConfig);
+
 void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t* buffer);
+
+void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* voodoo2Config, _GrVoodoo2Config_t* grVoodoo2Config);
 
 
 
@@ -61,6 +67,8 @@ typedef struct _GrSst96Config_t {
 } _GrSst96Config_t;
 
 void flush_GrSst96Config(const _GrSst96Config_t* grSst96Config, GrSst96Config_t* buffer);
+
+void hydrate_GrSst96Config(GrSst96Config_t* buffer, _GrSst96Config_t* grSst96Config);
 
 void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS);
 
@@ -74,6 +82,8 @@ typedef struct _GrAT3DConfig_t {
 } _GrAT3DConfig_t;
 
 void flush_GrAT3DConfig(const _GrAT3DConfig_t* grAT3DConfig, GrAT3DConfig_t* buffer);
+
+void hydrate_GrAT3DConfig(GrAT3DConfig_t* buffer, _GrAT3DConfig_t* grAT3DConfig);
 
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS);
 
@@ -98,6 +108,8 @@ typedef struct _SST_t {
 
 void flush_SST(const _SST_t* sST, SST_t* buffer);
 
+void hydrate_SST(const SST_t* sSTs, _SST_t* _sST);
+
 void phpglide2x_register_grSST(INIT_FUNC_ARGS);
 
 
@@ -109,9 +121,15 @@ typedef struct _GrHwConfiguration {
     zend_object std;
 } _GrHwConfiguration;
 
-void flush_GrHwConfiguration(const _GrHwConfiguration* sST, GrHwConfiguration* buffer);
+void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration_obj, GrHwConfiguration* buffer);
+
+void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* grHwConfiguration_obj);
 
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS);
+
+
+
+
 
 extern zend_class_entry* grTmuVertex_ce;
 
