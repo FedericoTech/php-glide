@@ -422,40 +422,37 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfi
 
 void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfig_t* grVoodooConfig)
 {
-    zval val_zv;
-
+    php_printf("ello %d", voodooConfig->fbRam);
     zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbRam", sizeof("fbRam") - 1, voodooConfig->fbRam);
-
+    
     zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbiRev", sizeof("fbiRev") - 1, voodooConfig->fbiRev);
 
     zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "nTexelfx", sizeof("nTexelfx") - 1, voodooConfig->nTexelfx);
 
     zend_update_property_bool(grVoodooConfig_ce, &grVoodooConfig->std, "sliDetect", sizeof("sliDetect") - 1, voodooConfig->sliDetect);
 
-    {
-        zval tmuConfig_arr_zval;
-        array_init_size(&tmuConfig_arr_zval, voodooConfig->nTexelfx);
+    zval tmuConfig_arr_zval;
+    array_init_size(&tmuConfig_arr_zval, voodooConfig->nTexelfx);
+    
+    for (int cont2 = 0; cont2 < voodooConfig->nTexelfx; cont2++) {
+        zval grTMUConfig_t;
 
-        for (int cont2 = 0; cont2 < voodooConfig->nTexelfx; cont2++) {
-            zval grTMUConfig_t;
+        object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
 
-            object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
+        hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
 
-            hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
-
-            add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
-        }
-
-        zend_update_property(
-            grVoodooConfig_ce,
-            &grVoodooConfig->std,
-            "tmuConfig",
-            sizeof("tmuConfig") - 1,
-            &tmuConfig_arr_zval
-        );
-
-        zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
+        add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
+
+    zend_update_property(
+        grVoodooConfig_ce,
+        &grVoodooConfig->std,
+        "tmuConfig",
+        sizeof("tmuConfig") - 1,
+        &tmuConfig_arr_zval
+    );
+
+    zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
 }
 
 void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t *buffer) {

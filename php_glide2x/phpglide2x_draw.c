@@ -180,6 +180,41 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 	efree(vertices);
 }
 
+PHP_FUNCTION(grAADrawTriangle)
+{
+	zend_object* a = NULL;
+	zend_object* b = NULL;
+	zend_object* c = NULL;
+	zend_bool antialiasAB;
+	zend_bool antialiasBC;
+	zend_bool antialiasCA;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(a, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(b, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(c, grVertex_ce)
+		Z_PARAM_BOOL(antialiasAB)
+		Z_PARAM_BOOL(antialiasBC)
+		Z_PARAM_BOOL(antialiasCA)
+		ZEND_PARSE_PARAMETERS_END();
+
+	GrVertex* vtx0 = NULL, * vtx1 = NULL, * vtx2 = NULL;
+
+	if (a) {
+		vtx0 = &O_EMBEDDED_P(_GrVertex, a)->grVertex;
+	}
+
+	if (b) {
+		vtx1 = &O_EMBEDDED_P(_GrVertex, b)->grVertex;
+	}
+
+	if (c) {
+		vtx2 = &O_EMBEDDED_P(_GrVertex, c)->grVertex;
+	}
+
+	grAADrawTriangle(vtx0, vtx1, vtx2, antialiasAB, antialiasBC, antialiasCA);
+}
+
 
 PHP_FUNCTION(grDrawTriangle)
 {
@@ -197,22 +232,6 @@ PHP_FUNCTION(grDrawTriangle)
 
 	if (a) {
 		vtx0 = &O_EMBEDDED_P(_GrVertex, a)->grVertex;
-		/*
-		php_printf(
-			"x: %f, y: %f, z: %f, r: %f, g: %f, b: %f, ooz: %f, a: %f, oow: %f\n",
-			vtx0->x,
-			vtx0->y,
-			vtx0->z,
-
-			vtx0->r,
-			vtx0->g,
-			vtx0->b,
-
-			vtx0->ooz,
-			vtx0->a,
-			vtx0->oow
-		);
-		*/
 	}
 
 	if (b) {

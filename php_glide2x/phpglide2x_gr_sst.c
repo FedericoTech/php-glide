@@ -263,7 +263,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 {
     zval sst_board, val_zv;
     zend_object* enum_case = NULL, * sst_board_zo = NULL;
-
+    
     switch (sSTs->type)
     {
     case GR_SSTTYPE_VOODOO:
@@ -271,9 +271,9 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_VOODOO");
 
         object_init_ex(&sst_board, grVoodooConfig_ce);
-
+        
         hydrate_grVoodooConfig(&sSTs->sstBoard.VoodooConfig, O_EMBEDDED_P(_GrVoodooConfig_t, &Z_OBJ(sst_board)));
-
+        
         break;
     default: //Banshee, and others. not garanteed it will work
     case GR_SSTTYPE_Voodoo2:
@@ -317,7 +317,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
     );
     zval_ptr_dtor(&sst_board); //destroy the local pointer
 
-
+    php_printf("ello6");
     
 
     //zval_ptr_dtor(&sst_obj);  //destroy the local pointer I'M WORKING HERE !!!!

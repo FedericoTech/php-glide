@@ -615,7 +615,7 @@ function grAADrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
 
 function grAADrawPolygonVertexList(int $nVerts, array $vlist) : void {};
 
-
+function grAADrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c, bool $antialiasAB, bool $antialiasBC, bool $antialiasCA) : void {};
 
 function grGlideInit() : void {};
 function grGlideShutdown() : void {};

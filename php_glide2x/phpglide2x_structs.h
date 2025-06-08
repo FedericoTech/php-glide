@@ -68,7 +68,7 @@ typedef struct _GrSst96Config_t {
 
 void flush_GrSst96Config(const _GrSst96Config_t* grSst96Config, GrSst96Config_t* buffer);
 
-void hydrate_GrSst96Config(GrSst96Config_t* buffer, _GrSst96Config_t* grSst96Config);
+void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* grSst96Config);
 
 void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS);
 
@@ -83,7 +83,7 @@ typedef struct _GrAT3DConfig_t {
 
 void flush_GrAT3DConfig(const _GrAT3DConfig_t* grAT3DConfig, GrAT3DConfig_t* buffer);
 
-void hydrate_GrAT3DConfig(GrAT3DConfig_t* buffer, _GrAT3DConfig_t* grAT3DConfig);
+void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* grAT3DConfig);
 
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS);
 

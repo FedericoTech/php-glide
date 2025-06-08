@@ -309,7 +309,7 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
     }
 }
 
-void hydrate_GrSst96Config(GrSst96Config_t* sST96Config, _GrSst96Config_t* grSst96Config)
+void hydrate_GrSst96Config(const GrSst96Config_t* sST96Config, _GrSst96Config_t* grSst96Config)
 {
     zend_update_property_long(grSst96Config_ce, &grSst96Config->std, "fbRam", sizeof("fbRam") - 1, sST96Config->fbRam);
 
