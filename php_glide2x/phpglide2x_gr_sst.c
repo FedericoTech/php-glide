@@ -272,7 +272,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 
         object_init_ex(&sst_board, grVoodooConfig_ce);
         
-        hydrate_grVoodooConfig(&sSTs->sstBoard.VoodooConfig, O_EMBEDDED_P(_GrVoodooConfig_t, &Z_OBJ(sst_board)));
+        hydrate_grVoodooConfig(&sSTs->sstBoard.VoodooConfig, O_EMBEDDED_P(_GrVoodooConfig_t, Z_OBJ_P(&sst_board)));
         
         break;
     default: //Banshee, and others. not garanteed it will work
@@ -281,7 +281,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 
         object_init_ex(&sst_board, grVoodoo2Config_ce);
 
-        hydrate_grVoodoo2Config(&sSTs->sstBoard.Voodoo2Config, O_EMBEDDED_P(_GrVoodoo2Config_t, &Z_OBJ(sst_board)));
+        hydrate_grVoodoo2Config(&sSTs->sstBoard.Voodoo2Config, O_EMBEDDED_P(_GrVoodoo2Config_t, Z_OBJ_P(&sst_board)));
 
         break;
     case GR_SSTTYPE_SST96:
@@ -289,7 +289,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 
         object_init_ex(&sst_board, grSst96Config_ce);
 
-        hydrate_GrSst96Config(&sSTs->sstBoard.SST96Config, O_EMBEDDED_P(_GrSst96Config_t, &Z_OBJ(sst_board)));
+        hydrate_GrSst96Config(&sSTs->sstBoard.SST96Config, O_EMBEDDED_P(_GrSst96Config_t, Z_OBJ_P(&sst_board)));
 
         break;
     case GR_SSTTYPE_AT3D:
@@ -297,7 +297,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 
         object_init_ex(&sst_board, grAT3DConfig_ce);
 
-        hydrate_GrAT3DConfig(&sSTs->sstBoard.AT3DConfig, O_EMBEDDED_P(_GrAT3DConfig_t, &Z_OBJ(sst_board)));
+        hydrate_GrAT3DConfig(&sSTs->sstBoard.AT3DConfig, O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(&sst_board)));
 
         break;
     }

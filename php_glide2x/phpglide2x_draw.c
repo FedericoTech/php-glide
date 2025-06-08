@@ -189,7 +189,7 @@ PHP_FUNCTION(grAADrawTriangle)
 	zend_bool antialiasBC;
 	zend_bool antialiasCA;
 
-	ZEND_PARSE_PARAMETERS_START(3, 3)
+	ZEND_PARSE_PARAMETERS_START(6, 6)
 		Z_PARAM_OBJ_OF_CLASS(a, grVertex_ce)
 		Z_PARAM_OBJ_OF_CLASS(b, grVertex_ce)
 		Z_PARAM_OBJ_OF_CLASS(c, grVertex_ce)

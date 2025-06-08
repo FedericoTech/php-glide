@@ -148,6 +148,7 @@ void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
 
 void hydrate_grTMUConfig(const GrTMUConfig_t* tmuConfig, _GrTMUConfig_t* grTMUConfig)
 {
+
     zend_update_property_long(grTMUConfig_ce, &grTMUConfig->std, "tmuRev", sizeof("tmuRev") - 1, tmuConfig->tmuRev);
 
     zend_update_property_long(grTMUConfig_ce, &grTMUConfig->std, "tmuRam", sizeof("tmuRam") - 1, tmuConfig->tmuRam);

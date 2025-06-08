@@ -422,7 +422,6 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfi
 
 void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfig_t* grVoodooConfig)
 {
-    php_printf("ello %d", voodooConfig->fbRam);
     zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbRam", sizeof("fbRam") - 1, voodooConfig->fbRam);
     
     zend_update_property_long(grVoodooConfig_ce, &grVoodooConfig->std, "fbiRev", sizeof("fbiRev") - 1, voodooConfig->fbiRev);
@@ -438,9 +437,9 @@ void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfi
         zval grTMUConfig_t;
 
         object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
-
-        hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
-
+        
+        hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(&grTMUConfig_t)));
+        php_printf("lala2\n");
         add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
 
