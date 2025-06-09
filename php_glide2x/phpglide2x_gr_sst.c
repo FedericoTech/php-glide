@@ -121,69 +121,6 @@ zend_object* SST_new(zend_class_entry* ce)
     return &sST->std;
 }
 
-
-static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
-{
-    if (object->ce == sST_ce) {
-        _SST_t* sst = O_EMBEDDED_P(_SST_t, object);
-
-        if (zend_string_equals_literal(member, "type")) {
-
-            sst->SST.type = enum_to_int(Z_OBJ_P(value));
-        }else if (zend_string_equals_literal(member, "sstBoard")) {
-
-            switch(sst->SST.type){
-            case GR_SSTTYPE_VOODOO:
-            {
-                _GrVoodooConfig_t* config = O_EMBEDDED_P(_GrVoodooConfig_t, Z_OBJ_P(value));
-
-                memcpy(
-                    &sst->SST.sstBoard,
-                    &config->grVoodooConfig,
-                    sizeof(GrVoodooConfig_t)
-                );
-            }
-                break;
-            case GR_SSTTYPE_SST96:
-            {
-                _GrSst96Config_t* config = O_EMBEDDED_P(_GrSst96Config_t, Z_OBJ_P(value));
-
-                memcpy(
-                    &sst->SST.sstBoard,
-                    &config->grSst96Config,
-                    sizeof(GrSst96Config_t)
-                );
-            }
-                break;
-            case GR_SSTTYPE_AT3D:
-            {
-                _GrAT3DConfig_t* config = O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(value));
-
-                memcpy(
-                    &sst->SST.sstBoard,
-                    &config->grAT3DConfig,
-                    sizeof(GrAT3DConfig_t)
-                );
-            }
-                break;
-            case GR_SSTTYPE_Voodoo2:
-            {
-                _GrVoodoo2Config_t* config = O_EMBEDDED_P(_GrVoodoo2Config_t, Z_OBJ_P(value));
-
-                memcpy(
-                    &sst->SST.sstBoard,
-                    &config->grVoodoo2Config,
-                    sizeof(GrVoodoo2Config_t)
-                );
-            }
-                break; 
-            }
-        } //if sstBoard
-    }
-    
-    return zend_std_write_property(object, member, value, cache_slot);
-}
-
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler

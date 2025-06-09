@@ -126,38 +126,6 @@ zend_object* GrHwConfiguration_new(zend_class_entry* ce)
     return &grHwConfiguration->std;
 }
 
-static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
-{
-    if (object->ce == grHwConfiguration_ce) {
-
-        _GrHwConfiguration* config = O_EMBEDDED_P(_GrHwConfiguration, object);  // Get your embedded struct from the object
-
-        if (zend_string_equals_literal(member, "num_sst")) {
-            config->grHwConfiguration.num_sst = Z_LVAL_P(value);
-        } else if (zend_string_equals_literal(member, "SSTs")) {
-
-            zval* entry = NULL;
-            zend_string* key = NULL;
-
-            for (uint32_t cont = 0; cont < min(MAX_NUM_SST, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
-
-                if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
-
-                    _SST_t* sST = O_EMBEDDED_P(_SST_t, Z_OBJ_P(entry));
-
-                    memcpy(
-                        &config->grHwConfiguration.SSTs[cont],
-                        &sST->SST,
-                        (size_t) & (((_SST_t*)0)->std) - (size_t) & (((_SST_t*)0)->SST)
-                    );
-                }
-            } // for
-        }
-    }
-
-    return zend_std_write_property(object, member, value, cache_slot);
-}
-
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
@@ -187,7 +155,6 @@ void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grHwConfiguration_object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
-    //grHwConfiguration_object_handlers.write_property = gr_write_property;
     grHwConfiguration_object_handlers.clone_obj = gr_clone_obj;
 }
 

@@ -64,36 +64,6 @@ zend_object* GrTmuVertex_new(zend_class_entry* ce)
     return &grTmuVertex->std;
 }
 
-static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
-{
-    if (object->ce == grTmuVertex_ce) {
-        
-        
-
-        _GrTmuVertex* config = O_EMBEDDED_P(_GrTmuVertex, object);  // Get your embedded struct from the object
-
-        for (int cont = 0; cont < 3; cont++) {
-            if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
-                
-                
-                switch (Z_TYPE_P(value))
-                {
-                case IS_STRING:
-                    if (!is_numeric_string(Z_STRVAL_P(value), Z_STRLEN_P(value), NULL, NULL, 0)) {
-                        break;
-                    }
-                case IS_DOUBLE:
-                case IS_LONG:
-                    *((FxFloat*)&config->grTmuVertex + cont) = (FxFloat)zval_get_double(value);
-                }
-                break;
-            }
-        }
-    }
-
-    return zend_std_write_property(object, member, value, cache_slot);
-}
-
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
@@ -122,7 +92,6 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grTmuVertex_object_handlers.offset = XtOffsetOf(_GrTmuVertex, std);
-    //grTmuVertex_object_handlers.write_property = gr_write_property;
     grTmuVertex_object_handlers.clone_obj = gr_clone_obj;
 }
 

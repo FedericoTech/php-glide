@@ -143,133 +143,6 @@ zend_object* GrVoodoo2Config_new(zend_class_entry* ce)
     return &grVoodoo2Config->std;
 }
 
-static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
-{
-    if (object->ce == grVoodooConfig_ce) {
-
-        _GrVoodooConfig_t* config = O_EMBEDDED_P(_GrVoodooConfig_t, object);  // Get your embedded struct from the object
-
-        //if the property we are checking is factor and the value is integer...
-        if (zend_string_equals_literal(member, "fbRam") 
-            && Z_TYPE_P(value) == IS_LONG
-        ) {
-
-            //we update the inner field
-            config->grVoodooConfig.fbRam = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "fbiRev") 
-            && Z_TYPE_P(value) == IS_LONG
-        ) {
-
-            //we update the inner field
-            config->grVoodooConfig.fbiRev = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "nTexelfx") 
-            && Z_TYPE_P(value) == IS_LONG
-        ) {
-
-            //we update the inner field
-            config->grVoodooConfig.nTexelfx = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "sliDetect") 
-            && Z_TYPE_P(value) == _IS_BOOL
-        ) {
-
-            //we update the inner field
-            config->grVoodooConfig.sliDetect = Z_TYPE_P(value) == IS_TRUE;
-        }
-        
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "tmuConfig") 
-            && Z_TYPE_P(value) == IS_ARRAY
-        ) {
-            zval* entry = NULL;
-            zend_string* key = NULL;
-
-            for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
-                
-                if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
-                    _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(entry));
-
-                    memcpy(
-                        &config->grVoodooConfig.tmuConfig[cont],
-                        &grTMUConfig->grTMUConfig,	            
-                        sizeof(GrTMUConfig_t)		            
-                    );
-                }
-            }
-        }
-    } else if (object->ce == grVoodoo2Config_ce) {
-
-        _GrVoodoo2Config_t* config = O_EMBEDDED_P(_GrVoodoo2Config_t, object);  // Get your embedded struct from the object
-        
-        //if the property we are checking is factor and the value is integer...
-        if (zend_string_equals_literal(member, "fbRam")
-            && Z_TYPE_P(value) == IS_LONG
-            ) {
-
-            //we update the inner field
-            config->grVoodoo2Config.fbRam = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "fbiRev")
-            && Z_TYPE_P(value) == IS_LONG
-            ) {
-
-            //we update the inner field
-            config->grVoodoo2Config.fbiRev = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "nTexelfx")
-            && Z_TYPE_P(value) == IS_LONG
-            ) {
-
-            //we update the inner field
-            config->grVoodoo2Config.nTexelfx = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "sliDetect")
-            && Z_TYPE_P(value) == _IS_BOOL
-            ) {
-
-            //we update the inner field
-            config->grVoodoo2Config.sliDetect = Z_TYPE_P(value) == IS_TRUE;
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "tmuConfig")
-            && Z_TYPE_P(value) == IS_ARRAY
-            ) {
-            zval* entry = NULL;
-            zend_string* key = NULL;
-
-            for (uint32_t cont = 0; cont < min(GLIDE_NUM_TMU, zend_hash_num_elements(Z_ARRVAL_P(value))); cont++) {
-
-                if ((entry = zend_hash_index_find(Z_ARRVAL_P(value), cont)) != NULL) {
-                    _GrTMUConfig_t* grTMUConfig = O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(entry));
-
-                    memcpy(
-                        &config->grVoodoo2Config.tmuConfig[cont],
-                        &grTMUConfig->grTMUConfig,
-                        sizeof(GrTMUConfig_t)
-                    );
-                }
-            }
-        }
-    }
-
-    return zend_std_write_property(object, member, value, cache_slot);
-}
-
 static zend_object* gr_clone_obj(zend_object* object)
 {
     zend_object* new_obj = NULL;
@@ -329,11 +202,9 @@ void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     grVoodooConfig_object_handlers.offset = XtOffsetOf(_GrVoodooConfig_t, std);
-    //grVoodooConfig_object_handlers.write_property = gr_write_property;
     grVoodooConfig_object_handlers.clone_obj = gr_clone_obj;
 
     grVoodoo2Config_object_handlers.offset = XtOffsetOf(_GrVoodoo2Config_t, std);
-    //grVoodoo2Config_object_handlers.write_property = gr_write_property;
     grVoodoo2Config_object_handlers.clone_obj = gr_clone_obj;
 }
 

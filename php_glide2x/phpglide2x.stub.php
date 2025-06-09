@@ -621,14 +621,42 @@ function grAADrawPolygonVertexList(int $nVerts, array $vlist) : void {};
 
 function grAADrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c, bool $antialiasAB, bool $antialiasBC, bool $antialiasCA) : void {};
 
-/*
 function grAlphaBlendFunction(
 	GrAlphaBlendFnc_t $rgb_sf,
 	GrAlphaBlendFnc_t $rgb_df,
 	GrAlphaBlendFnc_t $alpha_sf,
 	GrAlphaBlendFnc_t $alpha_df
 ) : void {};
-*/
+
+function grAlphaCombine(
+	GrCombineFunction_t $func,
+	GrCombineFactor_t $factor,
+	GrCombineLocal_t $local,
+	GrCombineOther_t $other,
+	bool $invert
+) : void {};
+
+function grAlphaControlsITRGBLighting(bool $enable) : void {};
+
+function grAlphaTestFunction(GrCmpFnc_t $function) : void {};
+
+function grAlphaTestReferenceValue(int $value) : void {};
+
+function grBufferClear(int $color, int $alpha, GrDepth_t $depth) : void {};
+
+function grBufferNumPending() : int {};
+
+function grBufferSwap(int $swap_interval) : void {};
+
+function grChromakeyMode(GrChromakeyMode_t $mode) : void {};
+
+function grChromakeyValue(int $color) : void {};
+
+
+
+
+
+
 
 function grGlideInit() : void {};
 function grGlideShutdown() : void {};
@@ -654,9 +682,9 @@ function grSstWinClose() : void {};
 
 function grSstIdle() : void {};
 
-function grBufferClear(int $color, int $alpha, GrDepth_t $depth) : void {};
 
-function grBufferSwap(int $swap_interval) : void {};
+
+
 
 // other functions
 function _kbhit() : int {};

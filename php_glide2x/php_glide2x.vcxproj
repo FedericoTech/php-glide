@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="phpglide2x.c" />
+    <ClCompile Include="phpglide2x_alpha.c" />
     <ClCompile Include="phpglide2x_buffer.c" />
     <ClCompile Include="phpglide2x_color.c" />
     <ClCompile Include="phpglide2x_draw.c" />
@@ -162,6 +163,7 @@
     <ClCompile Include="stdafx.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="phpglide2x_alpha.h" />
     <ClInclude Include="phpglide2x_arginfo.h" />
     <ClInclude Include="phpglide2x_buffer.h" />
     <ClInclude Include="phpglide2x_color.h" />

@@ -60,31 +60,6 @@ zend_object* GrTMUConfig_new(zend_class_entry* ce)
     //it returns the zend object
     return &grTMUConfig->std;
 }
-/*
-static zval* gr_write_property(zend_object* object, zend_string* member, zval* value, void** cache_slot)
-{
-    if (object->ce == grTMUConfig_ce) {
-
-        _GrTMUConfig_t* config = O_EMBEDDED_P(_GrTMUConfig_t, object);  // Get your embedded struct from the object
-
-        //if the property we are checking is factor and the value is integer...
-        if (zend_string_equals_literal(member, "tmuRev") && Z_TYPE_P(value) == IS_LONG) {
-
-            //we update the inner field
-            config->grTMUConfig.tmuRev = Z_LVAL_P(value);
-        }
-
-        //if the property we are checking is factor and the value is integer...
-        else if (zend_string_equals_literal(member, "tmuRam") && Z_TYPE_P(value) == IS_LONG) {
-
-            //we update the inner field
-            config->grTMUConfig.tmuRam = Z_LVAL_P(value);
-        }
-    }
-
-    return zend_std_write_property(object, member, value, cache_slot);
-}
-*/
 
 static zend_object* gr_clone_obj(zend_object* object)
 {

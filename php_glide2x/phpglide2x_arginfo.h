@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: e41e4501a6baf7a07987a5a50ad004dad022db09 */
+ * Stub hash: 770d1723bd98c81da622cff5745ead5269ffa345 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -72,6 +72,54 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAADrawTriangle, 0, 6, IS_VOID,
 	ZEND_ARG_TYPE_INFO(0, antialiasCA, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAlphaBlendFunction, 0, 4, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, rgb_sf, GrAlphaBlendFnc_t, 0)
+	ZEND_ARG_OBJ_INFO(0, rgb_df, GrAlphaBlendFnc_t, 0)
+	ZEND_ARG_OBJ_INFO(0, alpha_sf, GrAlphaBlendFnc_t, 0)
+	ZEND_ARG_OBJ_INFO(0, alpha_df, GrAlphaBlendFnc_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAlphaCombine, 0, 5, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, func, GrCombineFunction_t, 0)
+	ZEND_ARG_OBJ_INFO(0, factor, GrCombineFactor_t, 0)
+	ZEND_ARG_OBJ_INFO(0, local, GrCombineLocal_t, 0)
+	ZEND_ARG_OBJ_INFO(0, other, GrCombineOther_t, 0)
+	ZEND_ARG_TYPE_INFO(0, invert, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAlphaControlsITRGBLighting, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, enable, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAlphaTestFunction, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, function, GrCmpFnc_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grAlphaTestReferenceValue, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferClear, 0, 3, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, alpha, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, depth, GrDepth_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferNumPending, 0, 0, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferSwap, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, swap_interval, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grChromakeyMode, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrChromakeyMode_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grChromakeyValue, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideInit, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
@@ -109,90 +157,79 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grSstIdle arginfo_grGlideInit
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferClear, 0, 3, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, alpha, IS_LONG, 0)
-	ZEND_ARG_OBJ_INFO(0, depth, GrDepth_t, 0)
-ZEND_END_ARG_INFO()
+#define arginfo__kbhit arginfo_grBufferNumPending
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grBufferSwap, 0, 1, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(0, swap_interval, IS_LONG, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_class_GrDepth_t_toInt arginfo_grBufferNumPending
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo__kbhit, 0, 0, IS_LONG, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_class_GrEvenOdd_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrDepth_t_toInt arginfo__kbhit
+#define arginfo_class_GrChipID_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrEvenOdd_t_toInt arginfo__kbhit
+#define arginfo_class_GrCombineFunction_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrChipID_t_toInt arginfo__kbhit
+#define arginfo_class_GrCombineFactor_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCombineFunction_t_toInt arginfo__kbhit
+#define arginfo_class_GrCombineLocal_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCombineFactor_t_toInt arginfo__kbhit
+#define arginfo_class_GrCombineOther_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCombineLocal_t_toInt arginfo__kbhit
+#define arginfo_class_GrAlphaSource_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCombineOther_t_toInt arginfo__kbhit
+#define arginfo_class_GrColorCombineFnc_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrAlphaSource_t_toInt arginfo__kbhit
+#define arginfo_class_GrAlphaBlendFnc_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrColorCombineFnc_t_toInt arginfo__kbhit
+#define arginfo_class_GrAspectRatio_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrAlphaBlendFnc_t_toInt arginfo__kbhit
+#define arginfo_class_GrBuffer_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrAspectRatio_t_toInt arginfo__kbhit
+#define arginfo_class_GrChromakeyMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrBuffer_t_toInt arginfo__kbhit
+#define arginfo_class_GrCmpFnc_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrChromakeyMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrColorFormat_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCmpFnc_t_toInt arginfo__kbhit
+#define arginfo_class_GrCullMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrColorFormat_t_toInt arginfo__kbhit
+#define arginfo_class_GrDepthBufferMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrCullMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrDitherMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrDepthBufferMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrFogMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrDitherMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrLock_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrFogMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrLfbBypassMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrLock_t_toInt arginfo__kbhit
+#define arginfo_class_GrLfbWriteMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrLfbBypassMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrOriginLocation_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrLfbWriteMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrLOD_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrOriginLocation_t_toInt arginfo__kbhit
+#define arginfo_class_GrMipMapMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrLOD_t_toInt arginfo__kbhit
+#define arginfo_class_GrSmoothingMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrMipMapMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrTextureClampMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrSmoothingMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrTextureCombineFnc_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTextureClampMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrTextureFilterMode_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTextureCombineFnc_t_toInt arginfo__kbhit
+#define arginfo_class_GrTextureFormat_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTextureFilterMode_t_toInt arginfo__kbhit
+#define arginfo_class_GrTexTable_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTextureFormat_t_toInt arginfo__kbhit
+#define arginfo_class_GrNCCTable_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTexTable_t_toInt arginfo__kbhit
+#define arginfo_class_GrTexBaseRange_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrNCCTable_t_toInt arginfo__kbhit
+#define arginfo_class_GrSstType_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrTexBaseRange_t_toInt arginfo__kbhit
+#define arginfo_class_GrScreenRefresh_t_toInt arginfo_grBufferNumPending
 
-#define arginfo_class_GrSstType_toInt arginfo__kbhit
-
-#define arginfo_class_GrScreenRefresh_t_toInt arginfo__kbhit
-
-#define arginfo_class_GrScreenResolution_t_toInt arginfo__kbhit
+#define arginfo_class_GrScreenResolution_t_toInt arginfo_grBufferNumPending
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_flushable_flush, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -232,6 +269,16 @@ ZEND_FUNCTION(grAADrawPoint);
 ZEND_FUNCTION(grAADrawPolygon);
 ZEND_FUNCTION(grAADrawPolygonVertexList);
 ZEND_FUNCTION(grAADrawTriangle);
+ZEND_FUNCTION(grAlphaBlendFunction);
+ZEND_FUNCTION(grAlphaCombine);
+ZEND_FUNCTION(grAlphaControlsITRGBLighting);
+ZEND_FUNCTION(grAlphaTestFunction);
+ZEND_FUNCTION(grAlphaTestReferenceValue);
+ZEND_FUNCTION(grBufferClear);
+ZEND_FUNCTION(grBufferNumPending);
+ZEND_FUNCTION(grBufferSwap);
+ZEND_FUNCTION(grChromakeyMode);
+ZEND_FUNCTION(grChromakeyValue);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -241,8 +288,6 @@ ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grSstWinClose);
 ZEND_FUNCTION(grSstIdle);
-ZEND_FUNCTION(grBufferClear);
-ZEND_FUNCTION(grBufferSwap);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
 ZEND_METHOD(GrEvenOdd_t, toInt);
@@ -308,6 +353,16 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grAADrawPolygon, arginfo_grAADrawPolygon)
 	ZEND_FE(grAADrawPolygonVertexList, arginfo_grAADrawPolygonVertexList)
 	ZEND_FE(grAADrawTriangle, arginfo_grAADrawTriangle)
+	ZEND_FE(grAlphaBlendFunction, arginfo_grAlphaBlendFunction)
+	ZEND_FE(grAlphaCombine, arginfo_grAlphaCombine)
+	ZEND_FE(grAlphaControlsITRGBLighting, arginfo_grAlphaControlsITRGBLighting)
+	ZEND_FE(grAlphaTestFunction, arginfo_grAlphaTestFunction)
+	ZEND_FE(grAlphaTestReferenceValue, arginfo_grAlphaTestReferenceValue)
+	ZEND_FE(grBufferClear, arginfo_grBufferClear)
+	ZEND_FE(grBufferNumPending, arginfo_grBufferNumPending)
+	ZEND_FE(grBufferSwap, arginfo_grBufferSwap)
+	ZEND_FE(grChromakeyMode, arginfo_grChromakeyMode)
+	ZEND_FE(grChromakeyValue, arginfo_grChromakeyValue)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
@@ -317,8 +372,6 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
 	ZEND_FE(grSstIdle, arginfo_grSstIdle)
-	ZEND_FE(grBufferClear, arginfo_grBufferClear)
-	ZEND_FE(grBufferSwap, arginfo_grBufferSwap)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
 };

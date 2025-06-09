@@ -17,6 +17,11 @@ PHP_FUNCTION(grBufferClear)
 	grBufferClear((GrColor_t) color, (GrAlpha_t) alpha, enum_to_int(depth));
 }
 
+PHP_FUNCTION(grBufferNumPending)
+{
+	RETURN_LONG(grBufferNumPending());
+}
+
 PHP_FUNCTION(grBufferSwap)
 {
 	zend_long swap_interval;
