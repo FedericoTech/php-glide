@@ -572,17 +572,19 @@ final class GrHwConfiguration implements flushable
 function testGrHwConfiguration(GrHwConfiguration $chc) : void {};
 #endif
 
-class GrTmuVertex {
+final class GrTmuVertex implements flushable {
 	public float  $sow;
 	public float  $tow;
 	public float  $oow;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
-final class GrVertex {
+final class GrVertex implements flushable {
 	public float $x;
 	public float $y;
 	public float $z;
@@ -597,6 +599,8 @@ final class GrVertex {
 	
 	/** @var GrTmuVertex[] */
 	public array $tmuvtx;
+	
+	public function flush() : string;
 }
 
 #ifdef _DEBUG
@@ -616,6 +620,15 @@ function grAADrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
 function grAADrawPolygonVertexList(int $nVerts, array $vlist) : void {};
 
 function grAADrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c, bool $antialiasAB, bool $antialiasBC, bool $antialiasCA) : void {};
+
+/*
+function grAlphaBlendFunction(
+	GrAlphaBlendFnc_t $rgb_sf,
+	GrAlphaBlendFnc_t $rgb_df,
+	GrAlphaBlendFnc_t $alpha_sf,
+	GrAlphaBlendFnc_t $alpha_df
+) : void {};
+*/
 
 function grGlideInit() : void {};
 function grGlideShutdown() : void {};

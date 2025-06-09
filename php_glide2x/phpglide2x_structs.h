@@ -138,16 +138,23 @@ typedef struct _GrTmuVertex {
     zend_object std;
 } _GrTmuVertex;
 
+void flush_grTmuVertex(const _GrTmuVertex* grVertex, GrTmuVertex* buffer);
+
+void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grVertex);
+
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* grVertex_ce;
 
 typedef struct _GrVertex {
-    uint16_t initialized_flags;
     GrVertex grVertex;
     zend_object std;
 } _GrVertex;
+
+void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer);
+
+void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex);
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 

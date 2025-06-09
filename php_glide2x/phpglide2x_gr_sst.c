@@ -316,9 +316,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
         &sst_board
     );
     zval_ptr_dtor(&sst_board); //destroy the local pointer
-
-    php_printf("ello6");
-    
+       
 
     //zval_ptr_dtor(&sst_obj);  //destroy the local pointer I'M WORKING HERE !!!!
 }

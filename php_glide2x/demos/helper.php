@@ -37,6 +37,8 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
     //$new->oow = $point->oow;
 	*/
 	
+	$new->flush();
+	
     // Translate back
     return $new;
 }

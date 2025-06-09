@@ -34,6 +34,9 @@ $vtx3->g = $color;
 $vtx3->b = 0;
 $vtx3->a = 255.0;
 
+$arr = [$vtx1, $vtx2, $vtx3];
+array_walk($arr , fn($vt) => $vt->flush());
+
 
 while (!_kbhit()) {
 	
@@ -42,7 +45,7 @@ while (!_kbhit()) {
     $vtr1 = rotate_point($vtx1, $angle, $centre);
     $vtr2 = rotate_point($vtx2, $angle, $centre);
     $vtr3 = rotate_point($vtx3, $angle, $centre);
-
+	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
 	grAADrawPoint($vtr1);

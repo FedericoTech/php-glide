@@ -439,7 +439,7 @@ void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfi
         object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
         
         hydrate_grTMUConfig(&voodooConfig->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, Z_OBJ_P(&grTMUConfig_t)));
-        php_printf("lala2\n");
+
         add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
 
@@ -545,27 +545,25 @@ void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* voodoo2Config, _GrVoodoo2C
 
     zend_update_property_bool(grVoodoo2Config_ce, &grVoodoo2Config->std, "sliDetect", sizeof("sliDetect") - 1, voodoo2Config->sliDetect);
 
-    {
-        zval tmuConfig_arr_zval;
-        array_init_size(&tmuConfig_arr_zval, voodoo2Config->nTexelfx);
+    zval tmuConfig_arr_zval;
+    array_init_size(&tmuConfig_arr_zval, voodoo2Config->nTexelfx);
 
-        for (int cont2 = 0; cont2 < voodoo2Config->nTexelfx; cont2++) {
-            zval grTMUConfig_t;
-            object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
+    for (int cont2 = 0; cont2 < voodoo2Config->nTexelfx; cont2++) {
+        zval grTMUConfig_t;
+        object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
 
-            hydrate_grTMUConfig(&voodoo2Config->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
+        hydrate_grTMUConfig(&voodoo2Config->tmuConfig[cont2], O_EMBEDDED_P(_GrTMUConfig_t, &Z_OBJ(grTMUConfig_t)));
 
-            add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
-        }
-
-        zend_update_property(
-            grVoodoo2Config_ce,
-            &grVoodoo2Config->std,
-            "tmuConfig",
-            sizeof("tmuConfig") - 1,
-            &tmuConfig_arr_zval
-        );
-
-        zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
+        add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
+
+    zend_update_property(
+        grVoodoo2Config_ce,
+        &grVoodoo2Config->std,
+        "tmuConfig",
+        sizeof("tmuConfig") - 1,
+        &tmuConfig_arr_zval
+    );
+
+    zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
 }

@@ -6,6 +6,7 @@ grGlideInit();
 
 echo 'we create an empty object' . PHP_EOL;
 $grtv = new GrTmuVertex;
+$grtv->flush();
 
 var_dump($grtv);
 testGrTmuVertex($grtv);
@@ -13,13 +14,19 @@ testGrTmuVertex($grtv);
 echo 'we clone the empty object' . PHP_EOL;
 
 $grtv2 = clone $grtv;
-var_dump($grtv2);
+var_dump(
+	$grtv2,
+	$grtv == $grtv2,
+	$grtv === $grtv2,
+);
 testGrTmuVertex($grtv2);
 
 echo 'we set values in the original object' . PHP_EOL;
 $grtv->sow = '1';
 $grtv->tow = 2;
 $grtv->oow = 3;
+$grtv->flush();
+
 var_dump($grtv);
 testGrTmuVertex($grtv);
 
@@ -27,18 +34,25 @@ echo 'we set values in the cloned object' . PHP_EOL;
 $grtv2->sow = '1.1';
 $grtv2->tow = 2.2;
 $grtv2->oow = 3.3;
+$grtv2->flush();
+
 var_dump($grtv2);
 testGrTmuVertex($grtv2);
 
 echo 'we clone the cloned object' . PHP_EOL;
 $grtv3 = clone $grtv2;
-var_dump($grtv3);
+var_dump(
+	$grtv3,
+	$grtv3 == $grtv2,
+	$grtv3 === $grtv2
+);
 testGrTmuVertex($grtv3);
 
 echo 'we modify the cloned cloned object' . PHP_EOL;
 $grtv3->sow = '2.2';
 $grtv3->tow = 3.3;
 $grtv3->oow = 4.4;
+$grtv3->flush();
 var_dump($grtv3);
 testGrTmuVertex($grtv3);
 
@@ -60,7 +74,10 @@ foreach (get_object_vars($grtv5) as $f => $v) {
 
 echo 'is the class final?' . PHP_EOL;
 $reflection = new ReflectionClass(GrTmuVertex::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 
@@ -86,6 +103,8 @@ object(GrTmuVertex)#2 (0) {
   ["oow"]=>
   uninitialized(float)
 }
+bool(true)
+bool(false)
 sow: 0.000000, tow: 0.000000, oow: 0.000000
 we set values in the original object
 object(GrTmuVertex)#1 (3) {
@@ -116,6 +135,8 @@ object(GrTmuVertex)#3 (3) {
   ["oow"]=>
   float(3.3)
 }
+bool(true)
+bool(false)
 sow: 1.100000, tow: 2.200000, oow: 3.300000
 we modify the cloned cloned object
 object(GrTmuVertex)#3 (3) {
@@ -153,5 +174,6 @@ sow: 2.2
 tow: 3.3
 oow: 4.4
 is the class final?
-bool(false)
+bool(true)
+bool(true)
 done

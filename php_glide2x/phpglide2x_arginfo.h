@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 99fa3e9ae59ec0439587187f5d8bae4ddb952227 */
+ * Stub hash: e41e4501a6baf7a07987a5a50ad004dad022db09 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -211,6 +211,10 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrHwConfiguration_flush arginfo_class_flushable_flush
 
+#define arginfo_class_GrTmuVertex_flush arginfo_class_flushable_flush
+
+#define arginfo_class_GrVertex_flush arginfo_class_flushable_flush
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrTMUConfig_t);
 ZEND_FUNCTION(testGrVoodooConfig_t);
@@ -283,6 +287,8 @@ ZEND_METHOD(GrSst96Config_t, flush);
 ZEND_METHOD(GrAT3DConfig_t, flush);
 ZEND_METHOD(SST_t, flush);
 ZEND_METHOD(GrHwConfiguration, flush);
+ZEND_METHOD(GrTmuVertex, flush);
+ZEND_METHOD(GrVertex, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
@@ -534,6 +540,16 @@ static const zend_function_entry class_SST_t_methods[] = {
 
 static const zend_function_entry class_GrHwConfiguration_methods[] = {
 	ZEND_ME(GrHwConfiguration, flush, arginfo_class_GrHwConfiguration_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrTmuVertex_methods[] = {
+	ZEND_ME(GrTmuVertex, flush, arginfo_class_GrTmuVertex_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrVertex_methods[] = {
+	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1515,12 +1531,13 @@ static zend_class_entry *register_class_GrHwConfiguration(zend_class_entry *clas
 	return class_entry;
 }
 
-static zend_class_entry *register_class_GrTmuVertex(void)
+static zend_class_entry *register_class_GrTmuVertex(zend_class_entry *class_entry_flushable)
 {
 	zend_class_entry ce, *class_entry;
 
-	INIT_CLASS_ENTRY(ce, "GrTmuVertex", NULL);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, 0);
+	INIT_CLASS_ENTRY(ce, "GrTmuVertex", class_GrTmuVertex_methods);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_sow_default_value;
 	ZVAL_UNDEF(&property_sow_default_value);
@@ -1543,12 +1560,13 @@ static zend_class_entry *register_class_GrTmuVertex(void)
 	return class_entry;
 }
 
-static zend_class_entry *register_class_GrVertex(void)
+static zend_class_entry *register_class_GrVertex(zend_class_entry *class_entry_flushable)
 {
 	zend_class_entry ce, *class_entry;
 
-	INIT_CLASS_ENTRY(ce, "GrVertex", NULL);
+	INIT_CLASS_ENTRY(ce, "GrVertex", class_GrVertex_methods);
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_x_default_value;
 	ZVAL_UNDEF(&property_x_default_value);

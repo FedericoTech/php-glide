@@ -5,15 +5,22 @@ GrVertex
 grGlideInit();
 
 $gtv = new GrTmuVertex;
+$gtv->flush();
+
 var_dump($gtv);
 testGrTmuVertex($gtv);
+
+echo PHP_EOL;
 
 $gtv->sow = 0;
 $gtv->tow = 0.1;
 $gtv->oow = '0.2';
+$gtv->flush();
 
 var_dump($gtv);
 testGrTmuVertex($gtv);
+
+echo PHP_EOL;
 
 $gtv2 = new GrTmuVertex;
 $gtv2->sow = '0.3';
@@ -24,8 +31,12 @@ $gtv2->oow = 0.5;
 echo PHP_EOL;
 
 $vertex = new GrVertex;
+
+$vertex->flush();
 var_dump($vertex);
 testGrVertex($vertex);
+
+echo PHP_EOL;
 
 $vertex->x = 0;
 $vertex->y = 0.1;
@@ -40,6 +51,7 @@ $vertex->a = 0.7;
 $vertex->oow = '0.8';
 
 $vertex->tmuvtx = [$gtv, $gtv2];
+$vertex->flush();
 
 var_dump($vertex);
 testGrVertex($vertex);
@@ -47,7 +59,10 @@ testGrVertex($vertex);
 echo PHP_EOL;
 
 $reflection = new ReflectionClass(GrHwConfiguration::class);
-var_dump($reflection->isFinal());
+var_dump(
+	$reflection->isInternal(),
+	$reflection->isFinal()
+);
 
 grGlideShutdown();
 ?>
@@ -61,6 +76,7 @@ object(GrTmuVertex)#1 (0) {
   uninitialized(float)
 }
 sow: 0.000000, tow: 0.000000, oow: 0.000000
+
 object(GrTmuVertex)#1 (3) {
   ["sow"]=>
   float(0)
@@ -70,6 +86,7 @@ object(GrTmuVertex)#1 (3) {
   float(0.2)
 }
 sow: 0.000000, tow: 0.100000, oow: 0.200000
+
 
 object(GrVertex)#3 (0) {
   ["x"]=>
@@ -96,6 +113,7 @@ object(GrVertex)#3 (0) {
 x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+
 object(GrVertex)#3 (10) {
   ["x"]=>
   float(0)
@@ -141,4 +159,5 @@ x: 0.000000, y: 0.100000, z: 0.200000, r: 0.300000, g: 0.400000, b: 0.500000, oo
 [0] sow: 0.000000, tow: 0.100000, oow: 0.200000
 [1] sow: 0.300000, tow: 0.400000, oow: 0.500000
 
+bool(true)
 bool(true)

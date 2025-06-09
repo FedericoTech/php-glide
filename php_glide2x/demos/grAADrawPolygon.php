@@ -58,6 +58,10 @@ $vtx6->g = 0;
 $vtx6->b = $color;
 $vtx6->a = 255.0;
 
+
+$arr = [$centre, $vtx1, $vtx2, $vtx3, $vtx4, $vtx5, $vtx6];
+array_walk($arr , fn($vt) => $vt->flush());
+
 //see the case the indices are less than vertices
 $indices = [0, 1, 2, 0, 3, 4, 0, 5, 6, 0];
 
