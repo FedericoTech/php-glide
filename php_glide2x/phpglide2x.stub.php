@@ -652,6 +652,25 @@ function grChromakeyMode(GrChromakeyMode_t $mode) : void {};
 
 function grChromakeyValue(int $color) : void {};
 
+function grClipWindow(int $minx, int $miny, int $maxx, int $maxy) : void {};
+
+
+function grColorCombine( 
+	GrCombineFunction_t $func,
+	GrCombineFactor_t $factor,
+	GrCombineLocal_t $local,
+	GrCombineOther_t $other,
+	bool $invert
+) : void {};
+
+function grColorMask(bool $rgb, bool $alpha) : void {};
+
+function grConstantColorValue(int $color) : void {};
+
+function grCullMode(GrCullMode_t $mode) : void {};
+
+//function grDepthBiasLevel(int level) : void {};
+
 
 
 

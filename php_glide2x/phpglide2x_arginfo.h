@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 770d1723bd98c81da622cff5745ead5269ffa345 */
+ * Stub hash: f2f830f0eb243b657e7fe001894dc8fc39245ef8 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -118,6 +118,26 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grChromakeyValue, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, color, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grClipWindow, 0, 4, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, minx, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, miny, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, maxx, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, maxy, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grColorCombine arginfo_grAlphaCombine
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grColorMask, 0, 2, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, rgb, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, alpha, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grConstantColorValue arginfo_grChromakeyValue
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grCullMode, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrCullMode_t, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideInit, 0, 0, IS_VOID, 0)
@@ -279,6 +299,11 @@ ZEND_FUNCTION(grBufferNumPending);
 ZEND_FUNCTION(grBufferSwap);
 ZEND_FUNCTION(grChromakeyMode);
 ZEND_FUNCTION(grChromakeyValue);
+ZEND_FUNCTION(grClipWindow);
+ZEND_FUNCTION(grColorCombine);
+ZEND_FUNCTION(grColorMask);
+ZEND_FUNCTION(grConstantColorValue);
+ZEND_FUNCTION(grCullMode);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -363,6 +388,11 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grBufferSwap, arginfo_grBufferSwap)
 	ZEND_FE(grChromakeyMode, arginfo_grChromakeyMode)
 	ZEND_FE(grChromakeyValue, arginfo_grChromakeyValue)
+	ZEND_FE(grClipWindow, arginfo_grClipWindow)
+	ZEND_FE(grColorCombine, arginfo_grColorCombine)
+	ZEND_FE(grColorMask, arginfo_grColorMask)
+	ZEND_FE(grConstantColorValue, arginfo_grConstantColorValue)
+	ZEND_FE(grCullMode, arginfo_grCullMode)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
