@@ -669,10 +669,32 @@ function grConstantColorValue(int $color) : void {};
 
 function grCullMode(GrCullMode_t $mode) : void {};
 
-//function grDepthBiasLevel(int level) : void {};
+function grDepthBiasLevel(int $level) : void {};
 
+function grDepthBufferFunction(GrCmpFnc_t $func) : void {};
 
+function grDepthBufferMode(GrDepthBufferMode_t $mode) : void {};
 
+function grDepthMask(bool $enable) : void {};
+
+function grDisableAllEffects() : void {};
+
+function grDitherMode(GrDitherMode_t $mode) : void {};
+
+function grDrawLine(GrVertex $a, GrVertex $b ) : void {};
+
+function grDrawPlanarPolygon(int $nVerts, array $ilist, array $vlist) : void {};
+
+function grDrawPlanarPolygonVertexList(int $nVerts, array $vlist): void {};
+
+function grDrawPoint(GrVertex $a) : void {};
+
+function grDrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
+
+function grDrawPolygonVertexList(int $nVerts, array $vlist) : void {};
+
+// 						function(string $string, bool $fatal)
+//function grErrorSetCallback(callable $function) : void {};
 
 
 

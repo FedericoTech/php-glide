@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: f2f830f0eb243b657e7fe001894dc8fc39245ef8 */
+ * Stub hash: cb9e7dc6a0de25cf8862a7072847cdacfda29c13 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -140,10 +140,47 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grCullMode, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, mode, GrCullMode_t, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideInit, 0, 0, IS_VOID, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDepthBiasLevel, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, level, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_grGlideShutdown arginfo_grGlideInit
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDepthBufferFunction, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, func, GrCmpFnc_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDepthBufferMode, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrDepthBufferMode_t, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grDepthMask arginfo_grAlphaControlsITRGBLighting
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDisableAllEffects, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDitherMode, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrDitherMode_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawLine, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grDrawPlanarPolygon arginfo_grAADrawPolygon
+
+#define arginfo_grDrawPlanarPolygonVertexList arginfo_grAADrawPolygonVertexList
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawPoint, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grDrawPolygon arginfo_grAADrawPolygon
+
+#define arginfo_grDrawPolygonVertexList arginfo_grAADrawPolygonVertexList
+
+#define arginfo_grGlideInit arginfo_grDisableAllEffects
+
+#define arginfo_grGlideShutdown arginfo_grDisableAllEffects
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, hwConfig, GrHwConfiguration, 0)
@@ -173,9 +210,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, num_aux_buffers, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_grSstWinClose arginfo_grGlideInit
+#define arginfo_grSstWinClose arginfo_grDisableAllEffects
 
-#define arginfo_grSstIdle arginfo_grGlideInit
+#define arginfo_grSstIdle arginfo_grDisableAllEffects
 
 #define arginfo__kbhit arginfo_grBufferNumPending
 
@@ -304,6 +341,18 @@ ZEND_FUNCTION(grColorCombine);
 ZEND_FUNCTION(grColorMask);
 ZEND_FUNCTION(grConstantColorValue);
 ZEND_FUNCTION(grCullMode);
+ZEND_FUNCTION(grDepthBiasLevel);
+ZEND_FUNCTION(grDepthBufferFunction);
+ZEND_FUNCTION(grDepthBufferMode);
+ZEND_FUNCTION(grDepthMask);
+ZEND_FUNCTION(grDisableAllEffects);
+ZEND_FUNCTION(grDitherMode);
+ZEND_FUNCTION(grDrawLine);
+ZEND_FUNCTION(grDrawPlanarPolygon);
+ZEND_FUNCTION(grDrawPlanarPolygonVertexList);
+ZEND_FUNCTION(grDrawPoint);
+ZEND_FUNCTION(grDrawPolygon);
+ZEND_FUNCTION(grDrawPolygonVertexList);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -393,6 +442,18 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grColorMask, arginfo_grColorMask)
 	ZEND_FE(grConstantColorValue, arginfo_grConstantColorValue)
 	ZEND_FE(grCullMode, arginfo_grCullMode)
+	ZEND_FE(grDepthBiasLevel, arginfo_grDepthBiasLevel)
+	ZEND_FE(grDepthBufferFunction, arginfo_grDepthBufferFunction)
+	ZEND_FE(grDepthBufferMode, arginfo_grDepthBufferMode)
+	ZEND_FE(grDepthMask, arginfo_grDepthMask)
+	ZEND_FE(grDisableAllEffects, arginfo_grDisableAllEffects)
+	ZEND_FE(grDitherMode, arginfo_grDitherMode)
+	ZEND_FE(grDrawLine, arginfo_grDrawLine)
+	ZEND_FE(grDrawPlanarPolygon, arginfo_grDrawPlanarPolygon)
+	ZEND_FE(grDrawPlanarPolygonVertexList, arginfo_grDrawPlanarPolygonVertexList)
+	ZEND_FE(grDrawPoint, arginfo_grDrawPoint)
+	ZEND_FE(grDrawPolygon, arginfo_grDrawPolygon)
+	ZEND_FE(grDrawPolygonVertexList, arginfo_grDrawPolygonVertexList)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)

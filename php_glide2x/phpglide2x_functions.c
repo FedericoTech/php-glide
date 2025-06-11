@@ -34,6 +34,24 @@ PHP_FUNCTION(grCullMode)
 	grCullMode((GrCullMode_t)enum_to_int(mode));
 }
 
+PHP_FUNCTION(grDisableAllEffects)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	grDisableAllEffects();
+}
+
+PHP_FUNCTION(grDitherMode)
+{
+	zend_object* mode = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(mode, grDitherMode_ce)
+		ZEND_PARSE_PARAMETERS_END();
+
+	grDitherMode((GrDitherMode_t)enum_to_int(mode));
+}
+
 
 PHP_FUNCTION(_kbhit) {
 	ZEND_PARSE_PARAMETERS_NONE();

@@ -66,7 +66,7 @@ PHP_FUNCTION(grConstantColorValue)
 	zend_long color;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_BOOL(color)
+		Z_PARAM_LONG(color)
 		ZEND_PARSE_PARAMETERS_END();
 
 	grConstantColorValue((GrColor_t)color);
