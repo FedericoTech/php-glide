@@ -85,6 +85,7 @@ function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVerte
 
 $angle = 0.0;
 
+
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);

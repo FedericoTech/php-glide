@@ -61,6 +61,11 @@ sapi_windows_set_ctrl_handler('ctrl_handler');
 
 grGlideInit();
 
+grErrorSetCallback(function($message, $fatal){
+	var_dump($message, $fatal);
+});
+
+
 $hwConfig = new GrHwConfiguration;
 
 
@@ -89,7 +94,7 @@ switch($hwConfig->SSTs[0]->type){
 		echo 'hardware Voodoo 2 (glide 2)' . PHP_EOL;
 		break;
 	default:
-		echo 'hardware unknown (glide 2)' . PHP_EOL;
+		echo "hardware unknown type: {$hwConfig->SSTs[0]->type->toInt()} (glide 2)\n";
 		break;
 }
 
@@ -109,3 +114,4 @@ if(!grSstWinOpen(
     grGlideShutdown();
     return -1;
 };
+

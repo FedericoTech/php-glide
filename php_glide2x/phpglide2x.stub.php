@@ -427,6 +427,8 @@ enum GrSstType {
     case GR_SSTTYPE_SST96;
 	case GR_SSTTYPE_AT3D;
 	case GR_SSTTYPE_Voodoo2;
+	case GR_SSTTYPE_Banshee;
+	case GR_SSTTYPE_Unknown;
 	
 	public function toInt() : int;
 }
@@ -548,8 +550,8 @@ function testGrAT3DConfig_t(GrAT3DConfig_t $ga4dc) : void {};
 
 final class SST_t implements flushable
 {
-	public GrSstType $type;
-	public GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t $sstBoard;
+	public ?GrSstType $type;
+	public GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t|null $sstBoard;
 	
 	public function flush() : string;
 }
@@ -694,9 +696,13 @@ function grDrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
 function grDrawPolygonVertexList(int $nVerts, array $vlist) : void {};
 
 // 						function(string $string, bool $fatal)
-//function grErrorSetCallback(callable $function) : void {};
+function grErrorSetCallback(callable $function) : void {};
 
+function grFogColorValue(int $value) : void {};
 
+function grFogMode( GrFogMode_t $mode ) : void {};
+
+function grFogTable(array $table ) : void {};
 
 
 function grGlideInit() : void {};

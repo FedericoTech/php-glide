@@ -473,6 +473,8 @@ struct {
 			SET_CASE(GR_SSTTYPE_SST96),
 			SET_CASE(GR_SSTTYPE_AT3D),
 			SET_CASE(GR_SSTTYPE_Voodoo2),
+			{"GR_SSTTYPE_Banshee", 4},
+			{"GR_SSTTYPE_Unknown", 5},
 			{ NULL, 0 } // sentinel
 		}
 	},

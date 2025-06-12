@@ -200,7 +200,7 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
 {
     zval sst_board, val_zv;
     zend_object* enum_case = NULL, * sst_board_zo = NULL;
-    
+        
     switch (sSTs->type)
     {
     case GR_SSTTYPE_VOODOO:
@@ -210,16 +210,14 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
         object_init_ex(&sst_board, grVoodooConfig_ce);
         
         hydrate_grVoodooConfig(&sSTs->sstBoard.VoodooConfig, O_EMBEDDED_P(_GrVoodooConfig_t, Z_OBJ_P(&sst_board)));
-        
         break;
-    default: //Banshee, and others. not garanteed it will work
+    
     case GR_SSTTYPE_Voodoo2:
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_Voodoo2");
 
         object_init_ex(&sst_board, grVoodoo2Config_ce);
 
         hydrate_grVoodoo2Config(&sSTs->sstBoard.Voodoo2Config, O_EMBEDDED_P(_GrVoodoo2Config_t, Z_OBJ_P(&sst_board)));
-
         break;
     case GR_SSTTYPE_SST96:
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_SST96");
@@ -227,7 +225,6 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
         object_init_ex(&sst_board, grSst96Config_ce);
 
         hydrate_GrSst96Config(&sSTs->sstBoard.SST96Config, O_EMBEDDED_P(_GrSst96Config_t, Z_OBJ_P(&sst_board)));
-
         break;
     case GR_SSTTYPE_AT3D:
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_AT3D");
@@ -235,11 +232,17 @@ void hydrate_SST(const SST_t* sSTs, _SST_t* _sST)
         object_init_ex(&sst_board, grAT3DConfig_ce);
 
         hydrate_GrAT3DConfig(&sSTs->sstBoard.AT3DConfig, O_EMBEDDED_P(_GrAT3DConfig_t, Z_OBJ_P(&sst_board)));
-
+        break;
+    case 4: //Banshee, and others. not garanteed it will work
+        enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_Banshe");
+        ZVAL_NULL(&sst_board);
+        break;
+    default: 
+        enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_Unknown");
+        ZVAL_NULL(&sst_board);
         break;
     }
-
-
+     
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
         sST_ce, &_sST->std,

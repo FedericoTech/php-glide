@@ -214,7 +214,7 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
         "num_sst", sizeof("num_sst") - 1,
         buffer->num_sst
     );
-    
+        
     zval sSTs_arr_zval;
     array_init_size(&sSTs_arr_zval, buffer->num_sst);
         
@@ -226,7 +226,7 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
         object_init_ex(&sst_obj, sST_ce);
 
         hydrate_SST((const SST_t*) &buffer->SSTs[cont], O_EMBEDDED_P(_SST_t, Z_OBJ(sst_obj)));
-
+        
         add_next_index_zval(&sSTs_arr_zval, &sst_obj);
     }
 

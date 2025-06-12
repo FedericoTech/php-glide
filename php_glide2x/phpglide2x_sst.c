@@ -14,9 +14,9 @@ PHP_FUNCTION(grSstQueryHardware) {
 	GrHwConfiguration ghcf;
 
 	result = grSstQueryHardware(&ghcf);
-	
+		
 	hydrate_GrHwConfiguration(&ghcf, O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj));
-	
+
 	RETURN_BOOL(result);
 }
 

@@ -52,6 +52,54 @@ PHP_FUNCTION(grDitherMode)
 	grDitherMode((GrDitherMode_t)enum_to_int(mode));
 }
 
+static zend_fcall_info gr_error_fci;
+static zend_fcall_info_cache gr_error_fci_cache;
+static bool gr_error_callback_set = false;
+
+static void php_gr_error_callback(const char* msg, FxBool fatal)
+{
+	zval retval;
+	zval params[2];
+
+	ZVAL_STRING(&params[0], msg);
+	ZVAL_BOOL(&params[1], fatal);
+
+	gr_error_fci.retval = &retval;
+	gr_error_fci.params = params;
+	gr_error_fci.param_count = 2;
+
+	if (zend_call_function(&gr_error_fci, &gr_error_fci_cache) == SUCCESS) {
+		zval_ptr_dtor(&retval);
+	}
+
+	zval_ptr_dtor(&params[0]);
+}
+
+PHP_FUNCTION(grErrorSetCallback)
+{
+	zend_fcall_info fci;
+	zend_fcall_info_cache fcc;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_FUNC(fci, fcc)
+		ZEND_PARSE_PARAMETERS_END();
+
+	zend_function* func = fcc.function_handler;
+
+	if (func->common.num_args != 2) {
+		zend_throw_exception(NULL, "Callback must take exactly 2 parameters", 0);
+		RETURN_THROWS();
+	}
+
+	zend_arg_info* args = func->common.arg_info;
+
+	grErrorSetCallback(php_gr_error_callback); // Install the wrapper
+
+}
+
+
+// OTHER FUNCTIONS
+
 
 PHP_FUNCTION(_kbhit) {
 	ZEND_PARSE_PARAMETERS_NONE();

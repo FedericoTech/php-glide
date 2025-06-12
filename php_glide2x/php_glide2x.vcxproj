@@ -148,6 +148,7 @@
     <ClCompile Include="phpglide2x_color.c" />
     <ClCompile Include="phpglide2x_depth.c" />
     <ClCompile Include="phpglide2x_draw.c" />
+    <ClCompile Include="phpglide2x_fog.c" />
     <ClCompile Include="phpglide2x_functions.c" />
     <ClCompile Include="phpglide2x_glide.c" />
     <ClCompile Include="phpglide2x_enums.c" />
@@ -171,6 +172,7 @@
     <ClInclude Include="phpglide2x_depth.h" />
     <ClInclude Include="phpglide2x_draw.h" />
     <ClInclude Include="phpglide2x_enums.h" />
+    <ClInclude Include="phpglide2x_fog.h" />
     <ClInclude Include="phpglide2x_functions.h" />
     <ClInclude Include="phpglide2x_glide.h" />
     <ClInclude Include="phpglide2x_sst.h" />

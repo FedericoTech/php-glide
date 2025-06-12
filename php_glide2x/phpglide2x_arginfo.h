@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: cb9e7dc6a0de25cf8862a7072847cdacfda29c13 */
+ * Stub hash: 044d8ab189da1c808e66572194b8c752188a0d7f */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -178,6 +178,20 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grDrawPolygonVertexList arginfo_grAADrawPolygonVertexList
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grErrorSetCallback, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, function, IS_CALLABLE, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grFogColorValue arginfo_grAlphaTestReferenceValue
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grFogMode, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrFogMode_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grFogTable, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, table, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_grGlideInit arginfo_grDisableAllEffects
 
 #define arginfo_grGlideShutdown arginfo_grDisableAllEffects
@@ -353,6 +367,10 @@ ZEND_FUNCTION(grDrawPlanarPolygonVertexList);
 ZEND_FUNCTION(grDrawPoint);
 ZEND_FUNCTION(grDrawPolygon);
 ZEND_FUNCTION(grDrawPolygonVertexList);
+ZEND_FUNCTION(grErrorSetCallback);
+ZEND_FUNCTION(grFogColorValue);
+ZEND_FUNCTION(grFogMode);
+ZEND_FUNCTION(grFogTable);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -454,6 +472,10 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grDrawPoint, arginfo_grDrawPoint)
 	ZEND_FE(grDrawPolygon, arginfo_grDrawPolygon)
 	ZEND_FE(grDrawPolygonVertexList, arginfo_grDrawPolygonVertexList)
+	ZEND_FE(grErrorSetCallback, arginfo_grErrorSetCallback)
+	ZEND_FE(grFogColorValue, arginfo_grFogColorValue)
+	ZEND_FE(grFogMode, arginfo_grFogMode)
+	ZEND_FE(grFogTable, arginfo_grFogTable)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
@@ -1382,6 +1404,10 @@ static zend_class_entry *register_class_GrSstType(void)
 
 	zend_enum_add_case_cstr(class_entry, "GR_SSTTYPE_Voodoo2", NULL);
 
+	zend_enum_add_case_cstr(class_entry, "GR_SSTTYPE_Banshee", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_SSTTYPE_Unknown", NULL);
+
 	return class_entry;
 }
 
@@ -1630,7 +1656,7 @@ static zend_class_entry *register_class_SST_t(zend_class_entry *class_entry_flus
 	zval property_type_default_value;
 	ZVAL_UNDEF(&property_type_default_value);
 	zend_string *property_type_class_GrSstType = zend_string_init("GrSstType", sizeof("GrSstType")-1, 1);
-	zend_declare_typed_property(class_entry, ZSTR_KNOWN(ZEND_STR_TYPE), &property_type_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_type_class_GrSstType, 0, 0));
+	zend_declare_typed_property(class_entry, ZSTR_KNOWN(ZEND_STR_TYPE), &property_type_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_type_class_GrSstType, 0, MAY_BE_NULL));
 
 	zval property_sstBoard_default_value;
 	ZVAL_UNDEF(&property_sstBoard_default_value);
@@ -1645,7 +1671,7 @@ static zend_class_entry *register_class_SST_t(zend_class_entry *class_entry_flus
 	property_sstBoard_type_list->types[1] = (zend_type) ZEND_TYPE_INIT_CLASS(property_sstBoard_class_GrSst96Config_t, 0, 0);
 	property_sstBoard_type_list->types[2] = (zend_type) ZEND_TYPE_INIT_CLASS(property_sstBoard_class_GrAT3DConfig_t, 0, 0);
 	property_sstBoard_type_list->types[3] = (zend_type) ZEND_TYPE_INIT_CLASS(property_sstBoard_class_GrVoodoo2Config_t, 0, 0);
-	zend_type property_sstBoard_type = ZEND_TYPE_INIT_UNION(property_sstBoard_type_list, 0);
+	zend_type property_sstBoard_type = ZEND_TYPE_INIT_UNION(property_sstBoard_type_list, MAY_BE_NULL);
 	zend_declare_typed_property(class_entry, property_sstBoard_name, &property_sstBoard_default_value, ZEND_ACC_PUBLIC, NULL, property_sstBoard_type);
 	zend_string_release(property_sstBoard_name);
 
