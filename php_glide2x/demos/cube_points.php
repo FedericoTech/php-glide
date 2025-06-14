@@ -34,57 +34,7 @@ $cubeVertices = array_map(function($item){
 	$cubeVertices
 );
 
-$cubeIndices = [
-    [0, 1, 2], [0, 2, 3], // back
-    [4, 6, 5], [4, 7, 6], // front
-    [0, 4, 5], [0, 5, 1], // bottom
-    [3, 2, 6], [3, 6, 7], // top
-    [1, 5, 6], [1, 6, 2], // right
-    [0, 3, 7], [0, 7, 4]  // left
-];
-
-function rotateX(GrVertex $v, float $angle)  : GrVertex{
-    $r = clone $v;
-    $s = sin($angle);
-    $c = cos($angle);
-
-    $v->y = $r->y * $c - $r->z * $s;
-    $v->z = $r->y * $s + $r->z * $c;
-    return $v;
-}
-
-function rotateY(GrVertex $v, float $angle) : GrVertex {
-    $r = clone $v;
-	
-    $s = sin($angle);
-    $c = cos($angle);
-    $v->x = $r->x * $c - $r->z * $s;
-   
-    $v->z = $r->x * $s + $r->z * $c;
-    return $v;
-}
-
-function rotateZ(GrVertex $v, float $angle) : GrVertex {
-    $r = clone $v;
-    $s = sin($angle);
-    $c = cos($angle);
-
-    $v->x = $r->x * $c - $r->y * $s;
-    $v->y = $r->x * $s + $r->y * $c;
-    return $v;
-}
-
-
-function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex {
-    $scale = 1.0 / ($v->z + $nearZ);
-    $v->x *= $scale * $fov * $aspect;
-    $v->y *= $scale * $fov;
-	$v->oow = $scale;
-	return $v;
-}
-
 $angle = 0.0;
-
 
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
@@ -109,14 +59,8 @@ while (!_kbhit()) {
 		$v->flush();
 		
 		$transformed[] = $v;
-	}
-	
-	foreach($cubeIndices as $triad){
-		grDrawTriangle(
-			$transformed[$triad[0]], 
-			$transformed[$triad[1]], 
-			$transformed[$triad[2]], 
-		);
+
+		grDrawPoint($v);
 	}
 
 	grBufferSwap(1);

@@ -43,6 +43,45 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
     return $new;
 }
 
+function rotateX(GrVertex $v, float $angle)  : GrVertex{
+    $r = clone $v;
+    $s = sin($angle);
+    $c = cos($angle);
+
+    $v->y = $r->y * $c - $r->z * $s;
+    $v->z = $r->y * $s + $r->z * $c;
+    return $v;
+}
+
+function rotateY(GrVertex $v, float $angle) : GrVertex {
+    $r = clone $v;
+	
+    $s = sin($angle);
+    $c = cos($angle);
+    $v->x = $r->x * $c - $r->z * $s;
+   
+    $v->z = $r->x * $s + $r->z * $c;
+    return $v;
+}
+
+function rotateZ(GrVertex $v, float $angle) : GrVertex {
+    $r = clone $v;
+    $s = sin($angle);
+    $c = cos($angle);
+
+    $v->x = $r->x * $c - $r->y * $s;
+    $v->y = $r->x * $s + $r->y * $c;
+    return $v;
+}
+
+function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex {
+    $scale = 1.0 / ($v->z + $nearZ);
+    $v->x *= $scale * $fov * $aspect;
+    $v->y *= $scale * $fov;
+	$v->oow = $scale;
+	return $v;
+}
+
 //this handler is to gracefully close the script when CTRL+C
 function ctrl_handler(int $event)
 {
