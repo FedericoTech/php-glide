@@ -22,19 +22,40 @@ $cubeVertices = [
     [-1,	 1, 	 1,		0,		$color,	0		],	//7
 ];
 
-$faces = [
-	[0, 1, 2, 3], // Back face
-    [4, 5, 6, 7], // Front face
-    [0, 4, 7, 3], // Left face
-    [1, 5, 6, 2], // Right face
-    [3, 2, 6, 7], // Top face
-    [0, 1, 5, 4], // Bottom face
-];
+$vertices = array_map(function($item){
 
+	$vertex = new GrVertex;
+
+	list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
+		
+	return $vertex;
+}, $cubeVertices);
+
+/*
+$cubeIndices = [
+	0, 1, 2, 3, // back
+	4, 6, 5, 7, 
+	0, 4, 5, 1, // bottom
+	3, 2, 6, 7, // top
+	1, 5, 6, 2, // right
+	0, 3, 7, 4, // left
+];
+*/
+
+$cubeIndices = [
+	[
+		0, 1, 2, 3, // back
+		0, 1, 5, 4,
+		0, 4, 7, 3,
+	],[
+		6, 2, 3, 7,
+		6, 5, 4, 7,
+		6, 2, 1, 5
+	]
+];
 
 $angle = 0.0;
 
-//var_dump($vertices); exit();
 
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
@@ -44,29 +65,27 @@ while (!_kbhit()) {
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
-	$vertices = [];
-	foreach($cubeVertices as $vertex){
-		$v = new GrVertex;
-		list($v->x, $v->y, $v->z, $v->r, $v->g, $v->b) = $vertex;
-
+	$processedVertices = [];
+	foreach($vertices as $vertex){
+		$v = clone $vertex;
+		
 		$v = rotateX($v, $angle);
 		$v = rotateY($v, $angle);
 		$v = rotateZ($v, $angle);
 		
-		$v = project($v, 1.0, 1.0, 3.0); // Basic projection
-		$v->x = ($v->x + 1.0) * 320.0; // convert to screen
-		$v->y = (1.0 - $v->y) * 240.0;
+        $v = project($v, 1.0, 1.0, 3.0); // Basic projection
+        $v->x = ($v->x + 1.0) * 320.0; // convert to screen
+        $v->y = (1.0 - $v->y) * 240.0;
 		$v->flush();
 
-		$vertices[] = $v;
+		$processedVertices[] = $v;
 	}
-
-	foreach($faces as $face){
-
+	
+	foreach($cubeIndices as $indices){
 		grDrawPolygon(
-			8,
-			$face,
-			$vertices
+			count($indices),
+			$indices,
+			$processedVertices
 		);
 	}
 
