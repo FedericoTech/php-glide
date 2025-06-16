@@ -42,7 +42,7 @@ PHP_FUNCTION(grAADrawPolygon)
 	ZEND_PARSE_PARAMETERS_END();
 
 	// Allocate memory
-	int* indices = emalloc(sizeof(int) * nVerts);
+	int* indices = emalloc(sizeof(int) * zend_array_count(Z_ARRVAL_P(ilist)));
 
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
 
@@ -76,10 +76,10 @@ PHP_FUNCTION(grAADrawPolygon)
 		}
 
 		//we check the index is valid
-		if (index < 0 || index > nVerts || index > vertex_count) {
+		if (index < 0 || index > vertex_count) {
 			efree(indices);
 			efree(vertices);
-			zend_throw_exception(NULL, "ilist must contain invalid number. must be between 0 to nVerts", 0);
+			zend_throw_exception(NULL, "ilist contains an invalid number. it must be between 0 to nVerts", 0);
 		}
 
 		indices[i++] = index;
@@ -340,7 +340,6 @@ PHP_FUNCTION(grDrawPolygon)
 		ZEND_PARSE_PARAMETERS_END();
 
 	// Allocate memory
-	
 	int* indices = emalloc(sizeof(int) * zend_array_count(Z_ARRVAL_P(ilist)));
 
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
@@ -402,9 +401,9 @@ PHP_FUNCTION(grDrawPolygon)
 		memcpy(&vertices[i++], vtx, sizeof(GrVertex));
 
 	} ZEND_HASH_FOREACH_END();
-	//php_printf("before %d %d %d\n", nVerts, zend_array_count(Z_ARRVAL_P(ilist)), zend_array_count(Z_ARRVAL_P(vlist)));
+
 	grDrawPolygon(nVerts, indices, vertices);
-	//php_printf("after\n");
+
 	efree(indices);
 	efree(vertices);
 }

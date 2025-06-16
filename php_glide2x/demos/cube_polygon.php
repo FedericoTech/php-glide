@@ -31,26 +31,15 @@ $vertices = array_map(function($item){
 	return $vertex;
 }, $cubeVertices);
 
-/*
-$cubeIndices = [
-	0, 1, 2, 3, // back
-	4, 6, 5, 7, 
-	0, 4, 5, 1, // bottom
-	3, 2, 6, 7, // top
-	1, 5, 6, 2, // right
-	0, 3, 7, 4, // left
-];
-*/
-
 $cubeIndices = [
 	[
-		0, 1, 2, 3, // back
-		0, 1, 5, 4,
-		0, 4, 7, 3,
+		0, 1, 2, 3, //front
+		0, 4, 5, 1,	//top
+		0, 3, 7, 4,	//left
 	],[
-		6, 2, 3, 7,
-		6, 5, 4, 7,
-		6, 2, 1, 5
+		6, 7, 3, 2,	// bottom
+		6, 5, 4, 7,	//back
+		6, 2, 1, 5	//right
 	]
 ];
 
@@ -60,12 +49,14 @@ $angle = 0.0;
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
+grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
+
 
 while (!_kbhit()) {
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
-	$processedVertices = [];
+	$transformed = [];
 	foreach($vertices as $vertex){
 		$v = clone $vertex;
 		
@@ -78,14 +69,14 @@ while (!_kbhit()) {
         $v->y = (1.0 - $v->y) * 240.0;
 		$v->flush();
 
-		$processedVertices[] = $v;
+		$transformed[] = $v;
 	}
 	
 	foreach($cubeIndices as $indices){
 		grDrawPolygon(
 			count($indices),
 			$indices,
-			$processedVertices
+			$transformed
 		);
 	}
 

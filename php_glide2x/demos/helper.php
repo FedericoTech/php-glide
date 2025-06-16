@@ -24,21 +24,7 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
 	
 	$new->x = $x_new + $origin->x;
 	$new->y = $y_new + $origin->y;
-	
-	//echo "[$new->r]" . PHP_EOL;
-	/*
-	// Copy all other relevant properties
-    //$new->z = $point->z;
-    $new->r = $point->r;
-    $new->g = $point->g;
-    $new->b = $point->b;
-    //$new->ooz = $point->ooz;
-    $new->a = $point->a;
-    //$new->oow = $point->oow;
-	*/
-	
-	$new->flush();
-	
+
     // Translate back
     return $new;
 }

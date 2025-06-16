@@ -9,6 +9,7 @@ guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
+$centre->flush();
 
 $vtx1 = new GrVertex;
 $vtx1->x = '160';
@@ -34,17 +35,17 @@ $vtx3->g = 0;
 $vtx3->b = $color;
 $vtx3->a = 255.0;
 
-$arr = [$vtx1, $vtx2, $vtx3];
-array_walk($arr , fn($vt) => $vt->flush());
-
-
+$angle = 0.0;
 while (!_kbhit()) {
 	
 	$angle = microtime(true); // radians per second (change as needed)
 
     $vtr1 = rotate_point($vtx1, $angle, $centre);
+	$vtr1->flush();
     $vtr2 = rotate_point($vtx2, $angle, $centre);
+	$vtr2->flush();
     $vtr3 = rotate_point($vtx3, $angle, $centre);
+	$vtr3->flush();
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
@@ -55,6 +56,7 @@ while (!_kbhit()) {
 	grBufferSwap(1);
 	
 	//usleep(1000); // Reduce CPU usage
+	$angle += 0.01;
 }
 
 grSstIdle();

@@ -49,6 +49,8 @@ grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHB
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
 
+grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
+
 while (!_kbhit()) {
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
