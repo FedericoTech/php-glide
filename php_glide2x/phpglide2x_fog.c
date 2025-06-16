@@ -41,7 +41,7 @@ PHP_FUNCTION(grFogTable)
 	zval *val;
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(table), val) {
 
-		
+		ZVAL_DEREF(val);
 
 		int value;
 
