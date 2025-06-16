@@ -49,7 +49,7 @@ $angle = 0.0;
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
-grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
+grCullMode( GrCullMode_t::GR_CULL_NEGATIVE );
 
 
 while (!_kbhit()) {

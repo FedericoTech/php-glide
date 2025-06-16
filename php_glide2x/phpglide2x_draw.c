@@ -55,6 +55,8 @@ PHP_FUNCTION(grAADrawPolygon)
 
 		int index;
 
+		ZVAL_DEREF(val);
+
 		//if it's an integer...
 		if (Z_TYPE_P(val) == IS_LONG) {
 			index = Z_LVAL_P(val);
@@ -89,6 +91,9 @@ PHP_FUNCTION(grAADrawPolygon)
 	i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val);
+
 		if (Z_TYPE_P(val) != IS_OBJECT 
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
@@ -132,6 +137,9 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 	zend_ulong i = 0;
 	
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val); // <-- add this before your checks
+	
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
@@ -148,6 +156,8 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 	grAADrawPolygonVertexList(nVerts, vertices);
 
 	efree(vertices);
+
+	//RETURN_NULL();
 }
 
 PHP_FUNCTION(grAADrawTriangle)
@@ -220,6 +230,8 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 
 		int index;
 
+		ZVAL_DEREF(val);
+
 		//if it's an integer...
 		if (Z_TYPE_P(val) == IS_LONG) {
 			index = Z_LVAL_P(val);
@@ -255,6 +267,9 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 	i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val);
+
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 			) {
@@ -298,6 +313,9 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 	zend_ulong i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val);
+
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 			) {
@@ -353,6 +371,8 @@ PHP_FUNCTION(grDrawPolygon)
 
 		int index;
 
+		ZVAL_DEREF(val);
+
 		//if it's an integer...
 		if (Z_TYPE_P(val) == IS_LONG) {
 			index = Z_LVAL_P(val);
@@ -388,6 +408,9 @@ PHP_FUNCTION(grDrawPolygon)
 	i = 0;
 	
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val);
+
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
@@ -431,6 +454,9 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 	zend_ulong i = 0;
 
 	ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(vlist), val) {
+
+		ZVAL_DEREF(val);
+
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 			) {

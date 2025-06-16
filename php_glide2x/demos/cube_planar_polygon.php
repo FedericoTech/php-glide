@@ -73,15 +73,10 @@ while (!_kbhit()) {
 	}
 	
 	foreach($cubeIndices as $indices){
-		
-		$verts = [];
-		foreach($indices as $index){
-			$verts[] = $transformed[$index];
-		}
-
-		grDrawPlanarPolygonVertexList(
-			count($verts),
-			$verts
+		grDrawPlanarPolygon(
+			count($indices),
+			$indices,
+			$transformed
 		);
 	}
 

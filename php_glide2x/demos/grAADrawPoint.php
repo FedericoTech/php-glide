@@ -39,13 +39,11 @@ $angle = 0.0;
 while (!_kbhit()) {
 	
     $vtr1 = rotate_point($vtx1, $angle, $centre);
-	$vtr1->flush();
-	
     $vtr2 = rotate_point($vtx2, $angle, $centre);
-	$vtr2->flush();
-	
     $vtr3 = rotate_point($vtx3, $angle, $centre);
-	$vtr3->flush();
+	
+	$aux = [$vtr1, $vtr2, $vtr3];
+	array_walk($aux, fn($v) => $v->flush());
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 

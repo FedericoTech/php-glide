@@ -71,18 +71,15 @@ while (!_kbhit()) {
 	$angle_minus = 0 - $angle;
 	
 	$vtr1 = rotate_point($vtx1, $angle_minus, $centre);
-	$vtr1->flush();
     $vtr2 = rotate_point($vtx2, $angle_minus, $centre);
-	$vtr2->flush();
     $vtr3 = rotate_point($vtx3, $angle_minus, $centre);
-	$vtr3->flush();
 	
 	$vtr4 = rotate_point($vtx4, $angle_minus, $centre);
-	$vtr4->flush();
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
-	$vtr5->flush();
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
-	$vtr6->flush();
+	
+	$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+	array_walk($aux, fn($v) => $v->flush());
 	
 	$vertices = [$centre, $vtr1, $vtr2, $centre, $vtr3, $vtr4, $vtr5, $vtr6, $centre];
 
@@ -92,20 +89,15 @@ while (!_kbhit()) {
 	);
 
     $vtr1 = rotate_point($vtx1, $angle, $centre);
-	$vtr1->flush();
     $vtr2 = rotate_point($vtx2, $angle, $centre);
-	$vtr2->flush();
     $vtr3 = rotate_point($vtx3, $angle, $centre);
-	$vtr3->flush();
 	
 	$vtr4 = rotate_point($vtx4, $angle, $centre);
-	$vtr4->flush();
     $vtr5 = rotate_point($vtx5, $angle, $centre);
-	$vtr5->flush();
     $vtr6 = rotate_point($vtx6, $angle, $centre);
-	$vtr6->flush();
 		
 	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $centre, $vtr5, $vtr6, $centre];
+	array_walk($vertices, fn($v) => $v->flush());
 	
 	grDrawPlanarPolygonVertexList(
 		count($vertices), 	//whatever is highter whether indices or vertices
