@@ -52,6 +52,17 @@ PHP_FUNCTION(grDitherMode)
 	grDitherMode((GrDitherMode_t)enum_to_int(mode));
 }
 
+PHP_FUNCTION(grRenderBuffer)
+{
+	zend_object* buffer = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(buffer, grBuffer_ce)
+		ZEND_PARSE_PARAMETERS_END();
+
+	grRenderBuffer((GrBuffer_t)enum_to_int(buffer));
+}
+
 static zend_fcall_info gr_error_fci;
 static zend_fcall_info_cache gr_error_fci_cache;
 static bool gr_error_callback_set = false;

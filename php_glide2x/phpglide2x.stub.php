@@ -704,6 +704,8 @@ function grFogMode( GrFogMode_t $mode ) : void {};
 
 function grFogTable(array $table ) : void {};
 
+function guFogGenerateLinear(array &$fogTable, float $nearW, float $farW) : void {};
+
 
 function grGlideInit() : void {};
 function grGlideShutdown() : void {};
@@ -730,6 +732,7 @@ function grSstWinClose() : void {};
 function grSstIdle() : void {};
 
 
+function grRenderBuffer(GrBuffer_t $buffer) : void {};
 
 
 

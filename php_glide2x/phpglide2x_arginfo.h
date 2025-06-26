@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 044d8ab189da1c808e66572194b8c752188a0d7f */
+ * Stub hash: 2065484e420d8ed191cba7fb65045d400aa29960 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -192,6 +192,12 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grFogTable, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, table, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(1, fogTable, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, nearW, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, farW, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_grGlideInit arginfo_grDisableAllEffects
 
 #define arginfo_grGlideShutdown arginfo_grDisableAllEffects
@@ -227,6 +233,10 @@ ZEND_END_ARG_INFO()
 #define arginfo_grSstWinClose arginfo_grDisableAllEffects
 
 #define arginfo_grSstIdle arginfo_grDisableAllEffects
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grRenderBuffer, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+ZEND_END_ARG_INFO()
 
 #define arginfo__kbhit arginfo_grBufferNumPending
 
@@ -371,6 +381,7 @@ ZEND_FUNCTION(grErrorSetCallback);
 ZEND_FUNCTION(grFogColorValue);
 ZEND_FUNCTION(grFogMode);
 ZEND_FUNCTION(grFogTable);
+ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
@@ -380,6 +391,7 @@ ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grSstWinClose);
 ZEND_FUNCTION(grSstIdle);
+ZEND_FUNCTION(grRenderBuffer);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
 ZEND_METHOD(GrEvenOdd_t, toInt);
@@ -476,6 +488,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grFogColorValue, arginfo_grFogColorValue)
 	ZEND_FE(grFogMode, arginfo_grFogMode)
 	ZEND_FE(grFogTable, arginfo_grFogTable)
+	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
@@ -485,6 +498,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
 	ZEND_FE(grSstIdle, arginfo_grSstIdle)
+	ZEND_FE(grRenderBuffer, arginfo_grRenderBuffer)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
 };
