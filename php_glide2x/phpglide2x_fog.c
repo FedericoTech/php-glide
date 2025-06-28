@@ -13,6 +13,34 @@ PHP_FUNCTION(grFogColorValue)
 	grFogColorValue((GrColor_t)value);
 }
 
+PHP_FUNCTION(guFogGenerateLinear) {
+
+	zval* fogTable = NULL;
+	double nearW;
+	double farW;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_ZVAL(fogTable)
+		Z_PARAM_DOUBLE(nearW)
+		Z_PARAM_DOUBLE(farW)
+		ZEND_PARSE_PARAMETERS_END();
+
+	ZVAL_DEREF(fogTable);
+
+	GrFog_t fog_table[GR_FOG_TABLE_SIZE];
+	guFogGenerateLinear(fog_table, (FxFloat) nearW, (FxFloat) farW);
+
+	zval new_array;
+	array_init_size(&new_array, GR_FOG_TABLE_SIZE);
+
+	for (int cont = 0; cont < GR_FOG_TABLE_SIZE; cont++) {
+		add_next_index_long(&new_array, (zend_long) fog_table[cont]);
+	}
+
+	zval_ptr_dtor(fogTable);             // clean old value
+	ZVAL_COPY_VALUE(fogTable, &new_array); // move new array into var
+}
+
 PHP_FUNCTION(grFogMode) {
 
 	zend_object* mode = NULL;
@@ -69,7 +97,7 @@ PHP_FUNCTION(grFogTable)
 			zend_throw_exception(NULL, "table must contain a number between 0 and 255", 0);
 		}
 
-		fog_table[i] = value;
+		fog_table[i] = (GrFog_t) value;
 
 		++i;
 

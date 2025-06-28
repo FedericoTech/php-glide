@@ -4,7 +4,25 @@ include_once('helper.php');
 
 $color = 255.0;
 
-guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
+//guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
+
+grRenderBuffer(GrBuffer_t::GR_BUFFER_BACKBUFFER);
+
+grColorCombine(
+	GrCombineFunction_t::GR_COMBINE_FUNCTION_LOCAL,
+	GrCombineFactor_t::GR_COMBINE_FACTOR_NONE,
+	GrCombineLocal_t::GR_COMBINE_LOCAL_ITERATED,
+	GrCombineOther_t::GR_COMBINE_OTHER_NONE,
+	false
+);
+
+grAlphaCombine(
+	GrCombineFunction_t::GR_COMBINE_FUNCTION_NONE,
+	GrCombineFactor_t::GR_COMBINE_FACTOR_NONE,
+	GrCombineLocal_t::GR_COMBINE_LOCAL_NONE,
+	GrCombineOther_t::GR_COMBINE_OTHER_NONE,
+	false
+);
 
 $centre = new GrVertex;
 $centre->x = 320;
@@ -27,7 +45,7 @@ $vertices = array_map(function($item){
 	$vertex = new GrVertex;
 
 	list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b, $vertex->a) = $item;
-		
+	
 	return $vertex;
 }, $cubeVertices);
 
@@ -62,17 +80,18 @@ $fogTable = [
     141, 142, 144, 145, 147, 148, 150, 151,
     153, 154, 156, 157, 158, 160, 161, 255
 ];
-/*
-grFogColorValue(0x00FFFFFF);
-grFogTable($fogTable);
-grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
-*/
 
+grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
+grFogColorValue(0x00FFFFff); // Fog color: blue
+	
+guFogGenerateLinear($fogTable, 240, 200); // start and end Z for fog
+
+grFogTable($fogTable);
 
 
 while (!_kbhit()) {
 	
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+	grBufferClear( 0x00FFFFff, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
 	$transformed = [];
 	foreach($vertices as $vertex){
@@ -85,8 +104,10 @@ while (!_kbhit()) {
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
+		$v->z = (1.0 - $v->z) * 240.0;
 		
-		//$v->oow = 1.0 / $v->z;
+		$v->oow = 1.0 / ($v->z + 0.00001);
+
 		$v->flush();
 
 		$transformed[] = $v;
