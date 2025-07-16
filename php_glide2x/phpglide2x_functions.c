@@ -34,6 +34,17 @@ PHP_FUNCTION(grCullMode)
 	grCullMode((GrCullMode_t)enum_to_int(mode));
 }
 
+PHP_FUNCTION(grGammaCorrectionValue)
+{
+	zend_long value;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(value);
+		ZEND_PARSE_PARAMETERS_END();
+
+	grGammaCorrectionValue(value);
+}
+
 PHP_FUNCTION(grDisableAllEffects)
 {
 	ZEND_PARSE_PARAMETERS_NONE();

@@ -704,7 +704,15 @@ function grFogMode( GrFogMode_t $mode ) : void {};
 
 function grFogTable(array $table ) : void {};
 
-function guFogGenerateLinear(array &$fogTable, float $nearW, float $farW) : void {};
+function grGammaCorrectionValue(float $value) : void {};
+
+function grGlideGetVersion(string &$version) : void {};
+
+
+
+
+
+function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};
 
 
 function grGlideInit() : void {};

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 2065484e420d8ed191cba7fb65045d400aa29960 */
+ * Stub hash: 8988a87e589eb85e7636c28f4cf9bddaa6cb3acc */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -192,8 +192,16 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grFogTable, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, table, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGammaCorrectionValue, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, value, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideGetVersion, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(1, version, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(1, fogTable, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
 	ZEND_ARG_TYPE_INFO(0, nearW, IS_DOUBLE, 0)
 	ZEND_ARG_TYPE_INFO(0, farW, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
@@ -381,6 +389,8 @@ ZEND_FUNCTION(grErrorSetCallback);
 ZEND_FUNCTION(grFogColorValue);
 ZEND_FUNCTION(grFogMode);
 ZEND_FUNCTION(grFogTable);
+ZEND_FUNCTION(grGammaCorrectionValue);
+ZEND_FUNCTION(grGlideGetVersion);
 ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideShutdown);
@@ -488,6 +498,8 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grFogColorValue, arginfo_grFogColorValue)
 	ZEND_FE(grFogMode, arginfo_grFogMode)
 	ZEND_FE(grFogTable, arginfo_grFogTable)
+	ZEND_FE(grGammaCorrectionValue, arginfo_grGammaCorrectionValue)
+	ZEND_FE(grGlideGetVersion, arginfo_grGlideGetVersion)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)

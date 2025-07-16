@@ -113,9 +113,9 @@ grGlideShutdown();
 --EXPECT--
 object(SST_t)#1 (0) {
   ["type"]=>
-  uninitialized(GrSstType)
+  uninitialized(?GrSstType)
   ["sstBoard"]=>
-  uninitialized(GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t)
+  uninitialized(GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t|null)
 }
 string(70) "Typed property SST_t::$type must not be accessed before initialization"
 string(74) "Typed property SST_t::$sstBoard must not be accessed before initialization"

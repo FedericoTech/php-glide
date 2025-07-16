@@ -51,9 +51,16 @@ grDepthMask(true);
 
 grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
 
+grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
+grFogColorValue(0x00FFFFff); // Fog color: blue
+	
+guFogGenerateLinear($fogTable, 240, 200); // start and end Z for fog
+
+grFogTable($fogTable);
+
 while (!_kbhit()) {
 	
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+	grBufferClear( 0x00FFFFff, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 	
 	$transformed = [];
 	
@@ -67,6 +74,9 @@ while (!_kbhit()) {
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
+		$v->z = (1.0 - $v->z) * 240.0;
+		$v->oow = 1.0 / ($v->z + 0.00001);
+		
 		$v->flush();
 		
 		$transformed[] = $v;
