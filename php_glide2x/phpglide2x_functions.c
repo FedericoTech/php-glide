@@ -42,7 +42,7 @@ PHP_FUNCTION(grGammaCorrectionValue)
 		Z_PARAM_LONG(value);
 		ZEND_PARSE_PARAMETERS_END();
 
-	grGammaCorrectionValue(value);
+	grGammaCorrectionValue((float) value);
 }
 
 PHP_FUNCTION(grDisableAllEffects)

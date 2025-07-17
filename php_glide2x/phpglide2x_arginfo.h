@@ -1,7 +1,11 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 8988a87e589eb85e7636c28f4cf9bddaa6cb3acc */
+ * Stub hash: b0893ca84b59a2b8c0f4ca55f12a4d28f6fdb734 */
 
 #if defined(_DEBUG)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, state, GrState, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gtmu, GrTMUConfig_t, 0)
 ZEND_END_ARG_INFO()
@@ -200,13 +204,13 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideGetVersion, 0, 1, IS_VOID
 	ZEND_ARG_TYPE_INFO(1, version, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
-	ZEND_ARG_TYPE_INFO(0, nearW, IS_DOUBLE, 0)
-	ZEND_ARG_TYPE_INFO(0, farW, IS_DOUBLE, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grGlideGetState, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, state, GrState, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_grGlideInit arginfo_grDisableAllEffects
+
+#define arginfo_grGlideSetState arginfo_grGlideGetState
 
 #define arginfo_grGlideShutdown arginfo_grDisableAllEffects
 
@@ -244,6 +248,12 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grRenderBuffer, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
+	ZEND_ARG_TYPE_INFO(0, nearW, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, farW, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo__kbhit arginfo_grBufferNumPending
@@ -314,34 +324,37 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrTexBaseRange_t_toInt arginfo_grBufferNumPending
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrState_flush, 0, 0, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_class_GrSstType_toInt arginfo_grBufferNumPending
 
 #define arginfo_class_GrScreenRefresh_t_toInt arginfo_grBufferNumPending
 
 #define arginfo_class_GrScreenResolution_t_toInt arginfo_grBufferNumPending
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_flushable_flush, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_class_flushable_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrTMUConfig_t_flush arginfo_class_flushable_flush
+#define arginfo_class_GrTMUConfig_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrVoodooConfig_t_flush arginfo_class_flushable_flush
+#define arginfo_class_GrVoodooConfig_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrVoodoo2Config_t_flush arginfo_class_flushable_flush
+#define arginfo_class_GrVoodoo2Config_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrSst96Config_t_flush arginfo_class_flushable_flush
+#define arginfo_class_GrSst96Config_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrAT3DConfig_t_flush arginfo_class_flushable_flush
+#define arginfo_class_GrAT3DConfig_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_SST_t_flush arginfo_class_flushable_flush
+#define arginfo_class_SST_t_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrHwConfiguration_flush arginfo_class_flushable_flush
+#define arginfo_class_GrHwConfiguration_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrTmuVertex_flush arginfo_class_flushable_flush
+#define arginfo_class_GrTmuVertex_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrVertex_flush arginfo_class_flushable_flush
+#define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
 #if defined(_DEBUG)
+ZEND_FUNCTION(testGrState);
 ZEND_FUNCTION(testGrTMUConfig_t);
 ZEND_FUNCTION(testGrVoodooConfig_t);
 ZEND_FUNCTION(testGrVoodoo2Config_t);
@@ -391,8 +404,9 @@ ZEND_FUNCTION(grFogMode);
 ZEND_FUNCTION(grFogTable);
 ZEND_FUNCTION(grGammaCorrectionValue);
 ZEND_FUNCTION(grGlideGetVersion);
-ZEND_FUNCTION(guFogGenerateLinear);
+ZEND_FUNCTION(grGlideGetState);
 ZEND_FUNCTION(grGlideInit);
+ZEND_FUNCTION(grGlideSetState);
 ZEND_FUNCTION(grGlideShutdown);
 ZEND_FUNCTION(grSstQueryHardware);
 ZEND_FUNCTION(grSstSelect);
@@ -402,6 +416,7 @@ ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grSstWinClose);
 ZEND_FUNCTION(grSstIdle);
 ZEND_FUNCTION(grRenderBuffer);
+ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
 ZEND_METHOD(GrEvenOdd_t, toInt);
@@ -436,6 +451,7 @@ ZEND_METHOD(GrTextureFormat_t, toInt);
 ZEND_METHOD(GrTexTable_t, toInt);
 ZEND_METHOD(GrNCCTable_t, toInt);
 ZEND_METHOD(GrTexBaseRange_t, toInt);
+ZEND_METHOD(GrState, flush);
 ZEND_METHOD(GrSstType, toInt);
 ZEND_METHOD(GrScreenRefresh_t, toInt);
 ZEND_METHOD(GrScreenResolution_t, toInt);
@@ -451,6 +467,7 @@ ZEND_METHOD(GrVertex, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
+	ZEND_FE(testGrState, arginfo_testGrState)
 	ZEND_FE(testGrTMUConfig_t, arginfo_testGrTMUConfig_t)
 	ZEND_FE(testGrVoodooConfig_t, arginfo_testGrVoodooConfig_t)
 	ZEND_FE(testGrVoodoo2Config_t, arginfo_testGrVoodoo2Config_t)
@@ -500,8 +517,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grFogTable, arginfo_grFogTable)
 	ZEND_FE(grGammaCorrectionValue, arginfo_grGammaCorrectionValue)
 	ZEND_FE(grGlideGetVersion, arginfo_grGlideGetVersion)
-	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
+	ZEND_FE(grGlideGetState, arginfo_grGlideGetState)
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
+	ZEND_FE(grGlideSetState, arginfo_grGlideSetState)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
@@ -511,6 +529,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
 	ZEND_FE(grSstIdle, arginfo_grSstIdle)
 	ZEND_FE(grRenderBuffer, arginfo_grRenderBuffer)
+	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
 };
@@ -677,6 +696,11 @@ static const zend_function_entry class_GrNCCTable_t_methods[] = {
 
 static const zend_function_entry class_GrTexBaseRange_t_methods[] = {
 	ZEND_ME(GrTexBaseRange_t, toInt, arginfo_class_GrTexBaseRange_t_toInt, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrState_methods[] = {
+	ZEND_ME(GrState, flush, arginfo_class_GrState_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1414,6 +1438,23 @@ static zend_class_entry *register_class_GrTexBaseRange_t(void)
 	zend_enum_add_case_cstr(class_entry, "GR_TEXBASE_64", NULL);
 
 	zend_enum_add_case_cstr(class_entry, "GR_TEXBASE_32_TO_1", NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrState(zend_class_entry *class_entry_flushable)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "GrState", class_GrState_methods);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
+
+	zval property_pad_default_value;
+	ZVAL_UNDEF(&property_pad_default_value);
+	zend_string *property_pad_name = zend_string_init("pad", sizeof("pad") - 1, 1);
+	zend_declare_typed_property(class_entry, property_pad_name, &property_pad_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_STRING));
+	zend_string_release(property_pad_name);
 
 	return class_entry;
 }

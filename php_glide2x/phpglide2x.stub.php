@@ -422,6 +422,16 @@ enum GrTexBaseRange_t {
 	public function toInt() : int;
 }
 
+final class GrState implements flushable {
+    public string $pad;
+
+    public function flush() : string;
+}
+
+#ifdef _DEBUG
+function testGrState(GrState $state) : void {};
+#endif
+
 enum GrSstType {
     case GR_SSTTYPE_VOODOO;
     case GR_SSTTYPE_SST96;
@@ -708,14 +718,12 @@ function grGammaCorrectionValue(float $value) : void {};
 
 function grGlideGetVersion(string &$version) : void {};
 
-
-
-
-
-function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};
-
+function grGlideGetState(GrState $state) : void {};
 
 function grGlideInit() : void {};
+
+function grGlideSetState(GrState $state) : void {};
+
 function grGlideShutdown() : void {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
@@ -743,6 +751,7 @@ function grSstIdle() : void {};
 function grRenderBuffer(GrBuffer_t $buffer) : void {};
 
 
+function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};
 
 // other functions
 function _kbhit() : int {};

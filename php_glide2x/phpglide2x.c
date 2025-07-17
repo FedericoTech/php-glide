@@ -66,6 +66,7 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
+	phpglide2x_register_grState(INIT_FUNC_ARGS_PASSTHRU);
 	
 	return SUCCESS;
 }

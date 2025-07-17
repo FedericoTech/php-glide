@@ -155,6 +155,7 @@
     <ClCompile Include="phpglide2x_gr_at3d.c" />
     <ClCompile Include="phpglide2x_gr_hardware_configuration.c" />
     <ClCompile Include="phpglide2x_gr_sst_96.c" />
+    <ClCompile Include="phpglide2x_gr_state.c" />
     <ClCompile Include="phpglide2x_gr_tmu.c" />
     <ClCompile Include="phpglide2x_gr_tmu_vertex.c" />
     <ClCompile Include="phpglide2x_gr_vertex.c" />
