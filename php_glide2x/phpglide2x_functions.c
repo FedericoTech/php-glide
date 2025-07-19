@@ -34,17 +34,6 @@ PHP_FUNCTION(grCullMode)
 	grCullMode((GrCullMode_t)enum_to_int(mode));
 }
 
-PHP_FUNCTION(grGammaCorrectionValue)
-{
-	zend_long value;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_LONG(value);
-		ZEND_PARSE_PARAMETERS_END();
-
-	grGammaCorrectionValue((float) value);
-}
-
 PHP_FUNCTION(grDisableAllEffects)
 {
 	ZEND_PARSE_PARAMETERS_NONE();
@@ -62,6 +51,81 @@ PHP_FUNCTION(grDitherMode)
 
 	grDitherMode((GrDitherMode_t)enum_to_int(mode));
 }
+
+PHP_FUNCTION(grGammaCorrectionValue)
+{
+	zend_long value;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(value);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grGammaCorrectionValue((float)value);
+}
+
+PHP_FUNCTION(grHints)
+{
+	zend_object* type = NULL;
+	zend_long hintMask;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJ_OF_CLASS(type, grHints_ce);
+		Z_PARAM_LONG(hintMask);
+		ZEND_PARSE_PARAMETERS_END();
+
+	grHints((GrHint_t) enum_to_int(type), (FxU32) hintMask);
+}
+
+PHP_FUNCTION(grLfbConstantAlpha)
+{
+	zend_long alpha;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(alpha);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grLfbConstantAlpha((GrAlpha_t)alpha);
+}
+
+PHP_FUNCTION(grLfbConstantDepth)
+{
+	zend_long depth;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(depth);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grLfbConstantDepth((FxU16)depth);
+}
+
+PHP_FUNCTION(grLfbLock)
+{
+	zend_object* type = NULL;
+	zend_object* buffer = NULL;
+	zend_object* writeMode = NULL;
+	zend_object* origin = NULL;
+	zend_bool pixelPipeline;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(6, 6)
+		Z_PARAM_OBJ_OF_CLASS(type, grLock_ce);
+		Z_PARAM_OBJ_OF_CLASS(buffer, grBuffer_ce);
+		Z_PARAM_OBJ_OF_CLASS(writeMode, grLfbWriteMode_ce);
+		Z_PARAM_OBJ_OF_CLASS(origin, grOriginLocation_ce);
+		Z_PARAM_BOOL(pixelPipeline);
+		Z_PARAM_OBJ_OF_CLASS(info, grLfbInfo_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grLfbLock(
+		(GrLock_t)enum_to_int(type),
+		(GrBuffer_t)enum_to_int(buffer),
+		(GrLfbWriteMode_t)enum_to_int(writeMode),
+		(GrOriginLocation_t)enum_to_int(origin),
+		(FxBool) pixelPipeline,
+		&O_EMBEDDED_P(_GrLfbInfo_t, info)->grLfbInfo
+	);
+}
+
 
 PHP_FUNCTION(grRenderBuffer)
 {

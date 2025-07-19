@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: b0893ca84b59a2b8c0f4ca55f12a4d28f6fdb734 */
+ * Stub hash: 803ab5689f451d1e8ed00ecb7c3b78bab0d78fc8 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -40,6 +40,10 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrVertex, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, chc, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrLfbInfo_t, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, gli, GrLfbInfo_t, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
@@ -214,6 +218,28 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grGlideShutdown arginfo_grDisableAllEffects
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grHints, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrHints_t, 0)
+	ZEND_ARG_TYPE_INFO(0, hintMask, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbConstantAlpha, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, alpha, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbConstantDepth, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, depth, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbLock, 0, 6, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrLock_t, 0)
+	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+	ZEND_ARG_OBJ_INFO(0, writeMode, GrLfbWriteMode_t, 0)
+	ZEND_ARG_OBJ_INFO(0, origin, GrOriginLocation_t, 0)
+	ZEND_ARG_TYPE_INFO(0, pixelPipeline, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, info, GrLfbInfo_t, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, hwConfig, GrHwConfiguration, 0)
 ZEND_END_ARG_INFO()
@@ -296,6 +322,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrFogMode_t_toInt arginfo_grBufferNumPending
 
+#define arginfo_class_GrHints_t_toInt arginfo_grBufferNumPending
+
 #define arginfo_class_GrLock_t_toInt arginfo_grBufferNumPending
 
 #define arginfo_class_GrLfbBypassMode_t_toInt arginfo_grBufferNumPending
@@ -353,6 +381,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
+#define arginfo_class_GrLfbInfo_t_flush arginfo_class_GrState_flush
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
 ZEND_FUNCTION(testGrTMUConfig_t);
@@ -364,6 +394,7 @@ ZEND_FUNCTION(testSST_t);
 ZEND_FUNCTION(testGrHwConfiguration);
 ZEND_FUNCTION(testGrTmuVertex);
 ZEND_FUNCTION(testGrVertex);
+ZEND_FUNCTION(testGrLfbInfo_t);
 ZEND_FUNCTION(testObject);
 #endif
 ZEND_FUNCTION(grAADrawLine);
@@ -408,6 +439,10 @@ ZEND_FUNCTION(grGlideGetState);
 ZEND_FUNCTION(grGlideInit);
 ZEND_FUNCTION(grGlideSetState);
 ZEND_FUNCTION(grGlideShutdown);
+ZEND_FUNCTION(grHints);
+ZEND_FUNCTION(grLfbConstantAlpha);
+ZEND_FUNCTION(grLfbConstantDepth);
+ZEND_FUNCTION(grLfbLock);
 ZEND_FUNCTION(grSstQueryHardware);
 ZEND_FUNCTION(grSstSelect);
 ZEND_FUNCTION(grDrawTriangle);
@@ -437,6 +472,7 @@ ZEND_METHOD(GrCullMode_t, toInt);
 ZEND_METHOD(GrDepthBufferMode_t, toInt);
 ZEND_METHOD(GrDitherMode_t, toInt);
 ZEND_METHOD(GrFogMode_t, toInt);
+ZEND_METHOD(GrHints_t, toInt);
 ZEND_METHOD(GrLock_t, toInt);
 ZEND_METHOD(GrLfbBypassMode_t, toInt);
 ZEND_METHOD(GrLfbWriteMode_t, toInt);
@@ -464,6 +500,7 @@ ZEND_METHOD(SST_t, flush);
 ZEND_METHOD(GrHwConfiguration, flush);
 ZEND_METHOD(GrTmuVertex, flush);
 ZEND_METHOD(GrVertex, flush);
+ZEND_METHOD(GrLfbInfo_t, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
@@ -477,6 +514,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrHwConfiguration, arginfo_testGrHwConfiguration)
 	ZEND_FE(testGrTmuVertex, arginfo_testGrTmuVertex)
 	ZEND_FE(testGrVertex, arginfo_testGrVertex)
+	ZEND_FE(testGrLfbInfo_t, arginfo_testGrLfbInfo_t)
 	ZEND_FE(testObject, arginfo_testObject)
 #endif
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
@@ -521,6 +559,10 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grGlideInit, arginfo_grGlideInit)
 	ZEND_FE(grGlideSetState, arginfo_grGlideSetState)
 	ZEND_FE(grGlideShutdown, arginfo_grGlideShutdown)
+	ZEND_FE(grHints, arginfo_grHints)
+	ZEND_FE(grLfbConstantAlpha, arginfo_grLfbConstantAlpha)
+	ZEND_FE(grLfbConstantDepth, arginfo_grLfbConstantDepth)
+	ZEND_FE(grLfbLock, arginfo_grLfbLock)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
@@ -626,6 +668,11 @@ static const zend_function_entry class_GrDitherMode_t_methods[] = {
 
 static const zend_function_entry class_GrFogMode_t_methods[] = {
 	ZEND_ME(GrFogMode_t, toInt, arginfo_class_GrFogMode_t_toInt, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrHints_t_methods[] = {
+	ZEND_ME(GrHints_t, toInt, arginfo_class_GrHints_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -766,6 +813,11 @@ static const zend_function_entry class_GrTmuVertex_methods[] = {
 
 static const zend_function_entry class_GrVertex_methods[] = {
 	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrLfbInfo_t_methods[] = {
+	ZEND_ME(GrLfbInfo_t, flush, arginfo_class_GrLfbInfo_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1176,6 +1228,31 @@ static zend_class_entry *register_class_GrFogMode_t(void)
 	zend_enum_add_case_cstr(class_entry, "GR_FOG_MULT2", NULL);
 
 	zend_enum_add_case_cstr(class_entry, "GR_FOG_ADD2", NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrHints_t(void)
+{
+	zend_class_entry *class_entry = zend_register_internal_enum("GrHints_t", IS_UNDEF, class_GrHints_t_methods);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINTTYPE_MIN", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_STWHINT", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_FIFOCHECKHINT", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_FPUPRECISION", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_ALLOW_MIPMAP_DITHER", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_LFB_WRITE", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_LFB_PROTECT", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINT_LFB_RESET", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_HINTTYPE_MAX", NULL);
 
 	return class_entry;
 }
@@ -1864,6 +1941,49 @@ static zend_class_entry *register_class_GrVertex(zend_class_entry *class_entry_f
 	zend_string *property_tmuvtx_name = zend_string_init("tmuvtx", sizeof("tmuvtx") - 1, 1);
 	zend_declare_typed_property(class_entry, property_tmuvtx_name, &property_tmuvtx_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_ARRAY));
 	zend_string_release(property_tmuvtx_name);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entry_flushable)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "GrLfbInfo_t", class_GrLfbInfo_t_methods);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
+
+	zval property_size_default_value;
+	ZVAL_UNDEF(&property_size_default_value);
+	zend_string *property_size_name = zend_string_init("size", sizeof("size") - 1, 1);
+	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_size_name);
+
+	zval property_lfbPtr_default_value;
+	ZVAL_UNDEF(&property_lfbPtr_default_value);
+	zend_string *property_lfbPtr_name = zend_string_init("lfbPtr", sizeof("lfbPtr") - 1, 1);
+	zend_declare_typed_property(class_entry, property_lfbPtr_name, &property_lfbPtr_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_STRING));
+	zend_string_release(property_lfbPtr_name);
+
+	zval property_strideInBytes_default_value;
+	ZVAL_UNDEF(&property_strideInBytes_default_value);
+	zend_string *property_strideInBytes_name = zend_string_init("strideInBytes", sizeof("strideInBytes") - 1, 1);
+	zend_declare_typed_property(class_entry, property_strideInBytes_name, &property_strideInBytes_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_strideInBytes_name);
+
+	zval property_writeMode_default_value;
+	ZVAL_UNDEF(&property_writeMode_default_value);
+	zend_string *property_writeMode_name = zend_string_init("writeMode", sizeof("writeMode") - 1, 1);
+	zend_string *property_writeMode_class_GrLfbWriteMode_t = zend_string_init("GrLfbWriteMode_t", sizeof("GrLfbWriteMode_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_writeMode_name, &property_writeMode_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_writeMode_class_GrLfbWriteMode_t, 0, 0));
+	zend_string_release(property_writeMode_name);
+
+	zval property_origin_default_value;
+	ZVAL_UNDEF(&property_origin_default_value);
+	zend_string *property_origin_name = zend_string_init("origin", sizeof("origin") - 1, 1);
+	zend_string *property_origin_class_GrOriginLocation_t = zend_string_init("GrOriginLocation_t", sizeof("GrOriginLocation_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_origin_name, &property_origin_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_origin_class_GrOriginLocation_t, 0, 0));
+	zend_string_release(property_origin_name);
 
 	return class_entry;
 }

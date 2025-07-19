@@ -174,6 +174,24 @@ void hydrate_grState(const GrState* buffer, _GrState* grState);
 void phpglide2x_register_grState(INIT_FUNC_ARGS);
 
 
+
+extern zend_class_entry* grLfbInfo_ce;
+
+typedef struct _GrLfbInfo_t {
+    GrLfbInfo_t grLfbInfo;	// the embeded data
+    zend_object std;	// it is important that the zend_object goes last
+} _GrLfbInfo_t;
+
+void flush_grLfbInfo(const _GrLfbInfo_t* grLfbInfo, GrLfbInfo_t* buffer);
+
+void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo);
+
+void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
+
+
+
+
+
 void phpglide2x_register_structs(INIT_FUNC_ARGS);
 
 #endif

@@ -25,6 +25,7 @@ zend_class_entry* grDepthBufferMode_ce;
 zend_class_entry* grDitherMode_ce;
 zend_class_entry* grFogMode_ce;
 zend_class_entry* grLock_ce;
+zend_class_entry* grHints_ce;
 zend_class_entry* grLfbBypassMode_ce;
 zend_class_entry* grLfbWriteMode_ce;
 zend_class_entry* grOriginLocation_ce;
@@ -519,6 +520,21 @@ struct {
 			{ NULL, 0 } // sentinel
 		}
 	},
+	{
+		NULL, //grHints_ce
+		(EnumValue[]) {
+			SET_CASE(GR_HINTTYPE_MIN),
+			SET_CASE(GR_HINT_STWHINT),
+			SET_CASE(GR_HINT_FIFOCHECKHINT),
+			SET_CASE(GR_HINT_FPUPRECISION),
+			SET_CASE(GR_HINT_ALLOW_MIPMAP_DITHER),
+			SET_CASE(GR_HINT_LFB_WRITE),
+			SET_CASE(GR_HINT_LFB_PROTECT),
+			SET_CASE(GR_HINT_LFB_RESET),
+			SET_CASE(GR_HINTTYPE_MAX),
+			{ NULL, 0 } // sentinel
+		}
+	},
 	{ NULL, NULL }
 };
 
@@ -565,6 +581,7 @@ ZEND_METHOD(GrDepthBufferMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_T
 ZEND_METHOD(GrDitherMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrFogMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLock_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrHints_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLfbBypassMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLfbWriteMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrOriginLocation_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
@@ -968,4 +985,15 @@ void phpglide2x_register_enums(INIT_FUNC_ARGS)
 	CREATE_CONSTANT(GR_RESOLUTION_NONE);
 	CREATE_CONSTANT(GR_RESOLUTION_MIN);
 	CREATE_CONSTANT(GR_RESOLUTION_MAX);
+
+	//typedef FxU32 GrHint_t;
+	grHints_ce = grouped_enums[36].enum_entry = register_class_GrHints_t();
+	CREATE_CONSTANT(GR_HINTTYPE_MIN);
+	CREATE_CONSTANT(GR_HINT_STWHINT);
+	CREATE_CONSTANT(GR_HINT_FIFOCHECKHINT);
+	CREATE_CONSTANT(GR_HINT_ALLOW_MIPMAP_DITHER);
+	CREATE_CONSTANT(GR_HINT_LFB_WRITE);
+	CREATE_CONSTANT(GR_HINT_LFB_PROTECT);
+	CREATE_CONSTANT(GR_HINT_LFB_RESET);
+	CREATE_CONSTANT(GR_HINTTYPE_MAX);
 }

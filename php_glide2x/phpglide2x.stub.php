@@ -269,6 +269,20 @@ enum GrFogMode_t {
 	public function toInt() : int;
 }
 
+enum GrHints_t {
+    case GR_HINTTYPE_MIN;
+    case GR_HINT_STWHINT;
+    case GR_HINT_FIFOCHECKHINT;
+    case GR_HINT_FPUPRECISION;
+    case GR_HINT_ALLOW_MIPMAP_DITHER;
+    case GR_HINT_LFB_WRITE;
+    case GR_HINT_LFB_PROTECT;
+    case GR_HINT_LFB_RESET;
+    case GR_HINTTYPE_MAX;
+
+    public function toInt() : int;
+}
+
 enum GrLock_t {
     case GR_LFB_READ_ONLY;
     case GR_LFB_WRITE_ONLY;
@@ -619,6 +633,21 @@ final class GrVertex implements flushable {
 function testGrVertex(GrVertex $chc) : void {};
 #endif
 
+final class GrLfbInfo_t implements flushable {
+    public int $size;
+    public string $lfbPtr;
+    public int $strideInBytes;
+    public GrLfbWriteMode_t $writeMode;
+    public GrOriginLocation_t $origin;
+
+    public function flush() : string;
+}
+
+#ifdef _DEBUG
+function testGrLfbInfo_t(GrLfbInfo_t $gli) : void {};
+#endif
+
+
 #ifdef _DEBUG
 function testObject(object $obj) : void {};
 #endif
@@ -725,6 +754,21 @@ function grGlideInit() : void {};
 function grGlideSetState(GrState $state) : void {};
 
 function grGlideShutdown() : void {};
+
+function grHints(GrHints_t $type, int $hintMask) : void {};
+
+function grLfbConstantAlpha(int $alpha) : void {};
+
+function grLfbConstantDepth(int $depth) : void {};
+
+function grLfbLock(
+    GrLock_t $type,
+    GrBuffer_t $buffer,
+    GrLfbWriteMode_t $writeMode,
+    GrOriginLocation_t $origin,
+    bool $pixelPipeline,
+    GrLfbInfo_t $info
+) : bool {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};
