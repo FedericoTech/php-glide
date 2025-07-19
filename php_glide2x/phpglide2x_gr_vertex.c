@@ -67,7 +67,7 @@ PHP_METHOD(GrVertex, flush)
 static zend_object_handlers grVertex_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrVertex_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrVertex* grVertex = zend_object_alloc(sizeof(_GrVertex), ce);
@@ -86,7 +86,7 @@ zend_object* GrVertex_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrVertex_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
                
     _GrVertex* clone = O_EMBEDDED_P(_GrVertex, new_obj);
     _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
@@ -101,7 +101,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
 {
     grVertex_ce = register_class_GrVertex(gr_flushable_ce);
-    grVertex_ce->create_object = GrVertex_new; //asign an internal constructor
+    grVertex_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grVertex_object_handlers,	// our handler 

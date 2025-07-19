@@ -45,7 +45,7 @@ PHP_METHOD(GrTMUConfig_t, flush)
 static zend_object_handlers grTMUConfig_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrTMUConfig_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrTMUConfig_t* grTMUConfig = zend_object_alloc(sizeof(_GrTMUConfig_t), ce);
@@ -64,7 +64,7 @@ zend_object* GrTMUConfig_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrTMUConfig_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
     _GrTMUConfig_t* clone = O_EMBEDDED_P(_GrTMUConfig_t, new_obj);
     _GrTMUConfig_t* orig = O_EMBEDDED_P(_GrTMUConfig_t, object);
@@ -81,7 +81,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
 {
     grTMUConfig_ce = register_class_GrTMUConfig_t(gr_flushable_ce);
-    grTMUConfig_ce->create_object = GrTMUConfig_new; //asign an internal constructor
+    grTMUConfig_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grTMUConfig_object_handlers,	// our handler 

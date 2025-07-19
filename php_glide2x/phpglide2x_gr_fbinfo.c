@@ -51,7 +51,7 @@ PHP_METHOD(GrLfbInfo_t, flush)
 static zend_object_handlers grLfbInfo_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrLfbInfo_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrLfbInfo_t* grLfbInfo = zend_object_alloc(sizeof(_GrLfbInfo_t), ce);
@@ -70,7 +70,7 @@ zend_object* GrLfbInfo_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrLfbInfo_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
     _GrLfbInfo_t* clone = O_EMBEDDED_P(_GrLfbInfo_t, new_obj);
     _GrLfbInfo_t* orig = O_EMBEDDED_P(_GrLfbInfo_t, object);
@@ -85,7 +85,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
 {
     grLfbInfo_ce = register_class_GrLfbInfo_t(gr_flushable_ce);
-    grLfbInfo_ce->create_object = GrLfbInfo_new; //asign an internal constructor
+    grLfbInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grLfbInfo_object_handlers,	// our handler 
@@ -128,8 +128,9 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
         const char* str = Z_STRVAL_P(value);
         size_t len = Z_STRLEN_P(value);
         // Make sure not to overflow the destination buffer
-        strncpy_s(buffer->lfbPtr, sizeof(buffer->lfbPtr), str, _TRUNCATE);
-        buffer->lfbPtr[sizeof(buffer->lfbPtr) - 1] = '\0';  // Ensure null-termination
+
+        strncpy_s(buffer->lfbPtr, buffer->size, str, _TRUNCATE);
+        ((char *) &buffer->lfbPtr)[buffer->size - 1] = '\0';  // Ensure null-termination
     }
 
     value = zend_read_property(
@@ -192,16 +193,11 @@ void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)
         sizeof("strideInBytes") - 1,
         buffer->strideInBytes
     );
-
+   
     zend_object* enum_case = NULL;
     zval val_zv;
 
-    switch (buffer->writeMode) {
-    case GR_LFBWRITEMODE_565:
-        enum_case = zend_enum_get_case_cstr(grLfbWriteMode_ce, "GR_LFBWRITEMODE_565");
-        break;
-    }
-    
+    enum_case = int_to_enum(buffer->writeMode, grLfbWriteMode_ce);
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
@@ -211,12 +207,7 @@ void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)
     );
 
 
-
-    switch (buffer->origin) {
-    case GR_LFBWRITEMODE_565:
-        enum_case = zend_enum_get_case_cstr(grOriginLocation_ce, "GR_ORIGIN_UPPER_LEFT");
-        break;
-    }
+    enum_case = int_to_enum(buffer->origin, grOriginLocation_ce);
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
@@ -224,5 +215,4 @@ void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)
         "origin", sizeof("origin") - 1,
         &val_zv
     );
-
 }

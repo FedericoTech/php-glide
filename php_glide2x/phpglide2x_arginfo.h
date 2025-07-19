@@ -1,9 +1,18 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 803ab5689f451d1e8ed00ecb7c3b78bab0d78fc8 */
+ * Stub hash: 3da49a70c369d96f3fbc6348fada276166337e39 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, state, GrState, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_enumToIntTest, 0, 1, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, enum, UnitEnum, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_intToEnumTest, 0, 2, UnitEnum, 0)
+	ZEND_ARG_TYPE_INFO(0, index, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, enumClass, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
@@ -385,6 +394,8 @@ ZEND_END_ARG_INFO()
 
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
+ZEND_FUNCTION(enumToIntTest);
+ZEND_FUNCTION(intToEnumTest);
 ZEND_FUNCTION(testGrTMUConfig_t);
 ZEND_FUNCTION(testGrVoodooConfig_t);
 ZEND_FUNCTION(testGrVoodoo2Config_t);
@@ -505,6 +516,8 @@ ZEND_METHOD(GrLfbInfo_t, flush);
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
 	ZEND_FE(testGrState, arginfo_testGrState)
+	ZEND_FE(enumToIntTest, arginfo_enumToIntTest)
+	ZEND_FE(intToEnumTest, arginfo_intToEnumTest)
 	ZEND_FE(testGrTMUConfig_t, arginfo_testGrTMUConfig_t)
 	ZEND_FE(testGrVoodooConfig_t, arginfo_testGrVoodooConfig_t)
 	ZEND_FE(testGrVoodoo2Config_t, arginfo_testGrVoodoo2Config_t)

@@ -104,7 +104,7 @@ PHP_METHOD(SST_t, flush)
 static zend_object_handlers grSST_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* SST_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _SST_t* sST = zend_object_alloc(sizeof(_SST_t), ce);
@@ -124,7 +124,7 @@ zend_object* SST_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = SST_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
     _SST_t* clone = O_EMBEDDED_P(_SST_t, new_obj);
     _SST_t* orig = O_EMBEDDED_P(_SST_t, object);
@@ -139,7 +139,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grSST(INIT_FUNC_ARGS)
 {
     sST_ce = register_class_SST_t(gr_flushable_ce);
-    sST_ce->create_object = SST_new; //asign an internal constructor
+    sST_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grSST_object_handlers,	// our handler 

@@ -497,6 +497,12 @@ enum GrScreenResolution_t {
 	public function toInt() : int;
 }
 
+#ifdef _DEBUG
+function enumToIntTest (UnitEnum $enum): int {}
+
+function intToEnumTest (int $value, string $enumClass): UnitEnum {}
+#endif
+
 interface flushable {
 	public function flush() : string;
 }

@@ -538,28 +538,99 @@ struct {
 	{ NULL, NULL }
 };
 
-int enum_to_int(zend_object* enum_obj) {
+int enum_to_int(zend_object* enum_obj)
+{
+	//we go through all the groups till we find the sentinel
 	for (int i = 0; grouped_enums[i].enum_entry != NULL; i++) {
+		//if we find the scope...
 		if (grouped_enums[i].enum_entry == enum_obj->ce) {
+			
+			//we get he enumeration case name
 			const char* case_name = ZSTR_VAL(Z_STR_P(zend_enum_fetch_case_name(enum_obj)));
 			int len = strlen(case_name);
 
+			//we go through the case names till we find the sentinel
 			for (int j = 0; grouped_enums[i].values[j].name != NULL; j++) {
+				//if we find the case name
 				if (len == strlen(grouped_enums[i].values[j].name)
 					&& memcmp(case_name, grouped_enums[i].values[j].name, len) == 0
-					) {
+				) {
+					//we return the int value
 					return grouped_enums[i].values[j].value;
 				}
 			}
-
+			//if not found we throw an error
 			zend_throw_error(NULL, "Unknown enum case");
 			return 0;
 		}
 	}
-
+	//if not found we throw an error
 	zend_throw_error(NULL, "Unknown enum case");
 	return 0;
 }
+
+zend_object* int_to_enum(int index, zend_class_entry* scope_ce)
+{
+	//we go through all the groups till we find the sentinel
+	for (int i = 0; grouped_enums[i].enum_entry != NULL; i++) {
+		//if we find the entry with the scope given...
+		if (grouped_enums[i].enum_entry == scope_ce) {
+			//we go through its cases till we find the sentinel
+			for (int j = 0; grouped_enums[i].values[j].name != NULL; j++) {
+				//if we find the one with the index...
+				if (grouped_enums[i].values[j].value == index) {
+
+					//we return the enum
+					return zend_enum_get_case_cstr(scope_ce, grouped_enums[i].values[j].name);
+				}
+			}
+			//if not found we throw an error
+			zend_throw_error(NULL, "Unknown enum case");
+			return NULL;
+		}
+	}
+	//if not found we throw an error
+	zend_throw_error(NULL, "Unknown enum case");
+	return NULL;
+}
+
+#ifdef _DEBUG
+ZEND_FUNCTION(enumToIntTest)
+{
+	zval* enum_zv = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(enum_zv)
+		ZEND_PARSE_PARAMETERS_END();
+
+	RETURN_LONG(enum_to_int(Z_OBJ_P(enum_zv)));
+
+}
+
+ZEND_FUNCTION(intToEnumTest)
+{
+	zend_long value;
+
+	char* enumClass_str = NULL;
+	size_t enumClass_len;
+	
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_LONG(value)
+		Z_PARAM_STRING(enumClass_str, enumClass_len)
+		
+		ZEND_PARSE_PARAMETERS_END();
+
+	zend_string* class_name = zend_string_init(enumClass_str, enumClass_len, 0);
+	zend_class_entry* ce = zend_lookup_class(class_name);
+	zend_string_release(class_name);
+
+	zval zval_enum;
+	ZVAL_OBJ(&zval_enum, int_to_enum(value, ce));
+	RETURN_ZVAL(&zval_enum, 1, 0);
+}
+#endif // _DEBUG
+
 
 ZEND_METHOD(GrDepth_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrEvenOdd_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };

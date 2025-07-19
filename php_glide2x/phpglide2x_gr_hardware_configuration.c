@@ -110,7 +110,7 @@ PHP_METHOD(GrHwConfiguration, flush)
 static zend_object_handlers grHwConfiguration_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrHwConfiguration_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrHwConfiguration* grHwConfiguration = zend_object_alloc(sizeof(_GrHwConfiguration), ce);
@@ -129,7 +129,7 @@ zend_object* GrHwConfiguration_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrHwConfiguration_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
 
     _GrHwConfiguration* clone = O_EMBEDDED_P(_GrHwConfiguration, new_obj);
@@ -145,7 +145,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
 {
     grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
-    grHwConfiguration_ce->create_object = GrHwConfiguration_new; //asign an internal constructor
+    grHwConfiguration_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grHwConfiguration_object_handlers,	// our handler 

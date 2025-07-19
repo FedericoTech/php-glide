@@ -44,7 +44,7 @@ PHP_METHOD(GrAT3DConfig_t, flush)
 static zend_object_handlers grAT3DConfig_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrAT3DConfig_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrAT3DConfig_t* grAT3DConfig = zend_object_alloc(sizeof(_GrAT3DConfig_t), ce);
@@ -79,7 +79,7 @@ static zval* gr_write_property(zend_object* object, zend_string* member, zval* v
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrAT3DConfig_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
     _GrAT3DConfig_t* clone = O_EMBEDDED_P(_GrAT3DConfig_t, new_obj);
     _GrAT3DConfig_t* orig = O_EMBEDDED_P(_GrAT3DConfig_t, object);
@@ -94,7 +94,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS)
 {
 	grAT3DConfig_ce = register_class_GrAT3DConfig_t(gr_flushable_ce);
-    grAT3DConfig_ce->create_object = GrAT3DConfig_new; //asign an internal constructor
+    grAT3DConfig_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grAT3DConfig_object_handlers,	// our handler 

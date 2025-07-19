@@ -44,7 +44,7 @@ PHP_METHOD(GrState, flush)
 static zend_object_handlers grState_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrState_new(zend_class_entry* ce)
+static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrState* grState = zend_object_alloc(sizeof(_GrState), ce);
@@ -63,7 +63,7 @@ zend_object* GrState_new(zend_class_entry* ce)
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
-    zend_object* new_obj = GrState_new(object->ce);
+    zend_object* new_obj = gr_new_obj(object->ce);
 
     _GrState* clone = O_EMBEDDED_P(_GrState, new_obj);
     _GrState* orig = O_EMBEDDED_P(_GrState, object);
@@ -78,7 +78,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 void phpglide2x_register_grState(INIT_FUNC_ARGS)
 {
     grState_ce = register_class_GrState(gr_flushable_ce);
-    grState_ce->create_object = GrState_new; //asign an internal constructor
+    grState_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
         &grState_object_handlers,	// our handler 

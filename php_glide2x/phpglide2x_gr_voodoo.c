@@ -110,7 +110,7 @@ static zend_object_handlers grVoodooConfig_object_handlers;
 static zend_object_handlers grVoodoo2Config_object_handlers;
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrVoodooConfig_new(zend_class_entry* ce)
+static zend_object* GrVoodooConfig_new(zend_class_entry* ce)
 {
     //it allocates memory
     _GrVoodooConfig_t* grVoodooConfig = zend_object_alloc(sizeof(_GrVoodooConfig_t), ce);
@@ -127,7 +127,7 @@ zend_object* GrVoodooConfig_new(zend_class_entry* ce)
 }
 
 //function that allocates memory for the object and sets the handlers
-zend_object* GrVoodoo2Config_new(zend_class_entry* ce)
+static zend_object* GrVoodoo2Config_new(zend_class_entry* ce)
 {
     //it allocates memory
     _GrVoodoo2Config_t* grVoodoo2Config = zend_object_alloc(sizeof(_GrVoodoo2Config_t), ce);
