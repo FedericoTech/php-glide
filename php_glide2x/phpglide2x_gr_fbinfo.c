@@ -48,7 +48,7 @@ PHP_METHOD(GrLfbInfo_t, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grLfbInfo_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -60,8 +60,10 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     zend_object_std_init(&grLfbInfo->std, ce);
     object_properties_init(&grLfbInfo->std, ce);
 
+    grLfbInfo->grLfbInfo.lfbPtr = NULL;
+
     //it sets the handlers
-    grLfbInfo->std.handlers = &grLfbInfo_object_handlers;
+    grLfbInfo->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grLfbInfo->std;
@@ -82,21 +84,34 @@ static zend_object* gr_clone_obj(zend_object* object)
     return new_obj;
 }
 
+static void gr_free_obj(zend_object* object)
+{
+    _GrLfbInfo_t* obj = O_EMBEDDED_P(_GrLfbInfo_t, object);
+
+    if (obj->grLfbInfo.lfbPtr != NULL) {
+        efree(obj->grLfbInfo.lfbPtr);
+        obj->grLfbInfo.lfbPtr = NULL;
+    }
+
+    zend_object_std_dtor(&obj->std);
+}
+
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
 {
     grLfbInfo_ce = register_class_GrLfbInfo_t(gr_flushable_ce);
     grLfbInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grLfbInfo_object_handlers,	// our handler 
+        &object_handlers,	// our handler 
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grLfbInfo_object_handlers.offset = XtOffsetOf(_GrState, std);
-    //grAT3DConfig_object_handlers.write_property = gr_write_property;
-    grLfbInfo_object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.offset = XtOffsetOf(_GrLfbInfo_t, std);
+    //object_handlers.write_property = gr_write_property;
+    object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.free_obj = gr_free_obj;
 }
 
 void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
@@ -121,17 +136,17 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) == IS_NULL) {
-        buffer->lfbPtr = '\0';
+    if (buffer->lfbPtr) {
+        efree(buffer->lfbPtr);
     }
-    else {
-        const char* str = Z_STRVAL_P(value);
-        size_t len = Z_STRLEN_P(value);
-        // Make sure not to overflow the destination buffer
 
-        strncpy_s(buffer->lfbPtr, buffer->size, str, _TRUNCATE);
-        ((char *) &buffer->lfbPtr)[buffer->size - 1] = '\0';  // Ensure null-termination
-    }
+    buffer->lfbPtr = emalloc(Z_STRLEN_P(value));
+    memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
+
+
+    //strncpy_s(buffer->lfbPtr, buffer->size, str, _TRUNCATE);
+    //((char *) &buffer->lfbPtr)[buffer->size - 1] = '\0';  // Ensure null-termination
+    
 
     value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
@@ -164,7 +179,7 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->writeMode = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->origin = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
 }
 
 void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)

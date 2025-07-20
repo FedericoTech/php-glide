@@ -4,59 +4,94 @@ GrLfbInfo_t
 <?php
 grGlideInit();
 
-$ello = new GrState;
+$ello = new GrLfbInfo_t;
 
-$ello->pad = 'bobo';
+var_dump($ello);
+
+testGrLfbInfo_t($ello);
+
+$ello->size = 10;
+$ello->lfbPtr = '1234567890';
+$ello->strideInBytes = 4;
+$ello->writeMode = GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1;
+$ello->origin = GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT;
 $ello->flush();
 
 var_dump($ello);
 
-testGrState($ello);
+testGrLfbInfo_t($ello);
 
-grGlideSetState($ello);
 
-echo 'we set the state' . PHP_EOL;
+$ello->size = 9;
+$ello->lfbPtr = '1444567890';
+$ello->flush();
 
-$aquello = new GrState;
+var_dump($ello);
 
-grGlideGetState($aquello);
-
-testGrState($aquello);
-
-echo '[' . ($aquello->pad === str_repeat("\0", 312)) . ']' . PHP_EOL;
-
-//var_dump($aquello);
-
-echo 'we retrieved the state' . PHP_EOL;
+testGrLfbInfo_t($ello);
 
 $ello2 = clone $ello;
 
-testGrState($ello2);
-
 var_dump($ello2);
 
+testGrLfbInfo_t($ello2);
 
-
-echo 'we cloned' . PHP_EOL;
 
 grGlideShutdown();
 
 echo 'done';
 ?>
 --EXPECT--
-object(GrState)#1 (1) {
-  ["pad"]=>
-  string(4) "bobo"
+object(GrLfbInfo_t)#1 (0) {
+  ["size"]=>
+  uninitialized(int)
+  ["lfbPtr"]=>
+  uninitialized(string)
+  ["strideInBytes"]=>
+  uninitialized(int)
+  ["writeMode"]=>
+  uninitialized(GrLfbWriteMode_t)
+  ["origin"]=>
+  uninitialized(GrOriginLocation_t)
 }
-pad: bobo
-we set the state
-pad: 
-[1]
-we retrieved the state
-pad: bobo
-object(GrState)#3 (1) {
-  ["pad"]=>
-  string(4) "bobo"
+size: 0, lfbPtr: (null), strideInBytes: 0, writeMode: 0, origin: 0
+object(GrLfbInfo_t)#1 (5) {
+  ["size"]=>
+  int(10)
+  ["lfbPtr"]=>
+  string(10) "1234567890"
+  ["strideInBytes"]=>
+  int(4)
+  ["writeMode"]=>
+  enum(GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1)
+  ["origin"]=>
+  enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
 }
-we cloned
+size: 10, lfbPtr: 1234567890, strideInBytes: 4, writeMode: 3, origin: 1
+object(GrLfbInfo_t)#1 (5) {
+  ["size"]=>
+  int(9)
+  ["lfbPtr"]=>
+  string(10) "1444567890"
+  ["strideInBytes"]=>
+  int(4)
+  ["writeMode"]=>
+  enum(GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1)
+  ["origin"]=>
+  enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
+}
+size: 9, lfbPtr: 1444567890, strideInBytes: 4, writeMode: 3, origin: 1
+object(GrLfbInfo_t)#4 (5) {
+  ["size"]=>
+  int(9)
+  ["lfbPtr"]=>
+  string(10) "1444567890"
+  ["strideInBytes"]=>
+  int(4)
+  ["writeMode"]=>
+  enum(GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1)
+  ["origin"]=>
+  enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
+}
+size: 9, lfbPtr: 1444567890, strideInBytes: 4, writeMode: 3, origin: 1
 done

@@ -42,7 +42,7 @@ PHP_METHOD(GrTMUConfig_t, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grTMUConfig_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -55,7 +55,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     object_properties_init(&grTMUConfig->std, ce);
 
     //it sets the handlers
-    grTMUConfig->std.handlers = &grTMUConfig_object_handlers;
+    grTMUConfig->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grTMUConfig->std;
@@ -84,16 +84,16 @@ void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
     grTMUConfig_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grTMUConfig_object_handlers,	// our handler 
+        &object_handlers,	// our handler 
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grTMUConfig_object_handlers.offset = XtOffsetOf(_GrTMUConfig_t, std);
+    object_handlers.offset = XtOffsetOf(_GrTMUConfig_t, std);
 
-    //grTMUConfig_object_handlers.write_property = gr_write_property;
-    grTMUConfig_object_handlers.clone_obj = gr_clone_obj;
+    //object_handlers.write_property = gr_write_property;
+    object_handlers.clone_obj = gr_clone_obj;
 }
 
 void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)

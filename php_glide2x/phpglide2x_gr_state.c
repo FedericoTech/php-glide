@@ -41,7 +41,7 @@ PHP_METHOD(GrState, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grState_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -54,7 +54,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     object_properties_init(&grState->std, ce);
 
     //it sets the handlers
-    grState->std.handlers = &grState_object_handlers;
+    grState->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grState->std;
@@ -81,15 +81,15 @@ void phpglide2x_register_grState(INIT_FUNC_ARGS)
     grState_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grState_object_handlers,	// our handler 
+        &object_handlers,	// our handler 
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grState_object_handlers.offset = XtOffsetOf(_GrState, std);
-    //grAT3DConfig_object_handlers.write_property = gr_write_property;
-    grState_object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.offset = XtOffsetOf(_GrState, std);
+    //object_handlers.write_property = gr_write_property;
+    object_handlers.clone_obj = gr_clone_obj;
 }
 
 void flush_grState(const _GrState* obj, GrState* buffer)

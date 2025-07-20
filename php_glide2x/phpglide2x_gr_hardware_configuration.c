@@ -107,7 +107,7 @@ PHP_METHOD(GrHwConfiguration, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grHwConfiguration_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -120,7 +120,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     object_properties_init(&grHwConfiguration->std, ce);
 
     //it sets the handlers
-    grHwConfiguration->std.handlers = &grHwConfiguration_object_handlers;
+    grHwConfiguration->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grHwConfiguration->std;
@@ -148,14 +148,14 @@ void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
     grHwConfiguration_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grHwConfiguration_object_handlers,	// our handler 
+        &object_handlers,	// our handler 
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grHwConfiguration_object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
-    grHwConfiguration_object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
+    object_handlers.clone_obj = gr_clone_obj;
 }
 
 void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwConfiguration* buffer)

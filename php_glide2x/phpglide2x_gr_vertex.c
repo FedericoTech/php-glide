@@ -64,7 +64,7 @@ PHP_METHOD(GrVertex, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grVertex_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -77,7 +77,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     object_properties_init(&grVertex->std, ce);
 
     //it sets the handlers
-    grVertex->std.handlers = &grVertex_object_handlers;
+    grVertex->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grVertex->std;
@@ -104,15 +104,15 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     grVertex_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grVertex_object_handlers,	// our handler 
+        &object_handlers,	// our handler 
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grVertex_object_handlers.offset = XtOffsetOf(_GrVertex, std);
+    object_handlers.offset = XtOffsetOf(_GrVertex, std);
 
-    grVertex_object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.clone_obj = gr_clone_obj;
 }
 
 void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)

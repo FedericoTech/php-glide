@@ -44,7 +44,7 @@ PHP_METHOD(GrSst96Config_t, flush)
     RETURN_STR(bin);
 }
 
-static zend_object_handlers grSst96Config_object_handlers;
+static zend_object_handlers object_handlers;
 
 //function that allocates memory for the object and sets the handlers
 static zend_object* gr_new_obj(zend_class_entry* ce)
@@ -57,7 +57,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     object_properties_init(&grSst96Config->std, ce);
 
     //it sets the handlers
-    grSst96Config->std.handlers = &grSst96Config_object_handlers;
+    grSst96Config->std.handlers = &object_handlers;
 
     //it returns the zend object
     return &grSst96Config->std;
@@ -87,14 +87,14 @@ void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS)
     grSst96Config_ce->create_object = gr_new_obj; //asign an internal constructor
 
     memcpy(
-        &grSst96Config_object_handlers,	            // our handler
+        &object_handlers,	            // our handler
         &std_object_handlers,				        // the standard handler
         sizeof(zend_object_handlers)		        // size of the standar handler
     );
 
     //we set the address of the beginning of the whole embedded data
-    grSst96Config_object_handlers.offset = XtOffsetOf(_GrSst96Config_t, std);
-    grSst96Config_object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.offset = XtOffsetOf(_GrSst96Config_t, std);
+    object_handlers.clone_obj = gr_clone_obj;
 }
 
 void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
