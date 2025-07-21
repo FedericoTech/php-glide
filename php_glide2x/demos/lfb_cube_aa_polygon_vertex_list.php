@@ -18,42 +18,42 @@ $cubeVertices = [
     [-1,	 1, 	 1,		0,		$color,	0		],	//7
 ];
 
-$cubeVertices = array_map(function($item){
-		$vertex = new GrVertex;
+$vertices = array_map(function($item){
 
-		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
+	$vertex = new GrVertex;
+
+	list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
-		$vertex->flush();
-		
-		return $vertex;
-	},
-	$cubeVertices
-);
+	return $vertex;
+}, $cubeVertices);
 
 $cubeIndices = [
-    [0, 1, 2], [0, 2, 3], // back
-    [4, 6, 5], [4, 7, 6], // front
-    [0, 4, 5], [0, 5, 1], // bottom
-    [3, 2, 6], [3, 6, 7], // top
-    [1, 5, 6], [1, 6, 2], // right
-    [0, 3, 7], [0, 7, 4]  // left
+	[
+		0, 1, 2, 3, //front
+		0, 4, 5, 1,	//top
+		0, 3, 7, 4,	//left
+	],[
+		6, 7, 3, 2,	// bottom
+		6, 5, 4, 7,	//back
+		6, 2, 1, 5	//right
+	]
 ];
 
 $angle = 0.0;
 
+
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
-
 grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
+
 
 while (!_kbhit()) {
 	
 	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
-	
+
 	$transformed = [];
-	
-	foreach($cubeVertices as $vertex){
+	foreach($vertices as $vertex){
 		$v = clone $vertex;
 		
 		$v = rotateX($v, $angle);
@@ -64,20 +64,44 @@ while (!_kbhit()) {
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
 		$v->flush();
-		
+
 		$transformed[] = $v;
 	}
 	
-	foreach($cubeIndices as $triad){
-		grDrawTriangle(
-			$transformed[$triad[0]], 
-			$transformed[$triad[1]], 
-			$transformed[$triad[2]], 
+	foreach($cubeIndices as $indices){
+		
+		$verts = [];
+		foreach($indices as $index){
+			$verts[] = $transformed[$index];
+		}
+
+		grDrawPlanarPolygonVertexList(
+			count($verts),
+			$verts
 		);
 	}
 
 	grBufferSwap(1);
 	$angle += 0.01;
+}
+
+//$buffer = '';
+
+if(grLfbReadRegion(
+    GrBuffer_t::GR_BUFFER_BACKBUFFER,
+    0, 0,
+    640,
+    480,
+    640 * 2,
+    $buffer
+)){
+    $filename = 'screenshot.data';
+
+    if (file_put_contents($filename, $buffer) !== false) {
+        echo "Saved. use GIMP and open as Raw image data. In the dialog, select RGB565 Little Endian, Offset 0, Width 640 and Height 480\n";
+    } else {
+        echo "Failed to save screenshot.raw\n";
+    }
 }
 
 grSstIdle();

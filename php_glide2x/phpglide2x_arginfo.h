@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 3da49a70c369d96f3fbc6348fada276166337e39 */
+ * Stub hash: af074c22ef8c4c94827560370e7e7ee53a16a9de */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -11,7 +11,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_enumToIntTest, 0, 1, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_intToEnumTest, 0, 2, UnitEnum, 0)
-	ZEND_ARG_TYPE_INFO(0, index, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, enumClass, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -249,6 +249,32 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbLock, 0, 6, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, info, GrLfbInfo_t, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbReadRegion, 0, 7, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, src_buffer, GrBuffer_t, 0)
+	ZEND_ARG_TYPE_INFO(0, src_x, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_y, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_width, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_height, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, dst_stride, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(1, dst_data, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbWriteRegion, 0, 8, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, dst_buffer, GrBuffer_t, 0)
+	ZEND_ARG_TYPE_INFO(0, dst_x, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, dst_y, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, src_format, GrLfbSrcFmt_t, 0)
+	ZEND_ARG_TYPE_INFO(0, src_width, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_height, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_stride, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, src_data, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbUnlock, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrLock_t, 0)
+	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, hwConfig, GrHwConfiguration, 0)
 ZEND_END_ARG_INFO()
@@ -370,6 +396,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrScreenResolution_t_toInt arginfo_grBufferNumPending
 
+#define arginfo_class_GrLfbSrcFmt_t_toInt arginfo_grBufferNumPending
+
 #define arginfo_class_flushable_flush arginfo_class_GrState_flush
 
 #define arginfo_class_GrTMUConfig_t_flush arginfo_class_GrState_flush
@@ -454,6 +482,9 @@ ZEND_FUNCTION(grHints);
 ZEND_FUNCTION(grLfbConstantAlpha);
 ZEND_FUNCTION(grLfbConstantDepth);
 ZEND_FUNCTION(grLfbLock);
+ZEND_FUNCTION(grLfbReadRegion);
+ZEND_FUNCTION(grLfbWriteRegion);
+ZEND_FUNCTION(grLfbUnlock);
 ZEND_FUNCTION(grSstQueryHardware);
 ZEND_FUNCTION(grSstSelect);
 ZEND_FUNCTION(grDrawTriangle);
@@ -502,6 +533,7 @@ ZEND_METHOD(GrState, flush);
 ZEND_METHOD(GrSstType, toInt);
 ZEND_METHOD(GrScreenRefresh_t, toInt);
 ZEND_METHOD(GrScreenResolution_t, toInt);
+ZEND_METHOD(GrLfbSrcFmt_t, toInt);
 ZEND_METHOD(GrTMUConfig_t, flush);
 ZEND_METHOD(GrVoodooConfig_t, flush);
 ZEND_METHOD(GrVoodoo2Config_t, flush);
@@ -576,6 +608,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grLfbConstantAlpha, arginfo_grLfbConstantAlpha)
 	ZEND_FE(grLfbConstantDepth, arginfo_grLfbConstantDepth)
 	ZEND_FE(grLfbLock, arginfo_grLfbLock)
+	ZEND_FE(grLfbReadRegion, arginfo_grLfbReadRegion)
+	ZEND_FE(grLfbWriteRegion, arginfo_grLfbWriteRegion)
+	ZEND_FE(grLfbUnlock, arginfo_grLfbUnlock)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
@@ -776,6 +811,11 @@ static const zend_function_entry class_GrScreenRefresh_t_methods[] = {
 
 static const zend_function_entry class_GrScreenResolution_t_methods[] = {
 	ZEND_ME(GrScreenResolution_t, toInt, arginfo_class_GrScreenResolution_t_toInt, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrLfbSrcFmt_t_methods[] = {
+	ZEND_ME(GrLfbSrcFmt_t, toInt, arginfo_class_GrLfbSrcFmt_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1636,6 +1676,33 @@ static zend_class_entry *register_class_GrScreenResolution_t(void)
 	zend_enum_add_case_cstr(class_entry, "GR_RESOLUTION_MIN", NULL);
 
 	zend_enum_add_case_cstr(class_entry, "GR_RESOLUTION_MAX", NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrLfbSrcFmt_t(void)
+{
+	zend_class_entry *class_entry = zend_register_internal_enum("GrLfbSrcFmt_t", IS_UNDEF, class_GrLfbSrcFmt_t_methods);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_565", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_555", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_1555", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_888", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_8888", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_565_DEPTH", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_555_DEPTH", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_1555_DEPTH", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_ZA16", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_RLE16", NULL);
 
 	return class_entry;
 }

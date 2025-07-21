@@ -33,6 +33,7 @@ extern zend_class_entry* grFogMode_ce;
 extern zend_class_entry* grHints_ce;
 
 extern zend_class_entry* grLfbBypassMode_ce;
+extern zend_class_entry* grLfbSrcFmt_ce;
 extern zend_class_entry* grLfbWriteMode_ce;
 extern zend_class_entry* grLock_ce;
 extern zend_class_entry* grLOD_ce;

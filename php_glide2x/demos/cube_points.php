@@ -6,10 +6,6 @@ $color = 255.0;
 
 guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
 
-$centre = new GrVertex;
-$centre->x = 320;
-$centre->y = 240;
-
 $cubeVertices = [
 	//x,	y,		z,		r, 		g, 		b
 	[-1, 	-1, 	-1,		$color, 0,		0		],	//0

@@ -65,9 +65,29 @@ grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
 grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
 
+
+$fogTable = [
+	0, 5, 10, 15, 19, 24, 28, 33,
+    37, 41, 45, 49, 53, 56, 60, 63,
+    67, 70, 73, 76, 79, 82, 85, 88,
+    91, 94, 96, 99, 101, 104, 106, 108,
+    111, 113, 115, 117, 119, 121, 123, 125,
+    127, 129, 131, 133, 134, 136, 138, 139,
+    141, 142, 144, 145, 147, 148, 150, 151,
+    153, 154, 156, 157, 158, 160, 161, 255
+];
+
+grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
+grFogColorValue(0x00FFFFff); // Fog color: blue
+	
+guFogGenerateLinear($fogTable, 240, 200); // start and end Z for fog
+
+grFogTable($fogTable);
+
+
 while (!_kbhit()) {
 	
-	grBufferClear( 0x00000000, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+	grBufferClear( 0x00FFFFff, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
 	$transformed = [];
 	foreach($vertices as $vertex){

@@ -497,6 +497,20 @@ enum GrScreenResolution_t {
 	public function toInt() : int;
 }
 
+enum GrLfbSrcFmt_t {
+    case GR_LFB_SRC_FMT_565;
+    case GR_LFB_SRC_FMT_555;
+    case GR_LFB_SRC_FMT_1555;
+    case GR_LFB_SRC_FMT_888;
+    case GR_LFB_SRC_FMT_8888;
+    case GR_LFB_SRC_FMT_565_DEPTH;
+    case GR_LFB_SRC_FMT_555_DEPTH;
+    case GR_LFB_SRC_FMT_1555_DEPTH;
+    case GR_LFB_SRC_FMT_ZA16;
+    case GR_LFB_SRC_FMT_RLE16;
+    public function toInt() : int;
+}
+
 #ifdef _DEBUG
 function enumToIntTest (UnitEnum $enum): int {}
 
@@ -775,6 +789,25 @@ function grLfbLock(
     bool $pixelPipeline,
     GrLfbInfo_t $info
 ) : bool {};
+
+function grLfbReadRegion(
+    GrBuffer_t $src_buffer,
+    int $src_x, int $src_y,
+    int $src_width, int $src_height,
+    int $dst_stride,
+    string &$dst_data
+) : bool {}
+
+function grLfbWriteRegion(
+    GrBuffer_t $dst_buffer,
+    int $dst_x, int $dst_y,
+    GrLfbSrcFmt_t $src_format,
+    int $src_width, int $src_height,
+    int $src_stride, string $src_data
+) : bool {}
+
+
+function grLfbUnlock(GrLock_t $type, GrBuffer_t $buffer) : bool {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};

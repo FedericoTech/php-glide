@@ -11,6 +11,7 @@
 #include "phpglide2x_buffer.h"
 #include "phpglide2x_draw.h"
 #include "phpglide2x_functions.h"
+#include "phpglide2x_lfb.h"
 
 # define PHP_GLIDE2X_VERSION "0.1.0"
 

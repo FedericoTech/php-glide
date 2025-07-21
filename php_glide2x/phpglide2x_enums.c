@@ -5,43 +5,45 @@
 
 #define CREATE_CONSTANT(v) REGISTER_LONG_CONSTANT(#v, v, CONST_CS | CONST_PERSISTENT)
 
-zend_class_entry* grDepth_ce;
-zend_class_entry* grEvenOdd_ce;
-zend_class_entry* grChipID_ce;
-zend_class_entry* grCombineFunction_ce;
-zend_class_entry* grCombineFactor_ce;
-zend_class_entry* grCombineLocal_ce;
-zend_class_entry* grCombineOther_ce;
-zend_class_entry* grAlphaSource_ce;
-zend_class_entry* grColorCombineFnc_ce;
 zend_class_entry* grAlphaBlendFnc_ce;
+zend_class_entry* grAlphaSource_ce;
 zend_class_entry* grAspectRatio_ce;
 zend_class_entry* grBuffer_ce;
+zend_class_entry* grChipID_ce;
 zend_class_entry* grChromakeyMode_ce;
 zend_class_entry* grCmpFnc_ce;
+zend_class_entry* grColorCombineFnc_ce;
 zend_class_entry* grColorFormat_ce;
+zend_class_entry* grCombineFactor_ce;
+zend_class_entry* grCombineFunction_ce;
+zend_class_entry* grCombineLocal_ce;
+zend_class_entry* grCombineOther_ce;
 zend_class_entry* grCullMode_ce;
+zend_class_entry* grDepth_ce;
 zend_class_entry* grDepthBufferMode_ce;
 zend_class_entry* grDitherMode_ce;
+zend_class_entry* grEvenOdd_ce;
 zend_class_entry* grFogMode_ce;
-zend_class_entry* grLock_ce;
 zend_class_entry* grHints_ce;
-zend_class_entry* grLfbBypassMode_ce;
-zend_class_entry* grLfbWriteMode_ce;
-zend_class_entry* grOriginLocation_ce;
 zend_class_entry* grLOD_ce;
+zend_class_entry* grLfbBypassMode_ce;
+zend_class_entry* grLfbSrcFmt_ce;
+zend_class_entry* grLfbWriteMode_ce;
+zend_class_entry* grLock_ce;
 zend_class_entry* grMipMapMode_ce;
+zend_class_entry* grNCCTable_ce;
+zend_class_entry* grOriginLocation_ce;
+zend_class_entry* grScreenRefresh_ce;
+zend_class_entry* grScreenResolution_ce;
 zend_class_entry* grSmoothingMode_ce;
+zend_class_entry* grSstType_ce;
+zend_class_entry* grTexBaseRange_ce;
+zend_class_entry* grTexTable_ce;
 zend_class_entry* grTextureClampMode_ce;
 zend_class_entry* grTextureCombineFnc_ce;
 zend_class_entry* grTextureFilterMode_ce;
 zend_class_entry* grTextureFormat_ce;
-zend_class_entry* grTexTable_ce;
-zend_class_entry* grNCCTable_ce;
-zend_class_entry* grTexBaseRange_ce;
-zend_class_entry* grSstType_ce;
-zend_class_entry* grScreenRefresh_ce;
-zend_class_entry* grScreenResolution_ce;
+
 
 typedef struct {
 	const char* name;
@@ -535,6 +537,22 @@ struct {
 			{ NULL, 0 } // sentinel
 		}
 	},
+	{
+		NULL, //grLfbSrcFmt_ce
+		(EnumValue[]) {
+			SET_CASE(GR_LFB_SRC_FMT_565),
+			SET_CASE(GR_LFB_SRC_FMT_555),
+			SET_CASE(GR_LFB_SRC_FMT_1555),
+			SET_CASE(GR_LFB_SRC_FMT_888),
+			SET_CASE(GR_LFB_SRC_FMT_8888),
+			SET_CASE(GR_LFB_SRC_FMT_565_DEPTH),
+			SET_CASE(GR_LFB_SRC_FMT_555_DEPTH),
+			SET_CASE(GR_LFB_SRC_FMT_1555_DEPTH),
+			SET_CASE(GR_LFB_SRC_FMT_ZA16),
+			SET_CASE(GR_LFB_SRC_FMT_RLE16),
+			{ NULL, 0 } // sentinel
+		}
+	},
 	{ NULL, NULL }
 };
 
@@ -632,43 +650,44 @@ ZEND_FUNCTION(intToEnumTest)
 #endif // _DEBUG
 
 
-ZEND_METHOD(GrDepth_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrEvenOdd_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrChipID_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrCombineFunction_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrCombineFactor_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrCombineLocal_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrCombineOther_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrAlphaSource_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrColorCombineFnc_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrAlphaBlendFnc_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrAlphaSource_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrAspectRatio_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrBuffer_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrChipID_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrChromakeyMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrCmpFnc_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrColorCombineFnc_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrColorFormat_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrCombineFactor_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrCombineFunction_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrCombineLocal_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrCombineOther_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrCullMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrDepthBufferMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrDepth_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrDitherMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrEvenOdd_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrFogMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrLock_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrHints_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLfbBypassMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrLfbSrcFmt_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLfbWriteMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrOriginLocation_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrLOD_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrLock_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrMipMapMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrNCCTable_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrOriginLocation_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrScreenRefresh_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrScreenResolution_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrSmoothingMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrSstType, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrTexBaseRange_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrTexTable_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTextureClampMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTextureCombineFnc_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTextureFilterMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTextureFormat_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrTexTable_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrNCCTable_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrTexBaseRange_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrSstType, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrScreenRefresh_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
-ZEND_METHOD(GrScreenResolution_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 
 void phpglide2x_register_enums(INIT_FUNC_ARGS)
 {
@@ -1067,4 +1086,17 @@ void phpglide2x_register_enums(INIT_FUNC_ARGS)
 	CREATE_CONSTANT(GR_HINT_LFB_PROTECT);
 	CREATE_CONSTANT(GR_HINT_LFB_RESET);
 	CREATE_CONSTANT(GR_HINTTYPE_MAX);
+
+	//typedef FxU32 GrLfbSrcFmt_t;
+	grLfbSrcFmt_ce = grouped_enums[37].enum_entry = register_class_GrLfbSrcFmt_t();
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_565);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_555);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_1555);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_888);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_8888);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_565_DEPTH);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_555_DEPTH);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_1555_DEPTH);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_ZA16);
+	CREATE_CONSTANT(GR_LFB_SRC_FMT_RLE16);
 }
