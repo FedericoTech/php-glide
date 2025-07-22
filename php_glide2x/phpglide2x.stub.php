@@ -798,6 +798,8 @@ function grLfbReadRegion(
     string &$dst_data
 ) : bool {}
 
+function grLfbUnlock(GrLock_t $type, GrBuffer_t $buffer) : bool {};
+
 function grLfbWriteRegion(
     GrBuffer_t $dst_buffer,
     int $dst_x, int $dst_y,
@@ -805,9 +807,6 @@ function grLfbWriteRegion(
     int $src_width, int $src_height,
     int $src_stride, string $src_data
 ) : bool {}
-
-
-function grLfbUnlock(GrLock_t $type, GrBuffer_t $buffer) : bool {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};

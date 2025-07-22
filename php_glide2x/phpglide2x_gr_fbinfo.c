@@ -83,18 +83,14 @@ static zend_object* gr_clone_obj(zend_object* object)
 
     return new_obj;
 }
-
+/*
 static void gr_free_obj(zend_object* object)
 {
     _GrLfbInfo_t* obj = O_EMBEDDED_P(_GrLfbInfo_t, object);
 
-    if (obj->grLfbInfo.lfbPtr != NULL) {
-        efree(obj->grLfbInfo.lfbPtr);
-        obj->grLfbInfo.lfbPtr = NULL;
-    }
-
     zend_object_std_dtor(&obj->std);
 }
+*/
 
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
 {
@@ -111,7 +107,7 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
     object_handlers.offset = XtOffsetOf(_GrLfbInfo_t, std);
     //object_handlers.write_property = gr_write_property;
     object_handlers.clone_obj = gr_clone_obj;
-    object_handlers.free_obj = gr_free_obj;
+    //object_handlers.free_obj = gr_free_obj;
 }
 
 void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
@@ -137,16 +133,8 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
     );
 
     if (buffer->lfbPtr) {
-        efree(buffer->lfbPtr);
+        memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
     }
-
-    buffer->lfbPtr = emalloc(Z_STRLEN_P(value));
-    memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
-
-
-    //strncpy_s(buffer->lfbPtr, buffer->size, str, _TRUNCATE);
-    //((char *) &buffer->lfbPtr)[buffer->size - 1] = '\0';  // Ensure null-termination
-    
 
     value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
