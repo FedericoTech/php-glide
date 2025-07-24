@@ -508,6 +508,16 @@ enum GrLfbSrcFmt_t {
     case GR_LFB_SRC_FMT_1555_DEPTH;
     case GR_LFB_SRC_FMT_ZA16;
     case GR_LFB_SRC_FMT_RLE16;
+
+    public function toInt() : int;
+}
+
+enum GrSstControlMode_t {
+    case GR_CONTROL_ACTIVATE;
+    case GR_CONTROL_DEACTIVATE;
+    case GR_CONTROL_RESIZE;
+    case GR_CONTROL_MOVE;
+
     public function toInt() : int;
 }
 
@@ -810,7 +820,13 @@ function grLfbWriteRegion(
 
 function grRenderBuffer(GrBuffer_t $buffer) : void {};
 
-//function grSstControlMode( GrSstControlMode_t mode) : bool {}
+//function grSstControlMode(GrSstControlMode_t $mode) : bool {} //it only exists in the documentation
+
+function grSstIdle() : void {};
+
+function grSstIsBusy() : bool {};
+
+function grSstOrigin( GrOriginLocation_t $origin ) : void {};
 
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
@@ -832,7 +848,7 @@ function grSstWinOpen(
 
 function grSstWinClose() : void {};
 
-function grSstIdle() : void {};
+
 
 
 

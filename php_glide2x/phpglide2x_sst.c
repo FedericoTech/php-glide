@@ -2,6 +2,40 @@
 #include "phpglide2x_enums.h"
 #include "phpglide2x_structs.h"
 
+/*
+PHP_FUNCTION(grSstControlMode)
+{
+	zend_long mode;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(mode)
+		ZEND_PARSE_PARAMETERS_END();
+
+	RETURN_BOOL(grSstControlMode((int)mode));
+}
+*/
+
+PHP_FUNCTION(grSstIdle) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	grSstIdle();
+}
+
+PHP_FUNCTION(grSstIsBusy) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_BOOL(grSstIsBusy());
+}
+
+PHP_FUNCTION(grSstOrigin) 
+{
+	zend_object* origin = NULL;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(origin, grOriginLocation_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grSstOrigin((GrOriginLocation_t)enum_to_int(origin));
+}
+
+
 PHP_FUNCTION(grSstQueryHardware) {
 
 	zend_object* grHwConfiguration_obj = NULL;
@@ -72,7 +106,4 @@ PHP_FUNCTION(grSstWinClose) {
 	grSstWinClose();
 }
 
-PHP_FUNCTION(grSstIdle) {
-	ZEND_PARSE_PARAMETERS_NONE();
-	grSstIdle();
-}
+

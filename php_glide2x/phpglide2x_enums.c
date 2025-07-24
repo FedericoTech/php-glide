@@ -36,6 +36,7 @@ zend_class_entry* grOriginLocation_ce;
 zend_class_entry* grScreenRefresh_ce;
 zend_class_entry* grScreenResolution_ce;
 zend_class_entry* grSmoothingMode_ce;
+zend_class_entry* grSstControlMode_ce;
 zend_class_entry* grSstType_ce;
 zend_class_entry* grTexBaseRange_ce;
 zend_class_entry* grTexTable_ce;
@@ -553,6 +554,16 @@ struct {
 			{ NULL, 0 } // sentinel
 		}
 	},
+	{
+		NULL, //grSstControlMode_ce
+		(EnumValue[]) {
+			SET_CASE(GR_CONTROL_ACTIVATE),
+			SET_CASE(GR_CONTROL_DEACTIVATE),
+			SET_CASE(GR_CONTROL_RESIZE),
+			SET_CASE(GR_CONTROL_MOVE),
+			{ NULL, 0 } // sentinel
+		}
+	},
 	{ NULL, NULL }
 };
 
@@ -681,6 +692,7 @@ ZEND_METHOD(GrOriginLocation_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_TH
 ZEND_METHOD(GrScreenRefresh_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrScreenResolution_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrSmoothingMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
+ZEND_METHOD(GrSstControlMode_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrSstType, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTexBaseRange_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
 ZEND_METHOD(GrTexTable_t, toInt) { RETURN_LONG(enum_to_int(Z_OBJ_P(ZEND_THIS))); };
@@ -1015,6 +1027,13 @@ void phpglide2x_register_enums(INIT_FUNC_ARGS)
 	CREATE_CONSTANT(GR_TEXBASE_128);
 	CREATE_CONSTANT(GR_TEXBASE_64);
 	CREATE_CONSTANT(GR_TEXBASE_32_TO_1);
+
+	//typedef FxU32 GrSstControlMode_ce;
+	grSstControlMode_ce = grouped_enums[33].enum_entry = register_class_GrSstControlMode_t();
+	CREATE_CONSTANT(GR_CONTROL_ACTIVATE);
+	CREATE_CONSTANT(GR_CONTROL_DEACTIVATE);
+	CREATE_CONSTANT(GR_CONTROL_RESIZE);
+	CREATE_CONSTANT(GR_CONTROL_MOVE);
 
 	/*
 	typedef struct _GrState_s {

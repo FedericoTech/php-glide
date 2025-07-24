@@ -45,6 +45,7 @@ extern zend_class_entry* grOriginLocation_ce;
 extern zend_class_entry* grScreenRefresh_ce;
 extern zend_class_entry* grScreenResolution_ce;
 extern zend_class_entry* grSmoothingMode_ce;
+extern zend_class_entry* grSstControlMode_ce;
 extern zend_class_entry* grSstType_ce;
 
 extern zend_class_entry* grTexBaseRange_ce;

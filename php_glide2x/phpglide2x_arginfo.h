@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 63a529885abf99949433f46f70809e960ba8554e */
+ * Stub hash: 7f333701102989b843043733dc392747357692e6 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -275,6 +275,19 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbWriteRegion, 0, 8, _IS_BOOL
 	ZEND_ARG_TYPE_INFO(0, src_data, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grRenderBuffer, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grSstIdle arginfo_grDisableAllEffects
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstIsBusy, 0, 0, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstOrigin, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, origin, GrOriginLocation_t, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, hwConfig, GrHwConfiguration, 0)
 ZEND_END_ARG_INFO()
@@ -304,12 +317,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_grSstWinClose arginfo_grDisableAllEffects
-
-#define arginfo_grSstIdle arginfo_grDisableAllEffects
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grRenderBuffer, 0, 1, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
-ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
@@ -397,6 +404,8 @@ ZEND_END_ARG_INFO()
 #define arginfo_class_GrScreenResolution_t_toInt arginfo_grBufferNumPending
 
 #define arginfo_class_GrLfbSrcFmt_t_toInt arginfo_grBufferNumPending
+
+#define arginfo_class_GrSstControlMode_t_toInt arginfo_grBufferNumPending
 
 #define arginfo_class_flushable_flush arginfo_class_GrState_flush
 
@@ -487,14 +496,16 @@ ZEND_FUNCTION(grLfbLock);
 ZEND_FUNCTION(grLfbReadRegion);
 ZEND_FUNCTION(grLfbUnlock);
 ZEND_FUNCTION(grLfbWriteRegion);
+ZEND_FUNCTION(grRenderBuffer);
+ZEND_FUNCTION(grSstIdle);
+ZEND_FUNCTION(grSstIsBusy);
+ZEND_FUNCTION(grSstOrigin);
 ZEND_FUNCTION(grSstQueryHardware);
 ZEND_FUNCTION(grSstSelect);
 ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grSstWinClose);
-ZEND_FUNCTION(grSstIdle);
-ZEND_FUNCTION(grRenderBuffer);
 ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
@@ -536,6 +547,7 @@ ZEND_METHOD(GrSstType, toInt);
 ZEND_METHOD(GrScreenRefresh_t, toInt);
 ZEND_METHOD(GrScreenResolution_t, toInt);
 ZEND_METHOD(GrLfbSrcFmt_t, toInt);
+ZEND_METHOD(GrSstControlMode_t, toInt);
 ZEND_METHOD(GrTMUConfig_t, flush);
 ZEND_METHOD(GrVoodooConfig_t, flush);
 ZEND_METHOD(GrVoodoo2Config_t, flush);
@@ -613,14 +625,16 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grLfbReadRegion, arginfo_grLfbReadRegion)
 	ZEND_FE(grLfbUnlock, arginfo_grLfbUnlock)
 	ZEND_FE(grLfbWriteRegion, arginfo_grLfbWriteRegion)
+	ZEND_FE(grRenderBuffer, arginfo_grRenderBuffer)
+	ZEND_FE(grSstIdle, arginfo_grSstIdle)
+	ZEND_FE(grSstIsBusy, arginfo_grSstIsBusy)
+	ZEND_FE(grSstOrigin, arginfo_grSstOrigin)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
-	ZEND_FE(grSstIdle, arginfo_grSstIdle)
-	ZEND_FE(grRenderBuffer, arginfo_grRenderBuffer)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
@@ -818,6 +832,11 @@ static const zend_function_entry class_GrScreenResolution_t_methods[] = {
 
 static const zend_function_entry class_GrLfbSrcFmt_t_methods[] = {
 	ZEND_ME(GrLfbSrcFmt_t, toInt, arginfo_class_GrLfbSrcFmt_t_toInt, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrSstControlMode_t_methods[] = {
+	ZEND_ME(GrSstControlMode_t, toInt, arginfo_class_GrSstControlMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -1705,6 +1724,21 @@ static zend_class_entry *register_class_GrLfbSrcFmt_t(void)
 	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_ZA16", NULL);
 
 	zend_enum_add_case_cstr(class_entry, "GR_LFB_SRC_FMT_RLE16", NULL);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrSstControlMode_t(void)
+{
+	zend_class_entry *class_entry = zend_register_internal_enum("GrSstControlMode_t", IS_UNDEF, class_GrSstControlMode_t_methods);
+
+	zend_enum_add_case_cstr(class_entry, "GR_CONTROL_ACTIVATE", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_CONTROL_DEACTIVATE", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_CONTROL_RESIZE", NULL);
+
+	zend_enum_add_case_cstr(class_entry, "GR_CONTROL_MOVE", NULL);
 
 	return class_entry;
 }
