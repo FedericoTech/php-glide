@@ -10,7 +10,7 @@ var_dump($ello);
 
 testGrLfbInfo_t($ello);
 
-$ello->size = 10;
+//$ello->size = 10;
 $ello->lfbPtr = '1234567890';
 $ello->strideInBytes = 4;
 $ello->writeMode = GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1;
@@ -22,7 +22,7 @@ var_dump($ello);
 testGrLfbInfo_t($ello);
 
 
-$ello->size = 9;
+//$ello->size = 9;
 $ello->lfbPtr = '1444567890';
 $ello->flush();
 
@@ -42,9 +42,9 @@ grGlideShutdown();
 echo 'done';
 ?>
 --EXPECT--
-object(GrLfbInfo_t)#1 (0) {
+object(GrLfbInfo_t)#1 (1) {
   ["size"]=>
-  uninitialized(int)
+  int(20)
   ["lfbPtr"]=>
   uninitialized(string)
   ["strideInBytes"]=>
@@ -54,10 +54,10 @@ object(GrLfbInfo_t)#1 (0) {
   ["origin"]=>
   uninitialized(GrOriginLocation_t)
 }
-size: 0, lfbPtr: (null), strideInBytes: 0, writeMode: 0, origin: 0
+size: 20, lfbPtr: 0, lfbPtr: (null), strideInBytes: 0, writeMode: 0, origin: 0
 object(GrLfbInfo_t)#1 (5) {
   ["size"]=>
-  int(10)
+  int(20)
   ["lfbPtr"]=>
   string(10) "1234567890"
   ["strideInBytes"]=>
@@ -67,10 +67,10 @@ object(GrLfbInfo_t)#1 (5) {
   ["origin"]=>
   enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
 }
-size: 10, lfbPtr: 1234567890, strideInBytes: 4, writeMode: 3, origin: 1
+size: 20, lfbPtr: 0, lfbPtr: (null), strideInBytes: 4, writeMode: 3, origin: 1
 object(GrLfbInfo_t)#1 (5) {
   ["size"]=>
-  int(9)
+  int(20)
   ["lfbPtr"]=>
   string(10) "1444567890"
   ["strideInBytes"]=>
@@ -80,10 +80,10 @@ object(GrLfbInfo_t)#1 (5) {
   ["origin"]=>
   enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
 }
-size: 9, lfbPtr: 1444567890, strideInBytes: 4, writeMode: 3, origin: 1
+size: 20, lfbPtr: 0, lfbPtr: (null), strideInBytes: 4, writeMode: 3, origin: 1
 object(GrLfbInfo_t)#4 (5) {
   ["size"]=>
-  int(9)
+  int(20)
   ["lfbPtr"]=>
   string(10) "1444567890"
   ["strideInBytes"]=>
@@ -93,5 +93,5 @@ object(GrLfbInfo_t)#4 (5) {
   ["origin"]=>
   enum(GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT)
 }
-size: 9, lfbPtr: 1444567890, strideInBytes: 4, writeMode: 3, origin: 1
+size: 20, lfbPtr: 0, lfbPtr: (null), strideInBytes: 4, writeMode: 3, origin: 1
 done

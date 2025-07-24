@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 7f333701102989b843043733dc392747357692e6 */
+ * Stub hash: 3f343d73fa5f6b8073b474eec98086e107d8a23f */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -2072,7 +2072,7 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zval property_size_default_value;
 	ZVAL_UNDEF(&property_size_default_value);
 	zend_string *property_size_name = zend_string_init("size", sizeof("size") - 1, 1);
-	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_size_name);
 
 	zval property_lfbPtr_default_value;

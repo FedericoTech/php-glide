@@ -664,7 +664,7 @@ function testGrVertex(GrVertex $chc) : void {};
 #endif
 
 final class GrLfbInfo_t implements flushable {
-    public int $size;
+    public readonly int $size;
     public string $lfbPtr;
     public int $strideInBytes;
     public GrLfbWriteMode_t $writeMode;
@@ -828,6 +828,7 @@ function grSstIsBusy() : bool {};
 
 function grSstOrigin( GrOriginLocation_t $origin ) : void {};
 
+function grSstPerfStats(GrSstPerfStats_t &$stats) : void {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};

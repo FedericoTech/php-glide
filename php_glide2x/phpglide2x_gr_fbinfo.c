@@ -15,8 +15,9 @@ ZEND_FUNCTION(testGrLfbInfo_t)
     _GrLfbInfo_t* config = O_EMBEDDED_P(_GrLfbInfo_t, grLfbInfo_zo);
 
     php_printf(
-        "size: %d, lfbPtr: %s, strideInBytes: %d, writeMode: %d, origin: %d\n",
+        "size: %d, lfbPtr: %p, lfbPtr: %s, strideInBytes: %d, writeMode: %d, origin: %d\n",
         config->grLfbInfo.size,
+        config->grLfbInfo.lfbPtr,
         config->grLfbInfo.lfbPtr,
         config->grLfbInfo.strideInBytes,
         config->grLfbInfo.writeMode,
@@ -66,9 +67,17 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     zend_object_std_init(&grLfbInfo->std, ce);
     object_properties_init(&grLfbInfo->std, ce);
 
+    //we initialize the size
     grLfbInfo->grLfbInfo.size = sizeof(GrLfbInfo_t);
 
-    //memset(&grLfbInfo->grLfbInfo, 0, sizeof(GrLfbInfo_t));
+    zend_update_property_long(
+        grLfbInfo_ce,
+        &grLfbInfo->std,
+        "size",
+        sizeof("size") - 1,
+        grLfbInfo->grLfbInfo.size
+    );
+
 
     //it sets the handlers
     grLfbInfo->std.handlers = &object_handlers;
@@ -131,7 +140,7 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
 
     buffer->size = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
-    if (write) {
+    if (write && buffer->lfbPtr) {
         value = zend_read_property(
             obj->std.ce,            // zend_class_entry* of the object
             (zend_object*)&obj->std,           // zval* or zend_object* (see below)
@@ -141,9 +150,7 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
             NULL           // Optional return zval ptr, or NULL
         );
 
-        if (buffer->lfbPtr) {
-            memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
-        }
+        memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
     }
 
     value = zend_read_property(
@@ -182,26 +189,49 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
 
 void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
 {
+    /*
     zend_update_property_long(
         grLfbInfo_ce,
         &grLfbInfo->std,
-        "size", 
-        sizeof("size") - 1, 
+        "size",
+        sizeof("size") - 1,
         buffer->size
     );
+    */
 
-    if (read) {
-        zend_update_property_stringl(
+    if (buffer->lfbPtr) {
+
+        size_t buffer_size = buffer->strideInBytes * grSstScreenHeight();
+
+        zend_string* zstr = zend_string_alloc(buffer_size, 0);
+
+        if (read) {
+            memcpy(
+                ZSTR_VAL(zstr),
+                buffer->lfbPtr,
+                buffer_size
+            );
+        }
+        else {
+            memset(
+                ZSTR_VAL(zstr),
+                0,
+                buffer_size
+            );
+        }
+
+        ZSTR_VAL(zstr)[buffer_size] = '\0'; // null-terminate for safety
+
+        zend_update_property_str(
             grLfbInfo_ce,
             &grLfbInfo->std,
             "lfbPtr",
             sizeof("lfbPtr") - 1,
-            buffer->lfbPtr,
-            buffer->size
+            zstr
         );
-    }
 
-    //php_printf("[%d]\n", buffer->size);
+        zend_string_release(zstr); // zend_update_property will add a ref
+    }
 
     zend_update_property_long(
         grLfbInfo_ce,
