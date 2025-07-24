@@ -660,7 +660,7 @@ final class GrLfbInfo_t implements flushable {
     public GrLfbWriteMode_t $writeMode;
     public GrOriginLocation_t $origin;
 
-    public function flush() : string;
+    public function flush(bool $write = true) : string;
 }
 
 #ifdef _DEBUG
@@ -808,6 +808,11 @@ function grLfbWriteRegion(
     int $src_stride, string $src_data
 ) : bool {}
 
+function grRenderBuffer(GrBuffer_t $buffer) : void {};
+
+//function grSstControlMode( GrSstControlMode_t mode) : bool {}
+
+
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
 function grSstSelect(int $which_sst) : void {};
 
@@ -830,7 +835,7 @@ function grSstWinClose() : void {};
 function grSstIdle() : void {};
 
 
-function grRenderBuffer(GrBuffer_t $buffer) : void {};
+
 
 
 function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};

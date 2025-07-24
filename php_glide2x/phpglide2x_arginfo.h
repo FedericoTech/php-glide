@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: af074c22ef8c4c94827560370e7e7ee53a16a9de */
+ * Stub hash: 63a529885abf99949433f46f70809e960ba8554e */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -259,6 +259,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbReadRegion, 0, 7, _IS_BOOL,
 	ZEND_ARG_TYPE_INFO(1, dst_data, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbUnlock, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrLock_t, 0)
+	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbWriteRegion, 0, 8, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, dst_buffer, GrBuffer_t, 0)
 	ZEND_ARG_TYPE_INFO(0, dst_x, IS_LONG, 0)
@@ -268,11 +273,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbWriteRegion, 0, 8, _IS_BOOL
 	ZEND_ARG_TYPE_INFO(0, src_height, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, src_stride, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, src_data, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grLfbUnlock, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_OBJ_INFO(0, type, GrLock_t, 0)
-	ZEND_ARG_OBJ_INFO(0, buffer, GrBuffer_t, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
@@ -418,7 +418,9 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrLfbInfo_t_flush arginfo_class_GrState_flush
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrLfbInfo_t_flush, 0, 0, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, write, _IS_BOOL, 0, "true")
+ZEND_END_ARG_INFO()
 
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
@@ -483,8 +485,8 @@ ZEND_FUNCTION(grLfbConstantAlpha);
 ZEND_FUNCTION(grLfbConstantDepth);
 ZEND_FUNCTION(grLfbLock);
 ZEND_FUNCTION(grLfbReadRegion);
-ZEND_FUNCTION(grLfbWriteRegion);
 ZEND_FUNCTION(grLfbUnlock);
+ZEND_FUNCTION(grLfbWriteRegion);
 ZEND_FUNCTION(grSstQueryHardware);
 ZEND_FUNCTION(grSstSelect);
 ZEND_FUNCTION(grDrawTriangle);
@@ -609,8 +611,8 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grLfbConstantDepth, arginfo_grLfbConstantDepth)
 	ZEND_FE(grLfbLock, arginfo_grLfbLock)
 	ZEND_FE(grLfbReadRegion, arginfo_grLfbReadRegion)
-	ZEND_FE(grLfbWriteRegion, arginfo_grLfbWriteRegion)
 	ZEND_FE(grLfbUnlock, arginfo_grLfbUnlock)
+	ZEND_FE(grLfbWriteRegion, arginfo_grLfbWriteRegion)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)

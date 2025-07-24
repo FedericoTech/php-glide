@@ -29,11 +29,17 @@ ZEND_FUNCTION(testGrLfbInfo_t)
 
 PHP_METHOD(GrLfbInfo_t, flush)
 {
-    ZEND_PARSE_PARAMETERS_NONE();
+    zend_bool write = true;
+
+    ZEND_PARSE_PARAMETERS_START(0, 1)
+        Z_PARAM_OPTIONAL
+        Z_PARAM_BOOL(write);
+        ZEND_PARSE_PARAMETERS_END();
 
     _GrLfbInfo_t* obj = O_EMBEDDED_P(_GrLfbInfo_t, Z_OBJ_P(ZEND_THIS));
+      
 
-    flush_grLfbInfo(obj, &obj->grLfbInfo);
+    flush_grLfbInfo(obj, &obj->grLfbInfo, write);
 
     zend_string* bin = zend_string_alloc(sizeof(GrLfbInfo_t) + 1, 0);
 
@@ -60,7 +66,9 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     zend_object_std_init(&grLfbInfo->std, ce);
     object_properties_init(&grLfbInfo->std, ce);
 
-    grLfbInfo->grLfbInfo.lfbPtr = NULL;
+    grLfbInfo->grLfbInfo.size = sizeof(GrLfbInfo_t);
+
+    //memset(&grLfbInfo->grLfbInfo, 0, sizeof(GrLfbInfo_t));
 
     //it sets the handlers
     grLfbInfo->std.handlers = &object_handlers;
@@ -110,7 +118,7 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
     //object_handlers.free_obj = gr_free_obj;
 }
 
-void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
+void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
 {
     zval* value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
@@ -123,17 +131,19 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
 
     buffer->size = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
-    value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
-        "lfbPtr",   // property name
-        sizeof("lfbPtr") - 1,
-        1,             // silent (1 = don't emit notice if not found)
-        NULL           // Optional return zval ptr, or NULL
-    );
+    if (write) {
+        value = zend_read_property(
+            obj->std.ce,            // zend_class_entry* of the object
+            (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+            "lfbPtr",   // property name
+            sizeof("lfbPtr") - 1,
+            1,             // silent (1 = don't emit notice if not found)
+            NULL           // Optional return zval ptr, or NULL
+        );
 
-    if (buffer->lfbPtr) {
-        memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
+        if (buffer->lfbPtr) {
+            memcpy(buffer->lfbPtr, Z_STRVAL_P(value), Z_STRLEN_P(value));
+        }
     }
 
     value = zend_read_property(
@@ -170,7 +180,7 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer)
     buffer->origin = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
 }
 
-void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)
+void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
 {
     zend_update_property_long(
         grLfbInfo_ce,
@@ -180,14 +190,18 @@ void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo)
         buffer->size
     );
 
-    zend_update_property_stringl(
-        grLfbInfo_ce,
-        &grLfbInfo->std,
-        "lfbPtr",
-        sizeof("lfbPtr") - 1,
-        buffer->lfbPtr,
-        buffer->size
-    );
+    if (read) {
+        zend_update_property_stringl(
+            grLfbInfo_ce,
+            &grLfbInfo->std,
+            "lfbPtr",
+            sizeof("lfbPtr") - 1,
+            buffer->lfbPtr,
+            buffer->size
+        );
+    }
+
+    //php_printf("[%d]\n", buffer->size);
 
     zend_update_property_long(
         grLfbInfo_ce,

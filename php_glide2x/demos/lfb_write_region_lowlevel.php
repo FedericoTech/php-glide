@@ -33,6 +33,9 @@ if (false && $info->lfbPtr == NULL) {
     return;
 }
 
+//we initialize a string of zeroes big enough to cover the whole buffer
+$info->lfbPtr = str_repeat("\0", 480 * $info->strideInBytes); //this can only be done after having the lock and knowing strideInBytes
+
 $size = 200;
 $x = 150;
 $y = 150;
@@ -50,7 +53,7 @@ for ($j = 0; $j < $size; $j++) {
     }
 }
 
-$info->flush(); //apply changes in the underlaying memory.
+$info->flush(); //apply changes in the underlying memory.
 
 // Unlock when done
 grLfbUnlock(GrLock_t::GR_LFB_WRITE_ONLY, GrBuffer_t::GR_BUFFER_BACKBUFFER);

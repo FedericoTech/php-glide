@@ -182,9 +182,9 @@ typedef struct _GrLfbInfo_t {
     zend_object std;	// it is important that the zend_object goes last
 } _GrLfbInfo_t;
 
-void flush_grLfbInfo(const _GrLfbInfo_t* grLfbInfo, GrLfbInfo_t* buffer);
+void flush_grLfbInfo(const _GrLfbInfo_t* grLfbInfo, GrLfbInfo_t* buffer, bool write);
 
-void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo);
+void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read);
 
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
 
