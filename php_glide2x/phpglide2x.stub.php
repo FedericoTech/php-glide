@@ -678,6 +678,21 @@ function testGrLfbInfo_t(GrLfbInfo_t $gli) : void {};
 #endif
 
 
+final class GrSstPerfStats_t implements flushable
+{
+    public int $pixelsIn;              /* # pixels processed (minus buffer clears) */
+    public int $chromaFail;            /* # pixels not drawn due to chroma key */
+    public int $zFuncFail;             /* # pixels not drawn due to Z comparison */
+    public int $aFuncFail;             /* # pixels not drawn due to alpha comparison */
+    public int $pixelsOut;             /* # pixels drawn (including buffer clears) */
+
+    public function flush() : string;
+};
+
+#ifdef _DEBUG
+function testGrSstPerfStats_t(GrSstPerfStats_t $gsps) : void {};
+#endif
+
 #ifdef _DEBUG
 function testObject(object $obj) : void {};
 #endif
@@ -820,6 +835,8 @@ function grLfbWriteRegion(
 
 function grRenderBuffer(GrBuffer_t $buffer) : void {};
 
+//SST FUNCTION FAMILY
+
 //function grSstControlMode(GrSstControlMode_t $mode) : bool {} //it only exists in the documentation
 
 function grSstIdle() : void {};
@@ -828,30 +845,48 @@ function grSstIsBusy() : bool {};
 
 function grSstOrigin( GrOriginLocation_t $origin ) : void {};
 
-function grSstPerfStats(GrSstPerfStats_t &$stats) : void {};
+function grSstPerfStats(GrSstPerfStats_t $stats) : void {};
+
+function grSstQueryBoards(GrHwConfiguration $hwConfig) : bool {};
 
 function grSstQueryHardware(GrHwConfiguration $hwConfig) : bool {};
+
+function grSstResetPerfStats() : void {};
+
+function grSstScreenHeight() : int {};
+
+function grSstScreenWidth() : int {};
+
 function grSstSelect(int $which_sst) : void {};
+
+function grSstStatus() : int {};
+
+function grSstVideoLine() : int {};
+
+function grSstVRetraceOn() : bool {};
+
+function grSstWinClose() : void {};
+
+function grSstWinOpen(
+    int $hWin,
+    GrScreenResolution_t $res,
+    GrScreenRefresh_t $ref,
+    GrColorFormat_t $cFormat,
+    GrOriginLocation_t $org_loc,
+    int $num_buffers,
+    int $num_aux_buffers
+) : bool {};
+
+
+
+
+
+
+
 
 function grDrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c) : void {};
 
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
-
-function grSstWinOpen(
-	int $hWin, 
-	GrScreenResolution_t $res, 
-	GrScreenRefresh_t $ref, 
-	GrColorFormat_t $cFormat,
-	GrOriginLocation_t $org_loc,
-	int $num_buffers,
-	int $num_aux_buffers
-) : bool {};
-
-function grSstWinClose() : void {};
-
-
-
-
 
 
 

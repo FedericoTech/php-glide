@@ -37,6 +37,8 @@ $vtx3->a = 255.0;
 
 $angle = 0.0;
 
+$pstate = new GrSstPerfStats_t;
+
 while (!_kbhit()) {
 	
     $vtr1 = rotate_point($vtx1, $angle, $centre);
@@ -51,10 +53,14 @@ while (!_kbhit()) {
 	grAADrawTriangle($vtr1, $vtr2, $vtr3, true, false, true);
 	
 	grBufferSwap(1);
+
+    grSstPerfStats($pstate);
 	
 	//usleep(1000); // Reduce CPU usage
 	$angle += 0.01;
 }
+
+var_dump($pstate);
 
 grSstIdle();
 

@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 3f343d73fa5f6b8073b474eec98086e107d8a23f */
+ * Stub hash: b88fdcb1611913697c4a71efda172cbc5199f382 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -53,6 +53,10 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrLfbInfo_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gli, GrLfbInfo_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrSstPerfStats_t, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, gsps, GrSstPerfStats_t, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
@@ -288,23 +292,33 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstOrigin, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, origin, GrOriginLocation_t, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryHardware, 0, 1, _IS_BOOL, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstPerfStats, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, stats, GrSstPerfStats_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstQueryBoards, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_OBJ_INFO(0, hwConfig, GrHwConfiguration, 0)
 ZEND_END_ARG_INFO()
+
+#define arginfo_grSstQueryHardware arginfo_grSstQueryBoards
+
+#define arginfo_grSstResetPerfStats arginfo_grDisableAllEffects
+
+#define arginfo_grSstScreenHeight arginfo_grBufferNumPending
+
+#define arginfo_grSstScreenWidth arginfo_grBufferNumPending
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstSelect, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, which_sst, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, c, GrVertex, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_grSstStatus arginfo_grBufferNumPending
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, func, GrColorCombineFnc_t, 0)
-ZEND_END_ARG_INFO()
+#define arginfo_grSstVideoLine arginfo_grBufferNumPending
+
+#define arginfo_grSstVRetraceOn arginfo_grSstIsBusy
+
+#define arginfo_grSstWinClose arginfo_grDisableAllEffects
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, hWin, IS_LONG, 0)
@@ -316,7 +330,15 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, num_aux_buffers, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_grSstWinClose arginfo_grDisableAllEffects
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, c, GrVertex, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, func, GrColorCombineFnc_t, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
@@ -431,6 +453,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrLfbInfo_t_flush, 0, 0, I
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, write, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
+#define arginfo_class_GrSstPerfStats_t_flush arginfo_class_GrState_flush
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
 ZEND_FUNCTION(enumToIntTest);
@@ -445,6 +469,7 @@ ZEND_FUNCTION(testGrHwConfiguration);
 ZEND_FUNCTION(testGrTmuVertex);
 ZEND_FUNCTION(testGrVertex);
 ZEND_FUNCTION(testGrLfbInfo_t);
+ZEND_FUNCTION(testGrSstPerfStats_t);
 ZEND_FUNCTION(testObject);
 #endif
 ZEND_FUNCTION(grAADrawLine);
@@ -500,12 +525,20 @@ ZEND_FUNCTION(grRenderBuffer);
 ZEND_FUNCTION(grSstIdle);
 ZEND_FUNCTION(grSstIsBusy);
 ZEND_FUNCTION(grSstOrigin);
+ZEND_FUNCTION(grSstPerfStats);
+ZEND_FUNCTION(grSstQueryBoards);
 ZEND_FUNCTION(grSstQueryHardware);
+ZEND_FUNCTION(grSstResetPerfStats);
+ZEND_FUNCTION(grSstScreenHeight);
+ZEND_FUNCTION(grSstScreenWidth);
 ZEND_FUNCTION(grSstSelect);
+ZEND_FUNCTION(grSstStatus);
+ZEND_FUNCTION(grSstVideoLine);
+ZEND_FUNCTION(grSstVRetraceOn);
+ZEND_FUNCTION(grSstWinClose);
+ZEND_FUNCTION(grSstWinOpen);
 ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(guColorCombineFunction);
-ZEND_FUNCTION(grSstWinOpen);
-ZEND_FUNCTION(grSstWinClose);
 ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
@@ -558,6 +591,7 @@ ZEND_METHOD(GrHwConfiguration, flush);
 ZEND_METHOD(GrTmuVertex, flush);
 ZEND_METHOD(GrVertex, flush);
 ZEND_METHOD(GrLfbInfo_t, flush);
+ZEND_METHOD(GrSstPerfStats_t, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
@@ -574,6 +608,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrTmuVertex, arginfo_testGrTmuVertex)
 	ZEND_FE(testGrVertex, arginfo_testGrVertex)
 	ZEND_FE(testGrLfbInfo_t, arginfo_testGrLfbInfo_t)
+	ZEND_FE(testGrSstPerfStats_t, arginfo_testGrSstPerfStats_t)
 	ZEND_FE(testObject, arginfo_testObject)
 #endif
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
@@ -629,12 +664,20 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grSstIdle, arginfo_grSstIdle)
 	ZEND_FE(grSstIsBusy, arginfo_grSstIsBusy)
 	ZEND_FE(grSstOrigin, arginfo_grSstOrigin)
+	ZEND_FE(grSstPerfStats, arginfo_grSstPerfStats)
+	ZEND_FE(grSstQueryBoards, arginfo_grSstQueryBoards)
 	ZEND_FE(grSstQueryHardware, arginfo_grSstQueryHardware)
+	ZEND_FE(grSstResetPerfStats, arginfo_grSstResetPerfStats)
+	ZEND_FE(grSstScreenHeight, arginfo_grSstScreenHeight)
+	ZEND_FE(grSstScreenWidth, arginfo_grSstScreenWidth)
 	ZEND_FE(grSstSelect, arginfo_grSstSelect)
+	ZEND_FE(grSstStatus, arginfo_grSstStatus)
+	ZEND_FE(grSstVideoLine, arginfo_grSstVideoLine)
+	ZEND_FE(grSstVRetraceOn, arginfo_grSstVRetraceOn)
+	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
+	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
-	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
-	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
@@ -892,6 +935,11 @@ static const zend_function_entry class_GrVertex_methods[] = {
 
 static const zend_function_entry class_GrLfbInfo_t_methods[] = {
 	ZEND_ME(GrLfbInfo_t, flush, arginfo_class_GrLfbInfo_t_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrSstPerfStats_t_methods[] = {
+	ZEND_ME(GrSstPerfStats_t, flush, arginfo_class_GrSstPerfStats_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -2100,6 +2148,47 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zend_string *property_origin_class_GrOriginLocation_t = zend_string_init("GrOriginLocation_t", sizeof("GrOriginLocation_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_origin_name, &property_origin_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_origin_class_GrOriginLocation_t, 0, 0));
 	zend_string_release(property_origin_name);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrSstPerfStats_t(zend_class_entry *class_entry_flushable)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "GrSstPerfStats_t", class_GrSstPerfStats_t_methods);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
+
+	zval property_pixelsIn_default_value;
+	ZVAL_UNDEF(&property_pixelsIn_default_value);
+	zend_string *property_pixelsIn_name = zend_string_init("pixelsIn", sizeof("pixelsIn") - 1, 1);
+	zend_declare_typed_property(class_entry, property_pixelsIn_name, &property_pixelsIn_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_pixelsIn_name);
+
+	zval property_chromaFail_default_value;
+	ZVAL_UNDEF(&property_chromaFail_default_value);
+	zend_string *property_chromaFail_name = zend_string_init("chromaFail", sizeof("chromaFail") - 1, 1);
+	zend_declare_typed_property(class_entry, property_chromaFail_name, &property_chromaFail_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_chromaFail_name);
+
+	zval property_zFuncFail_default_value;
+	ZVAL_UNDEF(&property_zFuncFail_default_value);
+	zend_string *property_zFuncFail_name = zend_string_init("zFuncFail", sizeof("zFuncFail") - 1, 1);
+	zend_declare_typed_property(class_entry, property_zFuncFail_name, &property_zFuncFail_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_zFuncFail_name);
+
+	zval property_aFuncFail_default_value;
+	ZVAL_UNDEF(&property_aFuncFail_default_value);
+	zend_string *property_aFuncFail_name = zend_string_init("aFuncFail", sizeof("aFuncFail") - 1, 1);
+	zend_declare_typed_property(class_entry, property_aFuncFail_name, &property_aFuncFail_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_aFuncFail_name);
+
+	zval property_pixelsOut_default_value;
+	ZVAL_UNDEF(&property_pixelsOut_default_value);
+	zend_string *property_pixelsOut_name = zend_string_init("pixelsOut", sizeof("pixelsOut") - 1, 1);
+	zend_declare_typed_property(class_entry, property_pixelsOut_name, &property_pixelsOut_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_string_release(property_pixelsOut_name);
 
 	return class_entry;
 }

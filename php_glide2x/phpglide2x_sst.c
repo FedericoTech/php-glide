@@ -35,6 +35,37 @@ PHP_FUNCTION(grSstOrigin)
 	grSstOrigin((GrOriginLocation_t)enum_to_int(origin));
 }
 
+PHP_FUNCTION(grSstPerfStats)
+{
+	zend_object* pStats = NULL;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(pStats, gr_SstPerfStats_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	_GrSstPerfStats_t* gsps = O_EMBEDDED_P(_GrSstPerfStats_t, pStats);
+
+	grSstPerfStats(&gsps->grSstPerfStats);
+
+	hydrate_grSstPerfStats(&gsps->grSstPerfStats, gsps);
+}
+
+PHP_FUNCTION(grSstQueryBoards) {
+
+	zend_object* grHwConfiguration_obj = NULL;
+	FxBool result;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_obj, grHwConfiguration_ce)
+		ZEND_PARSE_PARAMETERS_END();
+
+	_GrHwConfiguration* ghcf = O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj);
+
+	result = grSstQueryBoards(&ghcf->grHwConfiguration);
+
+	hydrate_GrHwConfiguration(&ghcf->grHwConfiguration, ghcf);
+
+	RETURN_BOOL(result);
+}
 
 PHP_FUNCTION(grSstQueryHardware) {
 
@@ -43,15 +74,30 @@ PHP_FUNCTION(grSstQueryHardware) {
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_obj, grHwConfiguration_ce)
-	ZEND_PARSE_PARAMETERS_END();
+		ZEND_PARSE_PARAMETERS_END();
 
-	GrHwConfiguration ghcf;
+	_GrHwConfiguration* ghcf = O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj);
 
-	result = grSstQueryHardware(&ghcf);
-		
-	hydrate_GrHwConfiguration(&ghcf, O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj));
+	result = grSstQueryHardware(&ghcf->grHwConfiguration);
+
+	hydrate_GrHwConfiguration(&ghcf->grHwConfiguration, ghcf);
 
 	RETURN_BOOL(result);
+}
+
+PHP_FUNCTION(grSstResetPerfStats) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	grSstResetPerfStats();
+}
+
+PHP_FUNCTION(grSstScreenHeight) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_LONG(grSstScreenHeight());
+}
+
+PHP_FUNCTION(grSstScreenWidth) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_LONG(grSstScreenWidth());
 }
 
 PHP_FUNCTION(grSstSelect)
@@ -60,9 +106,29 @@ PHP_FUNCTION(grSstSelect)
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_LONG(which_sst)
-	ZEND_PARSE_PARAMETERS_END();
+		ZEND_PARSE_PARAMETERS_END();
 
 	grSstSelect((int)which_sst);
+}
+
+PHP_FUNCTION(grSstStatus) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_LONG(grSstStatus());
+}
+
+PHP_FUNCTION(grSstVideoLine) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_LONG(grSstVideoLine());
+}
+
+PHP_FUNCTION(grSstVRetraceOn) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	RETURN_BOOL(grSstVRetraceOn());
+}
+
+PHP_FUNCTION(grSstWinClose) {
+	ZEND_PARSE_PARAMETERS_NONE();
+	grSstWinClose();
 }
 
 PHP_FUNCTION(grSstWinOpen)
@@ -86,24 +152,19 @@ PHP_FUNCTION(grSstWinOpen)
 		Z_PARAM_OBJ_OF_CLASS(org_loc, grOriginLocation_ce)
 		Z_PARAM_LONG(num_buffers)
 		Z_PARAM_LONG(num_aux_buffers)
-	ZEND_PARSE_PARAMETERS_END();
+		ZEND_PARSE_PARAMETERS_END();
 
 	result = grSstWinOpen(
 		(FxU32)(is_null ? 0 : hWin),
-		(GrScreenResolution_t) enum_to_int(res),
-		(GrScreenRefresh_t) enum_to_int(ref),
-		(GrColorFormat_t) enum_to_int(cFormat),
+		(GrScreenResolution_t)enum_to_int(res),
+		(GrScreenRefresh_t)enum_to_int(ref),
+		(GrColorFormat_t)enum_to_int(cFormat),
 		(GrOriginLocation_t)enum_to_int(org_loc),
 		(int)num_buffers,
 		(int)num_aux_buffers
 	);
 
 	RETURN_BOOL(result);
-}
-
-PHP_FUNCTION(grSstWinClose) {
-	ZEND_PARSE_PARAMETERS_NONE();
-	grSstWinClose();
 }
 
 

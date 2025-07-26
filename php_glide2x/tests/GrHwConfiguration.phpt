@@ -117,6 +117,15 @@ var_dump(
 	$reflection->isFinal()
 );
 
+$ghc = new GrHwConfiguration;
+grSstQueryBoards($ghc);
+testGrHwConfiguration($ghc);
+
+$ghc = new GrHwConfiguration;
+grSstQueryHardware($ghc);
+testGrHwConfiguration($ghc);
+
+
 grGlideShutdown();
 ?>
 --EXPECT--
@@ -327,3 +336,10 @@ board n: 3: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuR
 
 bool(true)
 bool(true)
+num_sst: 1
+board n: 0, type: 0
+board n: 0: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+
+num_sst: 1
+board n: 0, type: 0
+board n: 0: [fbiRev: 2, fbRam: 8, nTexelfx: 2, sliDetect: 0, [0][tmuRev: 1, tmuRam: 4], [1][tmuRev: 1, tmuRam: 4]]

@@ -90,6 +90,14 @@ grErrorSetCallback(function($message, $fatal){
 	var_dump($message, $fatal);
 });
 
+$hwConfig = new GrHwConfiguration;
+
+if(!grSstQueryBoards($hwConfig)){
+    echo 'ERROR: grSstQueryBoards din\'t work!' . PHP_EOL;
+    grGlideShutdown();
+}
+
+echo "$hwConfig->num_sst boards\n";
 
 $hwConfig = new GrHwConfiguration;
 
@@ -122,6 +130,11 @@ switch($hwConfig->SSTs[0]->type){
 		echo "hardware unknown type: {$hwConfig->SSTs[0]->type->toInt()} (glide 2)\n";
 		break;
 }
+
+$height = grSstScreenHeight();
+$width = grSstScreenWidth();
+
+echo "resolution: $height x $width\n";
 
 // Select SST 0 and open up the hardware
 grSstSelect(0);

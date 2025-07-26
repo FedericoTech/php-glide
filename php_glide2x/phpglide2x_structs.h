@@ -192,6 +192,21 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
 
 
 
+extern zend_class_entry* gr_SstPerfStats_ce;
+
+typedef struct _GrSstPerfStats_t {
+    GrSstPerfStats_t grSstPerfStats;	// the embeded data
+    zend_object std;	// it is important that the zend_object goes last
+} _GrSstPerfStats_t;
+
+void flush_grSstPerfStats(const _GrSstPerfStats_t* grLfbInfo, GrSstPerfStats_t* buffer);
+
+void hydrate_grSstPerfStats(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* grLfbInfo);
+
+void phpglide2x_register_grSstPerfStats(INIT_FUNC_ARGS);
+
+
+
 void phpglide2x_register_structs(INIT_FUNC_ARGS);
 
 #endif
