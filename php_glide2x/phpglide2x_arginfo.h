@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: b88fdcb1611913697c4a71efda172cbc5199f382 */
+ * Stub hash: e9560a2fa26c4d570e6ed30c003236f0c00846ff */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -330,6 +330,36 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grSstWinOpen, 0, 7, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, num_aux_buffers, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexCalcMemRequired, 0, 4, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, smallLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, largeLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, aspect, GrAspectRatio_t, 0)
+	ZEND_ARG_OBJ_INFO(0, format, GrTextureFormat_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexClampMode, 0, 3, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, sClampMode, GrTextureClampMode_t, 0)
+	ZEND_ARG_OBJ_INFO(0, tClampMode, GrTextureClampMode_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexCombine, 0, 7, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, rgb_function, GrCombineFunction_t, 0)
+	ZEND_ARG_OBJ_INFO(0, rgb_factor, GrCombineFactor_t, 0)
+	ZEND_ARG_OBJ_INFO(0, alpha_function, GrCombineFunction_t, 0)
+	ZEND_ARG_OBJ_INFO(0, alpha_factor, GrCombineFactor_t, 0)
+	ZEND_ARG_TYPE_INFO(0, rgb_invert, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, alpha_invert, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDetailControl, 0, 4, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, lodBias, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, detailScale, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, detailMax, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
 	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
@@ -537,6 +567,10 @@ ZEND_FUNCTION(grSstVideoLine);
 ZEND_FUNCTION(grSstVRetraceOn);
 ZEND_FUNCTION(grSstWinClose);
 ZEND_FUNCTION(grSstWinOpen);
+ZEND_FUNCTION(grTexCalcMemRequired);
+ZEND_FUNCTION(grTexClampMode);
+ZEND_FUNCTION(grTexCombine);
+ZEND_FUNCTION(grTexDetailControl);
 ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(guFogGenerateLinear);
@@ -676,6 +710,10 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grSstVRetraceOn, arginfo_grSstVRetraceOn)
 	ZEND_FE(grSstWinClose, arginfo_grSstWinClose)
 	ZEND_FE(grSstWinOpen, arginfo_grSstWinOpen)
+	ZEND_FE(grTexCalcMemRequired, arginfo_grTexCalcMemRequired)
+	ZEND_FE(grTexClampMode, arginfo_grTexClampMode)
+	ZEND_FE(grTexCombine, arginfo_grTexCombine)
+	ZEND_FE(grTexDetailControl, arginfo_grTexDetailControl)
 	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)

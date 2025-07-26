@@ -877,12 +877,38 @@ function grSstWinOpen(
     int $num_aux_buffers
 ) : bool {};
 
+// TEXTURE FUNCTIONS
+
+function grTexCalcMemRequired(
+    GrLOD_t $smallLod,
+    GrLOD_t $largeLod,
+    GrAspectRatio_t $aspect,
+    GrTextureFormat_t $format
+) : int {};
 
 
+function grTexClampMode(
+    GrChipID_t $tmu,
+    GrTextureClampMode_t $sClampMode,
+    GrTextureClampMode_t $tClampMode
+) : void {};
 
+function grTexCombine(
+    GrChipID_t $tmu,
+    GrCombineFunction_t $rgb_function,
+    GrCombineFactor_t $rgb_factor,
+    GrCombineFunction_t $alpha_function,
+    GrCombineFactor_t $alpha_factor,
+    bool $rgb_invert,
+    bool $alpha_invert
+) : void {};
 
-
-
+function grTexDetailControl(
+    GrChipID_t $tmu,
+    int $lodBias,
+    int $detailScale,
+    float $detailMax
+) : void {};
 
 function grDrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c) : void {};
 
