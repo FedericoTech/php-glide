@@ -693,6 +693,21 @@ final class GrSstPerfStats_t implements flushable
 function testGrSstPerfStats_t(GrSstPerfStats_t $gsps) : void {};
 #endif
 
+final class GrTexInfo implements flushable
+{
+    public GrLOD_t              $smallLod;
+    public GrLOD_t              $largeLod;
+    public GrAspectRatio_t      $aspectRatio;
+    public GrTextureFormat_t    $format;
+    public string               $data;
+    public function flush() : string;
+}
+
+#ifdef _DEBUG
+function testGrTexInfo(GrTexInfo $gti) : void {};
+#endif
+
+
 #ifdef _DEBUG
 function testObject(object $obj) : void {};
 #endif

@@ -158,6 +158,7 @@
     <ClCompile Include="phpglide2x_gr_sstpeftstats.c" />
     <ClCompile Include="phpglide2x_gr_sst_96.c" />
     <ClCompile Include="phpglide2x_gr_state.c" />
+    <ClCompile Include="phpglide2x_gr_text_info.c" />
     <ClCompile Include="phpglide2x_gr_tmu.c" />
     <ClCompile Include="phpglide2x_gr_tmu_vertex.c" />
     <ClCompile Include="phpglide2x_gr_vertex.c" />

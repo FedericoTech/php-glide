@@ -71,7 +71,8 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	phpglide2x_register_grState(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grSstPerfStats(INIT_FUNC_ARGS_PASSTHRU);
-	
+	phpglide2x_register_grTexInfo(INIT_FUNC_ARGS_PASSTHRU);
+
 	return SUCCESS;
 }
 

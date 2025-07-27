@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: e9560a2fa26c4d570e6ed30c003236f0c00846ff */
+ * Stub hash: 6f73b45ecb1fb833c2438f9982cec4f2bc9d7eca */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -485,6 +485,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrSstPerfStats_t_flush arginfo_class_GrState_flush
 
+#define arginfo_class_GrTexInfo_flush arginfo_class_GrState_flush
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
 ZEND_FUNCTION(enumToIntTest);
@@ -626,6 +628,7 @@ ZEND_METHOD(GrTmuVertex, flush);
 ZEND_METHOD(GrVertex, flush);
 ZEND_METHOD(GrLfbInfo_t, flush);
 ZEND_METHOD(GrSstPerfStats_t, flush);
+ZEND_METHOD(GrTexInfo, flush);
 
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
@@ -978,6 +981,11 @@ static const zend_function_entry class_GrLfbInfo_t_methods[] = {
 
 static const zend_function_entry class_GrSstPerfStats_t_methods[] = {
 	ZEND_ME(GrSstPerfStats_t, flush, arginfo_class_GrSstPerfStats_t_flush, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+static const zend_function_entry class_GrTexInfo_methods[] = {
+	ZEND_ME(GrTexInfo, flush, arginfo_class_GrTexInfo_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
@@ -2227,6 +2235,51 @@ static zend_class_entry *register_class_GrSstPerfStats_t(zend_class_entry *class
 	zend_string *property_pixelsOut_name = zend_string_init("pixelsOut", sizeof("pixelsOut") - 1, 1);
 	zend_declare_typed_property(class_entry, property_pixelsOut_name, &property_pixelsOut_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_pixelsOut_name);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrTexInfo(zend_class_entry *class_entry_flushable)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "GrTexInfo", class_GrTexInfo_methods);
+	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
+
+	zval property_smallLod_default_value;
+	ZVAL_UNDEF(&property_smallLod_default_value);
+	zend_string *property_smallLod_name = zend_string_init("smallLod", sizeof("smallLod") - 1, 1);
+	zend_string *property_smallLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_smallLod_name, &property_smallLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_smallLod_class_GrLOD_t, 0, 0));
+	zend_string_release(property_smallLod_name);
+
+	zval property_largeLod_default_value;
+	ZVAL_UNDEF(&property_largeLod_default_value);
+	zend_string *property_largeLod_name = zend_string_init("largeLod", sizeof("largeLod") - 1, 1);
+	zend_string *property_largeLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_largeLod_name, &property_largeLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_largeLod_class_GrLOD_t, 0, 0));
+	zend_string_release(property_largeLod_name);
+
+	zval property_aspectRatio_default_value;
+	ZVAL_UNDEF(&property_aspectRatio_default_value);
+	zend_string *property_aspectRatio_name = zend_string_init("aspectRatio", sizeof("aspectRatio") - 1, 1);
+	zend_string *property_aspectRatio_class_GrAspectRatio_t = zend_string_init("GrAspectRatio_t", sizeof("GrAspectRatio_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_aspectRatio_name, &property_aspectRatio_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_aspectRatio_class_GrAspectRatio_t, 0, 0));
+	zend_string_release(property_aspectRatio_name);
+
+	zval property_format_default_value;
+	ZVAL_UNDEF(&property_format_default_value);
+	zend_string *property_format_name = zend_string_init("format", sizeof("format") - 1, 1);
+	zend_string *property_format_class_GrTextureFormat_t = zend_string_init("GrTextureFormat_t", sizeof("GrTextureFormat_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_format_name, &property_format_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_format_class_GrTextureFormat_t, 0, 0));
+	zend_string_release(property_format_name);
+
+	zval property_data_default_value;
+	ZVAL_UNDEF(&property_data_default_value);
+	zend_string *property_data_name = zend_string_init("data", sizeof("data") - 1, 1);
+	zend_declare_typed_property(class_entry, property_data_name, &property_data_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_STRING));
+	zend_string_release(property_data_name);
 
 	return class_entry;
 }

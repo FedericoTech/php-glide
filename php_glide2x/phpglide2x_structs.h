@@ -207,6 +207,23 @@ void phpglide2x_register_grSstPerfStats(INIT_FUNC_ARGS);
 
 
 
+
+
+extern zend_class_entry* grTexInfo_ce;
+
+typedef struct _GrTexInfo {
+    GrTexInfo grTexInfo;	// the embeded data
+    zend_object std;	// it is important that the zend_object goes last
+} _GrTexInfo;
+
+void flush_grTexInfo(const _GrTexInfo* grLfbInfo, GrTexInfo* buffer);
+
+void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* grLfbInfo);
+
+void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
+
+
+
 void phpglide2x_register_structs(INIT_FUNC_ARGS);
 
 #endif
