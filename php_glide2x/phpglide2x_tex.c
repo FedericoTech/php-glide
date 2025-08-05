@@ -62,7 +62,7 @@ PHP_FUNCTION(grTexCombine)
 		Z_PARAM_BOOL(alpha_invert)
 	ZEND_PARSE_PARAMETERS_END();
 
-	grTexClampMode(
+	grTexCombine(
 		(GrChipID_t)enum_to_int(tmu),
 		(GrCombineFunction_t)enum_to_int(rgb_function),
 		(GrCombineFactor_t)enum_to_int(rgb_factor),

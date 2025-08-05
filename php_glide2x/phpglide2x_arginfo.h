@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 6f73b45ecb1fb833c2438f9982cec4f2bc9d7eca */
+ * Stub hash: 1af96e69c9824efaad72d79afb69067bbe46c71a */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -57,6 +57,10 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrSstPerfStats_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gsps, GrSstPerfStats_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTexInfo, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, gti, GrTexInfo, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
@@ -198,6 +202,12 @@ ZEND_END_ARG_INFO()
 #define arginfo_grDrawPolygon arginfo_grAADrawPolygon
 
 #define arginfo_grDrawPolygonVertexList arginfo_grAADrawPolygonVertexList
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
+	ZEND_ARG_OBJ_INFO(0, c, GrVertex, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grErrorSetCallback, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, function, IS_CALLABLE, 0)
@@ -360,12 +370,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDetailControl, 0, 4, IS_VOI
 	ZEND_ARG_TYPE_INFO(0, detailMax, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grDrawTriangle, 0, 3, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, a, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, b, GrVertex, 0)
-	ZEND_ARG_OBJ_INFO(0, c, GrVertex, 0)
-ZEND_END_ARG_INFO()
-
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, func, GrColorCombineFnc_t, 0)
 ZEND_END_ARG_INFO()
@@ -502,6 +506,7 @@ ZEND_FUNCTION(testGrTmuVertex);
 ZEND_FUNCTION(testGrVertex);
 ZEND_FUNCTION(testGrLfbInfo_t);
 ZEND_FUNCTION(testGrSstPerfStats_t);
+ZEND_FUNCTION(testGrTexInfo);
 ZEND_FUNCTION(testObject);
 #endif
 ZEND_FUNCTION(grAADrawLine);
@@ -536,6 +541,7 @@ ZEND_FUNCTION(grDrawPlanarPolygonVertexList);
 ZEND_FUNCTION(grDrawPoint);
 ZEND_FUNCTION(grDrawPolygon);
 ZEND_FUNCTION(grDrawPolygonVertexList);
+ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(grErrorSetCallback);
 ZEND_FUNCTION(grFogColorValue);
 ZEND_FUNCTION(grFogMode);
@@ -573,7 +579,6 @@ ZEND_FUNCTION(grTexCalcMemRequired);
 ZEND_FUNCTION(grTexClampMode);
 ZEND_FUNCTION(grTexCombine);
 ZEND_FUNCTION(grTexDetailControl);
-ZEND_FUNCTION(grDrawTriangle);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(_kbhit);
@@ -646,6 +651,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrVertex, arginfo_testGrVertex)
 	ZEND_FE(testGrLfbInfo_t, arginfo_testGrLfbInfo_t)
 	ZEND_FE(testGrSstPerfStats_t, arginfo_testGrSstPerfStats_t)
+	ZEND_FE(testGrTexInfo, arginfo_testGrTexInfo)
 	ZEND_FE(testObject, arginfo_testObject)
 #endif
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
@@ -680,6 +686,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grDrawPoint, arginfo_grDrawPoint)
 	ZEND_FE(grDrawPolygon, arginfo_grDrawPolygon)
 	ZEND_FE(grDrawPolygonVertexList, arginfo_grDrawPolygonVertexList)
+	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
 	ZEND_FE(grErrorSetCallback, arginfo_grErrorSetCallback)
 	ZEND_FE(grFogColorValue, arginfo_grFogColorValue)
 	ZEND_FE(grFogMode, arginfo_grFogMode)
@@ -717,7 +724,6 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grTexClampMode, arginfo_grTexClampMode)
 	ZEND_FE(grTexCombine, arginfo_grTexCombine)
 	ZEND_FE(grTexDetailControl, arginfo_grTexDetailControl)
-	ZEND_FE(grDrawTriangle, arginfo_grDrawTriangle)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(_kbhit, arginfo__kbhit)
@@ -2166,7 +2172,7 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zval property_size_default_value;
 	ZVAL_UNDEF(&property_size_default_value);
 	zend_string *property_size_name = zend_string_init("size", sizeof("size") - 1, 1);
-	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
+	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_size_name);
 
 	zval property_lfbPtr_default_value;

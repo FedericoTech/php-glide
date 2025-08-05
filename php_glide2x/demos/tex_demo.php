@@ -5,8 +5,8 @@ include_once('helper.php');
 
 $amount = grTexCalcMemRequired(
     GrLOD_t::GR_LOD_4,
-    GrLOD_t::GR_LOD_16,
-    GrAspectRatio_t::GR_ASPECT_1x4,
+    GrLOD_t::GR_LOD_4,
+    GrAspectRatio_t::GR_ASPECT_1x1,
     GrTextureFormat_t::GR_TEXFMT_16BIT
 );
 

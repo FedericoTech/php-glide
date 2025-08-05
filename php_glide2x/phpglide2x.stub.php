@@ -664,7 +664,7 @@ function testGrVertex(GrVertex $chc) : void {};
 #endif
 
 final class GrLfbInfo_t implements flushable {
-    public readonly int $size;
+    public int $size;
     public string $lfbPtr;
     public int $strideInBytes;
     public GrLfbWriteMode_t $writeMode;
@@ -793,6 +793,8 @@ function grDrawPoint(GrVertex $a) : void {};
 function grDrawPolygon(int $nVerts, array $ilist, array $vlist) : void {};
 
 function grDrawPolygonVertexList(int $nVerts, array $vlist) : void {};
+
+function grDrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c) : void {};
 
 // 						function(string $string, bool $fatal)
 function grErrorSetCallback(callable $function) : void {};
@@ -924,8 +926,6 @@ function grTexDetailControl(
     int $detailScale,
     float $detailMax
 ) : void {};
-
-function grDrawTriangle(GrVertex $a, GrVertex $b, GrVertex $c) : void {};
 
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 
