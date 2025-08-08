@@ -1,5 +1,6 @@
 #include "phpglide2x_tex.h"
 #include "phpglide2x_enums.h"
+#include "phpglide2x_structs.h"
 
 PHP_FUNCTION(grTexCalcMemRequired)
 {
@@ -92,5 +93,65 @@ PHP_FUNCTION(grTexDetailControl)
 		(int)lodBias,
 		(FxU8)detailScale,
 		(float)detailMax
+	);
+}
+
+PHP_FUNCTION(grTexDownloadMipMap)
+{
+	zend_object* tmu = NULL;
+	zend_long startAddress;
+	zend_object* evenOdd = NULL;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(4, 4)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_LONG(startAddress)
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+		ZEND_PARSE_PARAMETERS_END();
+
+	grTexDownloadMipMap(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)startAddress,
+		(FxU32)enum_to_int(evenOdd),
+		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
+	);
+}
+
+PHP_FUNCTION(grTexSource)
+{
+	zend_object* tmu = NULL;
+	zend_long startAddress;
+	zend_object* evenOdd = NULL;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(4, 4)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_LONG(startAddress)
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexSource(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)startAddress,
+		(FxU32)enum_to_int(evenOdd),
+		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
+	);
+}
+
+PHP_FUNCTION(guTexCombineFunction)
+{
+	zend_object* tmu = NULL;
+	zend_object* func = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(func, grTextureCombineFnc_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	guTexCombineFunction(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrTextureCombineFnc_t)enum_to_int(func)
 	);
 }

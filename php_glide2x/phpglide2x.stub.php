@@ -927,11 +927,33 @@ function grTexDetailControl(
     float $detailMax
 ) : void {};
 
+function grTexDownloadMipMap(
+    GrChipID_t $tmu,
+    int $startAddress,
+    GrEvenOdd_t $evenOdd,
+    GrTexInfo $info
+) : void {};
+
+
+
+
+
+
+function grTexSource(
+    GrChipID_t $tmu,
+    int $startAddress,
+    GrEvenOdd_t $evenOdd,
+    GrTexInfo $info
+) : void {};
+
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 
 
 
 function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};
+
+function guTexCombineFunction(GrChipID_t $tmu, GrTextureCombineFnc_t $func) : void {};
+
 
 // other functions
 function _kbhit() : int {};

@@ -41,7 +41,7 @@ PHP_METHOD(GrTexInfo, flush)
 
     flush_grTexInfo(obj, &obj->grTexInfo /*, write*/);
 
-    zend_string* bin = zend_string_alloc(sizeof(GrLfbInfo_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrTexInfo) + 1, 0);
 
     memcpy(
         ZSTR_VAL(bin),
@@ -69,6 +69,8 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     //it sets the handlers
     grTexInfo->std.handlers = &object_handlers;
 
+    grTexInfo->grTexInfo.data = NULL;
+
     //it returns the zend object
     return &grTexInfo->std;
 }
@@ -88,6 +90,17 @@ static zend_object* gr_clone_obj(zend_object* object)
     return new_obj;
 }
 
+static void gr_free_obj(zend_object* object)
+{
+    _GrTexInfo* obj = O_EMBEDDED_P(_GrTexInfo, object);
+
+    if (obj->grTexInfo.data) {
+        efree(obj->grTexInfo.data);
+    }
+
+    zend_object_std_dtor(&obj->std);
+}
+
 void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
 {
     grTexInfo_ce = register_class_GrTexInfo(gr_flushable_ce);
@@ -103,7 +116,7 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
     object_handlers.offset = XtOffsetOf(_GrTexInfo, std);
     //object_handlers.write_property = gr_write_property;
     object_handlers.clone_obj = gr_clone_obj;
-    //object_handlers.free_obj = gr_free_obj;
+    object_handlers.free_obj = gr_free_obj;
 }
 
 void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
@@ -152,6 +165,25 @@ void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
     );
 
     buffer->format = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+
+    value = zend_read_property(
+        obj->std.ce,            // zend_class_entry* of the object
+        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        "data",   // property name
+        sizeof("data") - 1,
+        1,             // silent (1 = don't emit notice if not found)
+        NULL           // Optional return zval ptr, or NULL
+    );
+
+    //php_printf("[%p]\n", buffer->data);
+
+    if (buffer->data) {
+        efree(buffer->data);
+    }
+
+    buffer->data = emalloc(Z_STRLEN_P(value));
+
+    memcpy(buffer->data, Z_STRVAL_P(value), Z_STRLEN_P(value));
 }
 
 void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* obj /*, bool read*/)

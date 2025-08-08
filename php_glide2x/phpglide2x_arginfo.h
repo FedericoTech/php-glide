@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 1af96e69c9824efaad72d79afb69067bbe46c71a */
+ * Stub hash: 1672c252d9bd675daf5190f3f2eb1a09823fe18e */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -370,6 +370,15 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDetailControl, 0, 4, IS_VOI
 	ZEND_ARG_TYPE_INFO(0, detailMax, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadMipMap, 0, 4, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, startAddress, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, evenOdd, GrEvenOdd_t, 0)
+	ZEND_ARG_OBJ_INFO(0, info, GrTexInfo, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grTexSource arginfo_grTexDownloadMipMap
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, func, GrColorCombineFnc_t, 0)
 ZEND_END_ARG_INFO()
@@ -378,6 +387,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guFogGenerateLinear, 0, 3, IS_VO
 	ZEND_ARG_TYPE_INFO(1, fogTable, IS_MIXED, 0)
 	ZEND_ARG_TYPE_INFO(0, nearW, IS_DOUBLE, 0)
 	ZEND_ARG_TYPE_INFO(0, farW, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guTexCombineFunction, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, func, GrTextureCombineFnc_t, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo__kbhit arginfo_grBufferNumPending
@@ -579,8 +593,11 @@ ZEND_FUNCTION(grTexCalcMemRequired);
 ZEND_FUNCTION(grTexClampMode);
 ZEND_FUNCTION(grTexCombine);
 ZEND_FUNCTION(grTexDetailControl);
+ZEND_FUNCTION(grTexDownloadMipMap);
+ZEND_FUNCTION(grTexSource);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(guFogGenerateLinear);
+ZEND_FUNCTION(guTexCombineFunction);
 ZEND_FUNCTION(_kbhit);
 ZEND_METHOD(GrDepth_t, toInt);
 ZEND_METHOD(GrEvenOdd_t, toInt);
@@ -724,8 +741,11 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grTexClampMode, arginfo_grTexClampMode)
 	ZEND_FE(grTexCombine, arginfo_grTexCombine)
 	ZEND_FE(grTexDetailControl, arginfo_grTexDetailControl)
+	ZEND_FE(grTexDownloadMipMap, arginfo_grTexDownloadMipMap)
+	ZEND_FE(grTexSource, arginfo_grTexSource)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
+	ZEND_FE(guTexCombineFunction, arginfo_guTexCombineFunction)
 	ZEND_FE(_kbhit, arginfo__kbhit)
 	ZEND_FE_END
 };
