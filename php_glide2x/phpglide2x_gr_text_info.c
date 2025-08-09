@@ -15,11 +15,12 @@ ZEND_FUNCTION(testGrTexInfo)
     _GrTexInfo* config = O_EMBEDDED_P(_GrTexInfo, grTexInfo_zo);
 
     php_printf(
-        "smallLod: %d, largeLod: %d, aspectRatio: %d, format: %d, data: %p\n",
+        "smallLod: %d, largeLod: %d, aspectRatio: %d, format: %d, data: %p\n%.80s\n",
         config->grTexInfo.smallLod,
         config->grTexInfo.largeLod,
         config->grTexInfo.aspectRatio,
         config->grTexInfo.format,
+        config->grTexInfo.data,
         config->grTexInfo.data
     );
 }
@@ -175,8 +176,6 @@ void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
         NULL           // Optional return zval ptr, or NULL
     );
 
-    //php_printf("[%p]\n", buffer->data);
-
     if (buffer->data) {
         efree(buffer->data);
     }
@@ -184,6 +183,17 @@ void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
     buffer->data = emalloc(Z_STRLEN_P(value));
 
     memcpy(buffer->data, Z_STRVAL_P(value), Z_STRLEN_P(value));
+    
+    /*
+    uint16_t* pixels = emalloc(Z_STRLEN_P(value));
+    uint16_t orange = (31 << 11) | (41 << 5) | (0);
+
+    for (int i = 0; i < 64 * 64; i++) {
+        pixels[i] = orange;
+    }
+
+    buffer->data = pixels;
+    */
 }
 
 void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* obj /*, bool read*/)

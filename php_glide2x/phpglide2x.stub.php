@@ -946,6 +946,12 @@ function grTexSource(
     GrTexInfo $info
 ) : void {};
 
+function grTexMinAddress( GrChipID_t $tmu ) : int {};
+
+function grTexMaxAddress( GrChipID_t $tmu ) : int {};
+
+function grTexTextureMemRequired(GrEvenOdd_t $evenOdd, GrTexInfo $info) : int {}
+
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 
 

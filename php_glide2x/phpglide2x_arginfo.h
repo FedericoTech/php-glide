@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 1672c252d9bd675daf5190f3f2eb1a09823fe18e */
+ * Stub hash: 36d1b1c4377be0796a5ec084edc8ac58f6c0d117 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -379,6 +379,17 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grTexSource arginfo_grTexDownloadMipMap
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMinAddress, 0, 1, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+ZEND_END_ARG_INFO()
+
+#define arginfo_grTexMaxAddress arginfo_grTexMinAddress
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexTextureMemRequired, 0, 2, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, evenOdd, GrEvenOdd_t, 0)
+	ZEND_ARG_OBJ_INFO(0, info, GrTexInfo, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_guColorCombineFunction, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, func, GrColorCombineFnc_t, 0)
 ZEND_END_ARG_INFO()
@@ -595,6 +606,9 @@ ZEND_FUNCTION(grTexCombine);
 ZEND_FUNCTION(grTexDetailControl);
 ZEND_FUNCTION(grTexDownloadMipMap);
 ZEND_FUNCTION(grTexSource);
+ZEND_FUNCTION(grTexMinAddress);
+ZEND_FUNCTION(grTexMaxAddress);
+ZEND_FUNCTION(grTexTextureMemRequired);
 ZEND_FUNCTION(guColorCombineFunction);
 ZEND_FUNCTION(guFogGenerateLinear);
 ZEND_FUNCTION(guTexCombineFunction);
@@ -743,6 +757,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grTexDetailControl, arginfo_grTexDetailControl)
 	ZEND_FE(grTexDownloadMipMap, arginfo_grTexDownloadMipMap)
 	ZEND_FE(grTexSource, arginfo_grTexSource)
+	ZEND_FE(grTexMinAddress, arginfo_grTexMinAddress)
+	ZEND_FE(grTexMaxAddress, arginfo_grTexMaxAddress)
+	ZEND_FE(grTexTextureMemRequired, arginfo_grTexTextureMemRequired)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)
 	ZEND_FE(guFogGenerateLinear, arginfo_guFogGenerateLinear)
 	ZEND_FE(guTexCombineFunction, arginfo_guTexCombineFunction)

@@ -140,6 +140,44 @@ PHP_FUNCTION(grTexSource)
 	);
 }
 
+PHP_FUNCTION(grTexMinAddress)
+{
+	zend_object* tmu = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	RETURN_LONG(grTexMinAddress((GrChipID_t)enum_to_int(tmu)));
+}
+
+PHP_FUNCTION(grTexMaxAddress)
+{
+	zend_object* tmu = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	RETURN_LONG(grTexMaxAddress((GrChipID_t)enum_to_int(tmu)));
+}
+
+PHP_FUNCTION(grTexTextureMemRequired)
+{
+	zend_object* evenOdd = NULL;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	RETURN_LONG(grTexTextureMemRequired(
+		(FxU32)enum_to_int(evenOdd),
+		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
+	));
+}
+
 PHP_FUNCTION(guTexCombineFunction)
 {
 	zend_object* tmu = NULL;
