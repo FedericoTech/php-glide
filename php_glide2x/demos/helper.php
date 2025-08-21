@@ -29,7 +29,8 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
     return $new;
 }
 
-function rotateX(GrVertex $v, float $angle)  : GrVertex{
+function rotateX(GrVertex $v, float $angle) : GrVertex
+{
     $r = clone $v;
     $s = sin($angle);
     $c = cos($angle);
@@ -39,7 +40,8 @@ function rotateX(GrVertex $v, float $angle)  : GrVertex{
     return $v;
 }
 
-function rotateY(GrVertex $v, float $angle) : GrVertex {
+function rotateY(GrVertex $v, float $angle) : GrVertex
+{
     $r = clone $v;
 	
     $s = sin($angle);
@@ -50,7 +52,8 @@ function rotateY(GrVertex $v, float $angle) : GrVertex {
     return $v;
 }
 
-function rotateZ(GrVertex $v, float $angle) : GrVertex {
+function rotateZ(GrVertex $v, float $angle) : GrVertex
+{
     $r = clone $v;
     $s = sin($angle);
     $c = cos($angle);
@@ -60,7 +63,8 @@ function rotateZ(GrVertex $v, float $angle) : GrVertex {
     return $v;
 }
 
-function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex {
+function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex
+{
     $scale = 1.0 / ($v->z + $nearZ);
     $v->x *= $scale * $fov * $aspect;
     $v->y *= $scale * $fov;

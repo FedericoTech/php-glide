@@ -885,7 +885,7 @@ function grSstVRetraceOn() : bool {};
 function grSstWinClose() : void {};
 
 function grSstWinOpen(
-    int $hWin,
+    ?int $hWin,
     GrScreenResolution_t $res,
     GrScreenRefresh_t $ref,
     GrColorFormat_t $cFormat,
@@ -988,4 +988,7 @@ function guTexCombineFunction(GrChipID_t $tmu, GrTextureCombineFnc_t $func) : vo
 
 
 // other functions
+
+function _getch() : int {};
+
 function _kbhit() : int {};
