@@ -118,6 +118,38 @@ PHP_FUNCTION(grTexDownloadMipMap)
 	);
 }
 
+
+//grTexDownloadMipMapLevel
+
+//grTexDownloadMipMapLevelPartial
+
+//grTexDownloadTable
+
+//grTexDownloadTablePartial
+
+
+
+PHP_FUNCTION(grTexFilterMode)
+{
+	zend_object* tmu = NULL;
+	zend_object* minFilterMode = NULL;
+	zend_object* magFilterMode = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(minFilterMode, grTextureFilterMode_ce);
+		Z_PARAM_OBJ_OF_CLASS(magFilterMode, grTextureFilterMode_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexFilterMode(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrTextureFilterMode_t)enum_to_int(minFilterMode),
+		(GrTextureFilterMode_t)enum_to_int(magFilterMode)
+	);
+}
+
+
+
 PHP_FUNCTION(grTexSource)
 {
 	zend_object* tmu = NULL;

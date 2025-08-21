@@ -3,15 +3,32 @@
 include_once('helper.php');
 
 
-function makeCheckerTexture()
+
+
+function makeCheckerTexture(int $w = 64, int $h = 64, int $cell = 8): string
 {
-    $pixel = pack('v', 0xFA00); // 'v' = 16-bit little endian
-    return str_repeat($pixel, 64 * 64);
+    $orange = pack('v', 0xFA00); // 16-bit little-endian color
+    $other  = pack('v', 0x00AF);
+
+    $out = '';
+
+    for ($y = 0; $y < $h; $y++) {
+        $yBlock = intdiv($y, $cell);
+        for ($x = 0; $x < $w; $x++) {
+            $xBlock = intdiv($x, $cell);
+            $checker = ($xBlock ^ $yBlock) & 1;
+            $out .= $checker ? $orange : $other;
+        }
+    }
+
+    return $out;
 }
+
 
 $vtx1 = new GrVertex;
 $vtx1->x = '100';
 $vtx1->y = 100;
+$vtx1->z = 1;
 $vtx1->r = $vtx1->g = $vtx1->b = 255;
 $vtx1->oow = 1.0;
 $vtx1->tmuvtx[0] = new GrTmuVertex;
@@ -22,22 +39,48 @@ $vtx1->tmuvtx[0]->tow = 0.0;
 $vtx2 = new GrVertex;
 $vtx2->x = '300';
 $vtx2->y = '100';
+$vtx2->z = 1;
 $vtx2->r = $vtx2->g = $vtx2->b = 0;
 $vtx2->oow = 1.0;
 $vtx2->tmuvtx[0] = new GrTmuVertex;
-$vtx2->tmuvtx[0]->sow = 1.0;
+$vtx2->tmuvtx[0]->sow = 64 * 4;
 $vtx2->tmuvtx[0]->tow = 0.0;
 //$vtx2->tmuvtx[0]->oow = 1.0;
 
 $vtx3 = new GrVertex;
 $vtx3->x = 200.0;
 $vtx3->y = 300.0;
+$vtx3->z = 2;
 $vtx3->r = $vtx3->g = $vtx3->b = 255;
-$vtx3->oow = 1.0;
+$vtx3->oow = 0.5;
 $vtx3->tmuvtx[0] = new GrTmuVertex;
-$vtx3->tmuvtx[0]->sow = 0.5;
-$vtx3->tmuvtx[0]->tow = 1.0;
+$vtx3->tmuvtx[0]->sow = 32 * 4;
+$vtx3->tmuvtx[0]->tow = 32 * 4;
 //$vtx3->tmuvtx[0]->oow = 1.0;
+
+
+//START TESTING THESE FUNCTIONS
+grColorCombine(
+    GrCombineFunction_t::GR_COMBINE_FUNCTION_SCALE_OTHER,
+    GrCombineFactor_t::GR_COMBINE_FACTOR_ONE,
+    GrCombineLocal_t::GR_COMBINE_LOCAL_NONE,
+    GrCombineOther_t::GR_COMBINE_OTHER_TEXTURE,
+    false
+);
+
+grTexCombine(
+    GrChipID_t::GR_TMU0,
+    GrCombineFunction_t::GR_COMBINE_FUNCTION_LOCAL,
+    GrCombineFactor_t::GR_COMBINE_FACTOR_NONE,
+    GrCombineFunction_t::GR_COMBINE_FUNCTION_LOCAL,
+    GrCombineFactor_t::GR_COMBINE_FACTOR_NONE,
+    false, false
+);
+
+grTexClampMode(GrChipID_t::GR_TMU0, GrTextureClampMode_t::GR_TEXTURECLAMP_CLAMP, GrTextureClampMode_t::GR_TEXTURECLAMP_CLAMP);
+grTexFilterMode(GrChipID_t::GR_TMU0, GrTextureFilterMode_t::GR_TEXTUREFILTER_BILINEAR, GrTextureFilterMode_t::GR_TEXTUREFILTER_BILINEAR);
+
+//END TESTING THESE FUNCTIONS
 
 
 $ello = makeCheckerTexture();

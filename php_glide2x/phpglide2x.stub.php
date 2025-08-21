@@ -934,10 +934,33 @@ function grTexDownloadMipMap(
     GrTexInfo $info
 ) : void {};
 
+//grTexDownloadMipMapLevel
 
+//grTexDownloadMipMapLevelPartial
 
+//grTexDownloadTable
 
+//grTexDownloadTablePartial
 
+function grTexFilterMode(
+    GrChipID_t $tmu,
+    GrTextureFilterMode_t $minFilterMode,
+    GrTextureFilterMode_t $magFilterMode
+) : void {};
+
+//grTexLodBiasValue
+
+function grTexMinAddress( GrChipID_t $tmu ) : int {};
+
+function grTexMaxAddress( GrChipID_t $tmu ) : int {};
+
+// grTexMipMapMode
+
+//grTexMultibase
+
+//grTexMultibaseAddress
+
+//grTexNCCTable
 
 function grTexSource(
     GrChipID_t $tmu,
@@ -946,11 +969,14 @@ function grTexSource(
     GrTexInfo $info
 ) : void {};
 
-function grTexMinAddress( GrChipID_t $tmu ) : int {};
 
-function grTexMaxAddress( GrChipID_t $tmu ) : int {};
 
 function grTexTextureMemRequired(GrEvenOdd_t $evenOdd, GrTexInfo $info) : int {}
+
+
+
+
+
 
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 
