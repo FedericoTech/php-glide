@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 33510c8389c90ba76c9d6c5bd763e8771c32d762 */
+ * Stub hash: 8455ff36e9778606e0d49ae388e36199cd135f38 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -389,6 +389,12 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_grTexMaxAddress arginfo_grTexMinAddress
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMipMapMode, 0, 3, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, mode, GrMipMapMode_t, 0)
+	ZEND_ARG_TYPE_INFO(0, lodBlend, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_grTexSource arginfo_grTexDownloadMipMap
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexTextureMemRequired, 0, 2, IS_LONG, 0)
@@ -616,6 +622,7 @@ ZEND_FUNCTION(grTexDownloadMipMap);
 ZEND_FUNCTION(grTexFilterMode);
 ZEND_FUNCTION(grTexMinAddress);
 ZEND_FUNCTION(grTexMaxAddress);
+ZEND_FUNCTION(grTexMipMapMode);
 ZEND_FUNCTION(grTexSource);
 ZEND_FUNCTION(grTexTextureMemRequired);
 ZEND_FUNCTION(guColorCombineFunction);
@@ -769,6 +776,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grTexFilterMode, arginfo_grTexFilterMode)
 	ZEND_FE(grTexMinAddress, arginfo_grTexMinAddress)
 	ZEND_FE(grTexMaxAddress, arginfo_grTexMaxAddress)
+	ZEND_FE(grTexMipMapMode, arginfo_grTexMipMapMode)
 	ZEND_FE(grTexSource, arginfo_grTexSource)
 	ZEND_FE(grTexTextureMemRequired, arginfo_grTexTextureMemRequired)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)

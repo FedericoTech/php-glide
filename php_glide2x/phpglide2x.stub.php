@@ -954,7 +954,11 @@ function grTexMinAddress( GrChipID_t $tmu ) : int {};
 
 function grTexMaxAddress( GrChipID_t $tmu ) : int {};
 
-// grTexMipMapMode
+function grTexMipMapMode(
+    GrChipID_t $tmu,
+    GrMipMapMode_t $mode,
+    bool $lodBlend
+) : void {};
 
 //grTexMultibase
 

@@ -7,9 +7,15 @@ include_once('helper.php');
 
 function makeCheckerTexture(int $w = 256, int $h = 256, int $cell = 8): string
 {
-    $filename = 'sonic.data';
+    return file_get_contents('sonic256x256.data')
+        . file_get_contents('tails128x128.data')
+        . file_get_contents('knukles64x64.data')
+        . file_get_contents('robotnick32x32.data')
+        . file_get_contents('amy16x16.data')
+        . file_get_contents('shadow8x8.data');
 
-    return file_get_contents($filename);
+
+
 /*
     $orange = pack('v', 0xFA00); // 16-bit little-endian color
     $other  = pack('v', 0x00AF);
@@ -107,7 +113,7 @@ grTexFilterMode(GrChipID_t::GR_TMU0, GrTextureFilterMode_t::GR_TEXTUREFILTER_BIL
 $ello = makeCheckerTexture();
 
 $info = new GrTexInfo;
-$info->smallLod = GrLOD_t::GR_LOD_256;
+$info->smallLod = GrLOD_t::GR_LOD_8;
 $info->largeLod = GrLOD_t::GR_LOD_256;
 $info->aspectRatio = GrAspectRatio_t::GR_ASPECT_1x1;
 $info->format = GrTextureFormat_t::GR_TEXFMT_RGB_565;
@@ -144,6 +150,12 @@ grTexSource(
 guTexCombineFunction(
     GrChipID_t::GR_TMU0,
     GrTextureCombineFnc_t::GR_TEXTURECOMBINE_DETAIL_OTHER
+);
+
+grTexMipMapMode(
+    GrChipID_t::GR_TMU0,
+    GrMipMapMode_t::GR_MIPMAP_NEAREST_DITHER,
+    true
 );
 
 $aux = [$vtx0, $vtx1, $vtx2, $vtx3];
@@ -197,7 +209,7 @@ while (true) {
                 case 'a':   // zoom out
                     $zoom -= 0.01;
                     break;
-                case 'x':   // exit;
+                default:   // exit;
                     break 2;
             }
         }

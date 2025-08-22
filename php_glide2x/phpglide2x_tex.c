@@ -148,29 +148,7 @@ PHP_FUNCTION(grTexFilterMode)
 	);
 }
 
-
-
-PHP_FUNCTION(grTexSource)
-{
-	zend_object* tmu = NULL;
-	zend_long startAddress;
-	zend_object* evenOdd = NULL;
-	zend_object* info = NULL;
-
-	ZEND_PARSE_PARAMETERS_START(4, 4)
-		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
-		Z_PARAM_LONG(startAddress)
-		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
-		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
-	ZEND_PARSE_PARAMETERS_END();
-
-	grTexSource(
-		(GrChipID_t)enum_to_int(tmu),
-		(FxU32)startAddress,
-		(FxU32)enum_to_int(evenOdd),
-		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
-	);
-}
+//grTexLodBiasValue
 
 PHP_FUNCTION(grTexMinAddress)
 {
@@ -193,6 +171,54 @@ PHP_FUNCTION(grTexMaxAddress)
 
 	RETURN_LONG(grTexMaxAddress((GrChipID_t)enum_to_int(tmu)));
 }
+
+PHP_FUNCTION(grTexMipMapMode)
+{
+	zend_object* tmu = NULL;
+	zend_object* mode = NULL;
+	zend_bool lodBlend;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(mode, grMipMapMode_ce);
+		Z_PARAM_BOOL(lodBlend)
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexMipMapMode(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)enum_to_int(mode),
+		lodBlend
+	);
+}
+
+//grTexMultibase
+
+//grTexMultibaseAddress
+
+//grTexNCCTable
+
+PHP_FUNCTION(grTexSource)
+{
+	zend_object* tmu = NULL;
+	zend_long startAddress;
+	zend_object* evenOdd = NULL;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(4, 4)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+	Z_PARAM_LONG(startAddress)
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+	Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexSource(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)startAddress,
+		(FxU32)enum_to_int(evenOdd),
+		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
+	);
+}
+
 
 PHP_FUNCTION(grTexTextureMemRequired)
 {
