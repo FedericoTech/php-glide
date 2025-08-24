@@ -1,4 +1,4 @@
-#include "phpglide2x_glide.h"
+#include "stdafx.h"
 #include "phpglide2x_structs.h"
 
 PHP_FUNCTION(grGlideGetVersion) {

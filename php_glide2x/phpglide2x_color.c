@@ -1,5 +1,5 @@
 
-#include "phpglide2x_color.h"
+#include "stdafx.h"
 #include "phpglide2x_enums.h"
 
 PHP_FUNCTION(grChromakeyMode) {

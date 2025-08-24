@@ -1,4 +1,4 @@
-#include "phpglide2x_sst.h"
+#include "stdafx.h"
 #include "phpglide2x_enums.h"
 #include "phpglide2x_structs.h"
 

@@ -1,4 +1,4 @@
-#include "phpglide2x_fog.h"
+#include "stdafx.h"
 #include "phpglide2x_enums.h"
 
 

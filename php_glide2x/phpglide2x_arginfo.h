@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 8455ff36e9778606e0d49ae388e36199cd135f38 */
+ * Stub hash: d3980b92fffc44bce14955f0177f45b9ed61ff43 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -377,10 +377,53 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadMipMap, 0, 4, IS_VO
 	ZEND_ARG_OBJ_INFO(0, info, GrTexInfo, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadMipMapLevel, 0, 8, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, startAddress, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, thisLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, largeLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, aspectRatio, GrAspectRatio_t, 0)
+	ZEND_ARG_OBJ_INFO(0, format, GrTextureFormat_t, 0)
+	ZEND_ARG_OBJ_INFO(0, evenOdd, GrEvenOdd_t, 0)
+	ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadMipMapLevelPartial, 0, 10, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, startAddress, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, thisLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, largeLod, GrLOD_t, 0)
+	ZEND_ARG_OBJ_INFO(0, aspectRatio, GrAspectRatio_t, 0)
+	ZEND_ARG_OBJ_INFO(0, format, GrTextureFormat_t, 0)
+	ZEND_ARG_OBJ_INFO(0, evenOdd, GrEvenOdd_t, 0)
+	ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, start, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, end, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadTable, 0, 3, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrTexTable_t, 0)
+	ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexDownloadTablePartial, 0, 5, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, type, GrTexTable_t, 0)
+	ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, start, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, end, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexFilterMode, 0, 3, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
 	ZEND_ARG_OBJ_INFO(0, minFilterMode, GrTextureFilterMode_t, 0)
 	ZEND_ARG_OBJ_INFO(0, magFilterMode, GrTextureFilterMode_t, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexLodBiasValue, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, bias, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMinAddress, 0, 1, IS_LONG, 0)
@@ -393,6 +436,24 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMipMapMode, 0, 3, IS_VOID, 
 	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
 	ZEND_ARG_OBJ_INFO(0, mode, GrMipMapMode_t, 0)
 	ZEND_ARG_TYPE_INFO(0, lodBlend, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMultibase, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_TYPE_INFO(0, enable, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexMultibaseAddress, 0, 5, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, range, GrTexBaseRange_t, 0)
+	ZEND_ARG_TYPE_INFO(0, startAddress, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, evenOdd, GrEvenOdd_t, 0)
+	ZEND_ARG_OBJ_INFO(0, info, GrTexInfo, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_grTexNCCTable, 0, 2, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, tmu, GrChipID_t, 0)
+	ZEND_ARG_OBJ_INFO(0, table, GrNCCTable_t, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_grTexSource arginfo_grTexDownloadMipMap
@@ -619,10 +680,18 @@ ZEND_FUNCTION(grTexClampMode);
 ZEND_FUNCTION(grTexCombine);
 ZEND_FUNCTION(grTexDetailControl);
 ZEND_FUNCTION(grTexDownloadMipMap);
+ZEND_FUNCTION(grTexDownloadMipMapLevel);
+ZEND_FUNCTION(grTexDownloadMipMapLevelPartial);
+ZEND_FUNCTION(grTexDownloadTable);
+ZEND_FUNCTION(grTexDownloadTablePartial);
 ZEND_FUNCTION(grTexFilterMode);
+ZEND_FUNCTION(grTexLodBiasValue);
 ZEND_FUNCTION(grTexMinAddress);
 ZEND_FUNCTION(grTexMaxAddress);
 ZEND_FUNCTION(grTexMipMapMode);
+ZEND_FUNCTION(grTexMultibase);
+ZEND_FUNCTION(grTexMultibaseAddress);
+ZEND_FUNCTION(grTexNCCTable);
 ZEND_FUNCTION(grTexSource);
 ZEND_FUNCTION(grTexTextureMemRequired);
 ZEND_FUNCTION(guColorCombineFunction);
@@ -773,10 +842,18 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(grTexCombine, arginfo_grTexCombine)
 	ZEND_FE(grTexDetailControl, arginfo_grTexDetailControl)
 	ZEND_FE(grTexDownloadMipMap, arginfo_grTexDownloadMipMap)
+	ZEND_FE(grTexDownloadMipMapLevel, arginfo_grTexDownloadMipMapLevel)
+	ZEND_FE(grTexDownloadMipMapLevelPartial, arginfo_grTexDownloadMipMapLevelPartial)
+	ZEND_FE(grTexDownloadTable, arginfo_grTexDownloadTable)
+	ZEND_FE(grTexDownloadTablePartial, arginfo_grTexDownloadTablePartial)
 	ZEND_FE(grTexFilterMode, arginfo_grTexFilterMode)
+	ZEND_FE(grTexLodBiasValue, arginfo_grTexLodBiasValue)
 	ZEND_FE(grTexMinAddress, arginfo_grTexMinAddress)
 	ZEND_FE(grTexMaxAddress, arginfo_grTexMaxAddress)
 	ZEND_FE(grTexMipMapMode, arginfo_grTexMipMapMode)
+	ZEND_FE(grTexMultibase, arginfo_grTexMultibase)
+	ZEND_FE(grTexMultibaseAddress, arginfo_grTexMultibaseAddress)
+	ZEND_FE(grTexNCCTable, arginfo_grTexNCCTable)
 	ZEND_FE(grTexSource, arginfo_grTexSource)
 	ZEND_FE(grTexTextureMemRequired, arginfo_grTexTextureMemRequired)
 	ZEND_FE(guColorCombineFunction, arginfo_guColorCombineFunction)

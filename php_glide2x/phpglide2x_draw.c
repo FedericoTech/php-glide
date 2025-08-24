@@ -1,5 +1,5 @@
 
-#include "phpglide2x_draw.h"
+#include "stdafx.h"
 #include "phpglide2x_structs.h"
 
 PHP_FUNCTION(grAADrawLine)

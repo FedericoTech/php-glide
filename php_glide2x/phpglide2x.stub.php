@@ -712,6 +712,8 @@ function testGrTexInfo(GrTexInfo $gti) : void {};
 function testObject(object $obj) : void {};
 #endif
 
+//FUNCTIONS START
+
 function grAADrawLine(GrVertex $va, GrVertex $vb) : void {};
 
 function grAADrawPoint(GrVertex $p) : void {};
@@ -754,7 +756,6 @@ function grChromakeyMode(GrChromakeyMode_t $mode) : void {};
 function grChromakeyValue(int $color) : void {};
 
 function grClipWindow(int $minx, int $miny, int $maxx, int $maxy) : void {};
-
 
 function grColorCombine( 
 	GrCombineFunction_t $func,
@@ -934,13 +935,44 @@ function grTexDownloadMipMap(
     GrTexInfo $info
 ) : void {};
 
-//grTexDownloadMipMapLevel
+function grTexDownloadMipMapLevel(
+    GrChipID_t $tmu,
+    int $startAddress,
+    GrLOD_t $thisLod,
+    GrLOD_t $largeLod,
+    GrAspectRatio_t $aspectRatio,
+    GrTextureFormat_t $format,
+    GrEvenOdd_t $evenOdd,
+    string $data
+) : void {};
 
-//grTexDownloadMipMapLevelPartial
+function grTexDownloadMipMapLevelPartial(
+    GrChipID_t $tmu,
+    int $startAddress,
+    GrLOD_t $thisLod,
+    GrLOD_t $largeLod,
+    GrAspectRatio_t $aspectRatio,
+    GrTextureFormat_t $format,
+    GrEvenOdd_t $evenOdd,
+    string $data,
+    int $start,
+    int $end
+) : void {};
 
-//grTexDownloadTable
+function grTexDownloadTable(
+    GrChipID_t $tmu,
+    GrTexTable_t $type,
+    string $data
+) : void {};
 
-//grTexDownloadTablePartial
+function grTexDownloadTablePartial(
+    GrChipID_t $tmu,
+    GrTexTable_t $type,
+    string $data,
+    int $start,
+    int $end
+) : void {}
+
 
 function grTexFilterMode(
     GrChipID_t $tmu,
@@ -948,7 +980,7 @@ function grTexFilterMode(
     GrTextureFilterMode_t $magFilterMode
 ) : void {};
 
-//grTexLodBiasValue
+function grTexLodBiasValue( GrChipID_t $tmu, float $bias ) : void {}
 
 function grTexMinAddress( GrChipID_t $tmu ) : int {};
 
@@ -960,11 +992,17 @@ function grTexMipMapMode(
     bool $lodBlend
 ) : void {};
 
-//grTexMultibase
+function grTexMultibase( GrChipID_t $tmu, bool $enable ) : void {};
 
-//grTexMultibaseAddress
+function grTexMultibaseAddress(
+    GrChipID_t $tmu,
+    GrTexBaseRange_t $range,
+    int $startAddress,
+    GrEvenOdd_t $evenOdd,
+    GrTexInfo $info
+) : void {};
 
-//grTexNCCTable
+function grTexNCCTable( GrChipID_t $tmu, GrNCCTable_t $table ) : void {};
 
 function grTexSource(
     GrChipID_t $tmu,
@@ -973,22 +1011,49 @@ function grTexSource(
     GrTexInfo $info
 ) : void {};
 
-
-
 function grTexTextureMemRequired(GrEvenOdd_t $evenOdd, GrTexInfo $info) : int {}
 
+//gu3dfGetInfo
 
+//gu3dfLoad
 
+//guAADrawTriangleWithClip
 
-
+//guAlphaSource
 
 function guColorCombineFunction(GrColorCombineFnc_t $func) : void {};
 
+//guDrawTriangleWithClip
 
+//guFogGenerateExp
+
+//guFogGenerateExp2
 
 function guFogGenerateLinear(mixed &$fogTable, float $nearW, float $farW) : void {};
 
+//guFogTableIndexToW
+
+//guTexAllocateMemory
+
+//guTexChangeAttributes
+
 function guTexCombineFunction(GrChipID_t $tmu, GrTextureCombineFnc_t $func) : void {};
+
+//guTexDownloadMipMap
+
+//guTexDownloadMipMapLevel
+
+//guTexGetCurrentMipMap
+
+//guTexGetMipMapInfo
+
+//guTexMemQueryAvail
+
+//guTexMemReset
+
+//guTexSource
+
+
 
 
 // other functions

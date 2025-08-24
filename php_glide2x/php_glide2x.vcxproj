@@ -171,20 +171,9 @@
     <ClCompile Include="stdafx.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="phpglide2x_alpha.h" />
     <ClInclude Include="phpglide2x_arginfo.h" />
-    <ClInclude Include="phpglide2x_buffer.h" />
-    <ClInclude Include="phpglide2x_color.h" />
-    <ClInclude Include="phpglide2x_depth.h" />
-    <ClInclude Include="phpglide2x_draw.h" />
     <ClInclude Include="phpglide2x_enums.h" />
-    <ClInclude Include="phpglide2x_fog.h" />
-    <ClInclude Include="phpglide2x_functions.h" />
-    <ClInclude Include="phpglide2x_glide.h" />
-    <ClInclude Include="phpglide2x_lfb.h" />
-    <ClInclude Include="phpglide2x_sst.h" />
     <ClInclude Include="phpglide2x_structs.h" />
-    <ClInclude Include="phpglide2x_tex.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

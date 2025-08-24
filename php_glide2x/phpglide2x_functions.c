@@ -1,5 +1,5 @@
 
-#include "phpglide2x_functions.h"
+#include "stdafx.h"
 #include "phpglide2x_structs.h"
 #include "phpglide2x_enums.h"
 

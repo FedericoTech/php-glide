@@ -1,4 +1,4 @@
-#include "phpglide2x_tex.h"
+#include "stdafx.h"
 #include "phpglide2x_enums.h"
 #include "phpglide2x_structs.h"
 
@@ -108,7 +108,7 @@ PHP_FUNCTION(grTexDownloadMipMap)
 		Z_PARAM_LONG(startAddress)
 		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
 		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
-		ZEND_PARSE_PARAMETERS_END();
+	ZEND_PARSE_PARAMETERS_END();
 
 	grTexDownloadMipMap(
 		(GrChipID_t)enum_to_int(tmu),
@@ -121,13 +121,127 @@ PHP_FUNCTION(grTexDownloadMipMap)
 
 //grTexDownloadMipMapLevel
 
-//grTexDownloadMipMapLevelPartial
+PHP_FUNCTION(grTexDownloadMipMapLevel)
+{
+	zend_object* tmu = NULL;
+	zend_long startAddress;
+	zend_object* thisLod = NULL;
+	zend_object* largeLod = NULL;
+	zend_object* aspectRatio = NULL;
+	zend_object* format = NULL;
+	zend_object* evenOdd = NULL;
+	char* src_data_str = NULL;
+	size_t src_data_len;
 
-//grTexDownloadTable
+	ZEND_PARSE_PARAMETERS_START(8, 8)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_LONG(startAddress)
+		Z_PARAM_OBJ_OF_CLASS(thisLod, grLOD_ce);
+		Z_PARAM_OBJ_OF_CLASS(largeLod, grLOD_ce);
+		Z_PARAM_OBJ_OF_CLASS(aspectRatio, grAspectRatio_ce);
+		Z_PARAM_OBJ_OF_CLASS(format, grTextureFormat_ce);
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_STRING(src_data_str, src_data_len)
+	ZEND_PARSE_PARAMETERS_END();
 
-//grTexDownloadTablePartial
+	grTexDownloadMipMapLevel(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)startAddress,
+		(GrLOD_t)enum_to_int(thisLod),
+		(GrLOD_t)enum_to_int(largeLod),
+		(GrAspectRatio_t)enum_to_int(aspectRatio),
+		(GrTextureFormat_t)enum_to_int(format),
+		(FxU32)enum_to_int(evenOdd),
+		src_data_str
+	);
+}
 
+PHP_FUNCTION(grTexDownloadMipMapLevelPartial)
+{
+	zend_object* tmu = NULL;
+	zend_long startAddress;
+	zend_object* thisLod = NULL;
+	zend_object* largeLod = NULL;
+	zend_object* aspectRatio = NULL;
+	zend_object* format = NULL;
+	zend_object* evenOdd = NULL;
+	char* src_data_str = NULL;
+	size_t src_data_len;
+	zend_long start;
+	zend_long end;
 
+	ZEND_PARSE_PARAMETERS_START(10, 10)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_LONG(startAddress)
+		Z_PARAM_OBJ_OF_CLASS(thisLod, grLOD_ce);
+		Z_PARAM_OBJ_OF_CLASS(largeLod, grLOD_ce);
+		Z_PARAM_OBJ_OF_CLASS(aspectRatio, grAspectRatio_ce);
+		Z_PARAM_OBJ_OF_CLASS(format, grTextureFormat_ce);
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_STRING(src_data_str, src_data_len);
+		Z_PARAM_LONG(start);
+		Z_PARAM_LONG(end);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexDownloadMipMapLevelPartial(
+		(GrChipID_t)enum_to_int(tmu),
+		(FxU32)startAddress,
+		(GrLOD_t)enum_to_int(thisLod),
+		(GrLOD_t)enum_to_int(largeLod),
+		(GrAspectRatio_t)enum_to_int(aspectRatio),
+		(GrTextureFormat_t)enum_to_int(format),
+		(FxU32)enum_to_int(evenOdd),
+		src_data_str,
+		(FxU32)start,
+		(FxU32)end
+	);
+}
+
+PHP_FUNCTION(grTexDownloadTable)
+{
+	zend_object* tmu = NULL;
+	zend_object* type = NULL;
+	char* src_data_str = NULL;
+	size_t src_data_len;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(type, grTexTable_ce);
+		Z_PARAM_STRING(src_data_str, src_data_len);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexDownloadTable(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrTexTable_t)enum_to_int(type),
+		src_data_str
+	);
+}
+
+PHP_FUNCTION(grTexDownloadTablePartial)
+{
+	zend_object* tmu = NULL;
+	zend_object* type = NULL;
+	char* src_data_str = NULL;
+	size_t src_data_len;
+	zend_long start;
+	zend_long end;
+
+	ZEND_PARSE_PARAMETERS_START(5, 5)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(type, grTexTable_ce);
+		Z_PARAM_STRING(src_data_str, src_data_len);
+		Z_PARAM_LONG(start);
+		Z_PARAM_LONG(end);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexDownloadTablePartial(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrTexTable_t)enum_to_int(type),
+		src_data_str,
+		start,
+		end
+	);
+}
 
 PHP_FUNCTION(grTexFilterMode)
 {
@@ -149,6 +263,22 @@ PHP_FUNCTION(grTexFilterMode)
 }
 
 //grTexLodBiasValue
+
+PHP_FUNCTION(grTexLodBiasValue)
+{
+	zend_object* tmu = NULL;
+	double detailMax;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_DOUBLE(detailMax);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexLodBiasValue(
+		(GrChipID_t)enum_to_int(tmu),
+		(float) detailMax
+	);
+}
 
 PHP_FUNCTION(grTexMinAddress)
 {
@@ -191,11 +321,62 @@ PHP_FUNCTION(grTexMipMapMode)
 	);
 }
 
-//grTexMultibase
+PHP_FUNCTION(grTexMultibase)
+{
+	zend_object* tmu = NULL;
+	zend_bool enabled;
 
-//grTexMultibaseAddress
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_BOOL(enabled);
+	ZEND_PARSE_PARAMETERS_END();
 
-//grTexNCCTable
+	grTexMultibase(
+		(GrChipID_t)enum_to_int(tmu),
+		enabled
+	);
+}
+
+PHP_FUNCTION(grTexMultibaseAddress)
+{
+	zend_object* tmu = NULL;
+	zend_object* range = NULL;
+	zend_long startAddress;
+	zend_object* evenOdd = NULL;
+	zend_object* info = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(5, 5)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(range, grTexBaseRange_ce);
+		Z_PARAM_LONG(startAddress);
+		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
+		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexMultibaseAddress(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrTexBaseRange_t)enum_to_int(range),
+		(int)startAddress,
+		(FxU32)enum_to_int(evenOdd),
+		&O_EMBEDDED_P(_GrTexInfo, info)->grTexInfo
+	);
+}
+
+PHP_FUNCTION(grTexNCCTable)
+{
+	zend_object* tmu = NULL;
+	zend_object* table = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
+		Z_PARAM_OBJ_OF_CLASS(table, grNCCTable_ce);
+	ZEND_PARSE_PARAMETERS_END();
+
+	grTexNCCTable(
+		(GrChipID_t)enum_to_int(tmu),
+		(GrNCCTable_t)enum_to_int(table)
+	);
+}
 
 PHP_FUNCTION(grTexSource)
 {
@@ -206,9 +387,9 @@ PHP_FUNCTION(grTexSource)
 
 	ZEND_PARSE_PARAMETERS_START(4, 4)
 		Z_PARAM_OBJ_OF_CLASS(tmu, grChipID_ce);
-	Z_PARAM_LONG(startAddress)
+		Z_PARAM_LONG(startAddress)
 		Z_PARAM_OBJ_OF_CLASS(evenOdd, grEvenOdd_ce);
-	Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
+		Z_PARAM_OBJ_OF_CLASS(info, grTexInfo_ce);
 	ZEND_PARSE_PARAMETERS_END();
 
 	grTexSource(

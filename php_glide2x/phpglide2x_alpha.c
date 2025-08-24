@@ -1,5 +1,6 @@
+#include "stdafx.h"
 #include "phpglide2x_enums.h"
-#include "phpglide2x_alpha.h"
+
 
 PHP_FUNCTION(grAlphaBlendFunction)
 {
