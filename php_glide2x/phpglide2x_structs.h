@@ -224,6 +224,11 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
 
 
+
+extern zend_class_entry* gu3dfHeader_ce;
+
+
+
 void phpglide2x_register_structs(INIT_FUNC_ARGS);
 
 #endif

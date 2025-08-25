@@ -28,6 +28,8 @@ const GR_FOG_TABLE_SIZE = UNKNOWN;
  */
 const GR_NULL_MIPMAP_HANDLE = UNKNOWN;
 
+//ENUMERATIONS FINISH
+
 enum GrDepth_t {
     case GR_ZDEPTHVALUE_NEAREST;
     case GR_ZDEPTHVALUE_FARTHEST;
@@ -527,8 +529,16 @@ function enumToIntTest (UnitEnum $enum): int {}
 function intToEnumTest (int $value, string $enumClass): UnitEnum {}
 #endif
 
+//ENUMERATIONS FINISH
+
+//CLASSES AND STRUCTS START
+
 interface flushable {
 	public function flush() : string;
+}
+
+interface hydratable {
+    public function hydrate(string $data) : void;
 }
 
 final class GrTMUConfig_t implements flushable
@@ -707,10 +717,34 @@ final class GrTexInfo implements flushable
 function testGrTexInfo(GrTexInfo $gti) : void {};
 #endif
 
+final class Gu3dfHeader implements flushable
+{
+    public int                  $width;
+    public int                  $height;
+    public GrLOD_t              $smallLod;
+    public GrLOD_t              $largeLod;
+    public GrAspectRatio_t      $aspect_ratio;
+    public GrTextureFormat_t    $format;
+    public function flush() : string;
+}
+
+#ifdef _DEBUG
+function testGu3dfHeader(GrTexInfo $gti) : void {};
+#endif
+
+
+/*
+final class GuNccTable implements flushable
+{
+    public function flush() : string;
+}
+*/
 
 #ifdef _DEBUG
 function testObject(object $obj) : void {};
 #endif
+
+//CLASSES AND STRUCTS FINISH
 
 //FUNCTIONS START
 
