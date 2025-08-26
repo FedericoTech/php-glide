@@ -721,15 +721,15 @@ final class Gu3dfHeader implements flushable
 {
     public int                  $width;
     public int                  $height;
-    public GrLOD_t              $smallLod;
-    public GrLOD_t              $largeLod;
+    public GrLOD_t              $small_lod;
+    public GrLOD_t              $large_lod;
     public GrAspectRatio_t      $aspect_ratio;
     public GrTextureFormat_t    $format;
     public function flush() : string;
 }
 
 #ifdef _DEBUG
-function testGu3dfHeader(GrTexInfo $gti) : void {};
+function testGu3dfHeader(Gu3dfHeader $g3dfh) : void {};
 #endif
 
 

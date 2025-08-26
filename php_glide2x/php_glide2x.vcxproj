@@ -163,6 +163,7 @@
     <ClCompile Include="phpglide2x_gr_tmu_vertex.c" />
     <ClCompile Include="phpglide2x_gr_vertex.c" />
     <ClCompile Include="phpglide2x_gr_voodoo.c" />
+    <ClCompile Include="phpglide2x_gu_3dfheader.c" />
     <ClCompile Include="phpglide2x_lfb.c" />
     <ClCompile Include="phpglide2x_sst.c" />
     <ClCompile Include="phpglide2x_gr_sst.c" />

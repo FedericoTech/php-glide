@@ -216,9 +216,9 @@ typedef struct _GrTexInfo {
     zend_object std;	// it is important that the zend_object goes last
 } _GrTexInfo;
 
-void flush_grTexInfo(const _GrTexInfo* grLfbInfo, GrTexInfo* buffer);
+void flush_grTexInfo(const _GrTexInfo* grTexInfo, GrTexInfo* buffer);
 
-void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* grLfbInfo);
+void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* grTexInfo);
 
 void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
@@ -226,6 +226,21 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* gu3dfHeader_ce;
+
+typedef struct _Gu3dfHeader {
+    Gu3dfHeader gu3dfHeader;	// the embeded data
+    zend_object std;	// it is important that the zend_object goes last
+} _Gu3dfHeader;
+
+void flush_gu3dfHeader(const _Gu3dfHeader* gu3dfHeader, Gu3dfHeader* buffer);
+
+void hydrate_gu3dfHeader(const Gu3dfHeader* buffer, _Gu3dfHeader* gu3dfHeader);
+
+void phpglide2x_register_gu3dfHeader(INIT_FUNC_ARGS);
+
+
+
+
 
 
 

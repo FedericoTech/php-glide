@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: e44badcd72d72ef3be5d17da79374f049cc05c47 */
+ * Stub hash: cbdf3d53e44c1ef189717f6f11c69f124c06f970 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -63,7 +63,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTexInfo, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gti, GrTexInfo, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_testGu3dfHeader arginfo_testGrTexInfo
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGu3dfHeader, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, g3dfh, Gu3dfHeader, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, obj, IS_OBJECT, 0)
@@ -2475,19 +2477,19 @@ static zend_class_entry *register_class_Gu3dfHeader(zend_class_entry *class_entr
 	zend_declare_typed_property(class_entry, property_height_name, &property_height_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_height_name);
 
-	zval property_smallLod_default_value;
-	ZVAL_UNDEF(&property_smallLod_default_value);
-	zend_string *property_smallLod_name = zend_string_init("smallLod", sizeof("smallLod") - 1, 1);
-	zend_string *property_smallLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
-	zend_declare_typed_property(class_entry, property_smallLod_name, &property_smallLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_smallLod_class_GrLOD_t, 0, 0));
-	zend_string_release(property_smallLod_name);
+	zval property_small_lod_default_value;
+	ZVAL_UNDEF(&property_small_lod_default_value);
+	zend_string *property_small_lod_name = zend_string_init("small_lod", sizeof("small_lod") - 1, 1);
+	zend_string *property_small_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_small_lod_name, &property_small_lod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_small_lod_class_GrLOD_t, 0, 0));
+	zend_string_release(property_small_lod_name);
 
-	zval property_largeLod_default_value;
-	ZVAL_UNDEF(&property_largeLod_default_value);
-	zend_string *property_largeLod_name = zend_string_init("largeLod", sizeof("largeLod") - 1, 1);
-	zend_string *property_largeLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
-	zend_declare_typed_property(class_entry, property_largeLod_name, &property_largeLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_largeLod_class_GrLOD_t, 0, 0));
-	zend_string_release(property_largeLod_name);
+	zval property_large_lod_default_value;
+	ZVAL_UNDEF(&property_large_lod_default_value);
+	zend_string *property_large_lod_name = zend_string_init("large_lod", sizeof("large_lod") - 1, 1);
+	zend_string *property_large_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
+	zend_declare_typed_property(class_entry, property_large_lod_name, &property_large_lod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_large_lod_class_GrLOD_t, 0, 0));
+	zend_string_release(property_large_lod_name);
 
 	zval property_aspect_ratio_default_value;
 	ZVAL_UNDEF(&property_aspect_ratio_default_value);
