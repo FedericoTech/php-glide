@@ -1,7 +1,90 @@
-<?php 
+<?php
 
-function rotate_point(GrVertex $point, float $angle_rad, $origin = null) {
-    
+class ObjParser {
+    public array $vertices = [];   // [[x,y,z], ...]
+    public array $texcoords = [];  // [[u,v,(w)], ...]
+    public array $normals = [];    // [[nx,ny,nz], ...]
+    public array $faces = [];      // [[ [v,vt,vn], ... ], ...]
+
+    public function load(string $filename): void {
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || $line[0] === '#') {
+                continue; // skip comments / blanks
+            }
+
+            $parts = preg_split('/\s+/', $line);
+            $type = array_shift($parts);
+
+            switch ($type) {
+                case 'v':  // vertex
+                    $this->vertices[] = array_map('floatval', $parts);
+                    break;
+
+                case 'vt': // texcoord
+                    $this->texcoords[] = array_map('floatval', $parts);
+                    break;
+
+                case 'vn': // normal
+                    $this->normals[] = array_map('floatval', $parts);
+                    break;
+
+                case 'f':  // face
+                    $face = [];
+                    foreach ($parts as $p) {
+                        $indices = explode('/', $p);
+
+                        $v  = $indices[0] !== '' ? $this->resolveIndex((int)$indices[0], count($this->vertices)) : null;
+                        $vt = (isset($indices[1]) && $indices[1] !== '') ? $this->resolveIndex((int)$indices[1], count($this->texcoords)) : null;
+                        $vn = (isset($indices[2]) && $indices[2] !== '') ? $this->resolveIndex((int)$indices[2], count($this->normals)) : null;
+
+                        $face[] = ['v' => $v, 'vt' => $vt, 'n' => $vn];
+                    }
+                    $this->faces[] = $face;
+                    break;
+
+                // ignore other keywords (o, g, usemtl, mtllib, etc.)
+            }
+        }
+    }
+
+    private function resolveIndex(int $i, int $count): int {
+        if ($i > 0) {
+            return $i - 1;          // OBJ is 1-based
+        }
+        return $count + $i;         // Negative indices are relative
+    }
+}
+
+function normalize(array $v): array
+{
+    $len = sqrt($v[0]**2 + $v[1]**2 + $v[2]**2);
+    return $len > 0 ? [$v[0]/$len, $v[1]/$len, $v[2]/$len] : [0,0,0];
+}
+
+function dot(array $a, array $b): float
+{
+    return $a[0]*$b[0] + $a[1]*$b[1] + $a[2]*$b[2];
+}
+
+function shade(array $normal, array $light, array $baseColor): array
+{
+    $n = normalize($normal);
+    $l = normalize($light);
+
+    $intensity = max(0, dot($n, $l));
+
+    return [
+        $baseColor[0] * $intensity,
+        $baseColor[1] * $intensity,
+        $baseColor[2] * $intensity
+    ];
+}
+
+function rotate_point(GrVertex $point, float $angle_rad, $origin = null)
+{
 	if ($origin === null) {
 		$origin = new GrVertex;
 		$origin->x = 0.0;
@@ -63,6 +146,13 @@ function rotateZ(GrVertex $v, float $angle) : GrVertex
     return $v;
 }
 
+/**
+ * @param GrVertex $v
+ * @param float $fov    Field of View
+ * @param float $aspect Aspect ratio of the viewport (width / height).
+ * @param float $nearZ
+ * @return GrVertex
+ */
 function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex
 {
     $scale = 1.0 / ($v->z + $nearZ);

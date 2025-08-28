@@ -75,7 +75,7 @@ while (!_kbhit()) {
 			$verts[] = $transformed[$index];
 		}
 
-		grDrawPlanarPolygonVertexList(
+        grAADrawPolygonVertexList(
 			count($verts),
 			$verts
 		);
