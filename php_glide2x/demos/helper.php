@@ -1,12 +1,16 @@
 <?php
 
-class ObjParser {
+class ObjParser
+{
     public array $vertices = [];   // [[x,y,z], ...]
     public array $texcoords = [];  // [[u,v,(w)], ...]
     public array $normals = [];    // [[nx,ny,nz], ...]
     public array $faces = [];      // [[ [v,vt,vn], ... ], ...]
+    public array $materials = [];
+    private ?string $currentMaterial = null;
 
-    public function load(string $filename): void {
+    public function load(string $filename, string $material = ''): void
+    {
         $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         foreach ($lines as $line) {
@@ -42,7 +46,15 @@ class ObjParser {
 
                         $face[] = ['v' => $v, 'vt' => $vt, 'n' => $vn];
                     }
-                    $this->faces[] = $face;
+                    $this->faces[] = ['vertices' => $face, 'material' => $this->currentMaterial];
+                    break;
+
+                case 'mtllib':
+                    $this->loadMtl(dirname($filename) . '/' . $parts[0]);
+                    break;
+
+                case 'usemtl':
+                    $this->currentMaterial = $parts[0];
                     break;
 
                 // ignore other keywords (o, g, usemtl, mtllib, etc.)
@@ -50,7 +62,53 @@ class ObjParser {
         }
     }
 
-    private function resolveIndex(int $i, int $count): int {
+    private function loadMtl(string $mtlFile): void
+    {
+        if (!file_exists($mtlFile)) return;
+
+        $lines = file($mtlFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $material = null;
+        $name = '';
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) continue;
+
+            $parts = preg_split('/\s+/', $line);
+            $cmd = array_shift($parts);
+
+            switch ($cmd) {
+                case 'newmtl':
+                    if ($material !== null) {
+                        $this->materials[$name] = $material;
+                    }
+                    $name = $parts[0];
+                    $material = [];
+                    break;
+
+                case 'Ka':
+                case 'Kd':
+                case 'Ks':
+                    $material[$cmd] = array_map('floatval', $parts);
+                    break;
+
+                case 'Ns':
+                    $material['Ns'] = floatval($parts[0]);
+                    break;
+
+                case 'map_Kd':
+                    $material['map_Kd'] = $parts[0];
+                    break;
+            }
+        }
+
+        if ($material !== null) {
+            $this->materials[$name] = $material;
+        }
+    }
+
+    private function resolveIndex(int $i, int $count): int
+    {
         if ($i > 0) {
             return $i - 1;          // OBJ is 1-based
         }
@@ -155,7 +213,7 @@ function rotateZ(GrVertex $v, float $angle) : GrVertex
  */
 function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVertex
 {
-    $scale = 1.0 / ($v->z + $nearZ);
+    $scale = 1.0 / ($nearZ - $v->z);
     $v->x *= $scale * $fov * $aspect;
     $v->y *= $scale * $fov;
 	$v->oow = $scale;
