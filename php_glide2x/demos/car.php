@@ -8,7 +8,7 @@ $centre->z = 0;
 include_once('helper.php');
 
 $parser = new ObjParser();
-$parser->load("php_glide2x/demos/Car.obj");
+$parser->load("php_glide2x/demos/Mazinger_Volador.obj");
 
 
 
@@ -34,7 +34,7 @@ grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);   // 16bits floa
 //grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_ZBUFFER); //16 bits fixed
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
-grCullMode( GrCullMode_t::GR_CULL_DISABLE);
+grCullMode( GrCullMode_t::GR_CULL_NEGATIVE);
 
 $step = .02;
 
@@ -109,11 +109,16 @@ while (!_kbhit()) {
             $vert = new GrVertex();
 
             list($vert->x, $vert->y, $vert->z) = $parser->vertices[$vertex['v']];
+			
+			//echo $parser->materials[$face['material']]['Kd'] . PHP_EOL;
 
             list($vert->r, $vert->g, $vert->b) = shade(
                 $parser->normals[$vertex['n']],
                 [0.5, 0.5, 0.5],  //light direction
-                array_map(fn($c) => (int) round($c * 255),$parser->materials[$face['material']]['Kd'])
+                array_map(
+					fn($c) => (int) round($c * 255),
+					$parser->materials[$face['material']]['Kd'] ?? [200.0, 200.0, 200.0]
+				)
             );
 
 

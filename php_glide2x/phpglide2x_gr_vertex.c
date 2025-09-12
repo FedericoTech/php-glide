@@ -91,7 +91,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrVertex* clone = O_EMBEDDED_P(_GrVertex, new_obj);
     _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
 
-    memcpy(&clone->grVertex, &orig->grVertex, sizeof(GrVertex));
+    clone->grVertex = orig->grVertex;
         
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -103,12 +103,8 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     grVertex_ce = register_class_GrVertex(gr_flushable_ce);
     grVertex_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
-
+    object_handlers = std_object_handlers;
+    
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrVertex, std);
 

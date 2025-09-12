@@ -135,7 +135,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrHwConfiguration* clone = O_EMBEDDED_P(_GrHwConfiguration, new_obj);
     _GrHwConfiguration* orig = O_EMBEDDED_P(_GrHwConfiguration, object);
 
-    memcpy(&clone->grHwConfiguration, &orig->grHwConfiguration, sizeof(GrHwConfiguration));
+    clone->grHwConfiguration = orig->grHwConfiguration;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -147,11 +147,7 @@ void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
     grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
     grHwConfiguration_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);

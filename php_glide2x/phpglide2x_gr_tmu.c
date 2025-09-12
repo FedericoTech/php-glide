@@ -69,9 +69,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrTMUConfig_t* clone = O_EMBEDDED_P(_GrTMUConfig_t, new_obj);
     _GrTMUConfig_t* orig = O_EMBEDDED_P(_GrTMUConfig_t, object);
 
-    //flush_grTMUConfig(orig, &orig->grTMUConfig);
-
-    memcpy(&clone->grTMUConfig, &orig->grTMUConfig, sizeof(GrTMUConfig_t));
+    clone->grTMUConfig = orig->grTMUConfig;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -83,11 +81,7 @@ void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS)
     grTMUConfig_ce = register_class_GrTMUConfig_t(gr_flushable_ce);
     grTMUConfig_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrTMUConfig_t, std);

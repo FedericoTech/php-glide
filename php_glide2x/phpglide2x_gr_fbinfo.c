@@ -94,7 +94,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrLfbInfo_t* clone = O_EMBEDDED_P(_GrLfbInfo_t, new_obj);
     _GrLfbInfo_t* orig = O_EMBEDDED_P(_GrLfbInfo_t, object);
 
-    memcpy(&clone->grLfbInfo, &orig->grLfbInfo, sizeof(GrLfbInfo_t));
+    clone->grLfbInfo = orig->grLfbInfo;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -114,12 +114,8 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
     grLfbInfo_ce = register_class_GrLfbInfo_t(gr_flushable_ce);
     grLfbInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
-
+    object_handlers = std_object_handlers;
+    
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrLfbInfo_t, std);
     //object_handlers.write_property = gr_write_property;
@@ -189,16 +185,6 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
 
 void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
 {
-    /*
-    zend_update_property_long(
-        grLfbInfo_ce,
-        &grLfbInfo->std,
-        "size",
-        sizeof("size") - 1,
-        buffer->size
-    );
-    */
-
     if (buffer->lfbPtr) {
 
         size_t buffer_size = buffer->strideInBytes * grSstScreenHeight();

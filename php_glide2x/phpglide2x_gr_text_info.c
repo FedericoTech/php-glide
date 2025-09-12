@@ -84,7 +84,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrTexInfo* clone = O_EMBEDDED_P(_GrTexInfo, new_obj);
     _GrTexInfo* orig = O_EMBEDDED_P(_GrTexInfo, object);
 
-    memcpy(&clone->grTexInfo, &orig->grTexInfo, sizeof(GrTexInfo));
+    clone->grTexInfo = orig->grTexInfo;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -107,11 +107,7 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
     grTexInfo_ce = register_class_GrTexInfo(gr_flushable_ce);
     grTexInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrTexInfo, std);

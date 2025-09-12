@@ -75,7 +75,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _Gu3dfHeader* clone = O_EMBEDDED_P(_Gu3dfHeader, new_obj);
     _Gu3dfHeader* orig = O_EMBEDDED_P(_Gu3dfHeader, object);
 
-    memcpy(&clone->gu3dfHeader, &orig->gu3dfHeader, sizeof(Gu3dfHeader));
+    clone->gu3dfHeader = orig->gu3dfHeader;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -87,11 +87,7 @@ void phpglide2x_register_gu3dfHeader(INIT_FUNC_ARGS)
     gu3dfHeader_ce = register_class_Gu3dfHeader(gr_flushable_ce);
     gu3dfHeader_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_Gu3dfHeader, std);

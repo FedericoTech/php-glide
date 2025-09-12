@@ -1,6 +1,5 @@
 #ifndef STDAFX_H
 #define STDAFX_H
-
 #include <glide.h>
 #include <stdint.h>
 #include <php.h>

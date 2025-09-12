@@ -72,9 +72,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrSst96Config_t* clone = O_EMBEDDED_P(_GrSst96Config_t, new_obj);
     _GrSst96Config_t* orig = O_EMBEDDED_P(_GrSst96Config_t, object);
 
-    //flush_GrSst96Config(orig, &clone->grSst96Config);
-
-    memcpy(&clone->grSst96Config, &orig->grSst96Config, sizeof(GrSst96Config_t));
+    clone->grSst96Config = orig->grSst96Config;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -86,11 +84,7 @@ void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS)
     grSst96Config_ce = register_class_GrSst96Config_t(gr_flushable_ce);
     grSst96Config_ce->create_object = gr_new_obj; //asign an internal constructor
 
-    memcpy(
-        &object_handlers,	            // our handler
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrSst96Config_t, std);

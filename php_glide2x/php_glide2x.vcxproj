@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
-    <LibraryPath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Release_TS;$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Release_TS;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=1;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;_DEBUG;ZEND_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -100,7 +100,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_DEBUG=0;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;ZEND_DEBUG=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

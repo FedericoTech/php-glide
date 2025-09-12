@@ -156,9 +156,7 @@ static zend_object* gr_clone_obj(zend_object* object)
         _GrVoodooConfig_t* clone = O_EMBEDDED_P(_GrVoodooConfig_t, new_obj);
         _GrVoodooConfig_t* orig = O_EMBEDDED_P(_GrVoodooConfig_t, object);
 
-        //flush_grVoodooConfig(orig);
-
-        memcpy(&clone->grVoodooConfig, &orig->grVoodooConfig, sizeof(GrVoodooConfig_t));
+        clone->grVoodooConfig = orig->grVoodooConfig;
 
         zend_objects_clone_members(&clone->std, &orig->std);
     }
@@ -170,9 +168,7 @@ static zend_object* gr_clone_obj(zend_object* object)
         _GrVoodoo2Config_t* clone = O_EMBEDDED_P(_GrVoodoo2Config_t, new_obj);
         _GrVoodoo2Config_t* orig = O_EMBEDDED_P(_GrVoodoo2Config_t, object);
 
-        //flush_grVoodoo2Config(orig);
-
-        memcpy(&clone->grVoodoo2Config, &orig->grVoodoo2Config, sizeof(GrVoodooConfig_t));
+        clone->grVoodoo2Config = orig->grVoodoo2Config;
 
         zend_objects_clone_members(&clone->std, &orig->std);
     }
@@ -188,17 +184,9 @@ void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS)
     grVoodoo2Config_ce = register_class_GrVoodoo2Config_t(gr_flushable_ce);
     grVoodoo2Config_ce->create_object = GrVoodoo2Config_new; //asign an internal constructor
 
-    memcpy(
-        &grVoodooConfig_object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    grVoodooConfig_object_handlers = std_object_handlers;
 
-    memcpy(
-        &grVoodoo2Config_object_handlers,	// our handler 
-        &std_object_handlers,				        // the standard handler
-        sizeof(zend_object_handlers)		        // size of the standar handler
-    );
+    grVoodoo2Config_object_handlers = std_object_handlers;
 
     //we set the address of the beginning of the whole embedded data
     grVoodooConfig_object_handlers.offset = XtOffsetOf(_GrVoodooConfig_t, std);
