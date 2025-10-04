@@ -32,7 +32,7 @@ class ObjParser
                     break;
 
                 case 'vn': // normal
-                    $this->normals[] = array_map('floatval', $parts);
+                    $this->normals[] = normalize(array_map('floatval', $parts));
                     break;
 
                 case 'f':  // face
@@ -129,10 +129,7 @@ function dot(array $a, array $b): float
 
 function shade(array $normal, array $light, array $baseColor): array
 {
-    $n = normalize($normal);
-    $l = normalize($light);
-
-    $intensity = max(0, dot($n, $l));
+    $intensity = max(0, dot($normal, $light));
 
     return [
         $baseColor[0] * $intensity,
@@ -170,39 +167,6 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null)
     return $new;
 }
 
-function rotateX(GrVertex $v, float $angle) : GrVertex
-{
-    $r = clone $v;
-    $s = sin($angle);
-    $c = cos($angle);
-
-    $v->y = $r->y * $c - $r->z * $s;
-    $v->z = $r->y * $s + $r->z * $c;
-    return $v;
-}
-
-function rotateY(GrVertex $v, float $angle) : GrVertex
-{
-    $r = clone $v;
-	
-    $s = sin($angle);
-    $c = cos($angle);
-    $v->x = $r->x * $c - $r->z * $s;
-   
-    $v->z = $r->x * $s + $r->z * $c;
-    return $v;
-}
-
-function rotateZ(GrVertex $v, float $angle) : GrVertex
-{
-    $r = clone $v;
-    $s = sin($angle);
-    $c = cos($angle);
-
-    $v->x = $r->x * $c - $r->y * $s;
-    $v->y = $r->x * $s + $r->y * $c;
-    return $v;
-}
 
 /**
  * @param GrVertex $v
@@ -218,6 +182,60 @@ function project(GrVertex $v, float $fov, float $aspect, float $nearZ) : GrVerte
     $v->y *= $scale * $fov;
 	$v->oow = $scale;
 	return $v;
+}
+
+function rotationMatrix($xAngle, $yAngle, $zAngle) {
+    $cx = cos($xAngle); $sx = sin($xAngle);
+    $cy = cos($yAngle); $sy = sin($yAngle);
+    $cz = cos($zAngle); $sz = sin($zAngle);
+
+    // Combined rotation Rz * Ry * Rx
+    return [
+        [$cy * $cz,     $sx * $sy * $cz - $cx * $sz,    $cx * $sy * $cz + $sx * $sz ],
+        [$cy * $sz,     $sx * $sy * $sz + $cx * $cz,    $cx * $sy * $sz - $sx * $cz ],
+        [   -$sy,                $sx * $cy,                     $cx * $cy           ]
+    ];
+}
+
+function applyMatrix($v, $m) {
+    return [
+        $v[0] * $m[0][0] + $v[1] * $m[0][1] + $v[2] * $m[0][2],
+        $v[0] * $m[1][0] + $v[1] * $m[1][1] + $v[2] * $m[1][2],
+        $v[0] * $m[2][0] + $v[1] * $m[2][1] + $v[2] * $m[2][2]
+    ];
+}
+
+function rotateX(GrVertex $v, float $angle) : GrVertex
+{
+    $r = clone $v;
+    $s = sin($angle);
+    $c = cos($angle);
+
+    $v->y = $r->y * $c - $r->z * $s;
+    $v->z = $r->y * $s + $r->z * $c;
+    return $v;
+}
+
+function rotateY(GrVertex $v, float $angle) : GrVertex
+{
+    $r = clone $v;
+    $s = sin($angle);
+    $c = cos($angle);
+
+    $v->x = $r->x * $c - $r->z * $s;
+    $v->z = $r->x * $s + $r->z * $c;
+    return $v;
+}
+
+function rotateZ(GrVertex $v, float $angle) : GrVertex
+{
+    $r = clone $v;
+    $s = sin($angle);
+    $c = cos($angle);
+
+    $v->x = $r->x * $c - $r->y * $s;
+    $v->y = $r->x * $s + $r->y * $c;
+    return $v;
 }
 
 //this handler is to gracefully close the script when CTRL+C
@@ -241,6 +259,16 @@ grGlideInit();
 grErrorSetCallback(function($message, $fatal){
 	var_dump($message, $fatal);
 });
+
+$mode = new sfVideoMode;
+$mode->width = 640;
+$mode->height = 480;
+$mode->bitsPerPixel = 32;
+
+
+$window = sfWindow_create($mode, 'Glide Example', sfWindow::TITLEBAR | sfWindow::RESIZE | sfWindow::CLOSE , new sfContextSettings);
+
+
 
 $hwConfig = new GrHwConfiguration;
 
@@ -291,8 +319,10 @@ echo "resolution: $height x $width\n";
 // Select SST 0 and open up the hardware
 grSstSelect(0);
 
+$hwin = sfWindow_getSystemHandle($window);
+
 if(!grSstWinOpen(
-	null,									// hWin cast to FxU32 or null if console app or Voodoo 1 or full screen.
+    $hwin->getRawHandle(),									// hWin cast to FxU32 or null if console app or Voodoo 1 or full screen.
 	GrScreenResolution_t::GR_RESOLUTION_640x480,	// screen resolution
 	GrScreenRefresh_t::GR_REFRESH_60Hz,				// refresh rate
 	GrColorFormat_t::GR_COLORFORMAT_ABGR,							// color format

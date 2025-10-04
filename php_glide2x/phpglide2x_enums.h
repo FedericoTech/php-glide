@@ -55,10 +55,9 @@ extern zend_class_entry* grTextureCombineFnc_ce;
 extern zend_class_entry* grTextureFilterMode_ce;
 extern zend_class_entry* grTextureFormat_ce;
 
-int enum_to_int(zend_object* enum_obj);
+int enum_to_int(const zend_object* enum_obj);
 
-zend_object* int_to_enum(int index, zend_class_entry *scope_ce);
-
+zend_object* int_to_enum(int index, const zend_class_entry *scope_ce);
 
 void phpglide2x_register_enums(INIT_FUNC_ARGS);
 

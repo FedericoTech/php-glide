@@ -567,7 +567,7 @@ struct {
 	{ NULL, NULL }
 };
 
-int enum_to_int(zend_object* enum_obj)
+int enum_to_int(const zend_object* enum_obj)
 {
 	//we go through all the groups till we find the sentinel
 	for (int i = 0; grouped_enums[i].enum_entry != NULL; i++) {
@@ -598,7 +598,7 @@ int enum_to_int(zend_object* enum_obj)
 	return 0;
 }
 
-zend_object* int_to_enum(int index, zend_class_entry* scope_ce)
+zend_object* int_to_enum(int index, const zend_class_entry* scope_ce)
 {
 	//we go through all the groups till we find the sentinel
 	for (int i = 0; grouped_enums[i].enum_entry != NULL; i++) {
