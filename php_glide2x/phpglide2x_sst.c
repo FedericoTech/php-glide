@@ -58,11 +58,11 @@ PHP_FUNCTION(grSstQueryBoards) {
 		Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_obj, grHwConfiguration_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	_GrHwConfiguration* ghcf = O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj);
+	GrHwConfiguration ghcf;
 
-	result = grSstQueryBoards(&ghcf->grHwConfiguration);
+	result = grSstQueryBoards(&ghcf);
 
-	hydrate_GrHwConfiguration(&ghcf->grHwConfiguration, ghcf);
+	hydrate_GrHwConfiguration(&ghcf, grHwConfiguration_obj);
 
 	RETURN_BOOL(result);
 }
@@ -76,11 +76,11 @@ PHP_FUNCTION(grSstQueryHardware) {
 		Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_obj, grHwConfiguration_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	_GrHwConfiguration* ghcf = O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_obj);
+	GrHwConfiguration ghcf;
 
-	result = grSstQueryHardware(&ghcf->grHwConfiguration);
+	result = grSstQueryHardware(&ghcf);
 
-	hydrate_GrHwConfiguration(&ghcf->grHwConfiguration, ghcf);
+	hydrate_GrHwConfiguration(&ghcf, grHwConfiguration_obj);
 
 	RETURN_BOOL(result);
 }

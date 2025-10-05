@@ -16,80 +16,37 @@ static void handle_property_error(zend_object* object, zend_string* member) {
 
 zend_class_entry* gr_flushable_ce;
 
-void phpglide2x_register_gr_flushable(INIT_FUNC_ARGS);
-
 extern zend_class_entry* grTMUConfig_ce;
-
-typedef struct _GrTMUConfig_t {
-    GrTMUConfig_t grTMUConfig;	// the embeded data
-    //HashTable field_map;
-    zend_object std;	// it is important that the zend_object goes last
-} _GrTMUConfig_t;
-
-void flush_grTMUConfig(const _GrTMUConfig_t* grTMUConfig, GrTMUConfig_t* buffer);
-
-void hydrate_grTMUConfig(const GrTMUConfig_t* buffer, _GrTMUConfig_t* grTMUConfig);
-
-void phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS);
-
+typedef zend_object _GrTMUConfig_t;
+void flush_grTMUConfig(const _GrTMUConfig_t* obj, GrTMUConfig_t* buffer);
+void hydrate_grTMUConfig(const GrTMUConfig_t* buffer, _GrTMUConfig_t* obj);
 
 
 extern zend_class_entry* grVoodooConfig_ce;
+typedef zend_object _GrVoodooConfig_t;
+void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer);
+void hydrate_grVoodooConfig(const GrVoodooConfig_t* buffer, _GrVoodooConfig_t* obj);
+
+
 extern zend_class_entry* grVoodoo2Config_ce;
-
-typedef struct _GrVoodooConfig_t {
-    GrVoodooConfig_t grVoodooConfig;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _GrVoodooConfig_t;
-
-typedef struct _GrVoodoo2Config_t {
-    GrVoodoo2Config_t grVoodoo2Config;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _GrVoodoo2Config_t;
-
-void phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS);
-
-void flush_grVoodooConfig(const _GrVoodooConfig_t* grVoodooConfig, GrVoodooConfig_t* buffer);
-
-void hydrate_grVoodooConfig(const GrVoodooConfig_t* voodooConfig, _GrVoodooConfig_t* grVoodooConfig);
-
-void flush_grVoodoo2Config(const _GrVoodoo2Config_t* grVoodoo2Config, GrVoodoo2Config_t* buffer);
-
-void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* voodoo2Config, _GrVoodoo2Config_t* grVoodoo2Config);
-
+typedef zend_object _GrVoodoo2Config_t;
+void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t* buffer);
+void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* buffer, _GrVoodoo2Config_t* obj);
 
 
 extern zend_class_entry* grSst96Config_ce;
-
-typedef struct _GrSst96Config_t {
-    GrSst96Config_t grSst96Config;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _GrSst96Config_t;
-
-void flush_GrSst96Config(const _GrSst96Config_t* grSst96Config, GrSst96Config_t* buffer);
-
-void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* grSst96Config);
-
-void phpglide2x_register_grSst96Config(INIT_FUNC_ARGS);
-
+typedef zend_object _GrSst96Config_t;
+void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer);
+void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* obj);
 
 
 extern zend_class_entry* grAT3DConfig_ce;
-
-typedef struct _GrAT3DConfig_t {
-    GrAT3DConfig_t grAT3DConfig;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _GrAT3DConfig_t;
-
-void flush_GrAT3DConfig(const _GrAT3DConfig_t* grAT3DConfig, GrAT3DConfig_t* buffer);
-
-void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* grAT3DConfig);
-
-void phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS);
+typedef zend_object _GrAT3DConfig_t;
+void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer);
+void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj);
 
 
 extern zend_class_entry* sST_ce;
-
 typedef struct SST_t {
     GrSstType type;             /* Which hardware is it? */
     union {
@@ -100,34 +57,15 @@ typedef struct SST_t {
     } sstBoard;
 } SST_t;
 
-typedef struct _SST_t {
-    SST_t SST;	// the embeded data
-    //HashTable field_map;
-    zend_object std;	// it is important that the zend_object goes last
-} _SST_t;
-
-void flush_SST(const _SST_t* sST, SST_t* buffer);
-
-void hydrate_SST(const SST_t* sSTs, _SST_t* _sST);
-
-void phpglide2x_register_grSST(INIT_FUNC_ARGS);
-
+typedef zend_object _SST_t;
+void flush_SST(const _SST_t* obj, SST_t* buffer);
+void hydrate_SST(const SST_t* buffer, _SST_t* obj);
 
 
 extern zend_class_entry* grHwConfiguration_ce;
-
-typedef struct _GrHwConfiguration {
-    GrHwConfiguration grHwConfiguration;
-    zend_object std;
-} _GrHwConfiguration;
-
+typedef zend_object _GrHwConfiguration;
 void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration_obj, GrHwConfiguration* buffer);
-
 void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* grHwConfiguration_obj);
-
-void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS);
-
-
 
 
 

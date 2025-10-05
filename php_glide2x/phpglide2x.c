@@ -50,13 +50,22 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	
 	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
 
-	phpglide2x_register_gr_flushable(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grTMUConfig(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grVoodooConfig(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grSst96Config(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grAT3DConfig(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grSST(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS_PASSTHRU);
+	gr_flushable_ce = register_class_flushable();
+	
+	grTMUConfig_ce = register_class_GrTMUConfig_t(gr_flushable_ce);
+
+	grVoodooConfig_ce = register_class_GrVoodooConfig_t(gr_flushable_ce);
+
+	grVoodoo2Config_ce = register_class_GrVoodoo2Config_t(gr_flushable_ce);
+
+	grSst96Config_ce = register_class_GrSst96Config_t(gr_flushable_ce);
+
+	grAT3DConfig_ce = register_class_GrAT3DConfig_t(gr_flushable_ce);
+
+	sST_ce = register_class_SST_t(gr_flushable_ce);
+
+	grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
+
 	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grState(INIT_FUNC_ARGS_PASSTHRU);

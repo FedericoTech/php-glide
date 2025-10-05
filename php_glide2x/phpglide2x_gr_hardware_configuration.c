@@ -11,30 +11,32 @@ ZEND_FUNCTION(testGrHwConfiguration)
         Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_zo, grHwConfiguration_ce)
         ZEND_PARSE_PARAMETERS_END();
 
-    _GrHwConfiguration* config = O_EMBEDDED_P(_GrHwConfiguration, grHwConfiguration_zo);
+    GrHwConfiguration grHwConfiguration;
 
-    php_printf("num_sst: %d\n", config->grHwConfiguration.num_sst);
-    for (int cont = 0; cont < config->grHwConfiguration.num_sst; cont++) {
+    flush_GrHwConfiguration(grHwConfiguration_zo, &grHwConfiguration);
 
-        php_printf("board n: %d, type: %d\n", cont, config->grHwConfiguration.SSTs[cont].type);
+    php_printf("num_sst: %d\n", grHwConfiguration.num_sst);
+    for (int cont = 0; cont < grHwConfiguration.num_sst; cont++) {
 
-        switch (config->grHwConfiguration.SSTs[cont].type) {
+        php_printf("board n: %d, type: %d\n", cont, grHwConfiguration.SSTs[cont].type);
+
+        switch (grHwConfiguration.SSTs[cont].type) {
         case GR_SSTTYPE_VOODOO:
         {
             php_printf(
                 "board n: %d: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, [0][tmuRev: %d, tmuRam: %d], [1][tmuRev: %d, tmuRam: %d]]\n\n", 
                 cont, 
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbiRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbRam,
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.nTexelfx,
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.sliDetect,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbiRev,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbRam,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.nTexelfx,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.sliDetect,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRam,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRev,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRam,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRam
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRev,
+                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRam
             );
         }
         break;
@@ -44,10 +46,10 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d, [fbRam: %d, nTexelfx: %d, [tmuRev: %d, tmuRam: %d]]\n\n",
                 cont,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.SST96Config.fbRam,
-                config->grHwConfiguration.SSTs[cont].sstBoard.SST96Config.nTexelfx,
-                config->grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRam
+                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.fbRam,
+                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.nTexelfx,
+                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRev,
+                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRam
             );
         }
         break;
@@ -57,7 +59,7 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d, [rev: %d]\n\n",
                 cont,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.AT3DConfig.rev
+                grHwConfiguration.SSTs[cont].sstBoard.AT3DConfig.rev
             );
         }
         break;
@@ -67,16 +69,16 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, [0][tmuRev: %d, tmuRam: %d], [1][tmuRev: %d, tmuRam: %d]]\n\n",
                 cont,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbiRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbRam,
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.nTexelfx,
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.sliDetect,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbiRev,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbRam,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.nTexelfx,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.sliDetect,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRam,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRev,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRam,
 
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRev,
-                config->grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRam
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRev,
+                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRam
             );
         }
         break;
@@ -90,75 +92,20 @@ PHP_METHOD(GrHwConfiguration, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    _GrHwConfiguration* obj = O_EMBEDDED_P(_GrHwConfiguration, Z_OBJ_P(ZEND_THIS));
-
-    flush_GrHwConfiguration(obj, &obj->grHwConfiguration);
-
     zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration) + 1, 0);
 
-    memcpy(
-        ZSTR_VAL(bin),
-        &obj->grHwConfiguration,
-        sizeof(GrHwConfiguration) + 1
-    );
+    flush_GrHwConfiguration(Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrHwConfiguration) + 1] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
 
-static zend_object_handlers object_handlers;
-
-//function that allocates memory for the object and sets the handlers
-static zend_object* gr_new_obj(zend_class_entry* ce)
-{
-    //it allocates memory
-    _GrHwConfiguration* grHwConfiguration = zend_object_alloc(sizeof(_GrHwConfiguration), ce);
-
-    //it initializes the object
-    zend_object_std_init(&grHwConfiguration->std, ce);
-    object_properties_init(&grHwConfiguration->std, ce);
-
-    //it sets the handlers
-    grHwConfiguration->std.handlers = &object_handlers;
-
-    //it returns the zend object
-    return &grHwConfiguration->std;
-}
-
-static zend_object* gr_clone_obj(zend_object* object)
-{
-    // Step 1: Call the default clone handler
-    zend_object* new_obj = gr_new_obj(object->ce);
-
-
-    _GrHwConfiguration* clone = O_EMBEDDED_P(_GrHwConfiguration, new_obj);
-    _GrHwConfiguration* orig = O_EMBEDDED_P(_GrHwConfiguration, object);
-
-    clone->grHwConfiguration = orig->grHwConfiguration;
-
-    zend_objects_clone_members(&clone->std, &orig->std);
-
-    return new_obj;
-}
-
-void phpglide2x_register_grHwConfiguration(INIT_FUNC_ARGS)
-{
-    grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
-    grHwConfiguration_ce->create_object = gr_new_obj; //asign an internal constructor
-
-    object_handlers = std_object_handlers;
-
-    //we set the address of the beginning of the whole embedded data
-    object_handlers.offset = XtOffsetOf(_GrHwConfiguration, std);
-    object_handlers.clone_obj = gr_clone_obj;
-}
-
-void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwConfiguration* buffer)
+void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* buffer)
 {
     zval* value = zend_read_property(
-        grHwConfiguration->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&grHwConfiguration->std,           // zval* or zend_object* (see below)
+        grHwConfiguration_ce,            // zend_class_entry* of the object
+        (zend_object*)obj,           // zval* or zend_object* (see below)
         "num_sst",   // property name
         sizeof("num_sst") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -168,8 +115,8 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwCo
     buffer->num_sst = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
-        grHwConfiguration->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&grHwConfiguration->std,           // zval* or zend_object* (see below)
+        grHwConfiguration_ce,            // zend_class_entry* of the object
+        (zend_object*)obj,           // zval* or zend_object* (see below)
         "SSTs",   // property name
         sizeof("SSTs") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -190,10 +137,7 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwCo
             }
 
             if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), sST_ce)) {
-
-                _SST_t* sST = O_EMBEDDED_P(_SST_t, Z_OBJ_P(val));
-
-                flush_SST(sST, (SST_t*) &buffer->SSTs[cont++]);
+                flush_SST((_SST_t *)Z_OBJ_P(val), (SST_t*)&buffer->SSTs[cont++]);
             }
             else {
                 memset(&buffer->SSTs[cont++], 0, sizeof(SST_t));
@@ -203,10 +147,10 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration, GrHwCo
     }
 }
 
-void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* grHwConfiguration_obj)
+void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* obj)
 {
     zend_update_property_long(
-        grHwConfiguration_ce, &grHwConfiguration_obj->std,
+        grHwConfiguration_ce, obj,
         "num_sst", sizeof("num_sst") - 1,
         buffer->num_sst
     );
@@ -221,13 +165,13 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
         //we instantiate the SST_t class
         object_init_ex(&sst_obj, sST_ce);
 
-        hydrate_SST((const SST_t*) &buffer->SSTs[cont], O_EMBEDDED_P(_SST_t, Z_OBJ(sst_obj)));
+        hydrate_SST((SST_t*) &buffer->SSTs[cont], (_SST_t *)Z_OBJ(sst_obj));
         
         add_next_index_zval(&sSTs_arr_zval, &sst_obj);
     }
 
     zend_update_property(
-        grHwConfiguration_ce, &grHwConfiguration_obj->std,
+        grHwConfiguration_ce, obj,
         "SSTs", sizeof("SSTs") - 1,
         &sSTs_arr_zval
     );

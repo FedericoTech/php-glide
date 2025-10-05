@@ -167,7 +167,6 @@
     <ClCompile Include="phpglide2x_lfb.c" />
     <ClCompile Include="phpglide2x_sst.c" />
     <ClCompile Include="phpglide2x_gr_sst.c" />
-    <ClCompile Include="phpglide2x_structs.c" />
     <ClCompile Include="phpglide2x_tex.c" />
     <ClCompile Include="stdafx.c" />
   </ItemGroup>
