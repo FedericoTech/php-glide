@@ -14,6 +14,8 @@ ZEND_FUNCTION(testGrVoodooConfig_t)
 
     GrVoodooConfig_t buffer;
 
+    memset(&buffer, 0xff, sizeof buffer);
+
     flush_grVoodooConfig(grVoodooConfig_zo, &buffer);
 
     php_printf(
@@ -44,6 +46,8 @@ ZEND_FUNCTION(testGrVoodoo2Config_t)
         ZEND_PARSE_PARAMETERS_END();
 
     GrVoodoo2Config_t buffer;
+
+    memset(&buffer, 0xff, sizeof buffer);
 
     flush_grVoodoo2Config(grVoodoo2Config_zo, &buffer);
 
@@ -105,7 +109,7 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
@@ -116,7 +120,7 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbiRev = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
@@ -127,7 +131,7 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
@@ -138,8 +142,8 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE;
-    
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
+
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
         (zend_object*)obj,         // zval* or zend_object* (see below)
@@ -151,7 +155,7 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
     
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
+        //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
         zval* val;
@@ -168,7 +172,7 @@ void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
 
             }
             else {
-                memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
+                //memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
             }
                 
         } ZEND_HASH_FOREACH_END();
@@ -219,7 +223,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
@@ -230,7 +234,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->fbiRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbiRev = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
@@ -241,7 +245,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
@@ -252,7 +256,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE;
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
@@ -265,7 +269,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
 
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
+        //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
         zval* val;
@@ -281,7 +285,7 @@ void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
                 flush_grTMUConfig((_GrTMUConfig_t*)Z_OBJ_P(val), &buffer->tmuConfig[cont++]);
             }
             else {
-                memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
+                //memset(&buffer->tmuConfig[cont++], 0, sizeof(GrTMUConfig_t));
             }
 
         } ZEND_HASH_FOREACH_END();

@@ -107,9 +107,9 @@ string(83) "Typed property GrVoodoo2Config_t::$fbRam must not be accessed before
 string(84) "Typed property GrVoodoo2Config_t::$fbiRev must not be accessed before initialization"
 string(86) "Typed property GrVoodoo2Config_t::$nTexelfx must not be accessed before initialization"
 string(87) "Typed property GrVoodoo2Config_t::$tmuConfig must not be accessed before initialization"
-fbRam: 0, fbiRev: 0, nTexelfx: 0, sliDetect: 0
-[0] tmuRev: 0, tmuRam: 0
-[1] tmuRev: 0, tmuRam: 0
+fbRam: -1, fbiRev: -1, nTexelfx: -1, sliDetect: 0
+[0] tmuRev: -1, tmuRam: -1
+[1] tmuRev: -1, tmuRam: -1
 
 object(GrVoodoo2Config_t)#1 (5) {
   ["fbRam"]=>
@@ -161,7 +161,7 @@ array(2) {
 int(1)
 int(2)
 fbRam: 3, fbiRev: 4, nTexelfx: 2, sliDetect: 1
-[0] tmuRev: 0, tmuRam: 0
+[0] tmuRev: -1, tmuRam: -1
 [1] tmuRev: 1, tmuRam: 2
 
 object(GrVoodoo2Config_t)#5 (5) {
@@ -194,7 +194,7 @@ object(GrVoodoo2Config_t)#5 (5) {
 bool(true)
 bool(false)
 fbRam: 3, fbiRev: 4, nTexelfx: 2, sliDetect: 1
-[0] tmuRev: 0, tmuRam: 0
+[0] tmuRev: -1, tmuRam: -1
 [1] tmuRev: 1, tmuRam: 2
 
 bool(true)

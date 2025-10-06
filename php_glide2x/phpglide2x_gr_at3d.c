@@ -11,7 +11,7 @@ ZEND_FUNCTION(testGrAT3DConfig_t)
         Z_PARAM_OBJ_OF_CLASS(grAT3DConfig_zo, grAT3DConfig_ce)
     ZEND_PARSE_PARAMETERS_END();
 
-    GrAT3DConfig_t buffer;
+    GrAT3DConfig_t buffer = { 0xffffffff };
 
     flush_GrAT3DConfig(grAT3DConfig_zo, &buffer);
 
@@ -38,7 +38,7 @@ PHP_METHOD(GrAT3DConfig_t, flush)
 void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
 {
     zval* value = zend_read_property(
-        obj->ce,                // zend_class_entry* of the object
+        grAT3DConfig_ce,                // zend_class_entry* of the object
         (zend_object *) obj,    // zval* or zend_object* (see below)
         "rev",                  // property name
         sizeof("rev") - 1,
@@ -46,7 +46,7 @@ void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
         NULL                    // Optional return zval ptr, or NULL
     );
 
-    buffer->rev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->rev = Z_LVAL_P(value); }
 }
 
 void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj)

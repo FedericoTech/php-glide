@@ -119,8 +119,7 @@ object(SST_t)#1 (0) {
 }
 string(70) "Typed property SST_t::$type must not be accessed before initialization"
 string(74) "Typed property SST_t::$sstBoard must not be accessed before initialization"
-type: 0, sstBoard: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 0, tmuRam: 0]]
-
+type: -1,
 object(SST_t)#1 (2) {
   ["type"]=>
   enum(GrSstType::GR_SSTTYPE_VOODOO)
@@ -153,7 +152,7 @@ object(SST_t)#1 (2) {
     }
   }
 }
-type: 0, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+type: 0, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: -1, tmuRam: -1], [tmuRev: 5, tmuRam: 6]]
 
 object(SST_t)#8 (2) {
   ["type"]=>
@@ -218,7 +217,7 @@ object(SST_t)#12 (2) {
     }
   }
 }
-type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: -1, tmuRam: -1], [tmuRev: 5, tmuRam: 6]]
 object(SST_t)#13 (2) {
   ["type"]=>
   enum(GrSstType::GR_SSTTYPE_Voodoo2)
@@ -253,6 +252,6 @@ object(SST_t)#13 (2) {
 }
 bool(true)
 bool(false)
-type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: 0, tmuRam: 0], [tmuRev: 5, tmuRam: 6]]
+type: 3, sstBoard: [fbiRev: 1, fbRam: 2, nTexelfx: 3, sliDetect: 1, tmuConfig: [[tmuRev: -1, tmuRam: -1], [tmuRev: 5, tmuRam: 6]]
 bool(true)
 bool(true)

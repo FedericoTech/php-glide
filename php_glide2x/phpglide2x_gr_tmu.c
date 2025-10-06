@@ -13,6 +13,8 @@ ZEND_FUNCTION(testGrTMUConfig_t)
 
     GrTMUConfig_t buffer;
 
+    memset(&buffer, 0xff, sizeof buffer);
+
     flush_grTMUConfig(grTMUConfig_zo, &buffer);
 
     php_printf(
@@ -47,7 +49,8 @@ void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->tmuRev = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRev = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grTMUConfig_ce,             // zend_class_entry* of the object
@@ -58,7 +61,7 @@ void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->tmuRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRam = Z_LVAL_P(value); }
 }
 
 void hydrate_grTMUConfig(const GrTMUConfig_t* tmuConfig, _GrTMUConfig_t* obj)

@@ -740,10 +740,6 @@ final class GuNccTable implements flushable
 }
 */
 
-#ifdef _DEBUG
-function testObject(object $obj) : void {};
-#endif
-
 //CLASSES AND STRUCTS FINISH
 
 //FUNCTIONS START

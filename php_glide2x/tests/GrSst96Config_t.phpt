@@ -98,7 +98,7 @@ object(GrSst96Config_t)#1 (0) {
 string(81) "Typed property GrSst96Config_t::$fbRam must not be accessed before initialization"
 string(84) "Typed property GrSst96Config_t::$nTexelfx must not be accessed before initialization"
 string(85) "Typed property GrSst96Config_t::$tmuConfig must not be accessed before initialization"
-fbRam: 0, nTexelfx: 0, tmuConfig: [tmuRev: 0, tmuRam: 0]
+fbRam: -1, nTexelfx: -1, tmuConfig: [tmuRev: -1, tmuRam: -1]
 
 object(GrSst96Config_t)#1 (3) {
   ["fbRam"]=>

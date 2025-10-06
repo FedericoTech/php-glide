@@ -135,7 +135,7 @@ object(GrHwConfiguration)#1 (0) {
   ["SSTs"]=>
   uninitialized(array)
 }
-num_sst: 0
+num_sst: -1
 
 object(GrHwConfiguration)#1 (2) {
   ["num_sst"]=>
@@ -206,16 +206,16 @@ object(GrHwConfiguration)#1 (2) {
 }
 num_sst: 4
 board n: 0, type: 0
-board n: 0: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 0: [fbiRev: -1, fbRam: -1, nTexelfx: -1, sliDetect: 0, [0][tmuRev: -1, tmuRam: -1], [1][tmuRev: -1, tmuRam: -1]]
 
 board n: 1, type: 1
-board n: 1, [fbRam: 0, nTexelfx: 0, [tmuRev: 0, tmuRam: 0]]
+board n: 1, [fbRam: -1, nTexelfx: -1, [tmuRev: -1, tmuRam: -1]]
 
-board n: 2, type: 0
-board n: 2: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 2, type: 2
+board n: 2, [rev: -1]
 
-board n: 3, type: 0
-board n: 3: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 3, type: 3
+board n: 3: [fbiRev: -1, fbRam: -1, nTexelfx: -1, sliDetect: 0, [0][tmuRev: -1, tmuRam: -1], [1][tmuRev: -1, tmuRam: -1]]
 
 
 object(GrHwConfiguration)#1 (2) {
@@ -322,23 +322,23 @@ object(GrHwConfiguration)#1 (2) {
 }
 num_sst: 4
 board n: 0, type: 0
-board n: 0: [fbiRev: 3, fbRam: 4, nTexelfx: 5, sliDetect: 0, [0][tmuRev: 1, tmuRam: 2], [1][tmuRev: 0, tmuRam: 0]]
+board n: 0: [fbiRev: 3, fbRam: 4, nTexelfx: 5, sliDetect: 0, [0][tmuRev: 1, tmuRam: 2], [1][tmuRev: -1, tmuRam: -1]]
 
 board n: 1, type: 1
 board n: 1, [fbRam: 6, nTexelfx: 7, [tmuRev: 1, tmuRam: 2]]
 
-board n: 2, type: 0
-board n: 2: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 2, type: 2
+board n: 2, [rev: 8]
 
-board n: 3, type: 0
-board n: 3: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 3, type: 3
+board n: 3: [fbiRev: 9, fbRam: 10, nTexelfx: 11, sliDetect: 0, [0][tmuRev: 1, tmuRam: 2], [1][tmuRev: -1, tmuRam: -1]]
 
 
 bool(true)
 bool(true)
 num_sst: 1
 board n: 0, type: 0
-board n: 0: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: 0, tmuRam: 0], [1][tmuRev: 0, tmuRam: 0]]
+board n: 0: [fbiRev: 0, fbRam: 0, nTexelfx: 0, sliDetect: 0, [0][tmuRev: -1, tmuRam: -1], [1][tmuRev: -1, tmuRam: -1]]
 
 num_sst: 1
 board n: 0, type: 0

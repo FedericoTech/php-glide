@@ -61,7 +61,7 @@ object(GrAT3DConfig_t)#1 (0) {
   uninitialized(int)
 }
 string(78) "Typed property GrAT3DConfig_t::$rev must not be accessed before initialization"
-rev: 0
+rev: -1
 
 object(GrAT3DConfig_t)#1 (1) {
   ["rev"]=>

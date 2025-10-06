@@ -13,6 +13,8 @@ ZEND_FUNCTION(testGrSst96Config_t)
 
     GrSst96Config_t buffer;
 
+    memset(&buffer, 0xff, sizeof buffer);
+
     flush_GrSst96Config(grSst96Config_zo, &buffer);
 
     php_printf(
@@ -50,7 +52,7 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->fbRam = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
@@ -61,7 +63,7 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->nTexelfx = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
@@ -73,7 +75,7 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
     );
 
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t));
+        //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t));
     }
     else {
 

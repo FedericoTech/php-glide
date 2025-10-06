@@ -138,7 +138,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
+        //memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
     }
     else {
         zval* val;
@@ -156,7 +156,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
                 flush_grTmuVertex(grTmuVertex, &buffer->tmuvtx[cont++]);
             }
             else {
-                memset(&buffer->tmuvtx[cont++], 0, sizeof(_GrTmuVertex));
+                //memset(&buffer->tmuvtx[cont++], 0, sizeof(_GrTmuVertex));
             }
 
         } ZEND_HASH_FOREACH_END();

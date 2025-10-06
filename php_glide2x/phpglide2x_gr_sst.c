@@ -14,14 +14,17 @@ ZEND_FUNCTION(testSST_t)
 
     SST_t buffer;
 
+    memset(&buffer, 0xff, sizeof buffer);
+
     flush_SST(sST_zo, &buffer);
+
+    php_printf("type: %d,", buffer.type);
 
     switch (buffer.type) {
     case GR_SSTTYPE_VOODOO:
 
         php_printf(
-            "type: %d, sstBoard: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, tmuConfig: [[tmuRev: %d, tmuRam: %d], [tmuRev: %d, tmuRam: %d]]\n",
-            buffer.type,
+            " sstBoard: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, tmuConfig: [[tmuRev: %d, tmuRam: %d], [tmuRev: %d, tmuRam: %d]]\n",
 
             buffer.sstBoard.VoodooConfig.fbiRev,
             buffer.sstBoard.VoodooConfig.fbRam,
@@ -39,8 +42,7 @@ ZEND_FUNCTION(testSST_t)
     case GR_SSTTYPE_SST96:
 
         php_printf(
-            "type: %d, sstBoard: [fbRam: %d, nTexelfx: %d, tmuConfig: [tmuRev: %d, tmuRam: %d]]\n",
-            buffer.type,
+            " sstBoard: [fbRam: %d, nTexelfx: %d, tmuConfig: [tmuRev: %d, tmuRam: %d]]\n",
 
             buffer.sstBoard.SST96Config.fbRam,
             buffer.sstBoard.SST96Config.nTexelfx,
@@ -52,8 +54,7 @@ ZEND_FUNCTION(testSST_t)
     case GR_SSTTYPE_AT3D:
 
         php_printf(
-            "type: %d, sstBoard: [rev: %d]\n",
-            buffer.type,
+            " sstBoard: [rev: %d]\n",
 
             buffer.sstBoard.AT3DConfig.rev
         );
@@ -62,8 +63,7 @@ ZEND_FUNCTION(testSST_t)
     case GR_SSTTYPE_Voodoo2:
 
         php_printf(
-            "type: %d, sstBoard: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, tmuConfig: [[tmuRev: %d, tmuRam: %d], [tmuRev: %d, tmuRam: %d]]\n",
-            buffer.type,
+            " sstBoard: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, tmuConfig: [[tmuRev: %d, tmuRam: %d], [tmuRev: %d, tmuRam: %d]]\n",
 
             buffer.sstBoard.Voodoo2Config.fbiRev,
             buffer.sstBoard.Voodoo2Config.fbRam,
@@ -87,38 +87,38 @@ PHP_METHOD(SST_t, flush)
     ZEND_PARSE_PARAMETERS_NONE();
 
     zend_string* bin = zend_string_alloc(sizeof(SST_t) + 1, 0);
-
+    
     flush_SST(Z_OBJ_P(ZEND_THIS), (SST_t*)ZSTR_VAL(bin));
-
-    ZSTR_VAL(bin)[sizeof(_SST_t) + 1] = '\0'; // null terminator (optional for binary)
-
+    
+    ZSTR_VAL(bin)[sizeof(SST_t) + 1] = '\0'; // null terminator (optional for binary)
+    
     RETURN_STR(bin);
 }
 
 void flush_SST(const _SST_t* obj, SST_t* buffer)
 {
     zval* value = zend_read_property(
-        sST_ce,      // zend_class_entry* of the object
-        (zend_object*)obj,        // zval* or zend_object* (see below)
+        sST_ce,             // zend_class_entry* of the object
+        (zend_object*)obj,  // zval* or zend_object* (see below)
         "type",             // property name
         sizeof("type") - 1,
         1,                  // silent (1 = don't emit notice if not found)
         NULL                // Optional return zval ptr, or NULL
     );
 
-    buffer->type = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->type = enum_to_int(Z_OBJ_P(value)); }
 
     value = zend_read_property(
-        sST_ce,      // zend_class_entry* of the object
-        (zend_object*)obj,        // zval* or zend_object* (see below)
-        "sstBoard",             // property name
+        sST_ce,             // zend_class_entry* of the object
+        (zend_object*)obj,  // zval* or zend_object* (see below)
+        "sstBoard",         // property name
         sizeof("sstBoard") - 1,
         1,                  // silent (1 = don't emit notice if not found)
         NULL                // Optional return zval ptr, or NULL
     );
 
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->sstBoard, 0, sizeof(SST_t));
+        //memset(&buffer->sstBoard, 0, sizeof(SST_t));
     }
     else {
         switch (buffer->type) {

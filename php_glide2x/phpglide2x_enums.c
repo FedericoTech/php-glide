@@ -575,7 +575,7 @@ int enum_to_int(const zend_object* enum_obj)
 		if (grouped_enums[i].enum_entry == enum_obj->ce) {
 			
 			//we get he enumeration case name
-			const char* case_name = ZSTR_VAL(Z_STR_P(zend_enum_fetch_case_name(enum_obj)));
+			const char* case_name = ZSTR_VAL(Z_STR_P(zend_enum_fetch_case_name((zend_object *) enum_obj)));
 			int len = strlen(case_name);
 
 			//we go through the case names till we find the sentinel
@@ -610,7 +610,7 @@ zend_object* int_to_enum(int index, const zend_class_entry* scope_ce)
 				if (grouped_enums[i].values[j].value == index) {
 
 					//we return the enum
-					return zend_enum_get_case_cstr(scope_ce, grouped_enums[i].values[j].name);
+					return zend_enum_get_case_cstr((zend_class_entry *) scope_ce, grouped_enums[i].values[j].name);
 				}
 			}
 			//if not found we throw an error

@@ -74,7 +74,7 @@ object(GrTMUConfig_t)#1 (0) {
 }
 string(80) "Typed property GrTMUConfig_t::$tmuRev must not be accessed before initialization"
 string(80) "Typed property GrTMUConfig_t::$tmuRam must not be accessed before initialization"
-tmuRev: 0, tmuRam: 0
+tmuRev: -1, tmuRam: -1
 
 object(GrTMUConfig_t)#1 (1) {
   ["tmuRev"]=>
@@ -83,7 +83,7 @@ object(GrTMUConfig_t)#1 (1) {
   uninitialized(int)
 }
 int(1)
-tmuRev: 1, tmuRam: 0
+tmuRev: 1, tmuRam: -1
 object(GrTMUConfig_t)#2 (1) {
   ["tmuRev"]=>
   int(1)
@@ -92,7 +92,7 @@ object(GrTMUConfig_t)#2 (1) {
 }
 bool(true)
 bool(false)
-tmuRev: 1, tmuRam: 0
+tmuRev: 1, tmuRam: -1
 
 object(GrTMUConfig_t)#1 (2) {
   ["tmuRev"]=>

@@ -11,32 +11,34 @@ ZEND_FUNCTION(testGrHwConfiguration)
         Z_PARAM_OBJ_OF_CLASS(grHwConfiguration_zo, grHwConfiguration_ce)
         ZEND_PARSE_PARAMETERS_END();
 
-    GrHwConfiguration grHwConfiguration;
+    GrHwConfiguration buffer;
 
-    flush_GrHwConfiguration(grHwConfiguration_zo, &grHwConfiguration);
+    memset(&buffer, 0xff, sizeof buffer);
 
-    php_printf("num_sst: %d\n", grHwConfiguration.num_sst);
-    for (int cont = 0; cont < grHwConfiguration.num_sst; cont++) {
+    flush_GrHwConfiguration(grHwConfiguration_zo, &buffer);
 
-        php_printf("board n: %d, type: %d\n", cont, grHwConfiguration.SSTs[cont].type);
+    php_printf("num_sst: %d\n", buffer.num_sst);
+    for (int cont = 0; cont < buffer.num_sst; cont++) {
 
-        switch (grHwConfiguration.SSTs[cont].type) {
+        php_printf("board n: %d, type: %d\n", cont, buffer.SSTs[cont].type);
+
+        switch (buffer.SSTs[cont].type) {
         case GR_SSTTYPE_VOODOO:
         {
             php_printf(
                 "board n: %d: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, [0][tmuRev: %d, tmuRam: %d], [1][tmuRev: %d, tmuRam: %d]]\n\n", 
                 cont, 
 
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbiRev,
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.fbRam,
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.nTexelfx,
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.sliDetect,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.fbiRev,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.fbRam,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.nTexelfx,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.sliDetect,
 
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRev,
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRam,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRev,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[0].tmuRam,
 
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRev,
-                grHwConfiguration.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRam
+                buffer.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRev,
+                buffer.SSTs[cont].sstBoard.VoodooConfig.tmuConfig[1].tmuRam
             );
         }
         break;
@@ -46,10 +48,10 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d, [fbRam: %d, nTexelfx: %d, [tmuRev: %d, tmuRam: %d]]\n\n",
                 cont,
 
-                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.fbRam,
-                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.nTexelfx,
-                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRev,
-                grHwConfiguration.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRam
+                buffer.SSTs[cont].sstBoard.SST96Config.fbRam,
+                buffer.SSTs[cont].sstBoard.SST96Config.nTexelfx,
+                buffer.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRev,
+                buffer.SSTs[cont].sstBoard.SST96Config.tmuConfig.tmuRam
             );
         }
         break;
@@ -59,7 +61,7 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d, [rev: %d]\n\n",
                 cont,
 
-                grHwConfiguration.SSTs[cont].sstBoard.AT3DConfig.rev
+                buffer.SSTs[cont].sstBoard.AT3DConfig.rev
             );
         }
         break;
@@ -69,16 +71,16 @@ ZEND_FUNCTION(testGrHwConfiguration)
                 "board n: %d: [fbiRev: %d, fbRam: %d, nTexelfx: %d, sliDetect: %d, [0][tmuRev: %d, tmuRam: %d], [1][tmuRev: %d, tmuRam: %d]]\n\n",
                 cont,
 
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbiRev,
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.fbRam,
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.nTexelfx,
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.sliDetect,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.fbiRev,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.fbRam,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.nTexelfx,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.sliDetect,
 
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRev,
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRam,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRev,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[0].tmuRam,
 
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRev,
-                grHwConfiguration.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRam
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRev,
+                buffer.SSTs[cont].sstBoard.Voodoo2Config.tmuConfig[1].tmuRam
             );
         }
         break;
@@ -94,7 +96,7 @@ PHP_METHOD(GrHwConfiguration, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration) + 1, 0);
 
-    flush_GrHwConfiguration(Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
+    flush_GrHwConfiguration((_GrHwConfiguration *)Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrHwConfiguration) + 1] = '\0'; // null terminator (optional for binary)
 
@@ -104,43 +106,45 @@ PHP_METHOD(GrHwConfiguration, flush)
 void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* buffer)
 {
     zval* value = zend_read_property(
-        grHwConfiguration_ce,            // zend_class_entry* of the object
-        (zend_object*)obj,           // zval* or zend_object* (see below)
-        "num_sst",   // property name
+        grHwConfiguration_ce,       // zend_class_entry* of the object
+        (zend_object*)obj,          // zval* or zend_object* (see below)
+        "num_sst",                  // property name
         sizeof("num_sst") - 1,
-        1,             // silent (1 = don't emit notice if not found)
-        NULL           // Optional return zval ptr, or NULL
+        1,                          // silent (1 = don't emit notice if not found)
+        NULL                        // Optional return zval ptr, or NULL
     );
 
-    buffer->num_sst = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    if (Z_TYPE_P(value) != IS_NULL) { buffer->num_sst = Z_LVAL_P(value); }
 
     value = zend_read_property(
-        grHwConfiguration_ce,            // zend_class_entry* of the object
-        (zend_object*)obj,           // zval* or zend_object* (see below)
-        "SSTs",   // property name
+        grHwConfiguration_ce,       // zend_class_entry* of the object
+        (zend_object*)obj,          // zval* or zend_object* (see below)
+        "SSTs",                     // property name
         sizeof("SSTs") - 1,
-        1,             // silent (1 = don't emit notice if not found)
-        NULL           // Optional return zval ptr, or NULL
+        1,                          // silent (1 = don't emit notice if not found)
+        NULL                        // Optional return zval ptr, or NULL
     );
 
     //the array is not initialized...
     if (Z_TYPE_P(value) == IS_NULL) {
-        memset(&buffer->SSTs, 0, sizeof(SST_t) * 2);
+        //memset(&buffer->SSTs, 0, sizeof(SST_t) * 2);
     }
     else {
         zval* val;
         HashTable* ht = Z_ARRVAL_P(value); // array_zval is a zval* pointing to the PHP array
         int cont = 0;
         ZEND_HASH_FOREACH_VAL(ht, val) {
+            /*
             if (cont >= GLIDE_NUM_TMU) {
                 break;
             }
+            */
 
             if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), sST_ce)) {
                 flush_SST((_SST_t *)Z_OBJ_P(val), (SST_t*)&buffer->SSTs[cont++]);
             }
             else {
-                memset(&buffer->SSTs[cont++], 0, sizeof(SST_t));
+                //memset(&buffer->SSTs[cont++], 0, sizeof(SST_t));
             }
 
         } ZEND_HASH_FOREACH_END();
