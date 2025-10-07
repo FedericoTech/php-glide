@@ -3,8 +3,6 @@
 include_once('helper.php');
 
 
-
-
 function makeCheckerTexture(int $w = 256, int $h = 256, int $cell = 8): string
 {
     return file_get_contents('sonic256x256.data')
@@ -178,42 +176,10 @@ grAlphaBlendFunction(
 $angle = 0.0;
 $zoom = 1.0;
 
-while (true) {
 
-    //if any key is hit...
-    if(_kbhit()){
-        $key = _getch();
-
-        //arrows
-        if($key == 224){
-            switch (_getch()){
-                case 72: //up
-                    $centre->y += 10;
-                    break;
-                case 80: // down
-                    $centre->y -= 10;
-                    break;
-                case 75: //left
-                    $centre->x -= 10;
-                    break;
-                case 77: //right
-                    $centre->x += 10;
-                    break;
-            }
-        //normal keys
-        } else {
-            switch (chr($key)){
-                case 'q':   // zoom in
-                    $zoom += 0.01;
-                    break;
-                case 'a':   // zoom out
-                    $zoom -= 0.01;
-                    break;
-                default:   // exit;
-                    break 2;
-            }
-        }
-    }
+function draw()
+{
+    global $vtx0, $vtx1, $vtx2, $vtx3, $angle, $centre, $zoom;
 
     $aux = [$vtx0, $vtx1, $vtx2, $vtx3];
 
@@ -232,15 +198,67 @@ while (true) {
         $aux
     );
 
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
     grDrawTriangle($aux[0], $aux[1], $aux[2]);
 
     grDrawTriangle($aux[0], $aux[2], $aux[3]);
 
-	grBufferSwap(1);
+    grBufferSwap(1);
 
     $angle += 0.01;
+}
+
+$event = new sfEvent;
+
+while(sfWindow_isOpen($window)){
+
+    while (sfWindow_pollEvent($window, $event)) {
+        switch ($event->type) {
+            case sfEventType::sfEvtClosed:
+                break(3);
+        }
+        break;
+    }
+
+    // exit;
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyEscape)){
+        break;
+    }
+
+    $change = 0;
+
+    //forward
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyW)){
+        $zoom += 0.01;
+    }
+
+    //backward
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyS)){
+        $zoom -= 0.01;
+    }
+
+    //move left
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyLeft)){
+        $centre->x -= 10;
+    }
+
+    //move right
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyRight)){
+        $centre->x += 10;
+    }
+
+    // move up
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyUp)){
+        $centre->y += 10;
+    }
+
+    // move down
+    if (sfKeyboard_isKeyPressed(sfKeyCode::sfKeyDown)){
+        $centre->y -= 10;
+    }
+
+    draw();
 }
 
 grSstIdle();

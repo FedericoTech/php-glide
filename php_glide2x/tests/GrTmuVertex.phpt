@@ -93,7 +93,7 @@ object(GrTmuVertex)#1 (0) {
   ["oow"]=>
   uninitialized(float)
 }
-sow: 0.000000, tow: 0.000000, oow: 0.000000
+sow: nan, tow: nan, oow: nan
 we clone the empty object
 object(GrTmuVertex)#2 (0) {
   ["sow"]=>
@@ -105,7 +105,7 @@ object(GrTmuVertex)#2 (0) {
 }
 bool(true)
 bool(false)
-sow: 0.000000, tow: 0.000000, oow: 0.000000
+sow: nan, tow: nan, oow: nan
 we set values in the original object
 object(GrTmuVertex)#1 (3) {
   ["sow"]=>

@@ -151,9 +151,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
             if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), grTmuVertex_ce)) {
 
-                _GrTmuVertex* grTmuVertex = O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(val));
-
-                flush_grTmuVertex(grTmuVertex, &buffer->tmuvtx[cont++]);
+                flush_grTmuVertex(Z_OBJ_P(val), &buffer->tmuvtx[cont++]);
             }
             else {
                 //memset(&buffer->tmuvtx[cont++], 0, sizeof(_GrTmuVertex));
@@ -182,7 +180,7 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
         zval grTmuVertex;
         object_init_ex(&grTmuVertex, grTMUConfig_ce);
 
-        hydrate_grTmuVertex(&buffer->tmuvtx[cont2], O_EMBEDDED_P(_GrTmuVertex, &Z_OBJ(grTmuVertex)));
+        hydrate_grTmuVertex(&buffer->tmuvtx[cont2], (_GrTmuVertex *) &Z_OBJ(grTmuVertex));
 
         add_next_index_zval(&grTmuVertex_arr_zval, &grTmuVertex);
     }

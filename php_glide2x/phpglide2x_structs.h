@@ -64,23 +64,16 @@ void hydrate_SST(const SST_t* buffer, _SST_t* obj);
 
 extern zend_class_entry* grHwConfiguration_ce;
 typedef zend_object _GrHwConfiguration;
-void flush_GrHwConfiguration(const _GrHwConfiguration* grHwConfiguration_obj, GrHwConfiguration* buffer);
-void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* grHwConfiguration_obj);
+void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* buffer);
+void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* obj);
 
 
 
 extern zend_class_entry* grTmuVertex_ce;
+typedef zend_object _GrTmuVertex;
+void flush_grTmuVertex(const _GrTmuVertex* obj, GrTmuVertex* buffer);
+void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* obj);
 
-typedef struct _GrTmuVertex {
-    GrTmuVertex grTmuVertex;
-    zend_object std;
-} _GrTmuVertex;
-
-void flush_grTmuVertex(const _GrTmuVertex* grVertex, GrTmuVertex* buffer);
-
-void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grVertex);
-
-void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* grVertex_ce;

@@ -75,7 +75,7 @@ object(GrTmuVertex)#1 (0) {
   ["oow"]=>
   uninitialized(float)
 }
-sow: 0.000000, tow: 0.000000, oow: 0.000000
+sow: nan, tow: nan, oow: nan
 
 object(GrTmuVertex)#1 (3) {
   ["sow"]=>
