@@ -87,7 +87,7 @@ object(Gu3dfHeader)#1 (0) {
 string(77) "Typed property Gu3dfHeader::$width must not be accessed before initialization"
 string(78) "Typed property Gu3dfHeader::$height must not be accessed before initialization"
 string(81) "Typed property Gu3dfHeader::$small_lod must not be accessed before initialization"
-width: 0, height: 0, small_lod: 0, large_lod: 0, aspect_ratio: 0, format:0
+width: -1, height: -1, small_lod: -1, large_lod: -1, aspect_ratio: -1, format: -1
 
 object(Gu3dfHeader)#1 (6) {
   ["width"]=>
@@ -107,7 +107,7 @@ int(3)
 enum(GrLOD_t::GR_LOD_8)
 enum(GrAspectRatio_t::GR_ASPECT_2x1)
 enum(GrTextureFormat_t::GR_TEXFMT_RGB_332)
-width: 3, height: 4, small_lod: 5, large_lod: 0, aspect_ratio: 2, format:0
+width: 3, height: 4, small_lod: 5, large_lod: 0, aspect_ratio: 2, format: 0
 
 object(Gu3dfHeader)#1 (6) {
   ["width"]=>
@@ -139,6 +139,6 @@ object(Gu3dfHeader)#7 (6) {
 }
 bool(true)
 bool(false)
-width: 3, height: 4, small_lod: 5, large_lod: 0, aspect_ratio: 2, format:0
+width: 3, height: 4, small_lod: 5, large_lod: 0, aspect_ratio: 2, format: 0
 bool(true)
 bool(true)

@@ -68,11 +68,16 @@ PHP_MINIT_FUNCTION(phpglide2x)
 
 	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
 	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grState(INIT_FUNC_ARGS_PASSTHRU);
+
+	grState_ce = register_class_GrState(gr_flushable_ce);
+	
 	phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_grSstPerfStats(INIT_FUNC_ARGS_PASSTHRU);
+
+	gr_SstPerfStats_ce = register_class_GrSstPerfStats_t(gr_flushable_ce);
+	
 	phpglide2x_register_grTexInfo(INIT_FUNC_ARGS_PASSTHRU);
-	phpglide2x_register_gu3dfHeader(INIT_FUNC_ARGS_PASSTHRU);
+
+	gu3dfHeader_ce = register_class_Gu3dfHeader(gr_flushable_ce);
 
 	return SUCCESS;
 }

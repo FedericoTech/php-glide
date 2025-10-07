@@ -42,11 +42,11 @@ PHP_FUNCTION(grSstPerfStats)
 		Z_PARAM_OBJ_OF_CLASS(pStats, gr_SstPerfStats_ce);
 	ZEND_PARSE_PARAMETERS_END();
 
-	_GrSstPerfStats_t* gsps = O_EMBEDDED_P(_GrSstPerfStats_t, pStats);
+	GrSstPerfStats_t gsps;
 
-	grSstPerfStats(&gsps->grSstPerfStats);
+	grSstPerfStats(&gsps);
 
-	hydrate_grSstPerfStats(&gsps->grSstPerfStats, gsps);
+	hydrate_grSstPerfStats(&gsps, pStats);
 }
 
 PHP_FUNCTION(grSstQueryBoards) {

@@ -99,17 +99,9 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* grState_ce;
-
-typedef struct _GrState {
-    GrState grState;
-    zend_object std;
-} _GrState;
-
-void flush_grState(const _GrState* grState, GrState* buffer);
-
-void hydrate_grState(const GrState* buffer, _GrState* grState);
-
-void phpglide2x_register_grState(INIT_FUNC_ARGS);
+typedef zend_object _GrState;
+void flush_grState(const _GrState* obj, GrState* buffer);
+void hydrate_grState(const GrState* buffer, _GrState* obj);
 
 
 
@@ -131,17 +123,9 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* gr_SstPerfStats_ce;
-
-typedef struct _GrSstPerfStats_t {
-    GrSstPerfStats_t grSstPerfStats;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _GrSstPerfStats_t;
-
-void flush_grSstPerfStats(const _GrSstPerfStats_t* grLfbInfo, GrSstPerfStats_t* buffer);
-
-void hydrate_grSstPerfStats(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* grLfbInfo);
-
-void phpglide2x_register_grSstPerfStats(INIT_FUNC_ARGS);
+typedef zend_object _GrSstPerfStats_t;
+void flush_grSstPerfStats(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer);
+void hydrate_grSstPerfStats(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj);
 
 
 
@@ -164,17 +148,9 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* gu3dfHeader_ce;
-
-typedef struct _Gu3dfHeader {
-    Gu3dfHeader gu3dfHeader;	// the embeded data
-    zend_object std;	// it is important that the zend_object goes last
-} _Gu3dfHeader;
-
-void flush_gu3dfHeader(const _Gu3dfHeader* gu3dfHeader, Gu3dfHeader* buffer);
-
-void hydrate_gu3dfHeader(const Gu3dfHeader* buffer, _Gu3dfHeader* gu3dfHeader);
-
-void phpglide2x_register_gu3dfHeader(INIT_FUNC_ARGS);
+typedef zend_object _Gu3dfHeader;
+void flush_gu3dfHeader(const _Gu3dfHeader* obj, Gu3dfHeader* buffer);
+void hydrate_gu3dfHeader(const Gu3dfHeader* buffer, _Gu3dfHeader* obj);
 
 
 

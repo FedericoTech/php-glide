@@ -28,11 +28,13 @@ PHP_FUNCTION(grGlideGetState)
 		Z_PARAM_OBJ_OF_CLASS(state_zo, grState_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	_GrState* _grState = O_EMBEDDED_P(_GrState, state_zo);
+	GrState buffer;
 
-	grGlideGetState(&_grState->grState);
+	memset(&buffer, 0, sizeof buffer);
 
-	hydrate_grState(&_grState->grState, _grState);
+	grGlideGetState(&buffer);
+
+	hydrate_grState(&buffer, state_zo);
 }
 
 PHP_FUNCTION(grGlideInit) {
@@ -51,11 +53,11 @@ PHP_FUNCTION(grGlideSetState)
 		Z_PARAM_OBJ_OF_CLASS(state_zo, grState_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	_GrState* _grState = O_EMBEDDED_P(_GrState, state_zo);
+	GrState buffer;
 
-	flush_grState(_grState, &_grState->grState);
+	flush_grState(state_zo, &buffer);
 
-	grGlideSetState(&_grState->grState);
+	grGlideSetState(&buffer);
 }
 
 PHP_FUNCTION(grGlideShutdown) {

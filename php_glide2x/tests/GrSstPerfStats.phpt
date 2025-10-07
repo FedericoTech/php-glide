@@ -44,7 +44,7 @@ object(GrSstPerfStats_t)#1 (0) {
   ["pixelsOut"]=>
   uninitialized(int)
 }
-pixelsIn: 0, chromaFail: 0, zFuncFail: 0, aFuncFail: 0, pixelsOut: 0
+pixelsIn: 4294967295, chromaFail: 4294967295, zFuncFail: 4294967295, aFuncFail: 4294967295, pixelsOut: 4294967295
 object(GrSstPerfStats_t)#1 (5) {
   ["pixelsIn"]=>
   int(-1)
@@ -57,7 +57,7 @@ object(GrSstPerfStats_t)#1 (5) {
   ["pixelsOut"]=>
   int(-4)
 }
-pixelsIn: 4294967295, chromaFail: 2, zFuncFail: 4294967294, aFuncFail: 4294967292, pixelsOut: 0
+pixelsIn: 4294967295, chromaFail: 2, zFuncFail: 4294967294, aFuncFail: 3, pixelsOut: 4294967292
 object(GrSstPerfStats_t)#2 (5) {
   ["pixelsIn"]=>
   int(-1)
@@ -70,5 +70,5 @@ object(GrSstPerfStats_t)#2 (5) {
   ["pixelsOut"]=>
   int(-4)
 }
-pixelsIn: 4294967295, chromaFail: 2, zFuncFail: 4294967294, aFuncFail: 4294967292, pixelsOut: 0
+pixelsIn: 4294967295, chromaFail: 2, zFuncFail: 4294967294, aFuncFail: 3, pixelsOut: 4294967292
 done
