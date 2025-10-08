@@ -70,9 +70,17 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
 
 
 extern zend_class_entry* grTmuVertex_ce;
-typedef zend_object _GrTmuVertex;
-void flush_grTmuVertex(const _GrTmuVertex* obj, GrTmuVertex* buffer);
-void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* obj);
+
+typedef struct _GrTmuVertex {
+    GrTmuVertex grTmuVertex;
+    zend_object std;
+} _GrTmuVertex;
+
+void flush_grTmuVertex(const _GrTmuVertex* grVertex, GrTmuVertex* buffer);
+
+void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grVertex);
+
+void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
 
 

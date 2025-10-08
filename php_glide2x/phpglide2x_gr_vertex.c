@@ -151,7 +151,11 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
             if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), grTmuVertex_ce)) {
 
-                flush_grTmuVertex(Z_OBJ_P(val), &buffer->tmuvtx[cont++]);
+                _GrTmuVertex* grTmuVertex = O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(val));
+
+                buffer->tmuvtx[cont++] = grTmuVertex->grTmuVertex;
+
+                //flush_grTmuVertex(grTmuVertex, &buffer->tmuvtx[cont++]);
             }
             else {
                 //memset(&buffer->tmuvtx[cont++], 0, sizeof(_GrTmuVertex));

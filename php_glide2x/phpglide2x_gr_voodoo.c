@@ -76,11 +76,11 @@ PHP_METHOD(GrVoodooConfig_t, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrVoodooConfig_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrVoodooConfig_t), 0);
 
     flush_grVoodooConfig(Z_OBJ_P(ZEND_THIS), (GrVoodooConfig_t*) ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrVoodooConfig_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrVoodooConfig_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -89,11 +89,11 @@ PHP_METHOD(GrVoodoo2Config_t, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrVoodoo2Config_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrVoodoo2Config_t), 0);
 
     flush_grVoodoo2Config(Z_OBJ_P(ZEND_THIS), (GrVoodoo2Config_t*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrVoodoo2Config_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrVoodoo2Config_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }

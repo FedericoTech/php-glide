@@ -66,7 +66,7 @@ PHP_MINIT_FUNCTION(phpglide2x)
 
 	grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
 
-	grTmuVertex_ce = register_class_GrTmuVertex(gr_flushable_ce);
+	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
 
 	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
 

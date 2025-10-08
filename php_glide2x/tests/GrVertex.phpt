@@ -50,6 +50,9 @@ $vertex->ooz = 0.6;
 $vertex->a = 0.7;
 $vertex->oow = '0.8';
 
+$gtv->flush();
+$gtv2->flush();
+
 $vertex->tmuvtx = [$gtv, $gtv2];
 $vertex->flush();
 
@@ -75,7 +78,7 @@ object(GrTmuVertex)#1 (0) {
   ["oow"]=>
   uninitialized(float)
 }
-sow: nan, tow: nan, oow: nan
+sow: 0.000000, tow: 0.000000, oow: 0.000000
 
 object(GrTmuVertex)#1 (3) {
   ["sow"]=>

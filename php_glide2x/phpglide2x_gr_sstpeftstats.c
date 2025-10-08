@@ -32,11 +32,11 @@ PHP_METHOD(GrSstPerfStats_t, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrSstPerfStats_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrSstPerfStats_t), 0);
 
     flush_grSstPerfStats(Z_OBJ_P(ZEND_THIS), (GrSstPerfStats_t*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrSstPerfStats_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrSstPerfStats_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }

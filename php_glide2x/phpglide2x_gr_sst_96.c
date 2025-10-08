@@ -31,11 +31,11 @@ PHP_METHOD(GrSst96Config_t, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t), 0);
 
     flush_GrSst96Config(Z_OBJ_P(ZEND_THIS), (GrSst96Config_t*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrAT3DConfig_t) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrAT3DConfig_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }

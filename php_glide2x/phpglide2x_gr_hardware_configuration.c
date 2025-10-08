@@ -94,11 +94,11 @@ PHP_METHOD(GrHwConfiguration, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration), 0);
 
     flush_GrHwConfiguration((_GrHwConfiguration *)Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrHwConfiguration) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrHwConfiguration)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }

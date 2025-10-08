@@ -28,11 +28,11 @@ PHP_METHOD(GrState, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(GrState) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrState), 0);
 
     flush_grState(Z_OBJ_P(ZEND_THIS), (GrState*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(GrState) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrState)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -49,18 +49,16 @@ void flush_grState(const _GrState* obj, GrState* buffer)
     );
 
     if (Z_TYPE_P(value) == IS_NULL) {
-        buffer->pad[0] = '\0';
+        memset(buffer->pad, 0, sizeof(buffer->pad));
     }
     else {
-
-        const char* str = Z_STRVAL_P(value);
-        
-        size_t len = Z_STRLEN_P(value);
-
+        size_t len = MIN(Z_STRLEN_P(value), sizeof(buffer->pad));
         // Make sure not to overflow the destination buffer
-        strncpy_s(buffer->pad, sizeof(buffer->pad), str, _TRUNCATE);
+        memcpy(buffer->pad, Z_STRVAL_P(value), len);
         
-        buffer->pad[sizeof(buffer->pad) - 1] = '\0';  // Ensure null-termination
+        if (len < sizeof(buffer->pad)) {
+            memset(buffer->pad + len, 0, sizeof(buffer->pad) - len);
+        }
     }
 }
 

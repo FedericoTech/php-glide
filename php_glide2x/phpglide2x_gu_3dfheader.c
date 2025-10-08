@@ -34,11 +34,11 @@ PHP_METHOD(Gu3dfHeader, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    zend_string* bin = zend_string_alloc(sizeof(Gu3dfHeader) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(Gu3dfHeader), 0);
 
     flush_gu3dfHeader(Z_OBJ_P(ZEND_THIS), (Gu3dfHeader*)ZSTR_VAL(bin));
 
-    ZSTR_VAL(bin)[sizeof(Gu3dfHeader) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(Gu3dfHeader)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }

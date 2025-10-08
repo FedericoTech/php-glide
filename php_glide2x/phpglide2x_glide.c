@@ -28,9 +28,7 @@ PHP_FUNCTION(grGlideGetState)
 		Z_PARAM_OBJ_OF_CLASS(state_zo, grState_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	GrState buffer;
-
-	memset(&buffer, 0, sizeof buffer);
+	GrState buffer = { 0 };
 
 	grGlideGetState(&buffer);
 
