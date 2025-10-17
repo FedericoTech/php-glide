@@ -32,7 +32,7 @@ PHP_FUNCTION(grGlideGetState)
 
 	grGlideGetState(&buffer);
 
-	hydrate_grState(&buffer, state_zo);
+	hydrate_grState(&buffer, O_EMBEDDED_P(_GrState, state_zo));
 }
 
 PHP_FUNCTION(grGlideInit) {
@@ -53,7 +53,7 @@ PHP_FUNCTION(grGlideSetState)
 
 	GrState buffer;
 
-	flush_grState(state_zo, &buffer);
+	flush_grState(O_EMBEDDED_P(_GrState, state_zo), &buffer);
 
 	grGlideSetState(&buffer);
 }

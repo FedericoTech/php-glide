@@ -100,9 +100,17 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 
 
 extern zend_class_entry* grState_ce;
-typedef zend_object _GrState;
-void flush_grState(const _GrState* obj, GrState* buffer);
-void hydrate_grState(const GrState* buffer, _GrState* obj);
+
+typedef struct _GrState {
+    GrState grState;
+    zend_object std;
+} _GrState;
+
+void flush_grState(const _GrState* grState, GrState* buffer);
+
+void hydrate_grState(const GrState* buffer, _GrState* grState);
+
+void phpglide2x_register_grState(INIT_FUNC_ARGS);
 
 
 

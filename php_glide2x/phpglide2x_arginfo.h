@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: cbdf3d53e44c1ef189717f6f11c69f124c06f970 */
+ * Stub hash: 032a95d74475d586e344707699dcf0bda4769891 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -65,10 +65,6 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGu3dfHeader, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, g3dfh, Gu3dfHeader, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testObject, 0, 1, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO(0, obj, IS_OBJECT, 0)
 ZEND_END_ARG_INFO()
 #endif
 
@@ -618,7 +614,6 @@ ZEND_FUNCTION(testGrLfbInfo_t);
 ZEND_FUNCTION(testGrSstPerfStats_t);
 ZEND_FUNCTION(testGrTexInfo);
 ZEND_FUNCTION(testGu3dfHeader);
-ZEND_FUNCTION(testObject);
 #endif
 ZEND_FUNCTION(grAADrawLine);
 ZEND_FUNCTION(grAADrawPoint);
@@ -782,7 +777,6 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(testGrSstPerfStats_t, arginfo_testGrSstPerfStats_t)
 	ZEND_FE(testGrTexInfo, arginfo_testGrTexInfo)
 	ZEND_FE(testGu3dfHeader, arginfo_testGu3dfHeader)
-	ZEND_FE(testObject, arginfo_testObject)
 #endif
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
 	ZEND_FE(grAADrawPoint, arginfo_grAADrawPoint)
@@ -2337,7 +2331,7 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_size_default_value;
-	ZVAL_UNDEF(&property_size_default_value);
+	ZVAL_LONG(&property_size_default_value, 20);
 	zend_string *property_size_name = zend_string_init("size", sizeof("size") - 1, 1);
 	zend_declare_typed_property(class_entry, property_size_name, &property_size_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_size_name);

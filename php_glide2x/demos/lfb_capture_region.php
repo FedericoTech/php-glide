@@ -45,44 +45,53 @@ $angle = 0.0;
 grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHBUFFER_ZBUFFER
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
-grCullMode( GrCullMode_t::GR_CULL_POSITIVE );
+grCullMode( GrCullMode_t::GR_CULL_NEGATIVE );
 
+$event = new sfEvent;
 
-while (!_kbhit()) {
-	
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+while(sfWindow_isOpen($window)) {
 
-	$transformed = [];
-	foreach($vertices as $vertex){
-		$v = clone $vertex;
-		
-		$v = rotateX($v, $angle);
-		$v = rotateY($v, $angle);
-		$v = rotateZ($v, $angle);
-		
+    while (sfWindow_pollEvent($window, $event)) {
+        switch ($event->type) {
+            case sfEventType::sfEvtClosed:
+                break(3);
+        }
+        break;
+    }
+
+    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+
+    $transformed = [];
+    foreach($vertices as $vertex){
+        $v = clone $vertex;
+
+        $v = rotateX($v, $angle);
+        $v = rotateY($v, $angle);
+        $v = rotateZ($v, $angle);
+
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
-		$v->flush();
+        $v->flush();
 
-		$transformed[] = $v;
-	}
-	
-	foreach($cubeIndices as $indices){
-		
-		$verts = [];
-		foreach($indices as $index){
-			$verts[] = $transformed[$index];
-		}
+        $transformed[] = $v;
+    }
 
-		grDrawPlanarPolygonVertexList(
-			count($verts),
-			$verts
-		);
-	}
+    foreach($cubeIndices as $indices){
 
-	grBufferSwap(1);
-	$angle += 0.01;
+        $verts = [];
+        foreach($indices as $index){
+            $verts[] = $transformed[$index];
+        }
+
+        grDrawPlanarPolygonVertexList(
+            count($verts),
+            $verts
+        );
+    }
+
+    grBufferSwap(1);
+    $angle += 0.01;
 }
 
 //$buffer = '';

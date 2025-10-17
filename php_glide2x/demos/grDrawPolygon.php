@@ -64,52 +64,62 @@ $indices = [0, 1, 2, 0, 3, 4, 0, 5, 6, 0];
 
 $angle = 0.0;
 
-while (!_kbhit()) {
-	
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
-	
-	$angle_minus = 0 - $angle;
-	
-	$vtr1 = rotate_point($vtx1, $angle_minus, $centre);
+$event = new sfEvent;
+
+while(sfWindow_isOpen($window)) {
+
+    while (sfWindow_pollEvent($window, $event)) {
+        switch ($event->type) {
+            case sfEventType::sfEvtClosed:
+                break(3);
+        }
+        break;
+    }
+
+    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+
+    $angle_minus = 0 - $angle;
+
+    $vtr1 = rotate_point($vtx1, $angle_minus, $centre);
     $vtr2 = rotate_point($vtx2, $angle_minus, $centre);
     $vtr3 = rotate_point($vtx3, $angle_minus, $centre);
-	
-	$vtr4 = rotate_point($vtx4, $angle_minus, $centre);
+
+    $vtr4 = rotate_point($vtx4, $angle_minus, $centre);
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
-	
-	$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-	array_walk($aux, fn($v) => $v->flush());
-	
-	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
 
-	grDrawPolygon(
-		count($indices), 	//whatever is highter whether indices or vertices
-		$indices, 
-		$vertices
-	);
+    $aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+    array_walk($aux, fn($v) => $v->flush());
+
+    $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+
+    grDrawPolygon(
+        count($indices), 	//whatever is highter whether indices or vertices
+        $indices,
+        $vertices
+    );
 
     $vtr1 = rotate_point($vtx1, $angle, $centre);
     $vtr2 = rotate_point($vtx2, $angle, $centre);
     $vtr3 = rotate_point($vtx3, $angle, $centre);
-	
-	$vtr4 = rotate_point($vtx4, $angle, $centre);
+
+    $vtr4 = rotate_point($vtx4, $angle, $centre);
     $vtr5 = rotate_point($vtx5, $angle, $centre);
     $vtr6 = rotate_point($vtx6, $angle, $centre);
-		
-	$vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-	array_walk($vertices, fn($v) => $v->flush());
 
-	grDrawPolygon(
-		count($indices), 	//whatever is highter whether indices or vertices
-		$indices, 
-		$vertices
-	);
+    $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+    array_walk($vertices, fn($v) => $v->flush());
 
-	grBufferSwap(1);
-	
-	//usleep(1000); // Reduce CPU usage
-	$angle += 0.01;
+    grDrawPolygon(
+        count($indices), 	//whatever is highter whether indices or vertices
+        $indices,
+        $vertices
+    );
+
+    grBufferSwap(1);
+
+    //usleep(1000); // Reduce CPU usage
+    $angle += 0.01;
 }
 
 grSstIdle();

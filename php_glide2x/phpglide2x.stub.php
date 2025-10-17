@@ -674,7 +674,7 @@ function testGrVertex(GrVertex $chc) : void {};
 #endif
 
 final class GrLfbInfo_t implements flushable {
-    public int $size;
+    public int $size = 20;
     public string $lfbPtr;
     public int $strideInBytes;
     public GrLfbWriteMode_t $writeMode;

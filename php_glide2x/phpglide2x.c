@@ -70,7 +70,7 @@ PHP_MINIT_FUNCTION(phpglide2x)
 
 	phpglide2x_register_grVertex(INIT_FUNC_ARGS_PASSTHRU);
 
-	grState_ce = register_class_GrState(gr_flushable_ce);
+	phpglide2x_register_grState(INIT_FUNC_ARGS_PASSTHRU);
 	
 	phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS_PASSTHRU);
 

@@ -58,7 +58,17 @@ $info->flush(); //apply changes in the underlying memory.
 // Unlock when done
 grLfbUnlock(GrLock_t::GR_LFB_WRITE_ONLY, GrBuffer_t::GR_BUFFER_BACKBUFFER);
 
-while (!_kbhit()) {
+$event = new sfEvent;
+
+while(sfWindow_isOpen($window)) {
+
+    while (sfWindow_pollEvent($window, $event)) {
+        switch ($event->type) {
+            case sfEventType::sfEvtClosed:
+                break(3);
+        }
+        break;
+    }
 
 	grBufferSwap(1);
 }

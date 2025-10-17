@@ -37,25 +37,35 @@ $vtx3->a = 255.0;
 
 $angle = 0.0;
 
-while (!_kbhit()) {
-	
+$event = new sfEvent;
+
+while(sfWindow_isOpen($window)) {
+
+    while (sfWindow_pollEvent($window, $event)) {
+        switch ($event->type) {
+            case sfEventType::sfEvtClosed:
+                break(3);
+        }
+        break;
+    }
+
     $vtr1 = rotate_point($vtx1, $angle, $centre);
     $vtr2 = rotate_point($vtx2, $angle, $centre);
     $vtr3 = rotate_point($vtx3, $angle, $centre);
-	
-	$aux = [$vtr1, $vtr2, $vtr3];
-	array_walk($aux, fn($v) => $v->flush());
-	
-	grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
-	grDrawPoint($vtr1);
-	grDrawPoint($vtr2);
-	grDrawPoint($vtr3);
-	
-	grBufferSwap(1);
-	
-	//usleep(1000); // Reduce CPU usage
-	$angle += 0.01;
+    $aux = [$vtr1, $vtr2, $vtr3];
+    array_walk($aux, fn($v) => $v->flush());
+
+    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+
+    grDrawPoint($vtr1);
+    grDrawPoint($vtr2);
+    grDrawPoint($vtr3);
+
+    grBufferSwap(1);
+
+    //usleep(1000); // Reduce CPU usage
+    $angle += 0.01;
 }
 
 grSstIdle();
