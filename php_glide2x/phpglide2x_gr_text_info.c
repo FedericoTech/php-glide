@@ -42,15 +42,15 @@ PHP_METHOD(GrTexInfo, flush)
 
     flush_grTexInfo(obj, &obj->grTexInfo /*, write*/);
 
-    zend_string* bin = zend_string_alloc(sizeof(GrTexInfo) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(GrTexInfo), 0);
 
     memcpy(
         ZSTR_VAL(bin),
         &obj->grTexInfo,
-        sizeof(GrTexInfo) + 1
+        sizeof(GrTexInfo)
     );
 
-    ZSTR_VAL(bin)[sizeof(GrTexInfo) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(GrTexInfo)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -111,14 +111,16 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
 
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrTexInfo, std);
-    //object_handlers.write_property = gr_write_property;
+
     object_handlers.clone_obj = gr_clone_obj;
     object_handlers.free_obj = gr_free_obj;
 }
 
 void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
 {
-    zval* value = zend_read_property(
+    zval* value = NULL;
+        
+    value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
         (zend_object*)&obj->std,           // zval* or zend_object* (see below)
         "smallLod",   // property name

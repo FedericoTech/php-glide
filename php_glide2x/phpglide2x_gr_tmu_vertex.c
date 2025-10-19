@@ -86,23 +86,16 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 {
     zval* value = NULL;
+
     for (int cont = 0; cont < 3; cont++) {
-        value = zend_read_property(
-            grTmuVertex_ce,                     // zend_class_entry* of the object
-            (zend_object*)&grTmuVertex->std,    // zval* or zend_object* (see below)
-            properties[cont],                   // property name
-            strlen(properties[cont]),
-            1,                                  // silent (1 = don't emit notice if not found)
-            NULL                                // Optional return zval ptr, or NULL
-        );
+        //this way we don't use zend_read_property
+        value = OBJ_PROP(&grTmuVertex->std, grTmuVertex_ce->properties_info_table[cont]->offset);
 
-        ((FxFloat*)&buffer->sow)[cont] = (FxFloat)(
-            Z_TYPE_P(value) == IS_DOUBLE
-            ? Z_DVAL_P(value)
-            : zval_get_double(value)
-            );
+
+        ((FxFloat*)&buffer->sow)[cont] = (FxFloat)(Z_ISUNDEF_P(value)
+            ? 0.0
+            : Z_DVAL_P(value));
     }
-
 }
 
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)

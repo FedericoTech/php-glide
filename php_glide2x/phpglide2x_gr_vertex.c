@@ -51,15 +51,15 @@ PHP_METHOD(GrVertex, flush)
 
     flush_grVertex(obj, &obj->grVertex);
 
-    zend_string* bin = zend_string_alloc(sizeof(_GrVertex) + 1, 0);
+    zend_string* bin = zend_string_alloc(sizeof(_GrVertex), 0);
 
     memcpy(
         ZSTR_VAL(bin),
         &obj->grVertex,
-        sizeof(_GrVertex) + 1
+        sizeof(_GrVertex)
     );
 
-    ZSTR_VAL(bin)[sizeof(_GrVertex) + 1] = '\0'; // null terminator (optional for binary)
+    ZSTR_VAL(bin)[sizeof(_GrVertex)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
@@ -94,6 +94,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     clone->grVertex = orig->grVertex;
         
     zend_objects_clone_members(&clone->std, &orig->std);
+    
 
     return new_obj;
 }
@@ -116,28 +117,18 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
     zval* value = NULL;
 
     for (int cont = 0; cont < 9; cont++) {
-        value = zend_read_property(
-            grVertex->std.ce,            // zend_class_entry* of the object
-            (zend_object*)&grVertex->std,           // zval* or zend_object* (see below)
-            properties[cont],   // property name
-            strlen(properties[cont]),
-            1,             // silent (1 = don't emit notice if not found)
-            NULL           // Optional return zval ptr, or NULL
-        );
-        ((FxFloat*)&buffer->x)[cont] = (FxFloat)zval_get_double(value);
+        //this way we don't use zend_read_property
+        value = OBJ_PROP(&grVertex->std, grVertex_ce->properties_info_table[cont]->offset);
+
+        ((FxFloat*)&buffer->x)[cont] = (FxFloat)(Z_ISUNDEF_P(value)
+            ? 0.0
+            : Z_DVAL_P(value));
     }
 
-    value = zend_read_property(
-        grVertex->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&grVertex->std,           // zval* or zend_object* (see below)
-        "tmuvtx",   // property name
-        sizeof("tmuvtx") - 1,
-        1,             // silent (1 = don't emit notice if not found)
-        NULL           // Optional return zval ptr, or NULL
-    );
+    //this way we don't use zend_read_property
+    value = OBJ_PROP(&grVertex->std, grVertex_ce->properties_info_table[9]->offset);
 
-    //the array is not initialized...
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISUNDEF_P(value)) {
         //memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
     }
     else {
@@ -153,9 +144,8 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
                 _GrTmuVertex* grTmuVertex = O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(val));
 
-                buffer->tmuvtx[cont++] = grTmuVertex->grTmuVertex;
-
-                //flush_grTmuVertex(grTmuVertex, &buffer->tmuvtx[cont++]);
+                //this makes the textures show
+                flush_grTmuVertex(grTmuVertex, &buffer->tmuvtx[cont++]);
             }
             else {
                 //memset(&buffer->tmuvtx[cont++], 0, sizeof(_GrTmuVertex));
@@ -167,7 +157,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
 void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 {
-    for (int cont = 0; cont < GLIDE_NUM_TMU; cont++) {
+    for (int cont = 0; cont < 9; cont++) {
         zend_update_property_long(
             grVertex_ce,
             &grVertex->std,
