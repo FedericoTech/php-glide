@@ -62,42 +62,40 @@ function draw()
 
             global $parser, $centre, $light, $xAngle, $yAngle, $zAngle;
 
+            /*
             $vert = new GrVertex;
 
-            list($vert->x, $vert->y, $vert->z) = applyMatrix($parser->vertices[$vertex['v']], $matrix);
-
-            //echo $parser->materials[$face['material']]['Kd'] . PHP_EOL;
-/*
             list($vert->r, $vert->g, $vert->b) = array_map(
                 fn($c) => (int) round($c * 255),
                 $parser->materials[$face['material']]['Kd'] ?? [200.0, 200.0, 200.0]
             );
-*/
-
 
             $normal =  $parser->normals[$vertex['n']];
 
             $nml = new GrVertex;
-            list($nml->x, $nml->y, $nml->z) = applyMatrix($normal, $matrix);
 
-            //$nml = rotateZ(rotateY(rotateX($nml, $xAngle), $yAngle), $zAngle);
+            $nml = rotateZ(rotateY(rotateX($nml, $xAngle), $yAngle), $zAngle);
 
             $normal = [$nml->x, $nml->y, $nml->z];
 
+            $vert = rotateX($vert, $xAngle);
+            $vert = rotateY($vert, $yAngle);
+            $vert = rotateZ($vert, $zAngle);
+            */
+
+
+            $vert = new GrVertex;
+
+            list($vert->x, $vert->y, $vert->z) = applyMatrix($parser->vertices[$vertex['v']], $matrix);
+
             list($vert->r, $vert->g, $vert->b) = shade(
-                $normal,
+                applyMatrix($parser->normals[$vertex['n']], $matrix),
                 $light,  //light direction
                 array_map(
                     fn($c) => (int) round($c * 255),
                     $parser->materials[$face['material']]['Kd'] ?? [200.0, 200.0, 200.0]
                 )
             );
-
-/*
-            $vert = rotateX($vert, $xAngle);
-            $vert = rotateY($vert, $yAngle);
-            $vert = rotateZ($vert, $zAngle);
-*/
 
             $vert->x += $centre->x;
             $vert->y += $centre->y;
