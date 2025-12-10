@@ -53,6 +53,7 @@ PHP_METHOD(GrVertex, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(_GrVertex), 0);
 
+    //we flush into the backup data
     memcpy(
         ZSTR_VAL(bin),
         &obj->grVertex,
@@ -63,6 +64,8 @@ PHP_METHOD(GrVertex, flush)
 
     RETURN_STR(bin);
 }
+
+
 
 static zend_object_handlers object_handlers;
 
@@ -83,6 +86,71 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     return &grVertex->std;
 }
 
+static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* op2)
+{
+    
+
+    if (!(Z_TYPE_P(op1) == IS_OBJECT && instanceof_function(Z_OBJCE_P(op1), grVertex_ce))) {
+        return FAILURE; // only support Vector3 on left
+    }
+
+    if (Z_TYPE_P(op2) != IS_LONG && Z_TYPE_P(op2) != IS_DOUBLE) {
+        zend_throw_exception(NULL, "Right operand must be a scalar", 0);
+        return FAILURE;
+    }
+
+    FxFloat scalar;
+
+    _GrVertex* v1 = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op1));
+        
+    scalar = (FxFloat) zval_get_double(op2);
+
+    //php_printf("op: %d, scalar: %f, result_type: %d, same? %d\n", opcode, scalar, Z_TYPE_P(result), op1 == result);
+        
+    _GrVertex* v_out;
+
+    //if it not += or -= and so on...
+    if (Z_TYPE_P(result) == IS_UNDEF) {
+        //we clone the object
+        v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_HANDLER_P(op1, clone_obj)(Z_OBJ_P(op1)));
+        ZVAL_OBJ(result, &v_out->std);
+
+    //otherwise we use the same object
+    } else {
+        v_out = v1;
+    }
+    
+    switch (opcode) {
+    case ZEND_ADD:
+        v_out->grVertex.x += scalar;
+        v_out->grVertex.y += scalar;
+        v_out->grVertex.z += scalar;
+        break;
+    case ZEND_SUB:
+        v_out->grVertex.x -= scalar;
+        v_out->grVertex.y -= scalar;
+        v_out->grVertex.z -= scalar;
+        break;
+    case ZEND_MUL:
+        v_out->grVertex.x *= scalar;
+        v_out->grVertex.y *= scalar;
+        v_out->grVertex.z *= scalar;
+        break;
+    case ZEND_DIV:
+        v_out->grVertex.x /= scalar;
+        v_out->grVertex.y /= scalar;
+        v_out->grVertex.z /= scalar;
+        break;
+    default:
+        zend_throw_exception(NULL, "Unsupported operation", 0);
+        return FAILURE;
+    }
+
+    hydrate_grVertex(&v_out->grVertex, v_out);
+
+    return SUCCESS;
+}
+
 static zend_object* gr_clone_obj(zend_object* object)
 {
     // Step 1: Call the default clone handler
@@ -95,7 +163,6 @@ static zend_object* gr_clone_obj(zend_object* object)
         
     zend_objects_clone_members(&clone->std, &orig->std);
     
-
     return new_obj;
 }
 
@@ -110,6 +177,7 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     object_handlers.offset = XtOffsetOf(_GrVertex, std);
 
     object_handlers.clone_obj = gr_clone_obj;
+    object_handlers.do_operation = gr_operation;
 }
 
 void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
@@ -158,27 +226,28 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 {
     for (int cont = 0; cont < 9; cont++) {
-        zend_update_property_long(
+
+        zend_update_property_double(
             grVertex_ce,
             &grVertex->std,
             properties[cont],
-            strlen(properties[cont]) - 1,
-            (zend_long)((FxFloat*)&buffer->x)[cont]
+            strlen(properties[cont]),
+            (zend_long)((FxFloat*)buffer)[cont]
         );
     }
-
+        
     zval grTmuVertex_arr_zval;
     array_init_size(&grTmuVertex_arr_zval, GLIDE_NUM_TMU);
-
+    
     for (int cont2 = 0; cont2 < GLIDE_NUM_TMU; cont2++) {
         zval grTmuVertex;
-        object_init_ex(&grTmuVertex, grTMUConfig_ce);
+        object_init_ex(&grTmuVertex, grTmuVertex_ce);
 
-        hydrate_grTmuVertex(&buffer->tmuvtx[cont2], (_GrTmuVertex *) &Z_OBJ(grTmuVertex));
+        hydrate_grTmuVertex(&buffer->tmuvtx[cont2], O_EMBEDDED_P(_GrTmuVertex, Z_OBJ(grTmuVertex)));
 
         add_next_index_zval(&grTmuVertex_arr_zval, &grTmuVertex);
     }
-
+        
     zend_update_property(
         grVertex_ce,
         &grVertex->std,
@@ -186,6 +255,39 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
         sizeof("tmuvtx") - 1,
         &grTmuVertex_arr_zval
     );
-
+        
     zval_ptr_dtor(&grTmuVertex_arr_zval); //destroy the local pointer
+}
+
+PHP_METHOD(GrVertex, fromString)
+{
+    char* string = NULL;
+    size_t string_len;
+
+    ZEND_PARSE_PARAMETERS_START(1, 1)
+        Z_PARAM_STRING(string, string_len)
+        ZEND_PARSE_PARAMETERS_END();
+
+    if (string == NULL) {
+        zend_throw_exception(zend_exception_get_default(), "String cannot be NULL", 1);
+        return;
+    }
+
+    if (string_len != sizeof(GrVertex)) {
+        zend_throw_exception(zend_exception_get_default(), "String must be 60 bytes long", 1);
+        return;
+    }
+
+    zval zv;
+    object_init_ex(&zv, grVertex_ce);
+
+    zend_object* obj = Z_OBJ(zv);
+
+    _GrVertex* grv = O_EMBEDDED_P(_GrVertex, obj);
+
+    hydrate_grVertex((GrVertex*)string, grv);
+
+    memcpy(&grv->grVertex, string, sizeof(GrVertex));
+
+    RETURN_OBJ(obj);
 }

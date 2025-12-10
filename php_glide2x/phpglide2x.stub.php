@@ -667,6 +667,8 @@ final class GrVertex implements flushable {
 	public array $tmuvtx;
 	
 	public function flush() : string;
+
+    public static function fromString(string $string) : GrVertex;
 }
 
 #ifdef _DEBUG

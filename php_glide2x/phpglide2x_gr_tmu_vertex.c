@@ -101,12 +101,12 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
 {
     for (int cont = 0; cont < 3; cont++) {
-        zend_update_property_long(
+        zend_update_property_double(
             grTMUConfig_ce,
             &grTmuVertex->std,
             properties[cont],
             strlen(properties[cont]),
-            (zend_long)((FxFloat*)&buffer->sow)[cont]
+            (zend_long)((FxFloat*)buffer)[cont]
         );
     }
 }
