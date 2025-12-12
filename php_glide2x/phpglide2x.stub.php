@@ -650,7 +650,11 @@ final class GrTmuVertex implements flushable {
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
-final class GrVertex implements flushable {
+/**
+ * @method self __add(self|float $other)
+ * @method self __iadd(self|float $other)
+ */
+final class GrVertex {
 	public float $x;
 	public float $y;
 	public float $z;
@@ -665,8 +669,8 @@ final class GrVertex implements flushable {
 	
 	/** @var GrTmuVertex[] */
 	public array $tmuvtx;
-	
-	public function flush() : string;
+
+    public function getLength() : float;
 
     public static function fromString(string $string) : GrVertex;
 }

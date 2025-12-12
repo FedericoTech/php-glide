@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: a9835cb3b6180179175902ebb297fa5fc334cf5b */
+ * Stub hash: cd4aaf561d118fd04ef5337690e5a9a85fa2ef26 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -585,7 +585,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrTmuVertex_flush arginfo_class_GrState_flush
 
-#define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_getLength, 0, 0, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrVertex_fromString, 0, 1, GrVertex, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
@@ -757,7 +758,7 @@ ZEND_METHOD(GrAT3DConfig_t, flush);
 ZEND_METHOD(SST_t, flush);
 ZEND_METHOD(GrHwConfiguration, flush);
 ZEND_METHOD(GrTmuVertex, flush);
-ZEND_METHOD(GrVertex, flush);
+ZEND_METHOD(GrVertex, getLength);
 ZEND_METHOD(GrVertex, fromString);
 ZEND_METHOD(GrLfbInfo_t, flush);
 ZEND_METHOD(GrSstPerfStats_t, flush);
@@ -1127,7 +1128,7 @@ static const zend_function_entry class_GrTmuVertex_methods[] = {
 };
 
 static const zend_function_entry class_GrVertex_methods[] = {
-	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrVertex, getLength, arginfo_class_GrVertex_getLength, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, fromString, arginfo_class_GrVertex_fromString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_FE_END
 };
@@ -2257,13 +2258,12 @@ static zend_class_entry *register_class_GrTmuVertex(zend_class_entry *class_entr
 	return class_entry;
 }
 
-static zend_class_entry *register_class_GrVertex(zend_class_entry *class_entry_flushable)
+static zend_class_entry *register_class_GrVertex(void)
 {
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVertex", class_GrVertex_methods);
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
-	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_x_default_value;
 	ZVAL_UNDEF(&property_x_default_value);

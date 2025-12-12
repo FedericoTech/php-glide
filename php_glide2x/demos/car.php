@@ -36,6 +36,7 @@ $centre = new GrVertex;
 $centre->x = 0;
 $centre->y = -4;
 $centre->z = 0;
+//$centre->flush();
 
 $step = .02;
 
@@ -97,9 +98,18 @@ function draw()
                 )
             );
 
+            //$vert->flush();
+
+            //echo 'before '; testGrVertex($vert);
+
+            /*
             $vert->x += $centre->x;
             $vert->y += $centre->y;
             $vert->z += $centre->z;
+            */
+            $vert += $centre;
+
+            //echo 'after '; testGrVertex($vert);
 
             $vert->y *= -1; // turn the car
 
@@ -114,7 +124,7 @@ function draw()
             $vert->y = (1.0 - $vert->y) * 480.0;
 
 
-            $vert->flush();
+            //$vert->flush();
 
             return $vert;
 

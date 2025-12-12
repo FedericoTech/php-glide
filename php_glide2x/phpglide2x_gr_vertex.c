@@ -43,29 +43,16 @@ ZEND_FUNCTION(testGrVertex)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrVertex, flush)
+PHP_METHOD(GrVertex, getLength)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
     _GrVertex* obj = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(ZEND_THIS));
 
-    flush_grVertex(obj, &obj->grVertex);
+    //flush_grVertex(obj, &obj->grVertex);
 
-    zend_string* bin = zend_string_alloc(sizeof(_GrVertex), 0);
-
-    //we flush into the backup data
-    memcpy(
-        ZSTR_VAL(bin),
-        &obj->grVertex,
-        sizeof(_GrVertex)
-    );
-
-    ZSTR_VAL(bin)[sizeof(_GrVertex)] = '\0'; // null terminator (optional for binary)
-
-    RETURN_STR(bin);
+    RETURN_DOUBLE(sqrt(obj->grVertex.x * obj->grVertex.x + obj->grVertex.y * obj->grVertex.y + obj->grVertex.z * obj->grVertex.z));
 }
-
-
 
 static zend_object_handlers object_handlers;
 
@@ -86,38 +73,122 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     return &grVertex->std;
 }
 
-static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* op2)
+static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
 {
-    
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, readobj);
 
-    if (!(Z_TYPE_P(op1) == IS_OBJECT && instanceof_function(Z_OBJCE_P(op1), grVertex_ce))) {
-        return FAILURE; // only support Vector3 on left
+    switch (type) {
+
+    case IS_STRING: {
+        // produce binary representation
+        zend_string* buf = zend_string_alloc(sizeof(GrVertex), 0);
+        memcpy(ZSTR_VAL(buf), &v->grVertex, sizeof(GrVertex));
+        ZSTR_VAL(buf)[sizeof(GrVertex)] = '\0';
+
+        ZVAL_STR(retval, buf);
+
+        return SUCCESS;
     }
 
-    if (Z_TYPE_P(op2) != IS_LONG && Z_TYPE_P(op2) != IS_DOUBLE) {
-        zend_throw_exception(NULL, "Right operand must be a scalar", 0);
+
+    default:
+        // cast type not supported
         return FAILURE;
+    }
+}
+
+static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* op2)
+{
+    bool op1_is_vec = Z_TYPE_P(op1) == IS_OBJECT && Z_OBJCE_P(op1) == grVertex_ce;
+
+    bool op2_is_vec = Z_TYPE_P(op2) == IS_OBJECT && Z_OBJCE_P(op2) == grVertex_ce;
+
+    _GrVertex* v_out = NULL;
+
+    //if two of them are vectors...
+    if (op1_is_vec && op2_is_vec) {
+
+        //if not defined, operations are +, -, and so on...
+        if (Z_TYPE_P(result) == IS_UNDEF) {
+            //we clone the object
+            zend_object* zo = Z_OBJ_HANDLER_P(op1, clone_obj)(Z_OBJ_P(op1));
+            v_out = O_EMBEDDED_P(_GrVertex, zo);
+            ZVAL_OBJ(result, zo);
+
+        //if the fined, operations are +=, -=, and so on...
+        } else {
+            v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op1));
+        }
+
+        _GrVertex* v2 = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op2));
+
+        switch (opcode) {
+        case ZEND_ADD:
+            v_out->grVertex.x += v2->grVertex.x;
+            v_out->grVertex.y += v2->grVertex.y;
+            v_out->grVertex.z += v2->grVertex.z;
+            break;
+        case ZEND_SUB:
+            v_out->grVertex.x -= v2->grVertex.x;
+            v_out->grVertex.y -= v2->grVertex.y;
+            v_out->grVertex.z -= v2->grVertex.z;
+            break;
+        case ZEND_MUL:
+            v_out->grVertex.x *= v2->grVertex.x;
+            v_out->grVertex.y *= v2->grVertex.y;
+            v_out->grVertex.z *= v2->grVertex.z;
+            break;
+        case ZEND_DIV:
+            v_out->grVertex.x /= v2->grVertex.x;
+            v_out->grVertex.y /= v2->grVertex.y;
+            v_out->grVertex.z /= v2->grVertex.z;
+            break;
+        default:
+            zend_throw_exception(NULL, "Unsupported operation", 0);
+            return FAILURE;
+        }
+
+        //hydrate_grVertex(&v_out->grVertex, v_out);
+
+        return SUCCESS;
     }
 
     FxFloat scalar;
+    zval* zv = NULL;
 
-    _GrVertex* v1 = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op1));
-        
-    scalar = (FxFloat) zval_get_double(op2);
+    if (op1_is_vec) {
 
-    //php_printf("op: %d, scalar: %f, result_type: %d, same? %d\n", opcode, scalar, Z_TYPE_P(result), op1 == result);
-        
-    _GrVertex* v_out;
+        if (Z_TYPE_P(op2) != IS_LONG && Z_TYPE_P(op2) != IS_DOUBLE) {
+            zend_throw_exception(NULL, "Right operand must be a scalar", 0);
+            return FAILURE;
+        }
+
+        zv = op1;
+
+        scalar = (FxFloat)zval_get_double(op2);
+
+    }
+    else {
+        if (Z_TYPE_P(op1) != IS_LONG && Z_TYPE_P(op1) != IS_DOUBLE) {
+            zend_throw_exception(NULL, "Left operand must be a scalar", 0);
+            return FAILURE;
+        }
+
+        zv = op2;
+
+        scalar = (FxFloat)zval_get_double(op1);
+    }
 
     //if it not += or -= and so on...
     if (Z_TYPE_P(result) == IS_UNDEF) {
         //we clone the object
-        v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_HANDLER_P(op1, clone_obj)(Z_OBJ_P(op1)));
-        ZVAL_OBJ(result, &v_out->std);
+        zend_object* zo = Z_OBJ_HANDLER_P(op1, clone_obj)(Z_OBJ_P(op1));
+        v_out = O_EMBEDDED_P(_GrVertex, zo);
+        ZVAL_OBJ(result, zo);
 
     //otherwise we use the same object
     } else {
-        v_out = v1;
+        v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(zv));
     }
     
     switch (opcode) {
@@ -146,9 +217,76 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         return FAILURE;
     }
 
-    hydrate_grVertex(&v_out->grVertex, v_out);
+    //hydrate_grVertex(&v_out->grVertex, v_out);
 
     return SUCCESS;
+}
+
+static zval* gr_write_property(zend_object* object, zend_string* name, zval* value, void** cache_slot)
+{
+    //php_printf("write: %s\n", name->val);
+
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
+    
+    for (int cont = 0; cont < 9; cont++) {
+        if (zend_string_equals_cstr(name, properties[cont], strlen(properties[cont]))) {
+            ((FxFloat*)&v->grVertex)[cont] = (FxFloat)zval_get_double(value);
+            return value;
+        }
+    }
+
+    if (zend_string_equals_literal(name, "tmuvtx")) {
+        //v->grVertex.oow = (FxFloat)zval_get_double(value);
+
+        return value;
+    }
+
+    return zend_std_write_property(object, name, value, cache_slot);
+}
+
+static zval* gr_read_property(zend_object* object, zend_string* name, int type, void** cache_slot, zval* rv)
+{
+    //php_printf("read: %s\n", name->val);
+    
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
+
+    for (int cont = 0; cont < 9; cont++) {
+        if (zend_string_equals_cstr(name, properties[cont], strlen(properties[cont]))) {
+            ZVAL_DOUBLE(rv, (double)((FxFloat*)&v->grVertex)[cont]);
+            return rv;
+        }
+    }
+
+    if (zend_string_equals_literal(name, "tmuvtx")) {
+        ZVAL_DOUBLE(rv, v->grVertex.oow);
+        return rv;
+    }
+
+    // fallback
+    return zend_std_read_property(object, name, type, cache_slot, rv);
+}
+
+static zval* gr_get_property_ptr_ptr(zend_object* object, zend_string* member, int type, void** cache_slot)
+{
+    // Return NULL to force PHP to use read_property + write_property
+    return NULL; // fallback
+}
+
+static HashTable* gr_get_properties(zend_object* obj) {
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, obj);
+
+    HashTable* props = zend_std_get_properties(obj); // start with dynamic properties
+
+    zval tmp;
+
+    for (int cont = 0; cont < 9; cont++) {
+
+        ZVAL_DOUBLE(&tmp, (double)((FxFloat *) &v->grVertex)[cont]);
+
+        zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &tmp);
+    }
+
+    return props;
 }
 
 static zend_object* gr_clone_obj(zend_object* object)
@@ -178,6 +316,11 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
 
     object_handlers.clone_obj = gr_clone_obj;
     object_handlers.do_operation = gr_operation;
+    object_handlers.cast_object = gr_cast_object;
+    object_handlers.write_property = gr_write_property;
+    object_handlers.read_property = gr_read_property;
+    object_handlers.get_property_ptr_ptr = gr_get_property_ptr_ptr;
+    object_handlers.get_properties = gr_get_properties;
 }
 
 void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
@@ -232,7 +375,7 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
             &grVertex->std,
             properties[cont],
             strlen(properties[cont]),
-            (zend_long)((FxFloat*)buffer)[cont]
+            (double)(((FxFloat*)buffer)[cont])
         );
     }
         
@@ -285,7 +428,7 @@ PHP_METHOD(GrVertex, fromString)
 
     _GrVertex* grv = O_EMBEDDED_P(_GrVertex, obj);
 
-    hydrate_grVertex((GrVertex*)string, grv);
+    //hydrate_grVertex((GrVertex*)string, grv);
 
     memcpy(&grv->grVertex, string, sizeof(GrVertex));
 
