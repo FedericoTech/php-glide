@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: cd4aaf561d118fd04ef5337690e5a9a85fa2ef26 */
+ * Stub hash: 1e91050a16665f3cc953a38e3681f6c399c60395 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -583,10 +583,16 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrHwConfiguration_flush arginfo_class_GrState_flush
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertex_copyFrom, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, other, GrTmuVertex, 0)
+ZEND_END_ARG_INFO()
+
 #define arginfo_class_GrTmuVertex_flush arginfo_class_GrState_flush
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_getLength, 0, 0, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
+
+#define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrVertex_fromString, 0, 1, GrVertex, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
@@ -757,8 +763,10 @@ ZEND_METHOD(GrSst96Config_t, flush);
 ZEND_METHOD(GrAT3DConfig_t, flush);
 ZEND_METHOD(SST_t, flush);
 ZEND_METHOD(GrHwConfiguration, flush);
+ZEND_METHOD(GrTmuVertex, copyFrom);
 ZEND_METHOD(GrTmuVertex, flush);
 ZEND_METHOD(GrVertex, getLength);
+ZEND_METHOD(GrVertex, flush);
 ZEND_METHOD(GrVertex, fromString);
 ZEND_METHOD(GrLfbInfo_t, flush);
 ZEND_METHOD(GrSstPerfStats_t, flush);
@@ -1123,12 +1131,14 @@ static const zend_function_entry class_GrHwConfiguration_methods[] = {
 };
 
 static const zend_function_entry class_GrTmuVertex_methods[] = {
+	ZEND_ME(GrTmuVertex, copyFrom, arginfo_class_GrTmuVertex_copyFrom, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrTmuVertex, flush, arginfo_class_GrTmuVertex_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
 static const zend_function_entry class_GrVertex_methods[] = {
 	ZEND_ME(GrVertex, getLength, arginfo_class_GrVertex_getLength, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, fromString, arginfo_class_GrVertex_fromString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_FE_END
 };
@@ -2238,19 +2248,19 @@ static zend_class_entry *register_class_GrTmuVertex(zend_class_entry *class_entr
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_sow_default_value;
-	ZVAL_UNDEF(&property_sow_default_value);
+	ZVAL_DOUBLE(&property_sow_default_value, 0.0);
 	zend_string *property_sow_name = zend_string_init("sow", sizeof("sow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_sow_name, &property_sow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_sow_name);
 
 	zval property_tow_default_value;
-	ZVAL_UNDEF(&property_tow_default_value);
+	ZVAL_DOUBLE(&property_tow_default_value, 0.0);
 	zend_string *property_tow_name = zend_string_init("tow", sizeof("tow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_tow_name, &property_tow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_tow_name);
 
 	zval property_oow_default_value;
-	ZVAL_UNDEF(&property_oow_default_value);
+	ZVAL_DOUBLE(&property_oow_default_value, 0.0);
 	zend_string *property_oow_name = zend_string_init("oow", sizeof("oow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_oow_name, &property_oow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_oow_name);
@@ -2258,63 +2268,64 @@ static zend_class_entry *register_class_GrTmuVertex(zend_class_entry *class_entr
 	return class_entry;
 }
 
-static zend_class_entry *register_class_GrVertex(void)
+static zend_class_entry *register_class_GrVertex(zend_class_entry *class_entry_flushable)
 {
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVertex", class_GrVertex_methods);
 	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_x_default_value;
-	ZVAL_UNDEF(&property_x_default_value);
+	ZVAL_DOUBLE(&property_x_default_value, 0.0);
 	zend_string *property_x_name = zend_string_init("x", sizeof("x") - 1, 1);
 	zend_declare_typed_property(class_entry, property_x_name, &property_x_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_x_name);
 
 	zval property_y_default_value;
-	ZVAL_UNDEF(&property_y_default_value);
+	ZVAL_DOUBLE(&property_y_default_value, 0.0);
 	zend_string *property_y_name = zend_string_init("y", sizeof("y") - 1, 1);
 	zend_declare_typed_property(class_entry, property_y_name, &property_y_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_y_name);
 
 	zval property_z_default_value;
-	ZVAL_UNDEF(&property_z_default_value);
+	ZVAL_DOUBLE(&property_z_default_value, 0.0);
 	zend_string *property_z_name = zend_string_init("z", sizeof("z") - 1, 1);
 	zend_declare_typed_property(class_entry, property_z_name, &property_z_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_z_name);
 
 	zval property_r_default_value;
-	ZVAL_UNDEF(&property_r_default_value);
+	ZVAL_DOUBLE(&property_r_default_value, 0.0);
 	zend_string *property_r_name = zend_string_init("r", sizeof("r") - 1, 1);
 	zend_declare_typed_property(class_entry, property_r_name, &property_r_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_r_name);
 
 	zval property_g_default_value;
-	ZVAL_UNDEF(&property_g_default_value);
+	ZVAL_DOUBLE(&property_g_default_value, 0.0);
 	zend_string *property_g_name = zend_string_init("g", sizeof("g") - 1, 1);
 	zend_declare_typed_property(class_entry, property_g_name, &property_g_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_g_name);
 
 	zval property_b_default_value;
-	ZVAL_UNDEF(&property_b_default_value);
+	ZVAL_DOUBLE(&property_b_default_value, 0.0);
 	zend_string *property_b_name = zend_string_init("b", sizeof("b") - 1, 1);
 	zend_declare_typed_property(class_entry, property_b_name, &property_b_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_b_name);
 
 	zval property_ooz_default_value;
-	ZVAL_UNDEF(&property_ooz_default_value);
+	ZVAL_DOUBLE(&property_ooz_default_value, 0.0);
 	zend_string *property_ooz_name = zend_string_init("ooz", sizeof("ooz") - 1, 1);
 	zend_declare_typed_property(class_entry, property_ooz_name, &property_ooz_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_ooz_name);
 
 	zval property_a_default_value;
-	ZVAL_UNDEF(&property_a_default_value);
+	ZVAL_DOUBLE(&property_a_default_value, 0.0);
 	zend_string *property_a_name = zend_string_init("a", sizeof("a") - 1, 1);
 	zend_declare_typed_property(class_entry, property_a_name, &property_a_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_a_name);
 
 	zval property_oow_default_value;
-	ZVAL_UNDEF(&property_oow_default_value);
+	ZVAL_DOUBLE(&property_oow_default_value, 0.0);
 	zend_string *property_oow_name = zend_string_init("oow", sizeof("oow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_oow_name, &property_oow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_oow_name);
@@ -2322,7 +2333,7 @@ static zend_class_entry *register_class_GrVertex(void)
 	zval property_tmuvtx_default_value;
 	ZVAL_UNDEF(&property_tmuvtx_default_value);
 	zend_string *property_tmuvtx_name = zend_string_init("tmuvtx", sizeof("tmuvtx") - 1, 1);
-	zend_declare_typed_property(class_entry, property_tmuvtx_name, &property_tmuvtx_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_ARRAY));
+	zend_declare_typed_property(class_entry, property_tmuvtx_name, &property_tmuvtx_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_ARRAY));
 	zend_string_release(property_tmuvtx_name);
 
 	return class_entry;

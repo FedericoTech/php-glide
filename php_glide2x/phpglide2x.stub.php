@@ -639,38 +639,44 @@ function testGrHwConfiguration(GrHwConfiguration $chc) : void {};
 #endif
 
 final class GrTmuVertex implements flushable {
-	public float  $sow;
-	public float  $tow;
-	public float  $oow;
+	public float  $sow = 0.0;
+	public float  $tow = 0.0;
+	public float  $oow = 0.0;
+
+    public function copyFrom(GrTmuVertex $other): void {}
 	
-	public function flush() : string;
+	public function flush() : string {}
 }
 
 #ifdef _DEBUG
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
+
+
 /**
  * @method self __add(self|float $other)
  * @method self __iadd(self|float $other)
  */
-final class GrVertex {
-	public float $x;
-	public float $y;
-	public float $z;
+final class GrVertex implements flushable {
+	public float $x = 0.0;
+	public float $y = 0.0;
+	public float $z = 0.0;
 	
-	public float $r;
-	public float $g;
-	public float $b;
+	public float $r = 0.0;
+	public float $g = 0.0;
+	public float $b = 0.0;
 	
-	public float $ooz;
-	public float $a;
-	public float $oow;
-	
+	public float $ooz = 0.0;
+	public float $a = 0.0;
+	public float $oow = 0.0;
+
 	/** @var GrTmuVertex[] */
-	public array $tmuvtx;
+	public readonly array $tmuvtx;
 
     public function getLength() : float;
+
+    public function flush() : string;
 
     public static function fromString(string $string) : GrVertex;
 }

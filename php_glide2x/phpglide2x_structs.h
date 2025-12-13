@@ -72,7 +72,7 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
 extern zend_class_entry* grTmuVertex_ce;
 
 typedef struct _GrTmuVertex {
-    GrTmuVertex grTmuVertex;
+    GrTmuVertex *grTmuVertex;
     zend_object std;
 } _GrTmuVertex;
 

@@ -4,6 +4,7 @@ GrVertex
 <?php
 grGlideInit();
 
+//we create an empty GrTmuVertex to check the default values.
 $gtv = new GrTmuVertex;
 $gtv->flush();
 
@@ -12,31 +13,38 @@ testGrTmuVertex($gtv);
 
 echo PHP_EOL;
 
+//we now set these values
+
 $gtv->sow = 0;
 $gtv->tow = 0.1;
 $gtv->oow = '0.2';
-$gtv->flush();
+//$gtv->flush();
 
 var_dump($gtv);
 testGrTmuVertex($gtv);
 
 echo PHP_EOL;
 
+//we create a second object with these values...
+
 $gtv2 = new GrTmuVertex;
 $gtv2->sow = '0.3';
 $gtv2->tow = 0.4;
 $gtv2->oow = 0.5;
 
-
 echo PHP_EOL;
+
+//now we create a new vector and check the default values...
 
 $vertex = new GrVertex;
 
-$vertex->flush();
+//$vertex->flush();
 var_dump($vertex);
 testGrVertex($vertex);
 
 echo PHP_EOL;
+
+//now we set these values
 
 $vertex->x = 0;
 $vertex->y = 0.1;
@@ -50,67 +58,28 @@ $vertex->ooz = 0.6;
 $vertex->a = 0.7;
 $vertex->oow = '0.8';
 
+/*
 $gtv->flush();
 $gtv2->flush();
+*/
 
-$vertex->tmuvtx = [$gtv, $gtv2];
-$vertex->flush();
+//and assign the two GrTmuVertex objects with this method as the array is read only
+$vertex->tmuvtx[0]->copyFrom($gtv);
+$vertex->tmuvtx[1]->copyFrom($gtv2);
+
+//$vertex->flush();
 
 var_dump($vertex);
 testGrVertex($vertex);
 
-echo PHP_EOL;
+//this is the way to modify a GrTmuVertex object from the array as it is read ony
+$tmp = $vertex->tmuvtx[0];
+$tmp->sow = 6.0;
+$tmp->tow = 7;
+$tmp->oow = '8.0';
 
-$reflection = new ReflectionClass(GrHwConfiguration::class);
-var_dump(
-	$reflection->isInternal(),
-	$reflection->isFinal()
-);
-
-try {
-	$new_vertex = GrVertex::fromString('');
-} catch(Exception $e){
-	var_dump($e->getMessage());
-}
-
-$string = pack('f15',
-    1.0, 2.0, 3.0,  // x, y, z
-    4.0, 5.0, 6.0,  // r, g, b
-    7.0,             // ooz
-    8.0,            // a
-    9.0,            // oow
-    10.0, 11.0, 12.0,   // tmu 0: sow, tow, oow
-    13.0, 14.0, 15.0    // tmo 1: sow, tow, oow
-);
-
-var_dump(strlen($string));
-
-$new_vertex = GrVertex::fromString($string);
-
-var_dump($new_vertex);
-testGrVertex($new_vertex);
-
-$new_vertex++;
-
-var_dump($new_vertex);
-testGrVertex($new_vertex);
-
-$new_vertex = $new_vertex + 2;
-
-var_dump($new_vertex);
-testGrVertex($new_vertex);
-
-$new_vertex += 3;
-
-var_dump($new_vertex);
-testGrVertex($new_vertex);
-
-$new_vertex2 = $new_vertex + 4;
-
-var_dump($new_vertex2);
-testGrVertex($new_vertex2);
-
-grGlideShutdown();
+var_dump($vertex);
+testGrVertex($vertex);
 ?>
 --EXPECT--
 object(GrTmuVertex)#1 (0) {
