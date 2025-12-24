@@ -524,9 +524,9 @@ enum GrSstControlMode_t {
 }
 
 #ifdef _DEBUG
-function enumToIntTest (UnitEnum $enum): int {}
+function enumToIntTest (UnitEnum $enum): int {};
 
-function intToEnumTest (int $value, string $enumClass): UnitEnum {}
+function intToEnumTest (int $value, string $enumClass): UnitEnum {};
 #endif
 
 //ENUMERATIONS FINISH
@@ -643,7 +643,7 @@ final class GrTmuVertex implements flushable {
 	public float  $tow = 0.0;
 	public float  $oow = 0.0;
 
-    public function copyFrom(GrTmuVertex $other): void {}
+    //public function copyFrom(GrTmuVertex $other): void {}
 	
 	public function flush() : string {}
 }
@@ -652,12 +652,26 @@ final class GrTmuVertex implements flushable {
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
+final class GrTmuVertices implements ArrayAccess
+{
+    public function __construct() {}
+
+    public function offsetExists(mixed $offset): bool;
+
+    public function offsetGet(mixed $offset) : GrTmuVertex;
+
+    public function offsetSet(mixed $offset, mixed $value): void;
+
+    public function offsetUnset(mixed $offset): void;
+
+    public function __debugInfo(): array;
+}
+
+#ifdef _DEBUG
+function testGrTmuVertices(GrTmuVertices $gtv) : void {};
+#endif
 
 
-/**
- * @method self __add(self|float $other)
- * @method self __iadd(self|float $other)
- */
 final class GrVertex implements flushable {
 	public float $x = 0.0;
 	public float $y = 0.0;
@@ -671,12 +685,15 @@ final class GrVertex implements flushable {
 	public float $a = 0.0;
 	public float $oow = 0.0;
 
-	/** @var GrTmuVertex[] */
-	public readonly array $tmuvtx;
+	public readonly GrTmuVertices $tmuvtx;
 
     public function getLength() : float;
 
     public function flush() : string;
+
+    public function setAutoload(bool $autoload = false) : void;
+
+    public function isAutoload() : bool;
 
     public static function fromString(string $string) : GrVertex;
 }

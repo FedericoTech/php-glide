@@ -49,6 +49,8 @@ $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
 
+    $time = microtime(true);
+
     while (sfWindow_pollEvent($window, $event)) {
         switch ($event->type) {
             case sfEventType::sfEvtClosed:
@@ -84,6 +86,9 @@ while(sfWindow_isOpen($window)) {
 
     grBufferSwap(1);
     $angle += 0.01;
+
+    $fps = 1 / (microtime(true) - $time);
+    sfWindow_setTitle($window, "fps: $fps");
 }
 
 grSstIdle();

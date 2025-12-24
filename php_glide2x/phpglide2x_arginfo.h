@@ -1,68 +1,104 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 1e91050a16665f3cc953a38e3681f6c399c60395 */
+ * Stub hash: d6358f0f0800d3d795693e23e0b3ea25cd3a79f7 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, state, GrState, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_enumToIntTest, 0, 1, IS_LONG, 0)
 	ZEND_ARG_OBJ_INFO(0, enum, UnitEnum, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_intToEnumTest, 0, 2, UnitEnum, 0)
 	ZEND_ARG_TYPE_INFO(0, value, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, enumClass, IS_STRING, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTMUConfig_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gtmu, GrTMUConfig_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrVoodooConfig_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gvc, GrVoodooConfig_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrVoodoo2Config_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gv2c, GrVoodoo2Config_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrSst96Config_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gs9c, GrSst96Config_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrAT3DConfig_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, ga4dc, GrAT3DConfig_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testSST_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, sst, SST_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrHwConfiguration, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, chc, GrHwConfiguration, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTmuVertex, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gtv, GrTmuVertex, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTmuVertices, 0, 1, IS_VOID, 0)
+	ZEND_ARG_OBJ_INFO(0, gtv, GrTmuVertices, 0)
+ZEND_END_ARG_INFO()
+#endif
+
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrVertex, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, chc, GrVertex, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrLfbInfo_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gli, GrLfbInfo_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrSstPerfStats_t, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gsps, GrSstPerfStats_t, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrTexInfo, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, gti, GrTexInfo, 0)
 ZEND_END_ARG_INFO()
+#endif
 
+#if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGu3dfHeader, 0, 1, IS_VOID, 0)
 	ZEND_ARG_OBJ_INFO(0, g3dfh, Gu3dfHeader, 0)
 ZEND_END_ARG_INFO()
@@ -583,16 +619,41 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrHwConfiguration_flush arginfo_class_GrState_flush
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertex_copyFrom, 0, 1, IS_VOID, 0)
-	ZEND_ARG_OBJ_INFO(0, other, GrTmuVertex, 0)
+#define arginfo_class_GrTmuVertex_flush arginfo_class_GrState_flush
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_class_GrTmuVertices___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_GrTmuVertex_flush arginfo_class_GrState_flush
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertices_offsetExists, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, offset, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrTmuVertices_offsetGet, 0, 1, GrTmuVertex, 0)
+	ZEND_ARG_TYPE_INFO(0, offset, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertices_offsetSet, 0, 2, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, offset, IS_MIXED, 0)
+	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertices_offsetUnset, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, offset, IS_MIXED, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrTmuVertices___debugInfo, 0, 0, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_getLength, 0, 0, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_setAutoload, 0, 0, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "false")
+ZEND_END_ARG_INFO()
+
+#define arginfo_class_GrVertex_isAutoload arginfo_grSstIsBusy
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrVertex_fromString, 0, 1, GrVertex, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
@@ -608,22 +669,56 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Gu3dfHeader_flush arginfo_class_GrState_flush
 
+
 #if defined(_DEBUG)
 ZEND_FUNCTION(testGrState);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(enumToIntTest);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(intToEnumTest);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrTMUConfig_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrVoodooConfig_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrVoodoo2Config_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrSst96Config_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrAT3DConfig_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testSST_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrHwConfiguration);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrTmuVertex);
+#endif
+#if defined(_DEBUG)
+ZEND_FUNCTION(testGrTmuVertices);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrVertex);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrLfbInfo_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrSstPerfStats_t);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGrTexInfo);
+#endif
+#if defined(_DEBUG)
 ZEND_FUNCTION(testGu3dfHeader);
 #endif
 ZEND_FUNCTION(grAADrawLine);
@@ -763,33 +858,74 @@ ZEND_METHOD(GrSst96Config_t, flush);
 ZEND_METHOD(GrAT3DConfig_t, flush);
 ZEND_METHOD(SST_t, flush);
 ZEND_METHOD(GrHwConfiguration, flush);
-ZEND_METHOD(GrTmuVertex, copyFrom);
 ZEND_METHOD(GrTmuVertex, flush);
+ZEND_METHOD(GrTmuVertices, __construct);
+ZEND_METHOD(GrTmuVertices, offsetExists);
+ZEND_METHOD(GrTmuVertices, offsetGet);
+ZEND_METHOD(GrTmuVertices, offsetSet);
+ZEND_METHOD(GrTmuVertices, offsetUnset);
+ZEND_METHOD(GrTmuVertices, __debugInfo);
 ZEND_METHOD(GrVertex, getLength);
 ZEND_METHOD(GrVertex, flush);
+ZEND_METHOD(GrVertex, setAutoload);
+ZEND_METHOD(GrVertex, isAutoload);
 ZEND_METHOD(GrVertex, fromString);
 ZEND_METHOD(GrLfbInfo_t, flush);
 ZEND_METHOD(GrSstPerfStats_t, flush);
 ZEND_METHOD(GrTexInfo, flush);
 ZEND_METHOD(Gu3dfHeader, flush);
 
+
 static const zend_function_entry ext_functions[] = {
 #if defined(_DEBUG)
 	ZEND_FE(testGrState, arginfo_testGrState)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(enumToIntTest, arginfo_enumToIntTest)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(intToEnumTest, arginfo_intToEnumTest)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrTMUConfig_t, arginfo_testGrTMUConfig_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrVoodooConfig_t, arginfo_testGrVoodooConfig_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrVoodoo2Config_t, arginfo_testGrVoodoo2Config_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrSst96Config_t, arginfo_testGrSst96Config_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrAT3DConfig_t, arginfo_testGrAT3DConfig_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testSST_t, arginfo_testSST_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrHwConfiguration, arginfo_testGrHwConfiguration)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrTmuVertex, arginfo_testGrTmuVertex)
+#endif
+#if defined(_DEBUG)
+	ZEND_FE(testGrTmuVertices, arginfo_testGrTmuVertices)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrVertex, arginfo_testGrVertex)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrLfbInfo_t, arginfo_testGrLfbInfo_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrSstPerfStats_t, arginfo_testGrSstPerfStats_t)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGrTexInfo, arginfo_testGrTexInfo)
+#endif
+#if defined(_DEBUG)
 	ZEND_FE(testGu3dfHeader, arginfo_testGu3dfHeader)
 #endif
 	ZEND_FE(grAADrawLine, arginfo_grAADrawLine)
@@ -885,278 +1021,345 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrDepth_t_methods[] = {
 	ZEND_ME(GrDepth_t, toInt, arginfo_class_GrDepth_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrEvenOdd_t_methods[] = {
 	ZEND_ME(GrEvenOdd_t, toInt, arginfo_class_GrEvenOdd_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrChipID_t_methods[] = {
 	ZEND_ME(GrChipID_t, toInt, arginfo_class_GrChipID_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrCombineFunction_t_methods[] = {
 	ZEND_ME(GrCombineFunction_t, toInt, arginfo_class_GrCombineFunction_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrCombineFactor_t_methods[] = {
 	ZEND_ME(GrCombineFactor_t, toInt, arginfo_class_GrCombineFactor_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrCombineLocal_t_methods[] = {
 	ZEND_ME(GrCombineLocal_t, toInt, arginfo_class_GrCombineLocal_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrCombineOther_t_methods[] = {
 	ZEND_ME(GrCombineOther_t, toInt, arginfo_class_GrCombineOther_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrAlphaSource_t_methods[] = {
 	ZEND_ME(GrAlphaSource_t, toInt, arginfo_class_GrAlphaSource_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrColorCombineFnc_t_methods[] = {
 	ZEND_ME(GrColorCombineFnc_t, toInt, arginfo_class_GrColorCombineFnc_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrAlphaBlendFnc_t_methods[] = {
 	ZEND_ME(GrAlphaBlendFnc_t, toInt, arginfo_class_GrAlphaBlendFnc_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrAspectRatio_t_methods[] = {
 	ZEND_ME(GrAspectRatio_t, toInt, arginfo_class_GrAspectRatio_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrBuffer_t_methods[] = {
 	ZEND_ME(GrBuffer_t, toInt, arginfo_class_GrBuffer_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrChromakeyMode_t_methods[] = {
 	ZEND_ME(GrChromakeyMode_t, toInt, arginfo_class_GrChromakeyMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrCmpFnc_t_methods[] = {
 	ZEND_ME(GrCmpFnc_t, toInt, arginfo_class_GrCmpFnc_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrColorFormat_t_methods[] = {
 	ZEND_ME(GrColorFormat_t, toInt, arginfo_class_GrColorFormat_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrCullMode_t_methods[] = {
 	ZEND_ME(GrCullMode_t, toInt, arginfo_class_GrCullMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrDepthBufferMode_t_methods[] = {
 	ZEND_ME(GrDepthBufferMode_t, toInt, arginfo_class_GrDepthBufferMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrDitherMode_t_methods[] = {
 	ZEND_ME(GrDitherMode_t, toInt, arginfo_class_GrDitherMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrFogMode_t_methods[] = {
 	ZEND_ME(GrFogMode_t, toInt, arginfo_class_GrFogMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrHints_t_methods[] = {
 	ZEND_ME(GrHints_t, toInt, arginfo_class_GrHints_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrLock_t_methods[] = {
 	ZEND_ME(GrLock_t, toInt, arginfo_class_GrLock_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrLfbBypassMode_t_methods[] = {
 	ZEND_ME(GrLfbBypassMode_t, toInt, arginfo_class_GrLfbBypassMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrLfbWriteMode_t_methods[] = {
 	ZEND_ME(GrLfbWriteMode_t, toInt, arginfo_class_GrLfbWriteMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrOriginLocation_t_methods[] = {
 	ZEND_ME(GrOriginLocation_t, toInt, arginfo_class_GrOriginLocation_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrLOD_t_methods[] = {
 	ZEND_ME(GrLOD_t, toInt, arginfo_class_GrLOD_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrMipMapMode_t_methods[] = {
 	ZEND_ME(GrMipMapMode_t, toInt, arginfo_class_GrMipMapMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrSmoothingMode_t_methods[] = {
 	ZEND_ME(GrSmoothingMode_t, toInt, arginfo_class_GrSmoothingMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrTextureClampMode_t_methods[] = {
 	ZEND_ME(GrTextureClampMode_t, toInt, arginfo_class_GrTextureClampMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrTextureCombineFnc_t_methods[] = {
 	ZEND_ME(GrTextureCombineFnc_t, toInt, arginfo_class_GrTextureCombineFnc_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrTextureFilterMode_t_methods[] = {
 	ZEND_ME(GrTextureFilterMode_t, toInt, arginfo_class_GrTextureFilterMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrTextureFormat_t_methods[] = {
 	ZEND_ME(GrTextureFormat_t, toInt, arginfo_class_GrTextureFormat_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrTexTable_t_methods[] = {
 	ZEND_ME(GrTexTable_t, toInt, arginfo_class_GrTexTable_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrNCCTable_t_methods[] = {
 	ZEND_ME(GrNCCTable_t, toInt, arginfo_class_GrNCCTable_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrTexBaseRange_t_methods[] = {
 	ZEND_ME(GrTexBaseRange_t, toInt, arginfo_class_GrTexBaseRange_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrState_methods[] = {
 	ZEND_ME(GrState, flush, arginfo_class_GrState_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrSstType_methods[] = {
 	ZEND_ME(GrSstType, toInt, arginfo_class_GrSstType_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrScreenRefresh_t_methods[] = {
 	ZEND_ME(GrScreenRefresh_t, toInt, arginfo_class_GrScreenRefresh_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrScreenResolution_t_methods[] = {
 	ZEND_ME(GrScreenResolution_t, toInt, arginfo_class_GrScreenResolution_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrLfbSrcFmt_t_methods[] = {
 	ZEND_ME(GrLfbSrcFmt_t, toInt, arginfo_class_GrLfbSrcFmt_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrSstControlMode_t_methods[] = {
 	ZEND_ME(GrSstControlMode_t, toInt, arginfo_class_GrSstControlMode_t_toInt, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_flushable_methods[] = {
-	ZEND_RAW_FENTRY("flush", NULL, arginfo_class_flushable_flush, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)
+	ZEND_ABSTRACT_ME_WITH_FLAGS(flushable, flush, arginfo_class_flushable_flush, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_hydratable_methods[] = {
-	ZEND_RAW_FENTRY("hydrate", NULL, arginfo_class_hydratable_hydrate, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT, NULL, NULL)
+	ZEND_ABSTRACT_ME_WITH_FLAGS(hydratable, hydrate, arginfo_class_hydratable_hydrate, ZEND_ACC_PUBLIC|ZEND_ACC_ABSTRACT)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrTMUConfig_t_methods[] = {
 	ZEND_ME(GrTMUConfig_t, flush, arginfo_class_GrTMUConfig_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrVoodooConfig_t_methods[] = {
 	ZEND_ME(GrVoodooConfig_t, flush, arginfo_class_GrVoodooConfig_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrVoodoo2Config_t_methods[] = {
 	ZEND_ME(GrVoodoo2Config_t, flush, arginfo_class_GrVoodoo2Config_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrSst96Config_t_methods[] = {
 	ZEND_ME(GrSst96Config_t, flush, arginfo_class_GrSst96Config_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrAT3DConfig_t_methods[] = {
 	ZEND_ME(GrAT3DConfig_t, flush, arginfo_class_GrAT3DConfig_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_SST_t_methods[] = {
 	ZEND_ME(SST_t, flush, arginfo_class_SST_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrHwConfiguration_methods[] = {
 	ZEND_ME(GrHwConfiguration, flush, arginfo_class_GrHwConfiguration_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrTmuVertex_methods[] = {
-	ZEND_ME(GrTmuVertex, copyFrom, arginfo_class_GrTmuVertex_copyFrom, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrTmuVertex, flush, arginfo_class_GrTmuVertex_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
+static const zend_function_entry class_GrTmuVertices_methods[] = {
+	ZEND_ME(GrTmuVertices, __construct, arginfo_class_GrTmuVertices___construct, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrTmuVertices, offsetExists, arginfo_class_GrTmuVertices_offsetExists, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrTmuVertices, offsetGet, arginfo_class_GrTmuVertices_offsetGet, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrTmuVertices, offsetSet, arginfo_class_GrTmuVertices_offsetSet, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrTmuVertices, offsetUnset, arginfo_class_GrTmuVertices_offsetUnset, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrTmuVertices, __debugInfo, arginfo_class_GrTmuVertices___debugInfo, ZEND_ACC_PUBLIC)
+	ZEND_FE_END
+};
+
+
 static const zend_function_entry class_GrVertex_methods[] = {
 	ZEND_ME(GrVertex, getLength, arginfo_class_GrVertex_getLength, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrVertex, setAutoload, arginfo_class_GrVertex_setAutoload, ZEND_ACC_PUBLIC)
+	ZEND_ME(GrVertex, isAutoload, arginfo_class_GrVertex_isAutoload, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, fromString, arginfo_class_GrVertex_fromString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_GrLfbInfo_t_methods[] = {
 	ZEND_ME(GrLfbInfo_t, flush, arginfo_class_GrLfbInfo_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrSstPerfStats_t_methods[] = {
 	ZEND_ME(GrSstPerfStats_t, flush, arginfo_class_GrSstPerfStats_t_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
 
+
 static const zend_function_entry class_GrTexInfo_methods[] = {
 	ZEND_ME(GrTexInfo, flush, arginfo_class_GrTexInfo_flush, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
 
 static const zend_function_entry class_Gu3dfHeader_methods[] = {
 	ZEND_ME(Gu3dfHeader, flush, arginfo_class_Gu3dfHeader_flush, ZEND_ACC_PUBLIC)
@@ -1866,7 +2069,8 @@ static zend_class_entry *register_class_GrState(zend_class_entry *class_entry_fl
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrState", class_GrState_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_pad_default_value;
@@ -2036,7 +2240,8 @@ static zend_class_entry *register_class_GrTMUConfig_t(zend_class_entry *class_en
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrTMUConfig_t", class_GrTMUConfig_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_tmuRev_default_value;
@@ -2059,7 +2264,8 @@ static zend_class_entry *register_class_GrVoodooConfig_t(zend_class_entry *class
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVoodooConfig_t", class_GrVoodooConfig_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_fbRam_default_value;
@@ -2100,7 +2306,8 @@ static zend_class_entry *register_class_GrVoodoo2Config_t(zend_class_entry *clas
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVoodoo2Config_t", class_GrVoodoo2Config_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_fbRam_default_value;
@@ -2141,7 +2348,8 @@ static zend_class_entry *register_class_GrSst96Config_t(zend_class_entry *class_
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrSst96Config_t", class_GrSst96Config_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_fbRam_default_value;
@@ -2156,10 +2364,10 @@ static zend_class_entry *register_class_GrSst96Config_t(zend_class_entry *class_
 	zend_declare_typed_property(class_entry, property_nTexelfx_name, &property_nTexelfx_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_nTexelfx_name);
 
+	zend_string *property_tmuConfig_class_GrTMUConfig_t = zend_string_init("GrTMUConfig_t", sizeof("GrTMUConfig_t")-1, 1);
 	zval property_tmuConfig_default_value;
 	ZVAL_UNDEF(&property_tmuConfig_default_value);
 	zend_string *property_tmuConfig_name = zend_string_init("tmuConfig", sizeof("tmuConfig") - 1, 1);
-	zend_string *property_tmuConfig_class_GrTMUConfig_t = zend_string_init("GrTMUConfig_t", sizeof("GrTMUConfig_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_tmuConfig_name, &property_tmuConfig_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_tmuConfig_class_GrTMUConfig_t, 0, 0));
 	zend_string_release(property_tmuConfig_name);
 
@@ -2171,7 +2379,8 @@ static zend_class_entry *register_class_GrAT3DConfig_t(zend_class_entry *class_e
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrAT3DConfig_t", class_GrAT3DConfig_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_rev_default_value;
@@ -2188,17 +2397,17 @@ static zend_class_entry *register_class_SST_t(zend_class_entry *class_entry_flus
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "SST_t", class_SST_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
+	zend_string *property_type_class_GrSstType = zend_string_init("GrSstType", sizeof("GrSstType")-1, 1);
 	zval property_type_default_value;
 	ZVAL_UNDEF(&property_type_default_value);
-	zend_string *property_type_class_GrSstType = zend_string_init("GrSstType", sizeof("GrSstType")-1, 1);
-	zend_declare_typed_property(class_entry, ZSTR_KNOWN(ZEND_STR_TYPE), &property_type_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_type_class_GrSstType, 0, MAY_BE_NULL));
+	zend_string *property_type_name = zend_string_init("type", sizeof("type") - 1, 1);
+	zend_declare_typed_property(class_entry, property_type_name, &property_type_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_type_class_GrSstType, 0, MAY_BE_NULL));
+	zend_string_release(property_type_name);
 
-	zval property_sstBoard_default_value;
-	ZVAL_UNDEF(&property_sstBoard_default_value);
-	zend_string *property_sstBoard_name = zend_string_init("sstBoard", sizeof("sstBoard") - 1, 1);
 	zend_string *property_sstBoard_class_GrVoodooConfig_t = zend_string_init("GrVoodooConfig_t", sizeof("GrVoodooConfig_t") - 1, 1);
 	zend_string *property_sstBoard_class_GrSst96Config_t = zend_string_init("GrSst96Config_t", sizeof("GrSst96Config_t") - 1, 1);
 	zend_string *property_sstBoard_class_GrAT3DConfig_t = zend_string_init("GrAT3DConfig_t", sizeof("GrAT3DConfig_t") - 1, 1);
@@ -2210,6 +2419,9 @@ static zend_class_entry *register_class_SST_t(zend_class_entry *class_entry_flus
 	property_sstBoard_type_list->types[2] = (zend_type) ZEND_TYPE_INIT_CLASS(property_sstBoard_class_GrAT3DConfig_t, 0, 0);
 	property_sstBoard_type_list->types[3] = (zend_type) ZEND_TYPE_INIT_CLASS(property_sstBoard_class_GrVoodoo2Config_t, 0, 0);
 	zend_type property_sstBoard_type = ZEND_TYPE_INIT_UNION(property_sstBoard_type_list, MAY_BE_NULL);
+	zval property_sstBoard_default_value;
+	ZVAL_UNDEF(&property_sstBoard_default_value);
+	zend_string *property_sstBoard_name = zend_string_init("sstBoard", sizeof("sstBoard") - 1, 1);
 	zend_declare_typed_property(class_entry, property_sstBoard_name, &property_sstBoard_default_value, ZEND_ACC_PUBLIC, NULL, property_sstBoard_type);
 	zend_string_release(property_sstBoard_name);
 
@@ -2221,7 +2433,8 @@ static zend_class_entry *register_class_GrHwConfiguration(zend_class_entry *clas
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrHwConfiguration", class_GrHwConfiguration_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_num_sst_default_value;
@@ -2244,26 +2457,39 @@ static zend_class_entry *register_class_GrTmuVertex(zend_class_entry *class_entr
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrTmuVertex", class_GrTmuVertex_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_sow_default_value;
-	ZVAL_DOUBLE(&property_sow_default_value, 0.0);
+	ZVAL_DOUBLE(&property_sow_default_value, 0);
 	zend_string *property_sow_name = zend_string_init("sow", sizeof("sow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_sow_name, &property_sow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_sow_name);
 
 	zval property_tow_default_value;
-	ZVAL_DOUBLE(&property_tow_default_value, 0.0);
+	ZVAL_DOUBLE(&property_tow_default_value, 0);
 	zend_string *property_tow_name = zend_string_init("tow", sizeof("tow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_tow_name, &property_tow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_tow_name);
 
 	zval property_oow_default_value;
-	ZVAL_DOUBLE(&property_oow_default_value, 0.0);
+	ZVAL_DOUBLE(&property_oow_default_value, 0);
 	zend_string *property_oow_name = zend_string_init("oow", sizeof("oow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_oow_name, &property_oow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_oow_name);
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_GrTmuVertices(zend_class_entry *class_entry_ArrayAccess)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "GrTmuVertices", class_GrTmuVertices_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
+	zend_class_implements(class_entry, 1, class_entry_ArrayAccess);
 
 	return class_entry;
 }
@@ -2273,67 +2499,69 @@ static zend_class_entry *register_class_GrVertex(zend_class_entry *class_entry_f
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrVertex", class_GrVertex_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_x_default_value;
-	ZVAL_DOUBLE(&property_x_default_value, 0.0);
+	ZVAL_DOUBLE(&property_x_default_value, 0);
 	zend_string *property_x_name = zend_string_init("x", sizeof("x") - 1, 1);
 	zend_declare_typed_property(class_entry, property_x_name, &property_x_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_x_name);
 
 	zval property_y_default_value;
-	ZVAL_DOUBLE(&property_y_default_value, 0.0);
+	ZVAL_DOUBLE(&property_y_default_value, 0);
 	zend_string *property_y_name = zend_string_init("y", sizeof("y") - 1, 1);
 	zend_declare_typed_property(class_entry, property_y_name, &property_y_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_y_name);
 
 	zval property_z_default_value;
-	ZVAL_DOUBLE(&property_z_default_value, 0.0);
+	ZVAL_DOUBLE(&property_z_default_value, 0);
 	zend_string *property_z_name = zend_string_init("z", sizeof("z") - 1, 1);
 	zend_declare_typed_property(class_entry, property_z_name, &property_z_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_z_name);
 
 	zval property_r_default_value;
-	ZVAL_DOUBLE(&property_r_default_value, 0.0);
+	ZVAL_DOUBLE(&property_r_default_value, 0);
 	zend_string *property_r_name = zend_string_init("r", sizeof("r") - 1, 1);
 	zend_declare_typed_property(class_entry, property_r_name, &property_r_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_r_name);
 
 	zval property_g_default_value;
-	ZVAL_DOUBLE(&property_g_default_value, 0.0);
+	ZVAL_DOUBLE(&property_g_default_value, 0);
 	zend_string *property_g_name = zend_string_init("g", sizeof("g") - 1, 1);
 	zend_declare_typed_property(class_entry, property_g_name, &property_g_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_g_name);
 
 	zval property_b_default_value;
-	ZVAL_DOUBLE(&property_b_default_value, 0.0);
+	ZVAL_DOUBLE(&property_b_default_value, 0);
 	zend_string *property_b_name = zend_string_init("b", sizeof("b") - 1, 1);
 	zend_declare_typed_property(class_entry, property_b_name, &property_b_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_b_name);
 
 	zval property_ooz_default_value;
-	ZVAL_DOUBLE(&property_ooz_default_value, 0.0);
+	ZVAL_DOUBLE(&property_ooz_default_value, 0);
 	zend_string *property_ooz_name = zend_string_init("ooz", sizeof("ooz") - 1, 1);
 	zend_declare_typed_property(class_entry, property_ooz_name, &property_ooz_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_ooz_name);
 
 	zval property_a_default_value;
-	ZVAL_DOUBLE(&property_a_default_value, 0.0);
+	ZVAL_DOUBLE(&property_a_default_value, 0);
 	zend_string *property_a_name = zend_string_init("a", sizeof("a") - 1, 1);
 	zend_declare_typed_property(class_entry, property_a_name, &property_a_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_a_name);
 
 	zval property_oow_default_value;
-	ZVAL_DOUBLE(&property_oow_default_value, 0.0);
+	ZVAL_DOUBLE(&property_oow_default_value, 0);
 	zend_string *property_oow_name = zend_string_init("oow", sizeof("oow") - 1, 1);
 	zend_declare_typed_property(class_entry, property_oow_name, &property_oow_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_DOUBLE));
 	zend_string_release(property_oow_name);
 
+	zend_string *property_tmuvtx_class_GrTmuVertices = zend_string_init("GrTmuVertices", sizeof("GrTmuVertices")-1, 1);
 	zval property_tmuvtx_default_value;
 	ZVAL_UNDEF(&property_tmuvtx_default_value);
 	zend_string *property_tmuvtx_name = zend_string_init("tmuvtx", sizeof("tmuvtx") - 1, 1);
-	zend_declare_typed_property(class_entry, property_tmuvtx_name, &property_tmuvtx_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_ARRAY));
+	zend_declare_typed_property(class_entry, property_tmuvtx_name, &property_tmuvtx_default_value, ZEND_ACC_PUBLIC|ZEND_ACC_READONLY, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_tmuvtx_class_GrTmuVertices, 0, 0));
 	zend_string_release(property_tmuvtx_name);
 
 	return class_entry;
@@ -2344,7 +2572,8 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrLfbInfo_t", class_GrLfbInfo_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_size_default_value;
@@ -2365,17 +2594,17 @@ static zend_class_entry *register_class_GrLfbInfo_t(zend_class_entry *class_entr
 	zend_declare_typed_property(class_entry, property_strideInBytes_name, &property_strideInBytes_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_strideInBytes_name);
 
+	zend_string *property_writeMode_class_GrLfbWriteMode_t = zend_string_init("GrLfbWriteMode_t", sizeof("GrLfbWriteMode_t")-1, 1);
 	zval property_writeMode_default_value;
 	ZVAL_UNDEF(&property_writeMode_default_value);
 	zend_string *property_writeMode_name = zend_string_init("writeMode", sizeof("writeMode") - 1, 1);
-	zend_string *property_writeMode_class_GrLfbWriteMode_t = zend_string_init("GrLfbWriteMode_t", sizeof("GrLfbWriteMode_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_writeMode_name, &property_writeMode_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_writeMode_class_GrLfbWriteMode_t, 0, 0));
 	zend_string_release(property_writeMode_name);
 
+	zend_string *property_origin_class_GrOriginLocation_t = zend_string_init("GrOriginLocation_t", sizeof("GrOriginLocation_t")-1, 1);
 	zval property_origin_default_value;
 	ZVAL_UNDEF(&property_origin_default_value);
 	zend_string *property_origin_name = zend_string_init("origin", sizeof("origin") - 1, 1);
-	zend_string *property_origin_class_GrOriginLocation_t = zend_string_init("GrOriginLocation_t", sizeof("GrOriginLocation_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_origin_name, &property_origin_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_origin_class_GrOriginLocation_t, 0, 0));
 	zend_string_release(property_origin_name);
 
@@ -2387,7 +2616,8 @@ static zend_class_entry *register_class_GrSstPerfStats_t(zend_class_entry *class
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrSstPerfStats_t", class_GrSstPerfStats_t_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_pixelsIn_default_value;
@@ -2428,34 +2658,35 @@ static zend_class_entry *register_class_GrTexInfo(zend_class_entry *class_entry_
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "GrTexInfo", class_GrTexInfo_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
+	zend_string *property_smallLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zval property_smallLod_default_value;
 	ZVAL_UNDEF(&property_smallLod_default_value);
 	zend_string *property_smallLod_name = zend_string_init("smallLod", sizeof("smallLod") - 1, 1);
-	zend_string *property_smallLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_smallLod_name, &property_smallLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_smallLod_class_GrLOD_t, 0, 0));
 	zend_string_release(property_smallLod_name);
 
+	zend_string *property_largeLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zval property_largeLod_default_value;
 	ZVAL_UNDEF(&property_largeLod_default_value);
 	zend_string *property_largeLod_name = zend_string_init("largeLod", sizeof("largeLod") - 1, 1);
-	zend_string *property_largeLod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_largeLod_name, &property_largeLod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_largeLod_class_GrLOD_t, 0, 0));
 	zend_string_release(property_largeLod_name);
 
+	zend_string *property_aspectRatio_class_GrAspectRatio_t = zend_string_init("GrAspectRatio_t", sizeof("GrAspectRatio_t")-1, 1);
 	zval property_aspectRatio_default_value;
 	ZVAL_UNDEF(&property_aspectRatio_default_value);
 	zend_string *property_aspectRatio_name = zend_string_init("aspectRatio", sizeof("aspectRatio") - 1, 1);
-	zend_string *property_aspectRatio_class_GrAspectRatio_t = zend_string_init("GrAspectRatio_t", sizeof("GrAspectRatio_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_aspectRatio_name, &property_aspectRatio_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_aspectRatio_class_GrAspectRatio_t, 0, 0));
 	zend_string_release(property_aspectRatio_name);
 
+	zend_string *property_format_class_GrTextureFormat_t = zend_string_init("GrTextureFormat_t", sizeof("GrTextureFormat_t")-1, 1);
 	zval property_format_default_value;
 	ZVAL_UNDEF(&property_format_default_value);
 	zend_string *property_format_name = zend_string_init("format", sizeof("format") - 1, 1);
-	zend_string *property_format_class_GrTextureFormat_t = zend_string_init("GrTextureFormat_t", sizeof("GrTextureFormat_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_format_name, &property_format_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_format_class_GrTextureFormat_t, 0, 0));
 	zend_string_release(property_format_name);
 
@@ -2473,7 +2704,8 @@ static zend_class_entry *register_class_Gu3dfHeader(zend_class_entry *class_entr
 	zend_class_entry ce, *class_entry;
 
 	INIT_CLASS_ENTRY(ce, "Gu3dfHeader", class_Gu3dfHeader_methods);
-	class_entry = zend_register_internal_class_with_flags(&ce, NULL, ZEND_ACC_FINAL);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL;
 	zend_class_implements(class_entry, 1, class_entry_flushable);
 
 	zval property_width_default_value;
@@ -2488,31 +2720,31 @@ static zend_class_entry *register_class_Gu3dfHeader(zend_class_entry *class_entr
 	zend_declare_typed_property(class_entry, property_height_name, &property_height_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_MASK(MAY_BE_LONG));
 	zend_string_release(property_height_name);
 
+	zend_string *property_small_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zval property_small_lod_default_value;
 	ZVAL_UNDEF(&property_small_lod_default_value);
 	zend_string *property_small_lod_name = zend_string_init("small_lod", sizeof("small_lod") - 1, 1);
-	zend_string *property_small_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_small_lod_name, &property_small_lod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_small_lod_class_GrLOD_t, 0, 0));
 	zend_string_release(property_small_lod_name);
 
+	zend_string *property_large_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zval property_large_lod_default_value;
 	ZVAL_UNDEF(&property_large_lod_default_value);
 	zend_string *property_large_lod_name = zend_string_init("large_lod", sizeof("large_lod") - 1, 1);
-	zend_string *property_large_lod_class_GrLOD_t = zend_string_init("GrLOD_t", sizeof("GrLOD_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_large_lod_name, &property_large_lod_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_large_lod_class_GrLOD_t, 0, 0));
 	zend_string_release(property_large_lod_name);
 
+	zend_string *property_aspect_ratio_class_GrAspectRatio_t = zend_string_init("GrAspectRatio_t", sizeof("GrAspectRatio_t")-1, 1);
 	zval property_aspect_ratio_default_value;
 	ZVAL_UNDEF(&property_aspect_ratio_default_value);
 	zend_string *property_aspect_ratio_name = zend_string_init("aspect_ratio", sizeof("aspect_ratio") - 1, 1);
-	zend_string *property_aspect_ratio_class_GrAspectRatio_t = zend_string_init("GrAspectRatio_t", sizeof("GrAspectRatio_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_aspect_ratio_name, &property_aspect_ratio_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_aspect_ratio_class_GrAspectRatio_t, 0, 0));
 	zend_string_release(property_aspect_ratio_name);
 
+	zend_string *property_format_class_GrTextureFormat_t = zend_string_init("GrTextureFormat_t", sizeof("GrTextureFormat_t")-1, 1);
 	zval property_format_default_value;
 	ZVAL_UNDEF(&property_format_default_value);
 	zend_string *property_format_name = zend_string_init("format", sizeof("format") - 1, 1);
-	zend_string *property_format_class_GrTextureFormat_t = zend_string_init("GrTextureFormat_t", sizeof("GrTextureFormat_t")-1, 1);
 	zend_declare_typed_property(class_entry, property_format_name, &property_format_default_value, ZEND_ACC_PUBLIC, NULL, (zend_type) ZEND_TYPE_INIT_CLASS(property_format_class_GrTextureFormat_t, 0, 0));
 	zend_string_release(property_format_name);
 

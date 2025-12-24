@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="D8.2|Win32">
+      <Configuration>D8.2</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="D8.2|x64">
+      <Configuration>D8.2</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug 8.5.0|Win32">
+      <Configuration>Debug 8.5.0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug 8.5.0|x64">
+      <Configuration>Debug 8.5.0</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="R8.2|Win32">
+      <Configuration>R8.2</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="R8.2|x64">
+      <Configuration>R8.2</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release 8.5.0|Win32">
+      <Configuration>Release 8.5.0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release 8.5.0|x64">
+      <Configuration>Release 8.5.0</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -32,7 +64,33 @@
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
@@ -45,7 +103,33 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -60,27 +144,99 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
     <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Debug_TS;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\Zend;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\Debug_TS;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\Zend;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
     <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Release_TS;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.1.31-sources\Zend;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\Release_TS;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.5.0-sources\Zend;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
+    <LibraryPath>$(SolutionDir)..\..\SDK\3Dfx\Sdk;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\Release_TS;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\SDK\glide\glide2x\swlibs\fxmisc;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\init;$(SolutionDir)..\..\SDK\glide\glide2x\sst1\glide\src;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\main;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\TSRM;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\win32;$(SolutionDir)..\..\SDK\php-sdk-binary-tools\phpdev\vs16\x86\php-8.2-sources\Zend;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;_DEBUG;ZEND_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glide2x.lib;php8ts_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;_DEBUG;ZEND_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glide2x.lib;php8ts_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
@@ -113,6 +269,44 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;ZEND_DEBUG=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glide2x.lib;php8ts.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>__MSC__;WIN32;ZEND_WIN32;ZTS=1;PHP_WIN32;COMPILE_DL_GLIDE2X;_CONSOLE;ENABLE_INTSAFE_SIGNED_FUNCTIONS;ZEND_DEBUG=0;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glide2x.lib;php8ts.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -125,7 +319,63 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='D8.2|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug 8.5.0|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release 8.5.0|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R8.2|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -161,6 +411,7 @@
     <ClCompile Include="phpglide2x_gr_text_info.c" />
     <ClCompile Include="phpglide2x_gr_tmu.c" />
     <ClCompile Include="phpglide2x_gr_tmu_vertex.c" />
+    <ClCompile Include="phpglide2x_gr_tmu_vertices.c" />
     <ClCompile Include="phpglide2x_gr_vertex.c" />
     <ClCompile Include="phpglide2x_gr_voodoo.c" />
     <ClCompile Include="phpglide2x_gu_3dfheader.c" />
@@ -171,7 +422,6 @@
     <ClCompile Include="stdafx.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="phpglide2x_arginfo.h" />
     <ClInclude Include="phpglide2x_enums.h" />
     <ClInclude Include="phpglide2x_structs.h" />
     <ClInclude Include="stdafx.h" />

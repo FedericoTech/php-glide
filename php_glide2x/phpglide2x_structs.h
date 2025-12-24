@@ -76,24 +76,35 @@ typedef struct _GrTmuVertex {
     zend_object std;
 } _GrTmuVertex;
 
-void flush_grTmuVertex(const _GrTmuVertex* grVertex, GrTmuVertex* buffer);
+void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer);
 
-void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grVertex);
+void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex);
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
 
 
+
+extern zend_class_entry* grTmuVertices_ce;
+
+typedef struct _GrTmuVertices {
+    GrTmuVertex* tmuvtx;
+    zval tmu[GLIDE_NUM_TMU];
+    zend_object std;
+} _GrTmuVertices;
+
+//void flush_grTmuVertices(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer);
+
+//void hydrate_grTmuVertices(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices);
+
+void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS);
+
+
 extern zend_class_entry* grVertex_ce;
 
 typedef struct _GrVertex {
-    /*
-    zval* p_x, * p_y, * p_z;
-    zval* p_r, * p_g, * p_b;
-    zval* p_ooz, * p_a, * p_oow;
-    */
     GrVertex grVertex;
-
+    bool auto_flush;
     zend_object std;
 } _GrVertex;
 

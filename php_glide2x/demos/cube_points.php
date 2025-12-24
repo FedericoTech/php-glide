@@ -40,6 +40,8 @@ $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
 
+    $time = microtime(true);
+
     while (sfWindow_pollEvent($window, $event)) {
         switch ($event->type) {
             case sfEventType::sfEvtClosed:
@@ -62,7 +64,7 @@ while(sfWindow_isOpen($window)) {
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
-        $v->flush();
+        //$v->flush();
 
         $transformed[] = $v;
 
@@ -71,6 +73,9 @@ while(sfWindow_isOpen($window)) {
 
     grBufferSwap(1);
     $angle += 0.01;
+
+    $fps = 1 / (microtime(true) - $time);
+    sfWindow_setTitle($window, "fps: $fps");
 }
 
 grSstIdle();

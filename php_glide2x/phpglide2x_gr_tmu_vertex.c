@@ -3,6 +3,7 @@
 zend_class_entry* grTmuVertex_ce;
 
 static const char* properties[] = { "sow", "tow", "oow" };
+static const props_num = sizeof properties / sizeof properties[0];
 
 #ifdef _DEBUG
 ZEND_FUNCTION(testGrTmuVertex)
@@ -16,7 +17,17 @@ ZEND_FUNCTION(testGrTmuVertex)
     _GrTmuVertex* config = O_EMBEDDED_P(_GrTmuVertex, grTmuVertex_zo);
 
     if (config->grTmuVertex == NULL) {
-        php_printf("not assigned\n");
+        GrTmuVertex grTmuVertex;
+        
+        flush_grTmuVertex(config, &grTmuVertex);
+
+        php_printf(
+            "sow: %f, tow: %f, oow: %f\n",
+            grTmuVertex.sow,
+            grTmuVertex.tow,
+            grTmuVertex.oow
+        );
+        
     } else {
         php_printf(
             "sow: %f, tow: %f, oow: %f\n",
@@ -49,6 +60,7 @@ PHP_METHOD(GrTmuVertex, flush)
     RETURN_STR(bin);
 }
 
+/*
 PHP_METHOD(GrTmuVertex, copyFrom)
 {
     zend_object* grTmuVertex_zo = NULL;
@@ -80,7 +92,7 @@ PHP_METHOD(GrTmuVertex, copyFrom)
         }
     }
 }
-
+*/
 
 static zend_object_handlers object_handlers;
 
@@ -106,8 +118,10 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
 {
     _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, object);
 
+    //if pointing to a buffer...
     if (v->grTmuVertex != NULL) {
-        for (int cont = 0; cont < 9; cont++) {
+        //we update the fields
+        for (int cont = 0; cont < props_num; cont++) {
             if (zend_string_equals_cstr(name, properties[cont], strlen(properties[cont]))) {
                 ((FxFloat*)v->grTmuVertex)[cont] = (FxFloat)zval_get_double(value);
                 return value;
@@ -122,9 +136,19 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
 {
     _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, object);
 
+    //if pointing to a buffer...
     if (v->grTmuVertex != NULL) {
 
-        for (int cont = 0; cont < 3; cont++) {
+        if (type == BP_VAR_W || type == BP_VAR_RW) {
+            php_error_docref(
+                NULL,
+                E_WARNING,
+                "Property [%s] cannot be accessed by reference",
+                ZSTR_VAL(name)
+            );
+        }
+
+        for (int cont = 0; cont < props_num; cont++) {
             if (zend_string_equals_cstr(name, properties[cont], strlen(properties[cont]))) {
                 ZVAL_DOUBLE(rv, (double)((FxFloat*)v->grTmuVertex)[cont]);
                 return rv;
@@ -139,6 +163,7 @@ static zval* gr_get_property_ptr_ptr(zend_object* object, zend_string* member, i
 {
     _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, object);
 
+    //if pointing to a buffer...
     if (v->grTmuVertex != NULL) {
         // Return NULL to force PHP to use read_property + write_property
         return NULL;
@@ -151,13 +176,14 @@ static HashTable* gr_get_properties(zend_object* obj) {
 
     _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, obj);
 
+    //if pointing to a buffer...
     if (v->grTmuVertex != NULL) {
 
         HashTable* props = zend_std_get_properties(obj); // start with dynamic properties
 
         zval tmp;
 
-        for (int cont = 0; cont < 3; cont++) {
+        for (int cont = 0; cont < props_num; cont++) {
 
             ZVAL_DOUBLE(&tmp, (double)((FxFloat *)v->grTmuVertex)[cont]);
 
@@ -179,6 +205,8 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrTmuVertex* orig = O_EMBEDDED_P(_GrTmuVertex, object);
 
     //clone->grTmuVertex = orig->grTmuVertex;
+
+    clone->grTmuVertex = NULL;
 
     zend_objects_clone_members(&clone->std, &orig->std);
 
@@ -206,7 +234,7 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 {
     zval* value = NULL;
 
-    for (int cont = 0; cont < 3; cont++) {
+    for (int cont = 0; cont < props_num; cont++) {
         //this way we don't use zend_read_property
         value = OBJ_PROP(&grTmuVertex->std, grTmuVertex_ce->properties_info_table[cont]->offset);
 
@@ -218,7 +246,7 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
 {
-    for (int cont = 0; cont < 3; cont++) {
+    for (int cont = 0; cont < props_num; cont++) {
         zend_update_property_double(
             grTMUConfig_ce,
             &grTmuVertex->std,

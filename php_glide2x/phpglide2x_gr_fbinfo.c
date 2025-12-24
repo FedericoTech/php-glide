@@ -67,17 +67,18 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     zend_object_std_init(&grLfbInfo->std, ce);
     object_properties_init(&grLfbInfo->std, ce);
 
+
     //we initialize the size
     grLfbInfo->grLfbInfo.size = sizeof(GrLfbInfo_t);
 
-    zend_update_property_long(
-        grLfbInfo_ce,
-        &grLfbInfo->std,
-        "size",
-        sizeof("size") - 1,
-        grLfbInfo->grLfbInfo.size
-    );
-
+    //we search for the property
+    zend_property_info* pi = zend_hash_str_find_ptr(&ce->properties_info, "size", sizeof("size") - 1);
+    //if found
+    if (pi) {
+        //we update the property right in the slot
+        zval* prop = OBJ_PROP(&grLfbInfo->std, pi->offset);
+        ZVAL_LONG(prop, grLfbInfo->grLfbInfo.size);
+    }
 
     //it sets the handlers
     grLfbInfo->std.handlers = &object_handlers;

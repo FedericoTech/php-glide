@@ -38,7 +38,7 @@ $zoom = 100;
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
-$centre->flush();
+//$centre->flush();
 
 
 $vtx0 = new GrVertex;
@@ -47,7 +47,7 @@ $vtx0->y = - 100;
 $vtx0->z = 0;
 //$vtx0->r = $vtx0->g = $vtx0->b = 255;
 $vtx0->oow = 1.0;
-$vtx0->tmuvtx[0] = new GrTmuVertex;
+//$vtx0->tmuvtx[0] = new GrTmuVertex;
 $vtx0->tmuvtx[0]->sow = 0.0;
 $vtx0->tmuvtx[0]->tow = 256.0;
 //$vtx1->tmuvtx[0]->oow = 1.0;
@@ -58,7 +58,7 @@ $vtx1->y = -100;
 $vtx1->z = 0;
 //$vtx1->r = $vtx1->g = $vtx1->b = 0;
 $vtx1->oow = 1.0;
-$vtx1->tmuvtx[0] = new GrTmuVertex;
+//$vtx1->tmuvtx[0] = new GrTmuVertex;
 $vtx1->tmuvtx[0]->sow = 256;
 $vtx1->tmuvtx[0]->tow = 256.0;
 //$vtx2->tmuvtx[0]->oow = 1.0;
@@ -69,7 +69,7 @@ $vtx2->y = 100;
 $vtx2->z = 0;
 //$vtx2->r = $vtx2->g = $vtx2->b = 255;
 $vtx2->oow = 1.0;
-$vtx2->tmuvtx[0] = new GrTmuVertex;
+//$vtx2->tmuvtx[0] = new GrTmuVertex;
 $vtx2->tmuvtx[0]->sow = 256;
 $vtx2->tmuvtx[0]->tow = 0;
 
@@ -79,7 +79,7 @@ $vtx3->y = 100.0;
 $vtx3->z = 0;
 //$vtx3->r = $vtx3->g = $vtx3->b = 255;
 $vtx3->oow = 1.0;
-$vtx3->tmuvtx[0] = new GrTmuVertex;
+//$vtx3->tmuvtx[0] = new GrTmuVertex;
 $vtx3->tmuvtx[0]->sow = 0;
 $vtx3->tmuvtx[0]->tow = 0;
 
