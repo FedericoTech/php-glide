@@ -4,17 +4,30 @@
 
 PHP_FUNCTION(grAADrawLine)
 {
-	zend_object* va = NULL;
-	zend_object* vb = NULL;
+	zend_object* zva = NULL;
+	zend_object* zvb = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_OBJ_OF_CLASS(va, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(vb, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zva, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
+	_GrVertex* va = O_EMBEDDED_P(_GrVertex, zva);
+	_GrVertex* vb = O_EMBEDDED_P(_GrVertex, zvb);
+
+	if (1 || va->auto_flush) {
+		//we flush
+		flush_grVertex(va, &va->grVertex);
+	}
+
+	if (1 || vb->auto_flush) {
+		//we flush
+		flush_grVertex(vb, &vb->grVertex);
+	}
+
 	grAADrawLine(
-		&O_EMBEDDED_P(_GrVertex, va)->grVertex,
-		&O_EMBEDDED_P(_GrVertex, vb)->grVertex
+		&va->grVertex,
+		&vb->grVertex
 	);
 }
 

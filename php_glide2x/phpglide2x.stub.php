@@ -639,9 +639,9 @@ function testGrHwConfiguration(GrHwConfiguration $chc) : void {};
 #endif
 
 final class GrTmuVertex implements flushable {
-	public float  $sow = 0.0;
-	public float  $tow = 0.0;
-	public float  $oow = 0.0;
+	public float  $sow;
+	public float  $tow;
+	public float  $oow;
 
     //public function copyFrom(GrTmuVertex $other): void {}
 	
@@ -673,19 +673,19 @@ function testGrTmuVertices(GrTmuVertices $gtv) : void {};
 
 
 final class GrVertex implements flushable {
-	public float $x = 0.0;
-	public float $y = 0.0;
-	public float $z = 0.0;
+	public float $x;
+	public float $y;
+	public float $z;
 	
-	public float $r = 0.0;
-	public float $g = 0.0;
-	public float $b = 0.0;
+	public float $r;
+	public float $g;
+	public float $b;
 	
-	public float $ooz = 0.0;
-	public float $a = 0.0;
-	public float $oow = 0.0;
+	public float $ooz;
+	public float $a;
+	public float $oow;
 
-	public readonly GrTmuVertices $tmuvtx;
+	public GrTmuVertices $tmuvtx;
 
     public function getLength() : float;
 

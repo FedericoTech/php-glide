@@ -84,23 +84,23 @@ echo 'done';
 ?>
 --EXPECT--
 we create an empty object
-object(GrTmuVertex)#1 (3) {
+object(GrTmuVertex)#1 (0) {
   ["sow"]=>
-  float(0)
+  uninitialized(float)
   ["tow"]=>
-  float(0)
+  uninitialized(float)
   ["oow"]=>
-  float(0)
+  uninitialized(float)
 }
 sow: 0.000000, tow: 0.000000, oow: 0.000000
 we clone the empty object
-object(GrTmuVertex)#2 (3) {
+object(GrTmuVertex)#2 (0) {
   ["sow"]=>
-  float(0)
+  uninitialized(float)
   ["tow"]=>
-  float(0)
+  uninitialized(float)
   ["oow"]=>
-  float(0)
+  uninitialized(float)
 }
 bool(true)
 bool(false)

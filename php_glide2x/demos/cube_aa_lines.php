@@ -23,7 +23,7 @@ $vertices = array_map(function($item){
 
 		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
-		//$vertex->flush();
+		$vertex->flush();
 		
 		return $vertex;
 	},
@@ -71,7 +71,7 @@ while(sfWindow_isOpen($window)) {
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
-        //$v->flush();
+        $v->flush();
 
         $transformed[] = $v;
     }
