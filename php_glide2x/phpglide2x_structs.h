@@ -112,6 +112,13 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex);
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 
+static inline void gr_vertex_auto_flush(_GrVertex* vtx)
+{
+    if (vtx->auto_flush) {
+        flush_grVertex(vtx, &vtx->grVertex);
+    }
+}
+
 
 
 extern zend_class_entry* grState_ce;

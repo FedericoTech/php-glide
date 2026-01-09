@@ -230,10 +230,10 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
         //if the fined, operations are +=, -=, and so on...
         } else {
-            v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op1));
+            v_out = Z_EMBEDDED_P(_GrVertex, op1);
         }
 
-        _GrVertex* v2 = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(op2));
+        _GrVertex* v2 = Z_EMBEDDED_P(_GrVertex, op2);
 
         switch (opcode) {
         case ZEND_ADD:
@@ -301,7 +301,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
     //otherwise we use the same object
     } else {
-        v_out = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(zv));
+        v_out = Z_EMBEDDED_P(_GrVertex, zv);
     }
     
     switch (opcode) {
@@ -345,6 +345,7 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
 
     clone->grVertex = orig->grVertex;
+    clone->auto_flush = orig->auto_flush;
         
     zend_objects_clone_members(&clone->std, &orig->std);
     
@@ -384,12 +385,13 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
     //we retrieve the tmuvtx property
     value = OBJ_PROP(&grVertex->std, grVertex_ce->properties_info_table[9]->offset);
 
+    //if it wasn't defined...
     if (Z_ISUNDEF_P(value)) {
-        
-        //memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
+        //we set all to zero
+        memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
     }
     else {
-        flush_grTmuVertices(O_EMBEDDED_P(_GrTmuVertices, Z_OBJ_P(value)), buffer->tmuvtx);
+        flush_grTmuVertices(Z_EMBEDDED_P(_GrTmuVertices, value), buffer->tmuvtx);
     }
 }
 

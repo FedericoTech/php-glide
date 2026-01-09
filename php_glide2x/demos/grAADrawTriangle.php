@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -18,6 +20,7 @@ $vtx1->r = $color;
 $vtx1->g = 0;
 $vtx1->b = 0;
 $vtx1->a = 0;
+$vtx1->setAutoload(true);
 
 $vtx2 = new GrVertex;
 $vtx2->x = '480.0';
@@ -26,6 +29,7 @@ $vtx2->r = 0;
 $vtx2->g = $color;
 $vtx2->b = 0;
 $vtx2->a = 128.0;
+$vtx2->setAutoload(true);
 
 $vtx3 = new GrVertex;
 $vtx3->x = 320.0;
@@ -34,6 +38,7 @@ $vtx3->r = 0;
 $vtx3->g = 0;
 $vtx3->b = $color;
 $vtx3->a = 255.0;
+$vtx3->setAutoload(true);
 
 $angle = 0.0;
 
@@ -43,6 +48,8 @@ $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
 
+    $time = microtime(true);
+
     while (sfWindow_pollEvent($window, $event)) {
         switch ($event->type) {
             case sfEventType::sfEvtClosed:
@@ -51,14 +58,14 @@ while(sfWindow_isOpen($window)) {
         break;
     }
 
-    global $vtx1, $vtx2, $vtx3, $angle, $centre, $pstate;
+    //global $vtx1, $vtx2, $vtx3, $angle, $centre, $pstate;
 
     $vtr1 = rotate_point($vtx1, $angle, $centre);
     $vtr2 = rotate_point($vtx2, $angle, $centre);
     $vtr3 = rotate_point($vtx3, $angle, $centre);
 
     $aux = [$vtr1, $vtr2, $vtr3];
-    array_walk($aux, fn($v) => $v->flush());
+    //array_walk($aux, fn($v) => $v->flush());
 
     grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
@@ -70,6 +77,9 @@ while(sfWindow_isOpen($window)) {
 
     //usleep(1000); // Reduce CPU usage
     $angle += 0.01;
+
+    $fps = 1 / (microtime(true) - $time);
+    sfWindow_setTitle($window, "grAADrawTriangle fps: $fps");
 }
 
 var_dump($pstate);

@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -71,7 +73,6 @@ while(sfWindow_isOpen($window)) {
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-
     sfWindow_setTitle($window, "grAADrawLine demo fps: $fps");
 }
 

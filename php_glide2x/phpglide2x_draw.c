@@ -15,15 +15,8 @@ PHP_FUNCTION(grAADrawLine)
 	_GrVertex* va = O_EMBEDDED_P(_GrVertex, zva);
 	_GrVertex* vb = O_EMBEDDED_P(_GrVertex, zvb);
 
-	if (1 || va->auto_flush) {
-		//we flush
-		flush_grVertex(va, &va->grVertex);
-	}
-
-	if (1 || vb->auto_flush) {
-		//we flush
-		flush_grVertex(vb, &vb->grVertex);
-	}
+	gr_vertex_auto_flush(va);
+	gr_vertex_auto_flush(vb);
 
 	grAADrawLine(
 		&va->grVertex,
@@ -39,7 +32,11 @@ PHP_FUNCTION(grAADrawPoint)
 		Z_PARAM_OBJ_OF_CLASS(p, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grAADrawPoint(&O_EMBEDDED_P(_GrVertex, p)->grVertex);
+	_GrVertex* vp = O_EMBEDDED_P(_GrVertex, p);
+
+	gr_vertex_auto_flush(vp);
+
+	grAADrawPoint(&vp->grVertex);
 }
 
 PHP_FUNCTION(grAADrawPolygon)
@@ -116,8 +113,11 @@ PHP_FUNCTION(grAADrawPolygon)
 			return;
 		}
 
-		GrVertex* vtx = &Z_EMBEDDED_P(_GrVertex, val)->grVertex;
-		memcpy(&vertices[i++], vtx, sizeof(GrVertex));
+		_GrVertex* vtx = Z_EMBEDDED_P(_GrVertex, val);
+
+		gr_vertex_auto_flush(vtx);
+
+		memcpy(&vertices[i++], &vtx->grVertex, sizeof(GrVertex));
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -161,8 +161,11 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 			return;
 		}
 
-		GrVertex* vtx = &Z_EMBEDDED_P(_GrVertex, val)->grVertex;
-		memcpy(&vertices[i++], vtx, sizeof(GrVertex));
+		_GrVertex* vtx = Z_EMBEDDED_P(_GrVertex, val);
+
+		gr_vertex_auto_flush(vtx);
+
+		memcpy(&vertices[i++], &vtx->grVertex, sizeof(GrVertex));
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -191,10 +194,19 @@ PHP_FUNCTION(grAADrawTriangle)
 		Z_PARAM_BOOL(antialiasCA)
 		ZEND_PARSE_PARAMETERS_END();
 
+	_GrVertex* zoa = O_EMBEDDED_P(_GrVertex, a);
+	_GrVertex* zob = O_EMBEDDED_P(_GrVertex, b);
+	_GrVertex* zoc = O_EMBEDDED_P(_GrVertex, c);
+
+	gr_vertex_auto_flush(zoa);
+	gr_vertex_auto_flush(zob);
+	gr_vertex_auto_flush(zoc);
+
+
 	grAADrawTriangle(
-		&O_EMBEDDED_P(_GrVertex, a)->grVertex,
-		&O_EMBEDDED_P(_GrVertex, b)->grVertex,
-		&O_EMBEDDED_P(_GrVertex, c)->grVertex,
+		&zoa->grVertex,
+		&zob->grVertex,
+		&zoc->grVertex,
 		antialiasAB, 
 		antialiasBC, 
 		antialiasCA
@@ -203,17 +215,23 @@ PHP_FUNCTION(grAADrawTriangle)
 
 PHP_FUNCTION(grDrawLine)
 {
-	zend_object* va = NULL;
-	zend_object* vb = NULL;
+	zend_object* zva = NULL;
+	zend_object* zvb = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_OBJ_OF_CLASS(va, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(vb, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zva, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
+	_GrVertex* va = O_EMBEDDED_P(_GrVertex, zva);
+	_GrVertex* vb = O_EMBEDDED_P(_GrVertex, zvb);
+
+	gr_vertex_auto_flush(va);
+	gr_vertex_auto_flush(vb);
+
 	grDrawLine(
-		&O_EMBEDDED_P(_GrVertex, va)->grVertex,
-		&O_EMBEDDED_P(_GrVertex, vb)->grVertex
+		&va->grVertex,
+		&vb->grVertex
 	);
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -20,10 +22,11 @@ $vertices = [
 
 $vertices = array_map(function($item){
 		$vertex = new GrVertex;
+        $vertex->setAutoload(true);
 
 		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
-		$vertex->flush();
+		//$vertex->flush();
 		
 		return $vertex;
 	},
@@ -103,7 +106,7 @@ while(sfWindow_isOpen($window)) {
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "fps: $fps");
+    sfWindow_setTitle($window, "Cube AA Triangles fps: $fps");
 }
 
 grSstIdle();
