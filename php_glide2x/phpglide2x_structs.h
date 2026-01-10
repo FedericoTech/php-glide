@@ -101,8 +101,18 @@ void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS);
 extern zend_class_entry* grVertex_ce;
 
 typedef struct _GrVertex {
-    GrVertex grVertex;
+    union {
+        struct {
+            zval x, y, z;
+            zval r, g, b;
+            zval ooz;
+            zval a;
+            zval oow;
+        };
+        zval arr[9];
+    } z_vertex;
     bool auto_flush;
+    GrVertex grVertex;
     zend_object std;
 } _GrVertex;
 
