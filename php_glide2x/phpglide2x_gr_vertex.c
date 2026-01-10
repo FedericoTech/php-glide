@@ -245,24 +245,28 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
         switch (opcode) {
         case ZEND_ADD:
-            v_out->grVertex.x += v2->grVertex.x;
-            v_out->grVertex.y += v2->grVertex.y;
-            v_out->grVertex.z += v2->grVertex.z;
+            for (int cont = 0; cont < 3; cont++) {
+                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) + zval_get_double(&v2->z_vertex.arr[cont]));
+                v_out->grVertex.x = (FxFloat) Z_DVAL(v_out->z_vertex.arr[cont]);
+            }
             break;
         case ZEND_SUB:
-            v_out->grVertex.x -= v2->grVertex.x;
-            v_out->grVertex.y -= v2->grVertex.y;
-            v_out->grVertex.z -= v2->grVertex.z;
+            for (int cont = 0; cont < 3; cont++) {
+                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(&v2->z_vertex.arr[cont]));
+                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            }
             break;
         case ZEND_MUL:
-            v_out->grVertex.x *= v2->grVertex.x;
-            v_out->grVertex.y *= v2->grVertex.y;
-            v_out->grVertex.z *= v2->grVertex.z;
+            for (int cont = 0; cont < 3; cont++) {
+                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(&v2->z_vertex.arr[cont]));
+                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            }
             break;
         case ZEND_DIV:
-            v_out->grVertex.x /= v2->grVertex.x;
-            v_out->grVertex.y /= v2->grVertex.y;
-            v_out->grVertex.z /= v2->grVertex.z;
+            for (int cont = 0; cont < 3; cont++) {
+                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(&v2->z_vertex.arr[cont]));
+                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            }
             break;
         default:
             zend_throw_exception(NULL, "Unsupported operation", 0);
@@ -274,9 +278,9 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         return SUCCESS;
     }
 
-    FxFloat scalar;
     zval* zv = NULL;
 
+    //if the firt component is the object...
     if (op1_is_vec) {
 
         if (Z_TYPE_P(op2) != IS_LONG && Z_TYPE_P(op2) != IS_DOUBLE) {
@@ -286,10 +290,10 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
         zv = op1;
 
-        scalar = (FxFloat)zval_get_double(op2);
+        //scalar = (FxFloat)zval_get_double(op2);
 
-    }
-    else {
+    //if the second component is te object...
+    } else {
         if (Z_TYPE_P(op1) != IS_LONG && Z_TYPE_P(op1) != IS_DOUBLE) {
             zend_throw_exception(NULL, "Left operand must be a scalar", 0);
             return FAILURE;
@@ -297,7 +301,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
         zv = op2;
 
-        scalar = (FxFloat)zval_get_double(op1);
+        //scalar = (FxFloat)zval_get_double(op1);
     }
 
     //if it not += or -= and so on...
@@ -314,31 +318,35 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     
     switch (opcode) {
     case ZEND_ADD:
-        v_out->grVertex.x += scalar;
-        v_out->grVertex.y += scalar;
-        v_out->grVertex.z += scalar;
+        for (int cont = 0; cont < 3; cont++) {
+            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) + zval_get_double(zv));
+            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+        }
         break;
     case ZEND_SUB:
-        v_out->grVertex.x -= scalar;
-        v_out->grVertex.y -= scalar;
-        v_out->grVertex.z -= scalar;
+        for (int cont = 0; cont < 3; cont++) {
+            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(zv));
+            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+        }
         break;
     case ZEND_MUL:
-        v_out->grVertex.x *= scalar;
-        v_out->grVertex.y *= scalar;
-        v_out->grVertex.z *= scalar;
+        for (int cont = 0; cont < 3; cont++) {
+            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(zv));
+            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+        }
         break;
     case ZEND_DIV:
-        v_out->grVertex.x /= scalar;
-        v_out->grVertex.y /= scalar;
-        v_out->grVertex.z /= scalar;
+        for (int cont = 0; cont < 3; cont++) {
+            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(zv));
+            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+        }
         break;
     default:
         zend_throw_exception(NULL, "Unsupported operation", 0);
         return FAILURE;
     }
 
-    hydrate_grVertex(&v_out->grVertex, v_out);
+    //hydrate_grVertex(&v_out->grVertex, v_out);
 
     return SUCCESS;
 }
