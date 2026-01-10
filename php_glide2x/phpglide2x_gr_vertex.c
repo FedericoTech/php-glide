@@ -407,6 +407,16 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
             (double)(((FxFloat*)buffer)[cont])
         );
     }
+
+    zval grTmuVertices;
+
+    object_init_ex(&grTmuVertices, grTmuVertices_ce);
+
+    hydrate_grTmuVertices(&buffer->tmuvtx[0], Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices));
+
+    zend_update_property(grVertex_ce, &grVertex->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
+
+    zval_ptr_dtor(&grTmuVertices); //destroy the local pointer
         
     /*
     zval grTmuVertex_arr_zval;

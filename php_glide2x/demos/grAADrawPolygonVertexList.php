@@ -99,7 +99,7 @@ while(sfWindow_isOpen($window)) {
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
 
-    $aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+    //$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
     //array_walk($aux, fn($v) => $v->flush());
 
     $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $centre, $vtr5, $vtr6, $centre];
@@ -131,7 +131,7 @@ while(sfWindow_isOpen($window)) {
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "Cube AA Poligon Vertex List fps: $fps");
+    sfWindow_setTitle($window, "grAADrawPolygonVertexList fps: $fps");
 }
 
 

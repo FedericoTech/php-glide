@@ -93,7 +93,7 @@ typedef struct _GrTmuVertices {
 
 void flush_grTmuVertices(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer);
 
-//void hydrate_grTmuVertices(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices);
+void hydrate_grTmuVertices(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices);
 
 void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS);
 
@@ -112,11 +112,15 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex);
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 
-static inline void gr_vertex_auto_flush(_GrVertex* vtx)
+static inline GrVertex* gr_vertex_auto_flush(zend_object* zo)
 {
-    if (vtx->auto_flush) {
-        flush_grVertex(vtx, &vtx->grVertex);
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
+
+    if (v->auto_flush) {
+        flush_grVertex(v, &v->grVertex);
     }
+
+    return &v->grVertex;
 }
 
 

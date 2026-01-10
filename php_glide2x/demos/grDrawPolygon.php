@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -68,6 +70,8 @@ $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
 
+    $time = microtime(true);
+
     while (sfWindow_pollEvent($window, $event)) {
         switch ($event->type) {
             case sfEventType::sfEvtClosed:
@@ -120,6 +124,9 @@ while(sfWindow_isOpen($window)) {
 
     //usleep(1000); // Reduce CPU usage
     $angle += 0.01;
+
+    $fps = 1 / (microtime(true) - $time);
+    sfWindow_setTitle($window, "grDrawPolygon demo fps: $fps");
 }
 
 grSstIdle();

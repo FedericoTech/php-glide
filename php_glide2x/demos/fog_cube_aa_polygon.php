@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;

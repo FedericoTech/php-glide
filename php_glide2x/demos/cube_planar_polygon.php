@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -21,6 +23,7 @@ $vertices = [
 $vertices = array_map(function($item){
 
 	$vertex = new GrVertex;
+    $vertex->setAutoload(true);
 
 	list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
@@ -90,8 +93,17 @@ while(sfWindow_isOpen($window)) {
     grBufferSwap(1);
     $angle += 0.01;
 
+    /*
+    $elapsed = microtime(true) - $time;
+    $sleepTime = $frameTime - $elapsed;
+    if ($sleepTime > 0) {
+        // convert seconds to microseconds for usleep
+        usleep((int)($sleepTime * 1000000));
+    }
+    */
+
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "fps: $fps");
+    sfWindow_setTitle($window, "Cube Planar Polygon fps: $fps");
 }
 
 grSstIdle();

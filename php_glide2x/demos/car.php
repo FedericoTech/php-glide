@@ -1,6 +1,6 @@
 <?php
 
-
+/** @var sfWindow $window */
 
 include_once('helper.php');
 
@@ -36,7 +36,7 @@ $centre = new GrVertex;
 $centre->x = 0;
 $centre->y = -4;
 $centre->z = 0;
-//$centre->flush();
+$centre->flush();
 
 $step = .02;
 
@@ -98,16 +98,16 @@ function draw()
                 )
             );
 
-            //$vert->flush();
+            $vert->flush();
 
             //echo 'before '; testGrVertex($vert);
 
-            /*
+
             $vert->x += $centre->x;
             $vert->y += $centre->y;
             $vert->z += $centre->z;
-            */
-            $vert += $centre;
+
+            //$vert += $centre;
 
             //echo 'after '; testGrVertex($vert);
 
@@ -124,7 +124,7 @@ function draw()
             $vert->y = (1.0 - $vert->y) * 480.0;
 
 
-            //$vert->flush();
+            $vert->flush();
 
             return $vert;
 

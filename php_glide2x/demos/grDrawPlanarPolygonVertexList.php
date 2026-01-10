@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -18,6 +20,7 @@ $vtx1->r = $color;
 $vtx1->g = 0;
 $vtx1->b = 0;
 $vtx1->a = 0;
+$vtx1->setAutoload(true);
 
 $vtx2 = new GrVertex;
 $vtx2->x = '420.0';
@@ -26,6 +29,7 @@ $vtx2->r = 0;
 $vtx2->g = $color;
 $vtx2->b = 0;
 $vtx2->a = 128.0;
+$vtx2->setAutoload(true);
 
 $vtx3 = new GrVertex;
 $vtx3->x = 220;
@@ -34,6 +38,7 @@ $vtx3->r = 0;
 $vtx3->g = 0;
 $vtx3->b = $color;
 $vtx3->a = 255.0;
+$vtx3->setAutoload(true);
 
 $vtx4 = new GrVertex;
 $vtx4->x = '120';
@@ -42,6 +47,7 @@ $vtx4->r = $color;
 $vtx4->g = 0;
 $vtx4->b = 0;
 $vtx4->a = 0;
+$vtx4->setAutoload(true);
 
 $vtx5 = new GrVertex;
 $vtx5->x = '220.0';
@@ -50,6 +56,7 @@ $vtx5->r = 0;
 $vtx5->g = $color;
 $vtx5->b = 0;
 $vtx5->a = 128.0;
+$vtx5->setAutoload(true);
 
 $vtx6 = new GrVertex;
 $vtx6->x = 420;
@@ -58,6 +65,7 @@ $vtx6->r = 0;
 $vtx6->g = 0;
 $vtx6->b = $color;
 $vtx6->a = 255.0;
+$vtx6->setAutoload(true);
 
 //see the case the indices are less than vertices
 $indices = [0, 1, 2, 0, 3, 4, 0, 5, 6, 0];
@@ -67,6 +75,8 @@ $angle = 0.0;
 $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
+
+    $time = microtime(true);
 
     while (sfWindow_pollEvent($window, $event)) {
         switch ($event->type) {
@@ -88,8 +98,8 @@ while(sfWindow_isOpen($window)) {
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
 
-    $aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-    array_walk($aux, fn($v) => $v->flush());
+    //$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+    //array_walk($aux, fn($v) => $v->flush());
 
     $vertices = [$centre, $vtr1, $vtr2, $centre, $vtr3, $vtr4, $vtr5, $vtr6, $centre];
 
@@ -107,7 +117,7 @@ while(sfWindow_isOpen($window)) {
     $vtr6 = rotate_point($vtx6, $angle, $centre);
 
     $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $centre, $vtr5, $vtr6, $centre];
-    array_walk($vertices, fn($v) => $v->flush());
+    //array_walk($vertices, fn($v) => $v->flush());
 
     grDrawPlanarPolygonVertexList(
         count($vertices), 	//whatever is highter whether indices or vertices
@@ -118,6 +128,9 @@ while(sfWindow_isOpen($window)) {
 
     //usleep(1000); // Reduce CPU usage
     $angle += 0.01;
+
+    $fps = 1 / (microtime(true) - $time);
+    sfWindow_setTitle($window, "grDrawPlanarPolygonVertexList fps: $fps");
 }
 
 grSstIdle();

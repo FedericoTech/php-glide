@@ -19,7 +19,6 @@ $vtx1->r = $color;
 $vtx1->g = 0;
 $vtx1->b = 0;
 $vtx1->a = 0;
-$vtx1->setAutoload(true);
 
 $vtx2 = new GrVertex;
 $vtx2->x = '480.0';
@@ -28,7 +27,6 @@ $vtx2->r = 0;
 $vtx2->g = $color;
 $vtx2->b = 0;
 $vtx2->a = 128.0;
-$vtx2->setAutoload(true);
 
 $vtx3 = new GrVertex;
 $vtx3->x = 320.0;
@@ -37,7 +35,6 @@ $vtx3->r = 0;
 $vtx3->g = 0;
 $vtx3->b = $color;
 $vtx3->a = 255.0;
-$vtx3->setAutoload(true);
 
 $angle = 0.0;
 
@@ -60,7 +57,7 @@ while(sfWindow_isOpen($window)) {
     $vtr3 = rotate_point($vtx3, $angle, $centre);
 
     $aux = [$vtr1, $vtr2, $vtr3];
-    //array_walk($aux, fn($v) => $v->flush());
+    array_walk($aux, fn($v) => $v->flush());
 
     grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 

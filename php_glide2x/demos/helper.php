@@ -1,5 +1,9 @@
 <?php
 
+define('TARGET_FPS', 60);
+
+$frameTime = 1.0 /  TARGET_FPS;
+
 class ObjParser
 {
     public array $vertices = [];   // [[x,y,z], ...]

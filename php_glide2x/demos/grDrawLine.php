@@ -69,7 +69,6 @@ while(sfWindow_isOpen($window)) {
 
     grBufferSwap(1);
 
-    //usleep(1000); // Reduce CPU usage
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);

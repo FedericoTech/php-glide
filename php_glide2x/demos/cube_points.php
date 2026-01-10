@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 $color = 255.0;
@@ -19,16 +21,14 @@ $cubeVertices = [
 ];
 
 $cubeVertices = array_map(function($item){
-		$vertex = new GrVertex;
 
-		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
-		
-		$vertex->flush();
-		
-		return $vertex;
-	},
-	$cubeVertices
-);
+    $vertex = new GrVertex;
+    $vertex->setAutoload(true);
+
+    list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
+
+    return $vertex;
+}, $cubeVertices);
 
 $angle = 0.0;
 
@@ -75,7 +75,7 @@ while(sfWindow_isOpen($window)) {
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "fps: $fps");
+    sfWindow_setTitle($window, "grDrawPoint fps: $fps");
 }
 
 grSstIdle();
