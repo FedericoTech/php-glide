@@ -7,6 +7,8 @@ include_once('helper.php');
 $parser = new ObjParser();
 $parser->load('php_glide2x/demos/car.obj');
 //$parser->load('php_glide2x/demos/Mazinger_Volador.obj');
+//$parser->load('php_glide2x/demos/Batwing.obj');
+//$parser->load('php_glide2x/demos/Cup.obj');
 
 grRenderBuffer(GrBuffer_t::GR_BUFFER_BACKBUFFER);
 

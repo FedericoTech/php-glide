@@ -1,5 +1,7 @@
 <?php
 
+/** @var sfWindow $window */
+
 include_once('helper.php');
 
 
@@ -192,7 +194,7 @@ function draw()
             $v->x += $centre->x;
             $v->y += $centre->y;
             $v = rotate_point($v, $angle, $centre);
-            $v->flush();
+            //$v->flush();
             return $v;
         },
         $aux

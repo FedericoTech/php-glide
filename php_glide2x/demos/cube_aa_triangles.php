@@ -22,7 +22,7 @@ $vertices = [
 
 $vertices = array_map(function($item){
 		$vertex = new GrVertex;
-        $vertex->setAutoload(true);
+        //$vertex->setAutoload(true);
 
 		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
@@ -50,13 +50,6 @@ grDepthMask(true);
 
 grCullMode( GrCullMode_t::GR_CULL_NEGATIVE );
 
-grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
-grFogColorValue(0x00FFFFff); // Fog color: blue
-	
-guFogGenerateLinear($fogTable, 240, 200); // start and end Z for fog
-
-grFogTable($fogTable);
-
 $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
@@ -71,7 +64,7 @@ while(sfWindow_isOpen($window)) {
         break;
     }
 
-    grBufferClear( 0x00FFFFff, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
     $transformed = [];
 

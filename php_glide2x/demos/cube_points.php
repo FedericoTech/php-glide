@@ -23,7 +23,7 @@ $cubeVertices = [
 $cubeVertices = array_map(function($item){
 
     $vertex = new GrVertex;
-    $vertex->setAutoload(true);
+    //$vertex->setAutoload(true);
 
     list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 
@@ -75,7 +75,7 @@ while(sfWindow_isOpen($window)) {
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "grDrawPoint fps: $fps");
+    sfWindow_setTitle($window, "Cube Points fps: $fps");
 }
 
 grSstIdle();

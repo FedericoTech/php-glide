@@ -246,25 +246,66 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         switch (opcode) {
         case ZEND_ADD:
             for (int cont = 0; cont < 3; cont++) {
-                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) + zval_get_double(&v2->z_vertex.arr[cont]));
+                /*
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont], 
+                    zval_get_double(&v_out->z_vertex.arr[cont]) 
+                    + zval_get_double(&v2->z_vertex.arr[cont])
+                );
+                */
+                  
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont], 
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    + (Z_TYPE(v2->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v2->z_vertex.arr[cont]))
+                );
+                
                 v_out->grVertex.x = (FxFloat) Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_SUB:
             for (int cont = 0; cont < 3; cont++) {
-                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(&v2->z_vertex.arr[cont]));
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    - (Z_TYPE(v2->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v2->z_vertex.arr[cont]))
+                );
                 v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_MUL:
             for (int cont = 0; cont < 3; cont++) {
-                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(&v2->z_vertex.arr[cont]));
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    * (Z_TYPE(v2->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v2->z_vertex.arr[cont]))
+                );
                 v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_DIV:
             for (int cont = 0; cont < 3; cont++) {
-                ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(&v2->z_vertex.arr[cont]));
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    / (Z_TYPE(v2->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v2->z_vertex.arr[cont]))
+                );
                 v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
@@ -319,25 +360,73 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     switch (opcode) {
     case ZEND_ADD:
         for (int cont = 0; cont < 3; cont++) {
-            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) + zval_get_double(zv));
+
+            ZVAL_DOUBLE(
+                &v_out->z_vertex.arr[cont],
+                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL(v_out->z_vertex.arr[cont]))
+                + (Z_TYPE_P(zv) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL_P(zv))
+            );
+
+            /*
+            ZVAL_DOUBLE(
+                &v_out->z_vertex.arr[cont], 
+                zval_get_double(&v_out->z_vertex.arr[cont]) 
+                + zval_get_double(zv)
+            );
+            */
             v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_SUB:
         for (int cont = 0; cont < 3; cont++) {
-            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(zv));
+            
+            ZVAL_DOUBLE(
+                &v_out->z_vertex.arr[cont],
+                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL(v_out->z_vertex.arr[cont]))
+                - (Z_TYPE_P(zv) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL_P(zv))
+            );
+            
+            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(zv));
             v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_MUL:
         for (int cont = 0; cont < 3; cont++) {
-            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(zv));
+            ZVAL_DOUBLE(
+                &v_out->z_vertex.arr[cont],
+                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL(v_out->z_vertex.arr[cont]))
+                * (Z_TYPE_P(zv) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL_P(zv))
+            );
+            
+            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(zv));
             v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_DIV:
         for (int cont = 0; cont < 3; cont++) {
-            ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(zv));
+            ZVAL_DOUBLE(
+                &v_out->z_vertex.arr[cont],
+                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL(v_out->z_vertex.arr[cont]))
+                / (Z_TYPE_P(zv) == IS_UNDEF
+                    ? 0.0
+                    : Z_DVAL_P(zv))
+            );
+            
+            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(zv));
             v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
@@ -443,9 +532,8 @@ static zend_object* gr_clone_obj(zend_object* object)
         ZVAL_COPY(&clone->z_vertex.arr[i], &orig->z_vertex.arr[i]);
     }
 
-
     clone->grVertex = orig->grVertex;
-    clone->auto_flush = orig->auto_flush;
+    //clone->auto_flush = orig->auto_flush;
         
     zend_objects_clone_members(&clone->std, &orig->std);
     
@@ -532,5 +620,6 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
     zend_update_property(grVertex_ce, &grVertex->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
 
     zval_ptr_dtor(&grTmuVertices); //destroy the local pointer
+    
 }
 

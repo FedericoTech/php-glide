@@ -19,7 +19,6 @@ $vtx1->r = 0;
 $vtx1->g = $color;
 $vtx1->b = $color;
 $vtx1->a = 0;
-$vtx1->setAutoload(true);
 
 $vtx2 = new GrVertex;
 $vtx2->x = '480.0';
@@ -28,7 +27,6 @@ $vtx2->r = $color;
 $vtx2->g = 0;
 $vtx2->b = $color;
 $vtx2->a = 128.0;
-$vtx2->setAutoload(true);
 
 $vtx3 = new GrVertex;
 $vtx3->x = 320.0;
@@ -37,7 +35,6 @@ $vtx3->r = $color;
 $vtx3->g = $color;
 $vtx3->b = 0;
 $vtx3->a = 255.0;
-$vtx3->setAutoload(true);
 
 $angle = 0.0;
 

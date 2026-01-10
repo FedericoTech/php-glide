@@ -48,6 +48,15 @@ grDepthBufferMode(GrDepthBufferMode_t::GR_DEPTHBUFFER_WBUFFER);  // Or GR_DEPTHB
 grDepthBufferFunction(GrCmpFnc_t::GR_CMP_LESS);
 grDepthMask(true);
 
+grCullMode( GrCullMode_t::GR_CULL_NEGATIVE );
+
+grFogMode(GrFogMode_t::GR_FOG_WITH_TABLE);
+grFogColorValue(0x00FFFFff); // Fog color: blue
+	
+guFogGenerateLinear($fogTable, 240, 200); // start and end Z for fog
+
+grFogTable($fogTable);
+
 $event = new sfEvent;
 
 while(sfWindow_isOpen($window)) {
@@ -62,7 +71,7 @@ while(sfWindow_isOpen($window)) {
         break;
     }
 
-    grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
+    grBufferClear( 0x00FFFFff, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
     $transformed = [];
 
@@ -76,22 +85,28 @@ while(sfWindow_isOpen($window)) {
         $v = project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
+        $v->z = (1.0 - $v->z) * 240.0;
+        $v->oow = 1.0 / ($v->z + 0.00001);
+
         //$v->flush();
 
         $transformed[] = $v;
     }
 
     foreach($cubeIndices as $triad){
-        grDrawLine($transformed[$triad[0]], $transformed[$triad[1]]);
-        grDrawLine($transformed[$triad[1]], $transformed[$triad[2]]);
-        grDrawLine($transformed[$triad[2]], $transformed[$triad[0]]);
+        grAADrawTriangle(
+            $transformed[$triad[0]],
+            $transformed[$triad[1]],
+            $transformed[$triad[2]],
+            true, true, true
+        );
     }
 
     grBufferSwap(1);
     $angle += 0.01;
 
     $fps = 1 / (microtime(true) - $time);
-    sfWindow_setTitle($window, "Cube Lines fps: $fps");
+    sfWindow_setTitle($window, "Fog Cube AA Triangles fps: $fps");
 }
 
 grSstIdle();

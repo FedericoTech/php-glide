@@ -11,7 +11,6 @@ guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
-$centre->flush();
 
 $vtx1 = new GrVertex;
 $vtx1->x = '520';
@@ -92,8 +91,8 @@ while(sfWindow_isOpen($window)) {
     $vtr5 = rotate_point($vtx5, $angle_minus, $centre);
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
 
-    $aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-    array_walk($aux, fn($v) => $v->flush());
+    //$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
+    //array_walk($aux, fn($v) => $v->flush());
 
     $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
 
@@ -112,7 +111,7 @@ while(sfWindow_isOpen($window)) {
     $vtr6 = rotate_point($vtx6, $angle, $centre);
 
     $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-    array_walk($vertices, fn($v) => $v->flush());
+    //array_walk($vertices, fn($v) => $v->flush());
 
     grAADrawPolygon(
         count($indices), 	//whatever is highter whether indices or vertices

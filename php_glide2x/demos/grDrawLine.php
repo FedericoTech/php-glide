@@ -59,7 +59,7 @@ while(sfWindow_isOpen($window)) {
     $vtr3 = rotate_point($vtx3, $angle, $centre);
 
     $aux = [$vtr1, $vtr2, $vtr3];
-    array_walk($aux, fn($v) => $v->flush());
+    //array_walk($aux, fn($v) => $v->flush());
 
     grBufferClear( 0, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 

@@ -23,7 +23,7 @@ $cubeVertices = [
 $vertices = array_map(function($item){
 
 	$vertex = new GrVertex;
-    $vertex->setAutoload(true);
+    //$vertex->setAutoload(true);
 
 	list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
