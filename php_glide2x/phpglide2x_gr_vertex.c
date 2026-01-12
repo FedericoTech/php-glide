@@ -246,14 +246,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         switch (opcode) {
         case ZEND_ADD:
             for (int cont = 0; cont < 3; cont++) {
-                /*
-                ZVAL_DOUBLE(
-                    &v_out->z_vertex.arr[cont], 
-                    zval_get_double(&v_out->z_vertex.arr[cont]) 
-                    + zval_get_double(&v2->z_vertex.arr[cont])
-                );
-                */
-                  
+
                 ZVAL_DOUBLE(
                     &v_out->z_vertex.arr[cont], 
                     (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
@@ -263,8 +256,8 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                         ? 0.0
                         : Z_DVAL(v2->z_vertex.arr[cont]))
                 );
-                
-                v_out->grVertex.x = (FxFloat) Z_DVAL(v_out->z_vertex.arr[cont]);
+
+                ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat) Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_SUB:
@@ -278,7 +271,8 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                         ? 0.0
                         : Z_DVAL(v2->z_vertex.arr[cont]))
                 );
-                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+
+                ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_MUL:
@@ -292,7 +286,8 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                         ? 0.0
                         : Z_DVAL(v2->z_vertex.arr[cont]))
                 );
-                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+
+                ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         case ZEND_DIV:
@@ -306,7 +301,8 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                         ? 0.0
                         : Z_DVAL(v2->z_vertex.arr[cont]))
                 );
-                v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+
+                ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
             }
             break;
         default:
@@ -319,83 +315,106 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         return SUCCESS;
     }
 
-    zval* zv = NULL;
-
-    //if the firt component is the object...
+    zval* z_scalar = NULL;
+    zval* z_vector = NULL;
+    
+    //if the op1 is the object...
     if (op1_is_vec) {
 
-        if (Z_TYPE_P(op2) != IS_LONG && Z_TYPE_P(op2) != IS_DOUBLE) {
+        if (Z_TYPE_P(op2) != IS_LONG
+            && Z_TYPE_P(op2) != IS_DOUBLE
+            && (
+                Z_TYPE_P(op2) != IS_STRING
+                || is_numeric_string(
+                    Z_STRVAL_P(op2),
+                    Z_STRLEN_P(op2),
+                    NULL,
+                    NULL,
+                    0
+                ) == 0
+            )
+        ) {
             zend_throw_exception(NULL, "Right operand must be a scalar", 0);
             return FAILURE;
         }
+        z_vector = op1;
+        z_scalar = op2;
 
-        zv = op1;
-
-        //scalar = (FxFloat)zval_get_double(op2);
-
-    //if the second component is te object...
+    //if the op2 is the object...
     } else {
-        if (Z_TYPE_P(op1) != IS_LONG && Z_TYPE_P(op1) != IS_DOUBLE) {
+
+        if (Z_TYPE_P(op1) != IS_LONG 
+            && Z_TYPE_P(op1) != IS_DOUBLE
+            && (
+                Z_TYPE_P(op1) != IS_STRING
+                || is_numeric_string(
+                    Z_STRVAL_P(op1),
+                    Z_STRLEN_P(op1),
+                    NULL,
+                    NULL,
+                    0
+                ) == 0
+            )
+        ) {
             zend_throw_exception(NULL, "Left operand must be a scalar", 0);
             return FAILURE;
         }
-
-        zv = op2;
-
-        //scalar = (FxFloat)zval_get_double(op1);
+        
+        z_scalar = op1;
+        z_vector = op2;
     }
+
+    double scalar = zval_get_double(z_scalar);
 
     //if it not += or -= and so on...
     if (Z_TYPE_P(result) == IS_UNDEF) {
         //we clone the object
-        zend_object* zo = Z_OBJ_HANDLER_P(op1, clone_obj)(Z_OBJ_P(op1));
+        zend_object* zo = Z_OBJ_HANDLER_P(z_vector, clone_obj)(Z_OBJ_P(z_vector));
         v_out = O_EMBEDDED_P(_GrVertex, zo);
         ZVAL_OBJ(result, zo);
 
     //otherwise we use the same object
     } else {
-        v_out = Z_EMBEDDED_P(_GrVertex, zv);
+        v_out = Z_EMBEDDED_P(_GrVertex, z_vector);
     }
-    
+
     switch (opcode) {
     case ZEND_ADD:
         for (int cont = 0; cont < 3; cont++) {
-
             ZVAL_DOUBLE(
                 &v_out->z_vertex.arr[cont],
                 (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
                     ? 0.0
                     : Z_DVAL(v_out->z_vertex.arr[cont]))
-                + (Z_TYPE_P(zv) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL_P(zv))
+                + scalar
             );
 
-            /*
-            ZVAL_DOUBLE(
-                &v_out->z_vertex.arr[cont], 
-                zval_get_double(&v_out->z_vertex.arr[cont]) 
-                + zval_get_double(zv)
-            );
-            */
-            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_SUB:
         for (int cont = 0; cont < 3; cont++) {
-            
-            ZVAL_DOUBLE(
-                &v_out->z_vertex.arr[cont],
-                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL(v_out->z_vertex.arr[cont]))
-                - (Z_TYPE_P(zv) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL_P(zv))
-            );
-            
-            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) - zval_get_double(zv));
-            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+
+            if (op1_is_vec) {
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    - scalar
+                );
+            }
+            else {
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    scalar
+                    - (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                );
+            }
+
+            ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_MUL:
@@ -405,29 +424,35 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                 (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
                     ? 0.0
                     : Z_DVAL(v_out->z_vertex.arr[cont]))
-                * (Z_TYPE_P(zv) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL_P(zv))
+                * scalar
             );
             
-            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) * zval_get_double(zv));
-            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     case ZEND_DIV:
         for (int cont = 0; cont < 3; cont++) {
-            ZVAL_DOUBLE(
-                &v_out->z_vertex.arr[cont],
-                (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL(v_out->z_vertex.arr[cont]))
-                / (Z_TYPE_P(zv) == IS_UNDEF
-                    ? 0.0
-                    : Z_DVAL_P(zv))
-            );
+
+            if (op1_is_vec) {
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                    / scalar
+                );
+            }
+            else {
+                ZVAL_DOUBLE(
+                    &v_out->z_vertex.arr[cont],
+                    scalar
+                    / (Z_TYPE(v_out->z_vertex.arr[cont]) == IS_UNDEF
+                        ? 0.0
+                        : Z_DVAL(v_out->z_vertex.arr[cont]))
+                );
+            }
             
-            //ZVAL_DOUBLE(&v_out->z_vertex.arr[cont], zval_get_double(&v_out->z_vertex.arr[cont]) / zval_get_double(zv));
-            v_out->grVertex.x = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
+            ((FxFloat*)&v_out->grVertex.x)[cont] = (FxFloat)Z_DVAL(v_out->z_vertex.arr[cont]);
         }
         break;
     default:
