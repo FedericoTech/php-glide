@@ -220,6 +220,13 @@ static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
 
 static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* op2)
 {
+    /*
+    php_printf(
+        "op1: %d,  op2: %d\n", 
+        Z_TYPE_P(op1), Z_TYPE_P(op2)
+    );
+    */
+
     bool op1_is_vec = Z_TYPE_P(op1) == IS_OBJECT && Z_OBJCE_P(op1) == grVertex_ce;
 
     bool op2_is_vec = Z_TYPE_P(op2) == IS_OBJECT && Z_OBJCE_P(op2) == grVertex_ce;
@@ -321,47 +328,30 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     //if the op1 is the object...
     if (op1_is_vec) {
 
-        if (Z_TYPE_P(op2) != IS_LONG
-            && Z_TYPE_P(op2) != IS_DOUBLE
-            && (
-                Z_TYPE_P(op2) != IS_STRING
-                || is_numeric_string(
-                    Z_STRVAL_P(op2),
-                    Z_STRLEN_P(op2),
-                    NULL,
-                    NULL,
-                    0
-                ) == 0
-            )
-        ) {
-            zend_throw_exception(NULL, "Right operand must be a scalar", 0);
-            return FAILURE;
-        }
         z_vector = op1;
         z_scalar = op2;
 
     //if the op2 is the object...
     } else {
-
-        if (Z_TYPE_P(op1) != IS_LONG 
-            && Z_TYPE_P(op1) != IS_DOUBLE
-            && (
-                Z_TYPE_P(op1) != IS_STRING
-                || is_numeric_string(
-                    Z_STRVAL_P(op1),
-                    Z_STRLEN_P(op1),
-                    NULL,
-                    NULL,
-                    0
-                ) == 0
-            )
-        ) {
-            zend_throw_exception(NULL, "Left operand must be a scalar", 0);
-            return FAILURE;
-        }
-        
         z_scalar = op1;
         z_vector = op2;
+    }
+
+    if (Z_TYPE_P(z_scalar) != IS_LONG
+        && Z_TYPE_P(z_scalar) != IS_DOUBLE
+        && (
+            Z_TYPE_P(z_scalar) != IS_STRING
+            || is_numeric_string(
+                Z_STRVAL_P(z_scalar),
+                Z_STRLEN_P(z_scalar),
+                NULL,
+                NULL,
+                0
+            ) == 0
+        )
+    ) {
+        zend_throw_exception(NULL, "The scalar must be a number", 0);
+        return FAILURE;
     }
 
     double scalar = zval_get_double(z_scalar);
