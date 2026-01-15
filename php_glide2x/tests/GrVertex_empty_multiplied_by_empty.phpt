@@ -1,20 +1,24 @@
 --TEST--
-GrVertex empty
+GrVertex empty vertex multiplided by empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
-var_dump($vertex);
-print_r($vertex);
-testGrVertex($vertex);
+$vertex2 = new GrVertex;
+
+$vertex3 = $vertex * $vertex2;
+
+var_dump($vertex3);
+print_r($vertex3);
+testGrVertex($vertex3);
 ?>
 --EXPECT--
-object(GrVertex)#1 (1) {
+object(GrVertex)#9 (4) {
   ["x"]=>
-  uninitialized(float)
+  float(0)
   ["y"]=>
-  uninitialized(float)
+  float(0)
   ["z"]=>
-  uninitialized(float)
+  float(0)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -51,6 +55,9 @@ object(GrVertex)#1 (1) {
 }
 GrVertex Object
 (
+    [x] => 0
+    [y] => 0
+    [z] => 0
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object

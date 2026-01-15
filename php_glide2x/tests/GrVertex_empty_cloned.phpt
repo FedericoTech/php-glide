@@ -1,14 +1,18 @@
 --TEST--
-GrVertex empty
+GrVertex cloned empty
 --FILE--
 <?php
 $vertex = new GrVertex;
-var_dump($vertex);
-print_r($vertex);
-testGrVertex($vertex);
+
+$vertex2 = clone $vertex;
+
+var_dump($vertex2);
+print_r($vertex2);
+testGrVertex($vertex2);
+var_dump($vertex2 == $vertex);
 ?>
 --EXPECT--
-object(GrVertex)#1 (1) {
+object(GrVertex)#5 (1) {
   ["x"]=>
   uninitialized(float)
   ["y"]=>
@@ -67,3 +71,4 @@ GrVertex Object
 x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+bool(true)

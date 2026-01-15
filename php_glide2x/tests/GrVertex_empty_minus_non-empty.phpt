@@ -1,20 +1,34 @@
 --TEST--
-GrVertex empty
+GrVertex empty vertex minus non-empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
-var_dump($vertex);
-print_r($vertex);
-testGrVertex($vertex);
+
+$vertex2 = new GrVertex;
+$vertex2->x = 1;
+$vertex2->y = 1.0;
+$vertex2->z = '1';
+$vertex2->r = '1.0';
+$vertex2->g = 1;
+$vertex2->b = 1.0;
+$vertex2->ooz = '1';
+$vertex2->a = '1.0';
+$vertex2->oow = 1;
+
+$vertex3 = $vertex - $vertex2;
+
+var_dump($vertex3);
+print_r($vertex3);
+testGrVertex($vertex3);
 ?>
 --EXPECT--
-object(GrVertex)#1 (1) {
+object(GrVertex)#9 (4) {
   ["x"]=>
-  uninitialized(float)
+  float(-1)
   ["y"]=>
-  uninitialized(float)
+  float(-1)
   ["z"]=>
-  uninitialized(float)
+  float(-1)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -51,6 +65,9 @@ object(GrVertex)#1 (1) {
 }
 GrVertex Object
 (
+    [x] => -1
+    [y] => -1
+    [z] => -1
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -64,6 +81,6 @@ GrVertex Object
         )
 
 )
-x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: -1.000000, y: -1.000000, z: -1.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

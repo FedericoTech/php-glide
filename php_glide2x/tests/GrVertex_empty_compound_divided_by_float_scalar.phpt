@@ -1,20 +1,23 @@
 --TEST--
-GrVertex empty
+GrVertex empty vertex compound divided by float scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
+
+$vertex /= 2.0;
+
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
 --EXPECT--
-object(GrVertex)#1 (1) {
+object(GrVertex)#1 (4) {
   ["x"]=>
-  uninitialized(float)
+  float(0)
   ["y"]=>
-  uninitialized(float)
+  float(0)
   ["z"]=>
-  uninitialized(float)
+  float(0)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -51,6 +54,9 @@ object(GrVertex)#1 (1) {
 }
 GrVertex Object
 (
+    [x] => 0
+    [y] => 0
+    [z] => 0
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object

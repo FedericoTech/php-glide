@@ -1,20 +1,23 @@
 --TEST--
-GrVertex empty
+GrVertex empty vertex compound plus string scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
+
+$vertex += '3.0';
+
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
 --EXPECT--
-object(GrVertex)#1 (1) {
+object(GrVertex)#1 (4) {
   ["x"]=>
-  uninitialized(float)
+  float(3)
   ["y"]=>
-  uninitialized(float)
+  float(3)
   ["z"]=>
-  uninitialized(float)
+  float(3)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -51,6 +54,9 @@ object(GrVertex)#1 (1) {
 }
 GrVertex Object
 (
+    [x] => 3
+    [y] => 3
+    [z] => 3
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -64,6 +70,6 @@ GrVertex Object
         )
 
 )
-x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 3.000000, y: 3.000000, z: 3.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
