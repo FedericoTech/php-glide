@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty vertex compound multiply by float scalar
+GrVertex compound non-empty vertex multiplied by integer scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,7 +14,7 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex *= 2.0;
+$vertex *= 1;
 
 var_dump($vertex);
 print_r($vertex);
@@ -23,11 +23,11 @@ testGrVertex($vertex);
 --EXPECT--
 object(GrVertex)#1 (10) {
   ["x"]=>
-  float(2)
+  float(1)
   ["y"]=>
-  float(2)
+  float(1)
   ["z"]=>
-  float(2)
+  float(1)
   ["r"]=>
   float(1)
   ["g"]=>
@@ -64,9 +64,9 @@ object(GrVertex)#1 (10) {
 }
 GrVertex Object
 (
-    [x] => 2
-    [y] => 2
-    [z] => 2
+    [x] => 1
+    [y] => 1
+    [z] => 1
     [r] => 1
     [g] => 1
     [b] => 1
@@ -86,6 +86,6 @@ GrVertex Object
         )
 
 )
-x: 2.000000, y: 2.000000, z: 2.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: 1.000000, y: 1.000000, z: 1.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

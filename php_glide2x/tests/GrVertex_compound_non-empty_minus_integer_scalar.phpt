@@ -1,17 +1,27 @@
 --TEST--
-GrVertex empty vertex compound divided by string scalar
+GrVertex compound non-empty vector minus integer scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex /= '3.0';
+$vertex->x = 1;
+$vertex->y = 1.0;
+$vertex->z = '1';
+$vertex->r = '1.0';
+$vertex->g = 1;
+$vertex->b = 1.0;
+$vertex->ooz = '1';
+$vertex->a = '1.0';
+$vertex->oow = 1;
+
+$vertex--;
 
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
 --EXPECT--
-object(GrVertex)#1 (4) {
+object(GrVertex)#1 (10) {
   ["x"]=>
   float(0)
   ["y"]=>
@@ -19,17 +29,17 @@ object(GrVertex)#1 (4) {
   ["z"]=>
   float(0)
   ["r"]=>
-  uninitialized(float)
+  float(1)
   ["g"]=>
-  uninitialized(float)
+  float(1)
   ["b"]=>
-  uninitialized(float)
+  float(1)
   ["ooz"]=>
-  uninitialized(float)
+  float(1)
   ["a"]=>
-  uninitialized(float)
+  float(1)
   ["oow"]=>
-  uninitialized(float)
+  float(1)
   ["tmuvtx"]=>
   object(GrTmuVertices)#2 (2) {
     [0]=>
@@ -57,6 +67,12 @@ GrVertex Object
     [x] => 0
     [y] => 0
     [z] => 0
+    [r] => 1
+    [g] => 1
+    [b] => 1
+    [ooz] => 1
+    [a] => 1
+    [oow] => 1
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -70,6 +86,6 @@ GrVertex Object
         )
 
 )
-x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 0.000000, y: 0.000000, z: 0.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

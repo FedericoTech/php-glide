@@ -1,11 +1,12 @@
 --TEST--
-GrVertex empty vertex compound multiplied by non-scalar
+GrVertex compound empty vertex divided by string scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex *= 'hello world';
+$vertex /= 'hello world';
 ?>
+--EXPECT--
 --EXPECTF--
 Fatal error: Uncaught Exception: The scalar must be a number %s
 Stack trace:

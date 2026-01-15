@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty vertex compound divided by string scalar
+GrVertex compound non-empty vertex minus string scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,7 +14,7 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex /= '3.0';
+$vertex -= '3.0';
 
 var_dump($vertex);
 print_r($vertex);
@@ -23,11 +23,11 @@ testGrVertex($vertex);
 --EXPECT--
 object(GrVertex)#1 (10) {
   ["x"]=>
-  float(0.3333333333333333)
+  float(-2)
   ["y"]=>
-  float(0.3333333333333333)
+  float(-2)
   ["z"]=>
-  float(0.3333333333333333)
+  float(-2)
   ["r"]=>
   float(1)
   ["g"]=>
@@ -64,9 +64,9 @@ object(GrVertex)#1 (10) {
 }
 GrVertex Object
 (
-    [x] => 0.33333333333333
-    [y] => 0.33333333333333
-    [z] => 0.33333333333333
+    [x] => -2
+    [y] => -2
+    [z] => -2
     [r] => 1
     [g] => 1
     [b] => 1
@@ -86,6 +86,6 @@ GrVertex Object
         )
 
 )
-x: 0.333333, y: 0.333333, z: 0.333333, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: -2.000000, y: -2.000000, z: -2.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

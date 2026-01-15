@@ -1,5 +1,5 @@
 --TEST--
-GrVertex empty vertex mutliplied by integer scalar
+GrVertex compound empty vertex mutliplied by integer scalar
 --FILE--
 <?php
 $vertex = new GrVertex;

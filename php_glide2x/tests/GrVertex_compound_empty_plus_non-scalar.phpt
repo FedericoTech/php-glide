@@ -1,10 +1,10 @@
 --TEST--
-GrVertex empty vertex compound minus non-scalar
+GrVertex compound empty vertex plus non-scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex -= 'hello world';
+$vertex += 'hello world';
 ?>
 --EXPECTF--
 Fatal error: Uncaught Exception: The scalar must be a number %s

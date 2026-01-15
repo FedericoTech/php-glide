@@ -1,45 +1,35 @@
 --TEST--
-GrVertex non-empty vertex divided by integer scalar
+GrVertex compound empty vertex divided by float scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex->x = 1;
-$vertex->y = 1.0;
-$vertex->z = '1';
-$vertex->r = '1.0';
-$vertex->g = 1;
-$vertex->b = 1.0;
-$vertex->ooz = '1';
-$vertex->a = '1.0';
-$vertex->oow = 1;
-
-$vertex /= 1;
+$vertex /= 2.0;
 
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
 --EXPECT--
-object(GrVertex)#1 (10) {
+object(GrVertex)#1 (4) {
   ["x"]=>
-  float(1)
+  float(0)
   ["y"]=>
-  float(1)
+  float(0)
   ["z"]=>
-  float(1)
+  float(0)
   ["r"]=>
-  float(1)
+  uninitialized(float)
   ["g"]=>
-  float(1)
+  uninitialized(float)
   ["b"]=>
-  float(1)
+  uninitialized(float)
   ["ooz"]=>
-  float(1)
+  uninitialized(float)
   ["a"]=>
-  float(1)
+  uninitialized(float)
   ["oow"]=>
-  float(1)
+  uninitialized(float)
   ["tmuvtx"]=>
   object(GrTmuVertices)#2 (2) {
     [0]=>
@@ -64,15 +54,9 @@ object(GrVertex)#1 (10) {
 }
 GrVertex Object
 (
-    [x] => 1
-    [y] => 1
-    [z] => 1
-    [r] => 1
-    [g] => 1
-    [b] => 1
-    [ooz] => 1
-    [a] => 1
-    [oow] => 1
+    [x] => 0
+    [y] => 0
+    [z] => 0
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -86,6 +70,6 @@ GrVertex Object
         )
 
 )
-x: 1.000000, y: 1.000000, z: 1.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
