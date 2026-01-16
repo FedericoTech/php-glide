@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-scalar compound divided by empty vertex
+GrVertex non-scalar divided by empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;

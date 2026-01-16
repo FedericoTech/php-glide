@@ -1,5 +1,5 @@
 --TEST--
-GrVertex add right handside non scalar to empty
+GrVertex empty vertex multiplied by non-scalar
 --FILE--
 <?php
 $vertex = new GrVertex;

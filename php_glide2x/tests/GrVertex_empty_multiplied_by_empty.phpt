@@ -1,5 +1,5 @@
 --TEST--
-GrVertex empty vertex multiplided by empty vertex
+GrVertex empty vertex multiplied by empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;

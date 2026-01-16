@@ -21,6 +21,7 @@ var_dump($vertex2);
 print_r($vertex2);
 testGrVertex($vertex2);
 var_dump($vertex2 == $vertex);
+var_dump($vertex2 === $vertex);
 ?>
 --EXPECT--
 object(GrVertex)#5 (10) {
@@ -91,4 +92,5 @@ GrVertex Object
 x: 1.000000, y: 2.000000, z: 3.000000, r: 4.000000, g: 5.000000, b: 6.000000, ooz: 7.000000, a: 8.000000, oow: 9.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+bool(true)
 bool(false)

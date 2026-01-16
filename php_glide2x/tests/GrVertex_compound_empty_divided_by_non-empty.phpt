@@ -1,23 +1,46 @@
 --TEST--
-GrVertex empty vertex plus integer scalar
+GrVertex compound empty vertex divided by non-empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex2 = $vertex + 1;
+$vertex2 = new GrVertex;
+$vertex2->x = 1;
+$vertex2->y = 1.0;
+$vertex2->z = '1';
+$vertex2->r = '1.0';
+$vertex2->g = 1;
+$vertex2->b = 1.0;
+$vertex2->ooz = '1';
+$vertex2->a = '1.0';
+$vertex2->oow = 1;
 
-var_dump($vertex2);
-print_r($vertex2);
-testGrVertex($vertex2);
+//they were equial though not the same
+var_dump($vertex == $vertex2);
+var_dump($vertex === $vertex2);
+
+$vertex /= $vertex2;
+
+//now they are completely different
+var_dump($vertex == $vertex2);
+var_dump($vertex === $vertex2);
+
+var_dump($vertex);
+print_r($vertex);
+testGrVertex($vertex);
 ?>
 --EXPECT--
-object(GrVertex)#5 (4) {
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+object(GrVertex)#1 (4) {
   ["x"]=>
-  float(1)
+  float(0)
   ["y"]=>
-  float(1)
+  float(0)
   ["z"]=>
-  float(1)
+  float(0)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -54,9 +77,9 @@ object(GrVertex)#5 (4) {
 }
 GrVertex Object
 (
-    [x] => 1
-    [y] => 1
-    [z] => 1
+    [x] => 0
+    [y] => 0
+    [z] => 0
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -70,6 +93,6 @@ GrVertex Object
         )
 
 )
-x: 1.000000, y: 1.000000, z: 1.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

@@ -1,5 +1,5 @@
 --TEST--
-GrVertex compound non-empty vertext divided by float scalar
+GrVertex compound non-empty vertex divided by float scalar
 --FILE--
 <?php
 $vertex = new GrVertex;

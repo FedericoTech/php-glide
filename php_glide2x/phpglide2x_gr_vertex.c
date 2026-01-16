@@ -487,10 +487,14 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
     for (int cont = 0; cont < floats_num; cont++) {
         if (zend_string_equals_cstr(name, properties[cont], strlen(properties[cont]))) {
 
-            //php_printf("read prop: %s\n", properties[cont]);
+            zval* src = &O_EMBEDDED_P(_GrVertex, object)->z_vertex.arr[cont];
 
-            //we just return the embedded zval
-            return (zval*)&O_EMBEDDED_P(_GrVertex, object)->z_vertex.arr[cont];
+            if (Z_TYPE_P(src) == IS_UNDEF) {
+                break;
+            }
+
+            ZVAL_COPY(rv, src);
+            return rv;
         }
     }
 
@@ -522,15 +526,38 @@ static HashTable* gr_get_properties(zend_object* obj)
     _GrVertex* v = O_EMBEDDED_P(_GrVertex, obj);
 
     HashTable* props = zend_std_get_properties(obj); // start with dynamic properties
+    //all the zvals in the hasttable are of the type 12: callable.
+    //if zval in the hasttable is set to undefined is ignored
 
     for (int cont = 0; cont < floats_num; cont++) {
-
-        if (Z_TYPE(v->z_vertex.arr[cont]) == IS_DOUBLE) {
-            zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &v->z_vertex.arr[cont]);
+        zval tmp;
+        zval* src = &v->z_vertex.arr[cont];
+        
+        if (Z_TYPE_P(src) == IS_DOUBLE) {
+            ZVAL_COPY(&tmp, src); // copy the value for HashTable
+            zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &tmp);
         }
     }
 
     return props;
+}
+
+static int gr_compare(zval* o1, zval* o2) {
+
+    _GrVertex* v1 = Z_EMBEDDED_P(_GrVertex, o1);
+    _GrVertex* v2 = Z_EMBEDDED_P(_GrVertex, o2);
+
+
+    for (int cont = 0; cont < floats_num; cont++) {
+        zval* lhs = &v1->z_vertex.arr[cont];
+        zval* rhs = &v2->z_vertex.arr[cont];
+
+        if (Z_TYPE_P(lhs) == IS_UNDEF && Z_TYPE_P(rhs) == IS_UNDEF) continue;
+        if (Z_TYPE_P(lhs) == IS_UNDEF || Z_TYPE_P(rhs) == IS_UNDEF) return 1; // not equal
+        if (Z_DVAL_P(lhs) != Z_DVAL_P(rhs)) return 1; // values differ
+    }
+
+    return 0; // equal
 }
 
 static zend_object* gr_clone_obj(zend_object* object)
@@ -587,6 +614,7 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     object_handlers.read_property = gr_read_property;
     object_handlers.get_property_ptr_ptr = gr_get_property_ptr_ptr;
     object_handlers.get_properties = gr_get_properties;
+    object_handlers.compare = gr_compare;
     object_handlers.free_obj = gr_free_obj;
 }
 

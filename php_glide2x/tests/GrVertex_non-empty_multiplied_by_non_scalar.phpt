@@ -1,5 +1,5 @@
 --TEST--
-GrVertex compound non-empty vertex multiplied by non-scalar
+GrVertex non-empty vertex multiplied by non-scalar
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,7 +14,7 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex *= 'hello world';
+$vertex2 *= $vertex - 'hello world';
 ?>
 --EXPECTF--
 Fatal error: Uncaught Exception: The scalar must be a number %s
