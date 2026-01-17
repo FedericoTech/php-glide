@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty vertex plus string scalar
+GrVertex non-empty vertex divided by non-empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,20 +14,32 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex2 = $vertex + '3.0';
+$vertex2 = new GrVertex;
 
-var_dump($vertex2);
-print_r($vertex2);
-testGrVertex($vertex2);
+$vertex2->x = 2;
+$vertex2->y = 2.0;
+$vertex2->z = '2';
+$vertex2->r = '2.0';
+$vertex2->g = 2;
+$vertex2->b = 2.0;
+$vertex2->ooz = '2';
+$vertex2->a = '2.0';
+$vertex2->oow = 2;
+
+$vertex3 = $vertex / $vertex2;
+
+var_dump($vertex3);
+print_r($vertex3);
+testGrVertex($vertex3);
 ?>
 --EXPECT--
-object(GrVertex)#5 (10) {
+object(GrVertex)#9 (10) {
   ["x"]=>
-  float(4)
+  float(0.5)
   ["y"]=>
-  float(4)
+  float(0.5)
   ["z"]=>
-  float(4)
+  float(0.5)
   ["r"]=>
   float(1)
   ["g"]=>
@@ -64,9 +76,9 @@ object(GrVertex)#5 (10) {
 }
 GrVertex Object
 (
-    [x] => 4
-    [y] => 4
-    [z] => 4
+    [x] => 0.5
+    [y] => 0.5
+    [z] => 0.5
     [r] => 1
     [g] => 1
     [b] => 1
@@ -86,6 +98,6 @@ GrVertex Object
         )
 
 )
-x: 4.000000, y: 4.000000, z: 4.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: 0.500000, y: 0.500000, z: 0.500000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

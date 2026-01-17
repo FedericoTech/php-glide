@@ -1,45 +1,47 @@
 --TEST--
-GrVertex non-empty vertex plus string scalar
+GrVertex assigment
 --FILE--
 <?php
 $vertex = new GrVertex;
 
 $vertex->x = 1;
-$vertex->y = 1.0;
-$vertex->z = '1';
-$vertex->r = '1.0';
-$vertex->g = 1;
-$vertex->b = 1.0;
-$vertex->ooz = '1';
-$vertex->a = '1.0';
-$vertex->oow = 1;
+$vertex->y = 2.0;
+$vertex->z = '3';
+$vertex->r = '4.0';
+$vertex->g = 5;
+$vertex->b = 6.0;
+$vertex->ooz = '7';
+$vertex->a = '8.0';
+$vertex->oow = 9;
 
-$vertex2 = $vertex + '3.0';
+$vertex2 = $vertex;
 
 var_dump($vertex2);
 print_r($vertex2);
 testGrVertex($vertex2);
+var_dump($vertex2 == $vertex);
+var_dump($vertex2 === $vertex);
 ?>
 --EXPECT--
-object(GrVertex)#5 (10) {
+object(GrVertex)#1 (10) {
   ["x"]=>
-  float(4)
+  float(1)
   ["y"]=>
-  float(4)
+  float(2)
   ["z"]=>
-  float(4)
+  float(3)
   ["r"]=>
-  float(1)
+  float(4)
   ["g"]=>
-  float(1)
+  float(5)
   ["b"]=>
-  float(1)
+  float(6)
   ["ooz"]=>
-  float(1)
+  float(7)
   ["a"]=>
-  float(1)
+  float(8)
   ["oow"]=>
-  float(1)
+  float(9)
   ["tmuvtx"]=>
   object(GrTmuVertices)#2 (2) {
     [0]=>
@@ -64,15 +66,15 @@ object(GrVertex)#5 (10) {
 }
 GrVertex Object
 (
-    [x] => 4
-    [y] => 4
-    [z] => 4
-    [r] => 1
-    [g] => 1
-    [b] => 1
-    [ooz] => 1
-    [a] => 1
-    [oow] => 1
+    [x] => 1
+    [y] => 2
+    [z] => 3
+    [r] => 4
+    [g] => 5
+    [b] => 6
+    [ooz] => 7
+    [a] => 8
+    [oow] => 9
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -86,6 +88,8 @@ GrVertex Object
         )
 
 )
-x: 4.000000, y: 4.000000, z: 4.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: 1.000000, y: 2.000000, z: 3.000000, r: 4.000000, g: 5.000000, b: 6.000000, ooz: 7.000000, a: 8.000000, oow: 9.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+bool(true)
+bool(true)

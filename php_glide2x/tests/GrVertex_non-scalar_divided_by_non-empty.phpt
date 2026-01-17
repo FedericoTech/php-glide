@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty vertex plus string scalar
+GrVertex non-scalar divided by non-empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,7 +14,7 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex2 = $vertex + 'hello world';
+$vertex2 = 'hello world' / $vertex;
 ?>
 --EXPECTF--
 Fatal error: Uncaught Exception: The scalar must be a number %s

@@ -1,5 +1,5 @@
 --TEST--
-GrVertex compound non-empty vector minus integer scalar
+GrVertex compound non-empty vertex minus integer scalar
 --FILE--
 <?php
 $vertex = new GrVertex;

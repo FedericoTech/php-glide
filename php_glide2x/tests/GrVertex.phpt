@@ -36,7 +36,7 @@ $gtv2->oow = 0.5;
 
 echo PHP_EOL;
 
-//now we create a new vector and check the default values...
+//now we create a new vertex and check the default values...
 
 $vertex = new GrVertex;
 

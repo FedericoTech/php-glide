@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty vertex plus string scalar
+GrVertex non-empty vertex plus empty vertex
 --FILE--
 <?php
 $vertex = new GrVertex;
@@ -14,20 +14,24 @@ $vertex->ooz = '1';
 $vertex->a = '1.0';
 $vertex->oow = 1;
 
-$vertex2 = $vertex + '3.0';
+$vertex2 = new GrVertex;
 
-var_dump($vertex2);
-print_r($vertex2);
-testGrVertex($vertex2);
+$vertex3 = $vertex + $vertex2;
+
+var_dump($vertex3);
+print_r($vertex3);
+testGrVertex($vertex3);
+var_dump($vertex == $vertex3);
+var_dump($vertex === $vertex3);
 ?>
 --EXPECT--
-object(GrVertex)#5 (10) {
+object(GrVertex)#9 (10) {
   ["x"]=>
-  float(4)
+  float(1)
   ["y"]=>
-  float(4)
+  float(1)
   ["z"]=>
-  float(4)
+  float(1)
   ["r"]=>
   float(1)
   ["g"]=>
@@ -64,9 +68,9 @@ object(GrVertex)#5 (10) {
 }
 GrVertex Object
 (
-    [x] => 4
-    [y] => 4
-    [z] => 4
+    [x] => 1
+    [y] => 1
+    [z] => 1
     [r] => 1
     [g] => 1
     [b] => 1
@@ -86,6 +90,8 @@ GrVertex Object
         )
 
 )
-x: 4.000000, y: 4.000000, z: 4.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
+x: 1.000000, y: 1.000000, z: 1.000000, r: 1.000000, g: 1.000000, b: 1.000000, ooz: 1.000000, a: 1.000000, oow: 1.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+bool(true)
+bool(false)

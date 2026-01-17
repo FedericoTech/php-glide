@@ -3,7 +3,8 @@
 zend_class_entry* grVertex_ce;
 
 static const char* properties[] = { "x", "y", "z", "r", "g", "b", "ooz", "a", "oow", "tmuvtx" };
-static const floats_num = sizeof (properties) / sizeof (properties[0]) - 1;
+static const properties_num = sizeof(properties) / sizeof(properties[0]);
+static const floats_num = sizeof(properties) / sizeof(properties[0]) - 1;
 
 #ifdef _DEBUG
 ZEND_FUNCTION(testGrVertex)
@@ -493,6 +494,7 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
                 break;
             }
 
+            //we send a copy, no the embedded zv itself (by value)
             ZVAL_COPY(rv, src);
             return rv;
         }
@@ -511,7 +513,31 @@ static zval* gr_get_property_ptr_ptr(zend_object* object, zend_string* member, i
 
             obj->auto_flush = true;
 
-            return (zval*)&obj->z_vertex.arr[cont];
+            //php_printf("%s found for %d\n", properties[cont], type);
+
+            zval *zv = &obj->z_vertex.arr[cont];
+
+            //preventing referencing
+            if (type != BP_VAR_RW) {
+
+                zend_error(E_WARNING,
+                    "Cannot take reference to property %s::%s in this context",
+                    ZSTR_VAL(object->ce->name),
+                    ZSTR_VAL(member)
+                );
+                return NULL;
+            }
+
+            // Disallow reference to uninitialized typed property
+            if (Z_TYPE_P(zv) == IS_UNDEF) {
+                return NULL; // forces read_property -> fatal
+            }
+
+            // Ensure referenceability
+            //ZVAL_MAKE_REF(zv);
+
+            return zv;
+            
         }
     }
 
@@ -540,6 +566,62 @@ static HashTable* gr_get_properties(zend_object* obj)
     }
 
     return props;
+}
+
+static int gr_has_property(zend_object* object, zend_string* member, int has_set_exists, void** cache_slot)
+{
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
+
+    zval* value = NULL;
+
+    for (int cont = 0; cont < floats_num; cont++) {
+        if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
+            value = &v->z_vertex.arr[cont];
+            break;
+        }
+    }
+
+    //php_printf("ello: %d\n", has_set_exists);
+
+    if (value == NULL || Z_TYPE_P(value) == IS_UNDEF) {
+        return 0;
+    }
+
+    switch (has_set_exists) {
+    case ZEND_PROPERTY_EXISTS:
+        return 1;
+
+    case ZEND_PROPERTY_ISSET:
+        return Z_TYPE_P(value) != IS_NULL;
+
+    case ZEND_PROPERTY_NOT_EMPTY:
+        return zend_is_true(value);
+
+    default:
+        return 0;
+    }
+}
+
+static void gr_unset_property(zend_object* object, zend_string* member, void** cache_slot)
+{
+    _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
+
+    zval* value = NULL;
+
+    for (int cont = 0; cont < floats_num; cont++) {
+        if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
+            value = &v->z_vertex.arr[cont];
+            break;
+        }
+    }
+
+    //if property not found
+    if (value == NULL) {
+        return;
+    }
+
+    ZVAL_UNDEF(value);
+
 }
 
 static int gr_compare(zval* o1, zval* o2) {
@@ -614,6 +696,8 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     object_handlers.read_property = gr_read_property;
     object_handlers.get_property_ptr_ptr = gr_get_property_ptr_ptr;
     object_handlers.get_properties = gr_get_properties;
+    object_handlers.has_property = gr_has_property;
+    object_handlers.unset_property = gr_unset_property;
     object_handlers.compare = gr_compare;
     object_handlers.free_obj = gr_free_obj;
 }

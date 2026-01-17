@@ -1,5 +1,5 @@
 --TEST--
-GrVertex empty vector minus non-scalar
+GrVertex empty vertex minus non-scalar
 --FILE--
 <?php
 $vertex = new GrVertex;

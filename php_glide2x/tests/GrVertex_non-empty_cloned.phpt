@@ -14,7 +14,6 @@ $vertex->ooz = '7';
 $vertex->a = '8.0';
 $vertex->oow = 9;
 
-
 $vertex2 = clone $vertex;
 
 var_dump($vertex2);
