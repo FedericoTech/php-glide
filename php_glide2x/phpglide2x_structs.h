@@ -100,19 +100,31 @@ void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS);
 
 extern zend_class_entry* grVertex_ce;
 
+#define GR_X_DEFINED (1 << 0)
+#define GR_Y_DEFINED (1 << 1)
+#define GR_Z_DEFINED (1 << 2)
+
+#define GR_R_DEFINED (1 << 3)
+#define GR_G_DEFINED (1 << 4)
+#define GR_B_DEFINED (1 << 5)
+
+#define GR_OOZ_DEFINED (1 << 6)
+#define GR_A_DEFINED   (1 << 7)
+#define GR_OOW_DEFINED (1 << 8)
+
+#define GR_TMUVTX_DEFINED (1 << 9)
+
 typedef struct _GrVertex {
+    uint16_t defined_mask;
+    double shadow[9];
     union {
+        GrVertex vertex;
         struct {
-            zval x, y, z;
-            zval r, g, b;
-            zval ooz;
-            zval a;
-            zval oow;
+            float props[9];
+            GrTmuVertex tmuvtx[GLIDE_NUM_TMU];
         };
-        zval arr[9];
-    } z_vertex;
+    } grVertex;
     bool auto_flush;
-    GrVertex grVertex;
     zend_object std;
 } _GrVertex;
 
@@ -127,10 +139,10 @@ static inline GrVertex* gr_vertex_auto_flush(zend_object* zo)
     _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
 
     if (v->auto_flush) {
-        flush_grVertex(v, &v->grVertex);
+        flush_grVertex(v, &v->grVertex.vertex);
     }
 
-    return &v->grVertex;
+    return &v->grVertex.vertex;
 }
 
 
