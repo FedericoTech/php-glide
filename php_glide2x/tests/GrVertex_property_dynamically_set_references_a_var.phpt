@@ -10,7 +10,7 @@ echo 'isset: [' . isset($vertex->q) . ']' . PHP_EOL;
 echo 'empty: [' . empty($vertex->q) . ']' . PHP_EOL;
 echo 'prop_ext: [' . property_exists($vertex, 'q') . ']' . PHP_EOL . PHP_EOL;
 
-$ref = 3;
+$ref = 0;
 $vertex->q =& $ref;
 
 echo 'isset: [' . isset($vertex->q) . ']' . PHP_EOL;
@@ -32,7 +32,7 @@ empty: []
 prop_ext: [1]
 
 isset: [1]
-empty: []
+empty: [1]
 prop_ext: [1]
 
 int(3)
