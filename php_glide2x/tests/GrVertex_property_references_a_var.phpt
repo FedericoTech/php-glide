@@ -19,6 +19,8 @@ empty: []
 prop_ext: [1]
 
 
+Warning: main(): Indirect modification of overloaded property GrVertex::$x has no effect in %s on line %d
+
 Fatal error: Uncaught Error: Cannot assign by reference to overloaded object in %s:%d
 Stack trace:
 #0 {main}

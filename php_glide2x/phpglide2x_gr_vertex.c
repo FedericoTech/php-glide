@@ -430,11 +430,27 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
     #define BP_VAR_UNSET		5
     */
 
-    if (0 && (type != BP_VAR_R && type != BP_VAR_IS)) {
+    //php_printf("type: %d\n", type);
+
+
+    if (type == BP_VAR_W) {
+
+        php_error_docref(
+            NULL,
+            E_WARNING,
+            "Indirect modification of overloaded property %s::$%s has no effect",
+            ZSTR_VAL(object->ce->name),
+            ZSTR_VAL(name)
+        );
+    }
+
+    if (0 & (type != BP_VAR_R && type != BP_VAR_IS)) {
+
         zend_throw_error(
             NULL, 
-            "%s properties are virtual and cannot be referenced.",
-            ZSTR_VAL(object->ce->name)
+            "Cannot indirectly modify typed property %s::$%s",
+            ZSTR_VAL(object->ce->name),
+            ZSTR_VAL(name)
         );
         return &EG(uninitialized_zval);
     }

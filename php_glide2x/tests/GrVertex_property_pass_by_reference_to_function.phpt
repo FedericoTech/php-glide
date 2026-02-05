@@ -1,32 +1,36 @@
 --TEST--
-GrVertex chain assigment
+GrVertex property pass by reference to function
 --FILE--
 <?php
+
+function &takes_ref(&$v) {
+    $v = 42;
+
+	return $v;
+}
+
 $vertex = new GrVertex;
 
-$vertex->x = $vertex->y = $vertex->z = 1.3;
+$vertex->x = 3;
 
-var_dump(
-	$vertex->x,
-	$vertex->y,
-	$vertex->z
-);
+$v = takes_ref($vertex->x);
+
+var_dump($v);
 
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
---EXPECT--
-float(1.3)
-float(1.3)
-float(1.3)
-object(GrVertex)#1 (4) {
+--EXPECTF--
+Warning: main(): Indirect modification of overloaded property GrVertex::$x has no effect in %s on line %d
+int(42)
+object(GrVertex)#1 (2) {
   ["x"]=>
-  float(1.3)
+  float(3)
   ["y"]=>
-  float(1.3)
+  uninitialized(float)
   ["z"]=>
-  float(1.3)
+  uninitialized(float)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -63,9 +67,7 @@ object(GrVertex)#1 (4) {
 }
 GrVertex Object
 (
-    [x] => 1.3
-    [y] => 1.3
-    [z] => 1.3
+    [x] => 3
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -79,6 +81,6 @@ GrVertex Object
         )
 
 )
-x: 1.300000, y: 1.300000, z: 1.300000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 3.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

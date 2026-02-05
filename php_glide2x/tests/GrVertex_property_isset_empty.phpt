@@ -1,5 +1,5 @@
 --TEST--
-GrVertex isset and empty properties
+GrVertex property isset and empty
 --FILE--
 <?php
 $vertex = new GrVertex;

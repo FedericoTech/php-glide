@@ -1,5 +1,5 @@
 --TEST--
-GrVertex non-empty write and read
+GrVertex property write and read
 --FILE--
 <?php
 $vertex = new GrVertex;

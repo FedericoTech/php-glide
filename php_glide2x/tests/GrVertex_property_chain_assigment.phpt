@@ -1,52 +1,32 @@
 --TEST--
-GrVertex property gets referenced by a var
+GrVertex property chain assigment
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex->x = 3;
+$vertex->x = $vertex->y = $vertex->z = 1.3;
 
-echo 'isset: [' . isset($vertex->x) . ']' . PHP_EOL;
-echo 'empty: [' . empty($vertex->x) . ']' . PHP_EOL;
-echo 'prop_ext: [' . property_exists($vertex, 'x') . ']' . PHP_EOL . PHP_EOL;
-
-$ref =& $vertex->x;
-
-var_dump($ref);
-
-$ref = 5; //will not have effect
-
-var_dump($ref);
-
-echo 'isset: [' . isset($vertex->x) . ']' . PHP_EOL;
-echo 'empty: [' . empty($vertex->x) . ']' . PHP_EOL;
-echo 'prop_ext: [' . property_exists($vertex, 'x') . ']' . PHP_EOL . PHP_EOL;
-
+var_dump(
+	$vertex->x,
+	$vertex->y,
+	$vertex->z
+);
 
 var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
---EXPECTF--
-isset: [1]
-empty: []
-prop_ext: [1]
-
-
-Warning: main(): Indirect modification of overloaded property GrVertex::$x has no effect in %s on line %d
-float(3)
-int(5)
-isset: [1]
-empty: []
-prop_ext: [1]
-
-object(GrVertex)#1 (2) {
+--EXPECT--
+float(1.3)
+float(1.3)
+float(1.3)
+object(GrVertex)#1 (4) {
   ["x"]=>
-  float(3)
+  float(1.3)
   ["y"]=>
-  uninitialized(float)
+  float(1.3)
   ["z"]=>
-  uninitialized(float)
+  float(1.3)
   ["r"]=>
   uninitialized(float)
   ["g"]=>
@@ -83,7 +63,9 @@ object(GrVertex)#1 (2) {
 }
 GrVertex Object
 (
-    [x] => 3
+    [x] => 1.3
+    [y] => 1.3
+    [z] => 1.3
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -97,6 +79,6 @@ GrVertex Object
         )
 
 )
-x: 3.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 1.300000, y: 1.300000, z: 1.300000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

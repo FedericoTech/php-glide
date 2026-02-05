@@ -1,5 +1,5 @@
 --TEST--
-GrVertex assigment
+GrVertex property assigment
 --FILE--
 <?php
 $vertex = new GrVertex;
