@@ -115,8 +115,22 @@ extern zend_class_entry* grVertex_ce;
 #define GR_TMUVTX_DEFINED (1 << 9)
 
 typedef struct _GrVertex {
-    uint16_t defined_mask;
-    double shadow[9];
+    union {
+        zval arr[9];
+        struct {
+            zval x;
+            zval y;
+            zval z;
+
+            zval r;
+            zval g;
+            zval b;
+
+            zval ooz;
+            zval a;
+            zval oow;
+        } fields;
+    } zvals;
     union {
         GrVertex vertex;
         struct {

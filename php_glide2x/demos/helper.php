@@ -211,34 +211,43 @@ function applyMatrix($v, $m) {
 
 function rotateX(GrVertex $v, float $angle) : GrVertex
 {
-    $r = clone $v;
+    //$r = clone $v;
+    $y = $v->y;
+    $z = $v->z;
+
     $s = sin($angle);
     $c = cos($angle);
 
-    $v->y = $r->y * $c - $r->z * $s;
-    $v->z = $r->y * $s + $r->z * $c;
+    $v->y = $y * $c - $z * $s;
+    $v->z = $y * $s + $z * $c;
     return $v;
 }
 
 function rotateY(GrVertex $v, float $angle) : GrVertex
 {
-    $r = clone $v;
+    //$r = clone $v;
+    $x = $v->x;
+    $z = $v->z;
+
     $s = sin($angle);
     $c = cos($angle);
 
-    $v->x = $r->x * $c - $r->z * $s;
-    $v->z = $r->x * $s + $r->z * $c;
+    $v->x = $x * $c - $z * $s;
+    $v->z = $x * $s + $z * $c;
     return $v;
 }
 
 function rotateZ(GrVertex $v, float $angle) : GrVertex
 {
-    $r = clone $v;
+    //$r = clone $v;
+    $x = $v->x;
+    $y = $v->y;
+
     $s = sin($angle);
     $c = cos($angle);
 
-    $v->x = $r->x * $c - $r->y * $s;
-    $v->y = $r->x * $s + $r->y * $c;
+    $v->x = $x * $c - $y * $s;
+    $v->y = $x * $s + $y * $c;
     return $v;
 }
 

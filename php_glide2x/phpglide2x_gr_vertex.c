@@ -82,12 +82,10 @@ PHP_METHOD(GrVertex, getLength)
 
     _GrVertex* obj = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(ZEND_THIS));
 
-    //flush_grVertex(obj, &obj->grVertex);
-
     RETURN_DOUBLE(sqrt(
-          obj->grVertex.vertex.x * obj->grVertex.vertex.x
-        + obj->grVertex.vertex.y * obj->grVertex.vertex.y
-        + obj->grVertex.vertex.z * obj->grVertex.vertex.z
+        Z_DVAL(obj->zvals.fields.x) * Z_DVAL(obj->zvals.fields.x)
+        + Z_DVAL(obj->zvals.fields.y) * Z_DVAL(obj->zvals.fields.y)
+        + Z_DVAL(obj->zvals.fields.z) * Z_DVAL(obj->zvals.fields.z)
     ));
 }
 
@@ -169,7 +167,11 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     //it sets the handlers
     grVertex->std.handlers = &object_handlers;
            
-    grVertex->defined_mask = 0; //all marked as undefined
+    //all marked as undefined
+    for (int cont = 0; cont < floats_num; cont++) {
+
+        ZVAL_UNDEF(&grVertex->zvals.arr[cont]);
+    }
 
     //grVertex->auto_flush = true;
 
@@ -198,7 +200,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
         object_init_ex(&tmuvtx_obj->tmu[i], grTmuVertex_ce);
     }
 
-    grVertex->defined_mask = GR_TMUVTX_DEFINED; //only the last one is defined
+    //grVertex->defined_mask = GR_TMUVTX_DEFINED; //only the last one is defined
     
 
     //it returns the zend object
@@ -222,7 +224,10 @@ static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
     case IS_STRING: {
         // produce binary representation
         zend_string* buf = zend_string_alloc(sizeof(GrVertex), 0);
-        memcpy(ZSTR_VAL(buf), &v->grVertex, sizeof(GrVertex));
+
+        flush_grVertex(v, (GrVertex *) ZSTR_VAL(buf));
+
+        //memcpy(ZSTR_VAL(buf), &v->grVertex, sizeof(GrVertex));
         ZSTR_VAL(buf)[sizeof(GrVertex)] = '\0';
 
         ZVAL_STR(retval, buf);
@@ -273,30 +278,30 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         switch (opcode) {
         case ZEND_ADD:
             for (int cont = 0; cont < 3; cont++) {
-                v_out->shadow[cont] += v2->shadow[cont];
-                v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-                v_out->defined_mask |= (1 << cont);
+                SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) + Z_DVAL(v2->zvals.arr[cont]));
+                v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
             }
             break;
         case ZEND_SUB:
             for (int cont = 0; cont < 3; cont++) {
-                v_out->shadow[cont] -= v2->shadow[cont];
-                v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-                v_out->defined_mask |= (1 << cont);
+                SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) - Z_DVAL(v2->zvals.arr[cont]));
+                v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
             }
             break;
         case ZEND_MUL:
             for (int cont = 0; cont < 3; cont++) {
-                v_out->shadow[cont] *= v2->shadow[cont];
-                v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-                v_out->defined_mask |= (1 << cont);
+                SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) * Z_DVAL(v2->zvals.arr[cont]));
+                v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
             }
             break;
         case ZEND_DIV:
             for (int cont = 0; cont < 3; cont++) {
-                v_out->shadow[cont] /= v2->shadow[cont];
-                v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-                v_out->defined_mask |= (1 << cont);
+                SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) / Z_DVAL(v2->zvals.arr[cont]));
+                v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
             }
             break;
         default:
@@ -360,44 +365,44 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     switch (opcode) {
     case ZEND_ADD:
         for (int cont = 0; cont < 3; cont++) {
-            v_out->shadow[cont] += scalar;
-            v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-            v_out->defined_mask |= (1 << cont);
+            SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+            ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) + scalar);
+            v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
         }
         break;
     case ZEND_SUB:
         for (int cont = 0; cont < 3; cont++) {
+            SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
 
             if (op1_is_vec) {
-                v_out->shadow[cont] -= scalar;
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) - scalar);
             }
             else {
-                v_out->shadow[cont] = scalar - v_out->shadow[cont];
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], scalar - Z_DVAL(v_out->zvals.arr[cont]));
             }
 
-            v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-            v_out->defined_mask |= (1 << cont);
+            v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
         }
         break;
     case ZEND_MUL:
         for (int cont = 0; cont < 3; cont++) {
-            v_out->shadow[cont] *= scalar;
-            v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-            v_out->defined_mask |= (1 << cont);
+            SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
+            ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) * scalar);
+            v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
         }
         break;
     case ZEND_DIV:
         for (int cont = 0; cont < 3; cont++) {
+            SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
 
             if (op1_is_vec) {
-                v_out->shadow[cont] /= scalar;
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) / scalar);
             }
             else {
-                v_out->shadow[cont] = scalar / v_out->shadow[cont];
+                ZVAL_DOUBLE(&v_out->zvals.arr[cont], scalar / Z_DVAL(v_out->zvals.arr[cont]));
             }
 
-            v_out->grVertex.props[cont] = (FxFloat)v_out->shadow[cont];
-            v_out->defined_mask |= (1 << cont);
+            v_out->grVertex.props[cont] = (FxFloat)Z_DVAL(v_out->zvals.arr[cont]);
         }
         break;
     default:
@@ -463,15 +468,12 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
 
                 _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
 
-                //php_printf("%s [%d]: - %f\n", properties[cont], v->defined_mask & (1 << cont), v->shadow[cont]);
+                if (Z_TYPE_P(&v->zvals.arr[cont]) == IS_DOUBLE) {
 
-                if (v->defined_mask & (1 << cont)) {
-                    ZVAL_DOUBLE(rv, v->shadow[cont]);
-
+                    //php_printf("%s: %d \n", properties[cont], Z_TYPE_P(&v->zvals.arr[cont]));
+                    ZVAL_COPY(rv, &v->zvals.arr[cont]);
                     return rv;
                 }
-
-                break;
             }
         }
     }
@@ -495,16 +497,14 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
 
             _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
 
-            //if the value is the right type...
-            v->shadow[cont] = Z_TYPE_P(value) == IS_DOUBLE
-                ? Z_DVAL_P(value)
-                : zval_get_double(value)
-            ;
+            ZVAL_DOUBLE(&v->zvals.arr[cont],
+                Z_TYPE_P(value) == IS_DOUBLE
+                    ? Z_DVAL_P(value)
+                    : zval_get_double(value)
+            );
 
-            v->grVertex.props[cont] = (FxFloat)v->shadow[cont];
-
-            v->defined_mask |= (1 << cont);
-            
+            v->grVertex.props[cont] = (FxFloat)Z_DVAL(v->zvals.arr[cont]);
+                        
             return value;
         }
     }
@@ -562,12 +562,11 @@ static HashTable* gr_get_properties(zend_object* obj)
 
     for (int cont = 0; cont < floats_num; cont++) {
 
-        if (v->defined_mask & (1 << cont)) {
+        if (Z_TYPE(v->zvals.arr[cont]) != IS_UNDEF) {
             zval tmp;
 
-            //php_printf("%f %d\n", v->shadow[cont], cont);
-
-            ZVAL_DOUBLE(&tmp, v->shadow[cont]);
+            //php_printf("%f %d\n", v->zvals.arr[cont], cont);
+            ZVAL_COPY(&tmp, &v->zvals.arr[cont]);
 
             zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &tmp);
         }
@@ -602,14 +601,16 @@ static int gr_has_property(zend_object* object, zend_string* member, int has_set
                 return 1;
 
             case ZEND_PROPERTY_ISSET:
-                return (v->defined_mask & (1 << cont)) != 0;
+                return Z_TYPE(v->zvals.arr[cont]) != IS_UNDEF;
 
             case ZEND_PROPERTY_NOT_EMPTY:
-                /* empty(): false if undefined or falsy */
-                if (!(v->defined_mask & (1 << cont))) {
+
+                if (Z_TYPE(v->zvals.arr[cont]) == IS_UNDEF) {
                     return 0;
                 }
-                return v->shadow[cont] != 0.0;
+
+                /* if guaranteed double otherwise */
+                return Z_DVAL(v->zvals.arr[cont]) != 0.0;
             }
             break;
         }
@@ -633,10 +634,9 @@ static void gr_unset_property(zend_object* object, zend_string* member, void** c
 
             _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
 
-            v->defined_mask &= ~(1 << cont);
+            ZVAL_UNDEF(&v->zvals.arr[cont]);
 
             v->grVertex.props[cont] = 0.0;
-            v->shadow[cont] = 0.0;
 
             return;
         }
@@ -657,13 +657,12 @@ static int gr_compare(zval* o1, zval* o2)
     _GrVertex* v1 = Z_EMBEDDED_P(_GrVertex, o1);
     _GrVertex* v2 = Z_EMBEDDED_P(_GrVertex, o2);
 
-    //if the masks are different, that's a clue.
-    if (v1->defined_mask != v2->defined_mask) {
-        return 1;
-    }
-
     for (int cont = 0; cont < floats_num; cont++) {
-        if (v1->grVertex.props[cont] != v2->grVertex.props[cont]) {
+
+        //if the masks are different, that's a clue.
+        if (Z_TYPE_P(&v1->zvals.arr[cont]) != Z_TYPE_P(&v2->zvals.arr[cont])
+            || Z_DVAL_P(&v1->zvals.arr[cont]) != Z_DVAL_P(&v2->zvals.arr[cont])
+        ) {
             return 1;
         }
     }
@@ -686,11 +685,13 @@ static zend_object* gr_clone_obj(zend_object* object)
     _GrVertex* clone = O_EMBEDDED_P(_GrVertex, new_obj);
     _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
 
-    clone->defined_mask = orig->defined_mask;
+
     clone->grVertex.vertex = orig->grVertex.vertex;
 
-    memcpy(clone->shadow, orig->shadow, sizeof(orig->shadow));
-            
+    for (int cont = 0; cont < floats_num; cont++) {
+        ZVAL_COPY(&clone->zvals.arr[cont], &orig->zvals.arr[cont]);
+    }
+                
     zend_objects_clone_members(&clone->std, &orig->std);
     
     return new_obj;
@@ -738,16 +739,9 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
     for (int cont = 0; cont < floats_num; cont++) {
 
-        zval* value = zend_read_property(
-            grVertex_ce, (zend_object*) &grVertex->std,
-            properties[cont], strlen(properties[cont]),
-            0,
-            &rv
-        );
-
-        ((FxFloat*)&buffer->x)[cont] = (FxFloat)(Z_ISUNDEF_P(value)
+        ((FxFloat*)&buffer->x)[cont] = (FxFloat)(Z_ISUNDEF_P(&grVertex->zvals.arr[cont])
             ? 0.0
-            : (FxFloat)Z_DVAL_P(value)
+            : Z_DVAL_P(&grVertex->zvals.arr[cont])
         );
     }
 
@@ -771,9 +765,8 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 {
     for (int cont = 0; cont < floats_num; cont++) {
 
-        zend_update_property_double(
-            grVertex_ce, (zend_object*)&grVertex->std,
-            properties[cont], strlen(properties[cont]),
+        ZVAL_DOUBLE(
+            &grVertex->zvals.arr[cont],
             ((FxFloat*)buffer)[cont]
         );
     }

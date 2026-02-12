@@ -116,7 +116,7 @@ function draw()
 
             $vert->y *= -1; // turn the car
 
-            $vert = project(
+            project(
                 $vert,  // vertex
                 1,     // $fov
                 1,    // $aspect

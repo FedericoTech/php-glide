@@ -70,6 +70,12 @@ grCullMode( GrCullMode_t::GR_CULL_NEGATIVE );
 
 $event = new sfEvent;
 
+$transformed = [];
+
+foreach ($vertices as $v) {
+    $transformed[] = clone $v;   // allocate once
+}
+
 while(sfWindow_isOpen($window)) {
 
     $time = microtime(true);
@@ -84,15 +90,19 @@ while(sfWindow_isOpen($window)) {
 
     grBufferClear( 0x00000000, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST );
 
-    $transformed = [];
-    foreach($vertices as $vertex){
-        $v = clone $vertex;
+    foreach($vertices as $index => $vertex){
 
-        $v = rotateX($v, $angle);
-        $v = rotateY($v, $angle);
-        $v = rotateZ($v, $angle);
+        foreach ($vertex as $prop => $value) {
+            $transformed[$index]->$prop = $value;
+        }
 
-        $v = project($v, 1.0, 1.0, 3.0); // Basic projection
+        $v = $transformed[$index];
+
+        rotateX($v, $angle);
+        rotateY($v, $angle);
+        rotateZ($v, $angle);
+
+        project($v, 1.0, 1.0, 3.0); // Basic projection
         $v->x = ($v->x + 1.0) * 320.0; // convert to screen
         $v->y = (1.0 - $v->y) * 240.0;
         $v->z = (1.0 - $v->z) * 240.0;
@@ -101,7 +111,7 @@ while(sfWindow_isOpen($window)) {
 
         //$v->flush();
 
-        $transformed[] = $v;
+        //$transformed[$index] = $v;
     }
 
     foreach($cubeIndices as $indices){
