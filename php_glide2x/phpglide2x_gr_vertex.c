@@ -73,21 +73,12 @@ PHP_METHOD(GrVertex, getLength)
 
     _GrVertex* obj = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(ZEND_THIS));
 
-    zval rv, *value = NULL;
+    zval *value = NULL;
     double rtn = 0;
 
     for (int cont = 0; cont < 3; cont++) {
 
         value = OBJ_PROP(&obj->std, obj->offsets.arr[cont]);
-
-        /*
-        value = zend_read_property(
-            grVertex_ce, Z_OBJ_P(ZEND_THIS),
-            properties[cont], strlen(properties[cont]),
-            0, &rv
-        );
-        */
-
         rtn += Z_DVAL_P(value) * Z_DVAL_P(value);
     }
 
@@ -103,8 +94,6 @@ PHP_METHOD(GrVertex, setAutoload)
     ZEND_PARSE_PARAMETERS_END();
 
     _GrVertex* obj = O_EMBEDDED_P(_GrVertex, Z_OBJ_P(ZEND_THIS));
-
-    //obj->auto_flush = autoload;
 }
 
 PHP_METHOD(GrVertex, isAutoload)
@@ -175,15 +164,9 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     for (int cont = 0; cont < floats_num; cont++) {
         info = zend_hash_str_find_ptr(&ce->properties_info, properties[cont], strlen(properties[cont]));
 
-        php_printf("%s %d %d\n", properties[cont], cont, info->offset);
-        
-
         grVertex->offsets.arr[cont] = info->offset;
     }
 
-    //zend_error(E_ERROR, "Fatal extension error");
-
-    
     zval tmuvtx;
     // Create GrTmuVertices object
     object_init_ex(&tmuvtx, grTmuVertices_ce);
@@ -208,6 +191,28 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
 
     //it returns the zend object
     return &grVertex->std;
+}
+
+static zend_object* gr_clone_obj(zend_object* object)
+{
+#ifdef DEBUG_HANDLERS
+    php_printf(
+        "%s\n",
+        __FUNCTION__
+    );
+#endif  //DEBUG_HANDLERS
+
+    // Step 1: Call the default clone handler
+    zend_object* new_obj = gr_new_obj(object->ce);
+
+    _GrVertex* clone = O_EMBEDDED_P(_GrVertex, new_obj);
+    _GrVertex* orig = O_EMBEDDED_P(_GrVertex, object);
+
+    clone->offsets = orig->offsets;
+
+    zend_objects_clone_members(&clone->std, &orig->std);
+
+    return new_obj;
 }
 
 static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
@@ -254,13 +259,12 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     );
 #endif // DEBUG_HANDLERS
 
-    bool op1_is_vec = Z_TYPE_P(op1) == IS_OBJECT && Z_OBJCE_P(op1) == grVertex_ce;
+    bool op1_is_vec = EXPECTED(Z_TYPE_P(op1) == IS_OBJECT && Z_OBJCE_P(op1) == grVertex_ce);
 
     bool op2_is_vec = Z_TYPE_P(op2) == IS_OBJECT && Z_OBJCE_P(op2) == grVertex_ce;
 
     _GrVertex* v_out = NULL;
-    zval rv, * value1 = NULL;
-    double rst;
+    zval *value1 = NULL;
 
     //if two of them are vectors...
     if (op1_is_vec && op2_is_vec) {
@@ -284,28 +288,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         for (int cont = 0; cont < 3; cont++) {
 
             value1 = OBJ_PROP(&v_out->std, v_out->offsets.arr[cont]);
-
-
-            //if(Z_TYPE(value1) == IS_UNDEF){}
-
-            /*
-            value1 = zend_read_property(
-                grVertex_ce, &v_out->std,
-                properties[cont], strlen(properties[cont]),
-                0, &rv
-            );
-            */
-
             value2 = OBJ_PROP(&v2->std, v2->offsets.arr[cont]);
-
-            
-            /*
-            value2 = zend_read_property(
-                grVertex_ce, &v2->std,
-                properties[cont], strlen(properties[cont]),
-                0, &rv
-            );
-            */
 
             switch (opcode) {
             case ZEND_ADD:
@@ -324,13 +307,6 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
                 zend_throw_exception(NULL, "Unsupported operation", 0);
                 return FAILURE;
             }
-            /*
-            zend_update_property_double(
-                grVertex_ce, &v_out->std,
-                properties[cont], strlen(properties[cont]),
-                rst
-            );
-            */
         }
         
         return SUCCESS;
@@ -351,17 +327,20 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         z_vector = op2;
     }
 
-    if (Z_TYPE_P(z_scalar) != IS_LONG
-        && Z_TYPE_P(z_scalar) != IS_DOUBLE
-        && (
-            Z_TYPE_P(z_scalar) != IS_STRING
-            || is_numeric_string(
-                Z_STRVAL_P(z_scalar),
-                Z_STRLEN_P(z_scalar),
-                NULL,
-                NULL,
-                0
-            ) == 0
+    if (
+        UNEXPECTED(
+            Z_TYPE_P(z_scalar) != IS_LONG
+            && Z_TYPE_P(z_scalar) != IS_DOUBLE
+            && (
+                Z_TYPE_P(z_scalar) != IS_STRING
+                || is_numeric_string(
+                    Z_STRVAL_P(z_scalar),
+                    Z_STRLEN_P(z_scalar),
+                    NULL,
+                    NULL,
+                    0
+                ) == 0
+            )
         )
     ) {
         zend_throw_exception(NULL, "The scalar must be a number", 0);
@@ -385,14 +364,6 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     for (int cont = 0; cont < 3; cont++) {
 
         value1 = OBJ_PROP(&v_out->std, v_out->offsets.arr[cont]);
-
-        /*
-        value1 = zend_read_property(
-            grVertex_ce, &v_out->std,
-            properties[cont], strlen(properties[cont]),
-            0, &rv
-        );
-        */
 
         switch (opcode) {
         case ZEND_ADD:
@@ -419,13 +390,6 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
             zend_throw_exception(NULL, "Unsupported operation", 0);
             return FAILURE;
         }
-        /*
-        zend_update_property_double(
-            grVertex_ce, &v_out->std,
-            properties[cont], strlen(properties[cont]),
-            rst
-        );
-        */
     }
 
     return SUCCESS;
@@ -441,7 +405,7 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     //we set the address of the beginning of the whole embedded data
     object_handlers.offset = XtOffsetOf(_GrVertex, std);
 
-
+    //object_handlers.clone_obj = gr_clone_obj;
     object_handlers.do_operation = gr_operation;
     object_handlers.cast_object = gr_cast_object;
 }
@@ -452,20 +416,8 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
     for (int cont = 0; cont < floats_num; cont++) {
 
-        //grVertex->offsets.arr[cont
-
-        php_printf("%s %d %d\n", properties[cont], cont, grVertex->offsets.arr[cont]);
-
         value = OBJ_PROP(&grVertex->std, grVertex->offsets.arr[cont]);
-
-        /*
-        value = zend_read_property(
-            grVertex_ce, (zend_object*)&grVertex->std,
-            properties[cont], strlen(properties[cont]),
-            1, &rv
-        );
-        */
-
+        
         ((FxFloat*)&buffer->x)[cont] = (FxFloat)(Z_ISUNDEF_P(value)
             ? 0.0
             : Z_DVAL_P(value)
@@ -497,13 +449,6 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
         value = OBJ_PROP(&grVertex->std, grVertex->offsets.arr[cont]);
 
         ZVAL_DOUBLE(value, ((FxFloat*)buffer)[cont]);
-        /*
-        zend_update_property_double(
-            grVertex_ce, &grVertex->std, 
-            properties[cont], strlen(properties[cont]),
-            ((FxFloat*)buffer)[cont]
-        );
-        */
     }
 
     zval grTmuVertices;

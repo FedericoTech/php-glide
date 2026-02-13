@@ -117,11 +117,12 @@ extern zend_class_entry* grVertex_ce;
 typedef struct _GrVertex {
     union {
         struct {
-            uint32_t x, y, z;
-            uint32_t r, g, b;
-            uint32_t ooz, a, oow;
+            zend_long x, y, z;
+            zend_long r, g, b;
+            zend_long ooz, a, oow;
         } name;
-        uint32_t arr[9];
+        
+        zend_long arr[9];
     } offsets;
     zend_object std;
 } _GrVertex;
