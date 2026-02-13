@@ -116,29 +116,13 @@ extern zend_class_entry* grVertex_ce;
 
 typedef struct _GrVertex {
     union {
-        zval arr[9];
         struct {
-            zval x;
-            zval y;
-            zval z;
-
-            zval r;
-            zval g;
-            zval b;
-
-            zval ooz;
-            zval a;
-            zval oow;
-        } fields;
-    } zvals;
-    union {
-        GrVertex vertex;
-        struct {
-            float props[9];
-            GrTmuVertex tmuvtx[GLIDE_NUM_TMU];
-        };
-    } grVertex;
-    bool auto_flush;
+            uint32_t x, y, z;
+            uint32_t r, g, b;
+            uint32_t ooz, a, oow;
+        } name;
+        uint32_t arr[9];
+    } offsets;
     zend_object std;
 } _GrVertex;
 
@@ -147,18 +131,6 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer);
 void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex);
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
-
-static inline GrVertex* gr_vertex_auto_flush(zend_object* zo)
-{
-    _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
-
-    if (v->auto_flush) {
-        flush_grVertex(v, &v->grVertex.vertex);
-    }
-
-    return &v->grVertex.vertex;
-}
-
 
 
 extern zend_class_entry* grState_ce;
