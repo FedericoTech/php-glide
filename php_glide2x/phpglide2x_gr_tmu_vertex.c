@@ -93,6 +93,14 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     //it sets the handlers
     grTmuVertex->std.handlers = &object_handlers;
 
+    zend_property_info* info;
+
+    for (int cont = 0; cont < props_num; cont++) {
+        info = zend_hash_str_find_ptr(&ce->properties_info, properties[cont], strlen(properties[cont]));
+
+        grTmuVertex->offsets[cont] = info->offset;
+    }
+
     //it returns the zend object
     return &grTmuVertex->std;
 }
@@ -114,21 +122,23 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 
     for (int cont = 0; cont < props_num; cont++) {
         //this way we don't use zend_read_property
-        value = OBJ_PROP(&grTmuVertex->std, grTmuVertex_ce->properties_info_table[cont]->offset);
+        value = OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets[cont]);
 
-        ((FxFloat*)&buffer->sow)[cont] = (FxFloat)(Z_ISUNDEF_P(value) ? 0.0 : Z_DVAL_P(value));
+        ((FxFloat*)&buffer->sow)[cont] = (FxFloat)(Z_ISUNDEF_P(value) 
+            ? 0.0 
+            : Z_DVAL_P(value)
+        );
     }
 }
 
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
 {
+    zval* value = NULL;
+
     for (int cont = 0; cont < props_num; cont++) {
-        zend_update_property_double(
-            grTMUConfig_ce,
-            &grTmuVertex->std,
-            properties[cont],
-            strlen(properties[cont]),
-            (zend_long)((FxFloat*)buffer)[cont]
-        );
+
+        value = OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets[cont]);
+
+        ZVAL_DOUBLE(value, ((FxFloat*)buffer)[cont]);
     }
 }
