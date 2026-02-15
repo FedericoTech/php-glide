@@ -18,6 +18,14 @@ PHP_INI_BEGIN()
 	PHP_INI_ENTRY("phpglide2x.log_level", "debug", PHP_INI_ALL, NULL)
 PHP_INI_END()
 
+ZEND_DECLARE_MODULE_GLOBALS(phpglide2x)
+
+static void php_phpglide2x_init_globals(zend_phpglide2x_globals* glide_globals)
+{
+	glide_globals->tmp_vertices = NULL;
+	glide_globals->tmp_capacity = 0;
+}
+
 /**
  * Module setup
  */
@@ -41,6 +49,8 @@ PHP_MINIT_FUNCTION(phpglide2x)
 		zend_error_noreturn(E_ERROR, "[glide2x] Conflict detected: both 'glide2x' and 'glide3x' extensions are loaded.\n");
 
 	}
+
+	ZEND_INIT_MODULE_GLOBALS(phpglide2x, php_phpglide2x_init_globals, NULL);
 
 	REGISTER_INI_ENTRIES();
 
@@ -118,6 +128,12 @@ PHP_RSHUTDOWN_FUNCTION(phpglide2x)
 	// destruct registered callbacks
 
 	grGlideShutdown();
+
+	if (GLIDE_G(tmp_vertices)) {
+		efree(GLIDE_G(tmp_vertices));
+		GLIDE_G(tmp_vertices) = NULL;
+		GLIDE_G(tmp_capacity) = 0;
+	}
 
 	return SUCCESS;
 }
