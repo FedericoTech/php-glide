@@ -12,12 +12,12 @@
 ZEND_TSRMLS_CACHE_EXTERN()
 # endif
 
-ZEND_DECLARE_MODULE_GLOBALS(phpglide2x)
-
 PHP_INI_BEGIN()
 	PHP_INI_ENTRY("phpglide2x.enable_logging", "1", PHP_INI_ALL, NULL)
 	PHP_INI_ENTRY("phpglide2x.log_level", "debug", PHP_INI_ALL, NULL)
 PHP_INI_END()
+
+ZEND_DECLARE_MODULE_GLOBALS(phpglide2x)
 
 static void php_phpglide2x_init_globals(zend_phpglide2x_globals* glide_globals)
 {
