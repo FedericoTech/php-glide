@@ -2,6 +2,31 @@
 #include "stdafx.h"
 #include "phpglide2x_structs.h"
 
+static inline GrVertex* glide_ensure_vertex_buffer(uint32_t needed)
+{
+	if (needed > GLIDE_G(tmp_capacity)) {
+
+		uint32_t new_capacity = needed;
+
+		if (GLIDE_G(tmp_vertices)) {
+
+			GLIDE_G(tmp_vertices) = erealloc(
+				GLIDE_G(tmp_vertices),
+				sizeof(GrVertex) * new_capacity
+			);
+		}
+		else {
+			GLIDE_G(tmp_vertices) = emalloc(
+				sizeof(GrVertex) * new_capacity
+			);
+		}
+
+		GLIDE_G(tmp_capacity) = new_capacity;
+	}
+
+	return GLIDE_G(tmp_vertices);
+}
+
 PHP_FUNCTION(grAADrawLine)
 {
 	zend_object* zva = NULL;
@@ -46,7 +71,8 @@ PHP_FUNCTION(grAADrawPolygon)
 
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
 
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
+	GrVertex* vertices = glide_ensure_vertex_buffer(vertex_count);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -68,7 +94,7 @@ PHP_FUNCTION(grAADrawPolygon)
 		) {
 			//we release the resources
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist must contain only integers", 0);
 			return;
 		//we make it integer
@@ -80,7 +106,7 @@ PHP_FUNCTION(grAADrawPolygon)
 		//we check the index is valid
 		if (index < 0 || index > vertex_count) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist contains an invalid number. it must be between 0 to nVerts", 0);
 		}
 
@@ -98,7 +124,7 @@ PHP_FUNCTION(grAADrawPolygon)
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -115,7 +141,7 @@ PHP_FUNCTION(grAADrawPolygon)
 	grAADrawPolygon(nVerts, indices, vertices);
 
 	efree(indices);
-	efree(vertices);
+	//efree(vertices);
 }
 
 PHP_FUNCTION(grAADrawPolygonVertexList)
@@ -135,7 +161,8 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 	}
 
 	// Allocate memory
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+	GrVertex* vertices = glide_ensure_vertex_buffer(nVerts);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -147,7 +174,7 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -162,7 +189,7 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 
 	grAADrawPolygonVertexList(nVerts, vertices);
 
-	efree(vertices);
+	//efree(vertices);
 
 	//RETURN_NULL();
 }
@@ -228,7 +255,8 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
 
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
+	GrVertex* vertices = glide_ensure_vertex_buffer(vertex_count);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -251,7 +279,7 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 		) {
 			//we release the resources
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist must contain only integers", 0);
 			return;
 			//we make it integer
@@ -263,7 +291,7 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 		//we check the index is valid
 		if (index < 0 || index > nVerts || index > vertex_count) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist must contain invalid number. must be between 0 to nVerts", 0);
 		}
 
@@ -281,7 +309,7 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -297,7 +325,7 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 	grDrawPlanarPolygon(nVerts, indices, vertices);
 
 	efree(indices);
-	efree(vertices);
+	//efree(vertices);
 }
 
 PHP_FUNCTION(grDrawPlanarPolygonVertexList)
@@ -317,7 +345,8 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 	}
 
 	// Allocate memory
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+	GrVertex* vertices = glide_ensure_vertex_buffer(nVerts);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -329,7 +358,7 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 			) {
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -344,7 +373,7 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 
 	grDrawPlanarPolygonVertexList(nVerts, vertices);
 
-	efree(vertices);
+	//efree(vertices);
 }
 
 PHP_FUNCTION(grDrawPoint)
@@ -375,7 +404,8 @@ PHP_FUNCTION(grDrawPolygon)
 
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
 
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
+	GrVertex* vertices = glide_ensure_vertex_buffer(vertex_count);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -398,7 +428,7 @@ PHP_FUNCTION(grDrawPolygon)
 		) {
 			//we release the resources
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist must contain only integers", 0);
 			return;
 			//we make it integer
@@ -410,7 +440,7 @@ PHP_FUNCTION(grDrawPolygon)
 		//we check the index is valid
 		if (index < 0 || index > vertex_count) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "ilist contains an invalid number. it must be between 0 to nVerts", 0);
 		}
 
@@ -428,7 +458,7 @@ PHP_FUNCTION(grDrawPolygon)
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
 			efree(indices);
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -444,7 +474,7 @@ PHP_FUNCTION(grDrawPolygon)
 	grDrawPolygon(nVerts, indices, vertices);
 
 	efree(indices);
-	efree(vertices);
+	//efree(vertices);
 }
 
 PHP_FUNCTION(grDrawPolygonVertexList)
@@ -464,7 +494,8 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 	}
 
 	// Allocate memory
-	GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+	//GrVertex* vertices = emalloc(sizeof(GrVertex) * nVerts);
+	GrVertex* vertices = glide_ensure_vertex_buffer(nVerts);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -476,7 +507,7 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 		if (Z_TYPE_P(val) != IS_OBJECT
 			|| !instanceof_function(Z_OBJCE_P(val), grVertex_ce)
 		) {
-			efree(vertices);
+			//efree(vertices);
 			zend_throw_exception(NULL, "Array must contain only instances of GrVertex", 0);
 			return;
 		}
@@ -491,7 +522,7 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 
 	grDrawPolygonVertexList(nVerts, vertices);
 
-	efree(vertices);
+	//efree(vertices);
 }
 
 PHP_FUNCTION(grDrawTriangle)
