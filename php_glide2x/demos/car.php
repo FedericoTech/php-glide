@@ -305,4 +305,6 @@ grGlideShutdown();
 
 sfWindow_close($window);
 
+echo 'average frame: ' . ($frameCount / $totalFrameTime) . PHP_EOL;
+
 echo 'done';
