@@ -48,10 +48,13 @@ $zAngle = 0.0;
 
 $light = normalize([0.5, 0.5, 0.5]);
 
+$totalFrameTime = 0;
+$frameCount = 0;
+
 function draw()
 {
     $time = microtime(true);
-    global $parser, $window, $xAngle, $yAngle, $zAngle;
+    global $parser, $window, $xAngle, $yAngle, $zAngle, $totalFrameTime, $frameCount;
 
     grBufferClear(0x202020, 0, GrDepth_t::GR_WDEPTHVALUE_FARTHEST);
 
@@ -104,11 +107,11 @@ function draw()
 
             //echo 'before '; testGrVertex($vert);
 
-            /*
+/*
             $vert->x += $centre->x;
             $vert->y += $centre->y;
             $vert->z += $centre->z;
-            */
+  */
 
             $vert += $centre;
 
@@ -146,7 +149,12 @@ function draw()
 
     //echo 'time: ' . (microtime(true) - $time) . PHP_EOL;
 
-    $fps = 1 / (microtime(true) - $time);
+    $frameEnd = microtime(true);
+
+    $totalFrameTime += ($frameEnd - $time);
+    $frameCount++;
+
+    $fps = 1 / ($frameEnd - $time);
 
     sfWindow_setTitle($window, "fps: $fps, faces: $faceCount");
 }
@@ -299,5 +307,7 @@ grSstWinClose();
 grGlideShutdown();
 
 sfWindow_close($window);
+
+echo 'average frame: ' . ($frameCount / $totalFrameTime) . PHP_EOL;
 
 echo 'done';
