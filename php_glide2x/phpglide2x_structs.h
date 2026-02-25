@@ -72,6 +72,18 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
 extern zend_class_entry* grTmuVertex_ce;
 
 typedef struct _GrTmuVertex {
+    union {
+        zval arr[3];
+        struct {
+            zval sow;
+            zval tow;
+            zval oow;
+        } fields;
+    } zvals;
+    union {
+        GrTmuVertex tmu;
+        float props[3];
+    } tmuVertex;
     zend_object std;
 } _GrTmuVertex;
 
