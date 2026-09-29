@@ -426,18 +426,19 @@ static zval* gr_read_property(zend_object* object, zend_string* name, int type, 
 #endif // DEBUG_HANDLERS
 
     /*
-    #define BP_VAR_R			0
-    #define BP_VAR_W			1
-    #define BP_VAR_RW			2
-    #define BP_VAR_IS			3
-    #define BP_VAR_FUNC_ARG		4
-    #define BP_VAR_UNSET		5
+    #define BP_VAR_R			0   // read like in  = $obj->foo;
+    #define BP_VAR_W			1   // write like in $obj->foo = 123
+    #define BP_VAR_RW			2   // read and write like in $obj->foo++, $obj->foo += 1
+    #define BP_VAR_IS			3   // Read for isset() / existence test	isset($obj->foo)
+    #define BP_VAR_FUNC_ARG		4   // Read as a function argument	foo($obj->foo)
+    #define BP_VAR_UNSET		5   // Access for unset()	unset($obj->foo)
     */
 
     //php_printf("type: %d\n", type);
 
 
-    if (type == BP_VAR_W) {
+    //the read is intented for a write 
+    if (type == BP_VAR_W) { 
 
         php_error_docref(
             NULL,
