@@ -459,6 +459,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 {
     zval* value = NULL;
 
+    //we go through x, y, z, r, g, b, ooz, a, oow
     for (int cont = 0; cont < floats_num; cont++) {
         //this way we don't use zend_read_property
         value = OBJ_PROP(&grVertex->std, grVertex_ce->properties_info_table[cont]->offset);
@@ -500,6 +501,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
 void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 {
+    //we go through x, y, z, r, g, b, ooz, a, oow
     for (int cont = 0; cont < floats_num; cont++) {
 
         zend_update_property_double(
