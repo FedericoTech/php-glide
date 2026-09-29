@@ -127,9 +127,10 @@ extern zend_class_entry* grVertex_ce;
 #define GR_TMUVTX_DEFINED (1 << 9)
 
 typedef struct _GrVertex {
-    union {
+    //zvals part
+    union { //either zval array
         zval arr[9];
-        struct {
+        struct {    //or zval struct
             zval x;
             zval y;
             zval z;
@@ -143,9 +144,10 @@ typedef struct _GrVertex {
             zval oow;
         } fields;
     } zvals;
+    //GrVertex part
     union {
-        GrVertex vertex;
-        struct {
+        GrVertex vertex;    //either GrVertex
+        struct {            //or floats array
             float props[9];
             GrTmuVertex tmuvtx[GLIDE_NUM_TMU];
         };

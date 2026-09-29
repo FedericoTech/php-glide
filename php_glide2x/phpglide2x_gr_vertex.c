@@ -258,7 +258,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
     _GrVertex* v_out = NULL;
 
-    //if two of them are vectors...
+    //if the two of them are vectors...
     if (op1_is_vec && op2_is_vec) {
 
         //if not defined, operations are +, -, and so on...
@@ -321,7 +321,6 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
     
     //if the op1 is the object...
     if (op1_is_vec) {
-
         z_vector = op1;
         z_scalar = op2;
 
@@ -535,15 +534,15 @@ static zval* gr_get_property_ptr_ptr(zend_object* object, zend_string* member, i
 
 #endif  //DEBUG_HANDLERS
       
-
+    //we go through the Vector float properties
     for (int cont = 0; cont < floats_num; cont++) {
+        //if the property is one of them...
         if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
-
+            // return NULL to force PHP to use read_property + write_property
             return NULL;
         }
     }
-
-    // Return NULL to force PHP to use read_property + write_property
+    //otherwise, the default behaviour    
     return zend_std_get_property_ptr_ptr(object, member, type, cache_slot);
 }
 
@@ -560,14 +559,16 @@ static HashTable* gr_get_properties(zend_object* obj)
 
     HashTable* props = zend_std_get_properties(obj); // start with dynamic properties
 
+    //we go through the vector's local floats
     for (int cont = 0; cont < floats_num; cont++) {
-
+        //if a value is set...
         if (Z_TYPE(v->zvals.arr[cont]) != IS_UNDEF) {
-            zval tmp;
+            zval tmp; //we create a new zval
 
             //php_printf("%f %d\n", v->zvals.arr[cont], cont);
-            ZVAL_COPY(&tmp, &v->zvals.arr[cont]);
+            ZVAL_COPY(&tmp, &v->zvals.arr[cont]);   //copy the value from the inner float zvals
 
+            //add it to the hash table
             zend_hash_str_update(props, properties[cont], strlen(properties[cont]), &tmp);
         }
     }
@@ -591,7 +592,9 @@ static int gr_has_property(zend_object* object, zend_string* member, int has_set
 
 #endif  //DEBUG_HANDLERS
 
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
+        //if we find the property...
         if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
 
             _GrVertex* v = O_EMBEDDED_P(_GrVertex, object);
@@ -615,7 +618,7 @@ static int gr_has_property(zend_object* object, zend_string* member, int has_set
             break;
         }
     }
-    
+    //otherwise, the normal behaviour
     return zend_std_has_property(object, member, has_set_exists, cache_slot);
 }
 
@@ -629,6 +632,7 @@ static void gr_unset_property(zend_object* object, zend_string* member, void** c
     );
 #endif  //DEBUG_HANDLERS
 
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
         if (zend_string_equals_cstr(member, properties[cont], strlen(properties[cont]))) {
 
@@ -657,6 +661,7 @@ static int gr_compare(zval* o1, zval* o2)
     _GrVertex* v1 = Z_EMBEDDED_P(_GrVertex, o1);
     _GrVertex* v2 = Z_EMBEDDED_P(_GrVertex, o2);
 
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
 
         //if the masks are different, that's a clue.
@@ -688,6 +693,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 
     clone->grVertex.vertex = orig->grVertex.vertex;
 
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
         ZVAL_COPY(&clone->zvals.arr[cont], &orig->zvals.arr[cont]);
     }
@@ -737,6 +743,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 {
     zval rv, *value = NULL;
 
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
 
         ((FxFloat*)&buffer->x)[cont] = (FxFloat)(Z_ISUNDEF_P(&grVertex->zvals.arr[cont])
@@ -763,6 +770,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
 
 void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 {
+    //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
 
         ZVAL_DOUBLE(
