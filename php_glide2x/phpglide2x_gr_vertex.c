@@ -277,6 +277,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
         switch (opcode) {
         case ZEND_ADD:
+            //we go through x, y, and z
             for (int cont = 0; cont < 3; cont++) {
                 SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
                 ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) + Z_DVAL(v2->zvals.arr[cont]));
@@ -284,6 +285,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
             }
             break;
         case ZEND_SUB:
+            //we go through x, y, and z
             for (int cont = 0; cont < 3; cont++) {
                 SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
                 ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) - Z_DVAL(v2->zvals.arr[cont]));
@@ -291,6 +293,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
             }
             break;
         case ZEND_MUL:
+            //we go through x, y, and z
             for (int cont = 0; cont < 3; cont++) {
                 SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
                 ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) * Z_DVAL(v2->zvals.arr[cont]));
@@ -298,6 +301,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
             }
             break;
         case ZEND_DIV:
+            //we go through x, y, and z
             for (int cont = 0; cont < 3; cont++) {
                 SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
                 ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) / Z_DVAL(v2->zvals.arr[cont]));
@@ -363,6 +367,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
     switch (opcode) {
     case ZEND_ADD:
+        //we go through x, y, and z
         for (int cont = 0; cont < 3; cont++) {
             SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
             ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) + scalar);
@@ -370,6 +375,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         }
         break;
     case ZEND_SUB:
+        //we go through x, y, and z
         for (int cont = 0; cont < 3; cont++) {
             SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
 
@@ -384,6 +390,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         }
         break;
     case ZEND_MUL:
+        //we go through x, y, and z
         for (int cont = 0; cont < 3; cont++) {
             SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
             ZVAL_DOUBLE(&v_out->zvals.arr[cont], Z_DVAL(v_out->zvals.arr[cont]) * scalar);
@@ -391,6 +398,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
         }
         break;
     case ZEND_DIV:
+        //we go through x, y, and z
         for (int cont = 0; cont < 3; cont++) {
             SEPARATE_ZVAL(&v_out->zvals.arr[cont]);
 
