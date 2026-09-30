@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 7e967c6dfb30b08b6cbd3cf98e2b41e32c550062 */
+ * Stub hash: 8d7e5eb777fdc5ce2a58d6ed743f361f588e4c04 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -618,10 +618,10 @@ ZEND_END_ARG_INFO()
 #define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_setAutoload, 0, 0, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "false")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
-#define arginfo_class_GrVertex_isAutoload arginfo_grSstIsBusy
+#define arginfo_class_GrVertex_isAutoload arginfo_grBufferNumPending
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrVertex_fromString, 0, 1, GrVertex, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
