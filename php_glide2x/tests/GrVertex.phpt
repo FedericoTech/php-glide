@@ -78,7 +78,7 @@ $vertex->tmuvtx[1] = $gtv2;
 var_dump($vertex);
 testGrVertex($vertex);
 
-$vertex->setAutoload(true);
+//$vertex->setAutoload(true);
 
 testGrVertex($vertex);
 

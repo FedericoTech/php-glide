@@ -73,17 +73,18 @@ extern zend_class_entry* grTmuVertex_ce;
 
 typedef struct _GrTmuVertex {
     union {
-        zval arr[3];
+        uint32_t arr[3];
         struct {
-            zval sow;
-            zval tow;
-            zval oow;
+            uint32_t sow;
+            uint32_t tow;
+            uint32_t oow;
         } fields;
-    } zvals;
+    } offsets;
     union {
         GrTmuVertex tmu;
         float props[3];
     } tmuVertex;
+    uint16_t referenced_mask;
     zend_object std;
 } _GrTmuVertex;
 
@@ -93,6 +94,18 @@ void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex);
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
+static inline GrTmuVertex* gr_tmuVertex_auto_flush(zend_object* zo)
+{
+    _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, zo);
+
+    //if any difference property escaped...
+    if (v->referenced_mask) {
+        flush_grTmuVertex(v, &v->tmuVertex.tmu);
+    }
+
+    return &v->tmuVertex.tmu;
+}
+
 
 
 
@@ -100,6 +113,8 @@ extern zend_class_entry* grTmuVertices_ce;
 
 typedef struct _GrTmuVertices {
     zval tmu[GLIDE_NUM_TMU];
+    GrTmuVertex* buf;   //to the GrTmuVertex[2] off all the objects that point to this
+    uint16_t referenced_mask;
     zend_object std;
 } _GrTmuVertices;
 
@@ -134,7 +149,7 @@ typedef struct _GrVertex {
             uint32_t x, y, z;
             uint32_t r, g, b;
             uint32_t ooz, a, oow;
-        } name;
+        } fields;
     } offsets;
     //GrVertex part
     union {
@@ -158,6 +173,7 @@ static inline GrVertex* gr_vertex_auto_flush(zend_object* zo)
 {
     _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
 
+    //if any difference property escaped...
     if (v->referenced_mask) {
         flush_grVertex(v, &v->grVertex.vertex);
     }
