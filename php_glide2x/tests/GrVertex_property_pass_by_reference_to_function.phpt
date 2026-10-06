@@ -21,12 +21,11 @@ var_dump($vertex);
 print_r($vertex);
 testGrVertex($vertex);
 ?>
---EXPECTF--
-Warning: main(): Indirect modification of overloaded property GrVertex::$x has no effect in %s on line %d
-int(42)
+--EXPECT--
+float(42)
 object(GrVertex)#1 (2) {
   ["x"]=>
-  float(3)
+  float(42)
   ["y"]=>
   uninitialized(float)
   ["z"]=>
@@ -67,7 +66,7 @@ object(GrVertex)#1 (2) {
 }
 GrVertex Object
 (
-    [x] => 3
+    [x] => 42
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -81,6 +80,6 @@ GrVertex Object
         )
 
 )
-x: 3.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 42.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000

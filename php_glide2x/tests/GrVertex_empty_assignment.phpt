@@ -1,46 +1,23 @@
 --TEST--
-GrVertex property gets referenced by a var
+GrVertex cloned empty
 --FILE--
 <?php
 $vertex = new GrVertex;
 
-$vertex->x = 3;
+$vertex2 = $vertex;
 
-echo 'isset: [' . isset($vertex->x) . ']' . PHP_EOL;
-echo 'empty: [' . empty($vertex->x) . ']' . PHP_EOL;
-echo 'prop_ext: [' . property_exists($vertex, 'x') . ']' . PHP_EOL . PHP_EOL;
-
-$ref =& $vertex->x;
-
-var_dump($ref);
-
-$ref = 5;
-
-var_dump($ref);
-
-echo 'isset: [' . isset($vertex->x) . ']' . PHP_EOL;
-echo 'empty: [' . empty($vertex->x) . ']' . PHP_EOL;
-echo 'prop_ext: [' . property_exists($vertex, 'x') . ']' . PHP_EOL . PHP_EOL;
-
-
-var_dump($vertex);
-print_r($vertex);
-testGrVertex($vertex);
+var_dump($vertex2);
+print_r($vertex2);
+testGrVertex($vertex2);
+var_dump(
+    $vertex2 == $vertex,
+    $vertex2 === $vertex
+);
 ?>
 --EXPECT--
-isset: [1]
-empty: []
-prop_ext: [1]
-
-float(3)
-float(5)
-isset: [1]
-empty: []
-prop_ext: [1]
-
-object(GrVertex)#1 (2) {
+object(GrVertex)#1 (1) {
   ["x"]=>
-  &float(5)
+  uninitialized(float)
   ["y"]=>
   uninitialized(float)
   ["z"]=>
@@ -81,7 +58,6 @@ object(GrVertex)#1 (2) {
 }
 GrVertex Object
 (
-    [x] => 5
     [tmuvtx] => GrTmuVertices Object
         (
             [0] => GrTmuVertex Object
@@ -95,6 +71,8 @@ GrVertex Object
         )
 
 )
-x: 5.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
+x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, ooz: 0.000000, a: 0.000000, oow: 0.000000
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
+bool(true)
+bool(true)

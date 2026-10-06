@@ -19,8 +19,10 @@ $vertex2 = $vertex;
 var_dump($vertex2);
 print_r($vertex2);
 testGrVertex($vertex2);
-var_dump($vertex2 == $vertex);
-var_dump($vertex2 === $vertex);
+var_dump(
+    $vertex2 == $vertex,
+    $vertex2 === $vertex
+);
 ?>
 --EXPECT--
 object(GrVertex)#1 (10) {

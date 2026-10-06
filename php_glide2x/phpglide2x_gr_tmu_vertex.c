@@ -17,7 +17,9 @@ ZEND_FUNCTION(testGrTmuVertex)
     GrTmuVertex *grTmuVertex = gr_tmuVertex_auto_flush(grTmuVertex_zo);
 
     php_printf(
+        "referenced_mask: %d\n"
         "sow: %f, tow: %f, oow: %f\n",
+        O_EMBEDDED_P(_GrTmuVertex, grTmuVertex_zo)->referenced_mask,
         grTmuVertex->sow,
         grTmuVertex->tow,
         grTmuVertex->oow
@@ -103,6 +105,8 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
         grTmuVertex->offsets.arr[cont] = info->offset;
     }
 
+    //grTmuVertex->referenced_mask = 0;
+
     //it returns the zend object
     return &grTmuVertex->std;
 }
@@ -171,6 +175,14 @@ static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
 
 static void gr_unset_property(zend_object* object, zend_string* member, void** cache_slot)
 {
+#ifdef DEBUG_HANDLERS
+    php_printf(
+        "%s: %s\n",
+        __FUNCTION__,
+        ZSTR_VAL(member)
+    );
+#endif // DEBUG_HANDLERS
+
     //we go through the Vector float properties
     for (int cont = 0; cont < props_num; cont++) {
         //if the property is one of them...
@@ -191,6 +203,15 @@ static void gr_unset_property(zend_object* object, zend_string* member, void** c
 
 static zval* gr_write_property(zend_object* object, zend_string* name, zval* value, void** cache_slot)
 {
+#ifdef DEBUG_HANDLERS
+    php_printf(
+        "%s: %s: %f\n",
+        __FUNCTION__,
+        ZSTR_VAL(name),
+        zval_get_double(value)
+    );
+#endif // DEBUG_HANDLERS
+
     //we go through the float properties...
     for (int cont = 0; cont < props_num; cont++) {
         //if we find the property...
@@ -217,6 +238,22 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
 
 static zval* gr_get_property_ptr_ptr(zend_object* object, zend_string* member, int type, void** cache_slot)
 {
+    /*
+        0   BP_VAR_R            // read
+        1    BP_VAR_W           // write
+        2    BP_VAR_RW          // read/write
+        3    BP_VAR_IS          // isset() / empty()-style "is set?" check
+        4    BP_VAR_UNSET       // unset()
+        5    BP_VAR_FUNC_ARG    // passing as function argument
+    */
+#ifdef DEBUG_HANDLERS
+    php_printf(
+        "%s, type: %d\n",
+        __FUNCTION__,
+        type
+    );
+#endif // DEBUG_HANDLERS
+
     //we go through the Vector properties
     for (int cont = 0; cont < props_num; cont++) {
         //if the property is one of them...
@@ -277,22 +314,26 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
         if (grTmuVertex->referenced_mask & (1u << cont)) {
             value = OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets.arr[cont]);
 
-            php_printf("[%d] \n", Z_TYPE_P(value));
+#ifdef DEBUG_HANDLERS
+            php_printf(
+                "[%d][%d][%d] \n", 
+                cont, 
+                Z_TYPE_P(value), 
+                grTmuVertex->referenced_mask
+            );
+#endif // DEBUG_HANDLERS
 
-            ((FxFloat*)&buffer->oow)[cont] = (FxFloat)zval_get_double(value);
+            ((FxFloat*)&buffer->sow)[cont] = (FxFloat)zval_get_double(value);
         }
     }
 }
 
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
 {
-    
     for (int cont = 0; cont < props_num; cont++) {
         ZVAL_DOUBLE(
             OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets.arr[cont]),
             ((FxFloat*)buffer)[cont]
         );
-
-    }
-    
+    }   
 }

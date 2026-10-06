@@ -575,7 +575,7 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
         if (grVertex->referenced_mask & (1u << cont)) {
             value = OBJ_PROP(&grVertex->std, grVertex->offsets.arr[cont]);
 
-            php_printf("[%d] \n", Z_TYPE_P(value));
+            //php_printf("[%d] \n", Z_TYPE_P(value));
 
             ((FxFloat*)&buffer->x)[cont] = (FxFloat)zval_get_double(value);
         }

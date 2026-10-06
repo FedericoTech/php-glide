@@ -9,7 +9,10 @@ $vertex2 = clone $vertex;
 var_dump($vertex2);
 print_r($vertex2);
 testGrVertex($vertex2);
-var_dump($vertex2 == $vertex);
+var_dump(
+    $vertex2 == $vertex,
+    $vertex2 === $vertex
+);
 ?>
 --EXPECT--
 object(GrVertex)#5 (1) {
@@ -72,3 +75,4 @@ x: 0.000000, y: 0.000000, z: 0.000000, r: 0.000000, g: 0.000000, b: 0.000000, oo
 [0] sow: 0.000000, tow: 0.000000, oow: 0.000000
 [1] sow: 0.000000, tow: 0.000000, oow: 0.000000
 bool(true)
+bool(false)

@@ -10,6 +10,8 @@
 
 #include "phpglide2x_arginfo.h"
 
+//#define DEBUG_HANDLERS
+
 ZEND_BEGIN_MODULE_GLOBALS(phpglide2x)
 	GrVertex* tmp_vertices;
 	uint32_t  tmp_capacity;
