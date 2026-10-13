@@ -230,14 +230,15 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
             v->referenced_mask &= ~(1u << cont);
 
             //if any syncrhonization...
-            if (v->sync_count) {
+            //if (v->sync_count) {
                 //we syncrhonize all the buffers pointed to this object
-                for (int cont2 = 0; cont2 < MAX_SYNCERS; cont2++) {
+                for (int cont2 = 0, found = 0; found < v->sync_count && cont2 < MAX_SYNCERS; cont2++) {
                     if (v->sync_references[cont2] != NULL) {
+                        ++found;
                         *v->sync_references[cont2] = v->tmuVertex.tmu;
                     }
                 }
-            }
+            //}
 
             break;
         }
