@@ -229,6 +229,16 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
             //we clear the bit as the zval is now a value
             v->referenced_mask &= ~(1u << cont);
 
+            //if any syncrhonization...
+            if (v->sync_count) {
+                //we syncrhonize all the buffers pointed to this object
+                for (int cont2 = 0; cont2 < MAX_SYNCERS; cont2++) {
+                    if (v->sync_references[cont2] != NULL) {
+                        *v->sync_references[cont2] = v->tmuVertex.tmu;
+                    }
+                }
+            }
+
             break;
         }
     }

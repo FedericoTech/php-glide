@@ -3,13 +3,15 @@
 
 #include "stdafx.h"
 
+#define MAX_SYNCERS 100
+
 static void handle_property_error(zend_object* object, zend_string* member) {
     zend_throw_error(NULL, "Typed property %s::$%s must not be accessed before initialization", ZSTR_VAL(object->ce->name), ZSTR_VAL(member));
 }
 
 //macros to get the address of the scaler_embedded_t from zend_object and from zval
-#define O_EMBEDDED_P(t, o) \
-	((t*)((char*)(o) - XtOffsetOf(t, std)))
+#define O_EMBEDDED_P(t, zo) \
+	((t*)((char*)(zo) - XtOffsetOf(t, std)))
 
 #define Z_EMBEDDED_P(t, zv) \
 	O_EMBEDDED_P(t, Z_OBJ_P(zv))
@@ -84,7 +86,10 @@ typedef struct _GrTmuVertex {
         GrTmuVertex tmu;
         float props[3];
     } tmuVertex;
-    uint16_t referenced_mask;
+    uint16_t referenced_mask;   //properties that have become a reference
+    
+    GrTmuVertex *sync_references[MAX_SYNCERS];  //pointer to buffers to sync
+    uint16_t sync_count;
     zend_object std;
 } _GrTmuVertex;
 
@@ -113,10 +118,15 @@ extern zend_class_entry* grTmuVertices_ce;
 
 typedef struct _GrTmuVertices {
     zval tmu[GLIDE_NUM_TMU];
-    GrTmuVertex* buf;   //to the GrTmuVertex[2] off all the objects that point to this
+
+    GrTmuVertex gtvArray[GLIDE_NUM_TMU];   //to the GrTmuVertex[2] off all the objects that point to this
+    
     uint16_t referenced_mask;
     zend_object std;
 } _GrTmuVertices;
+
+void grTmuVertices_remove_sync_ref(GrTmuVertex* my, _GrTmuVertex* from);
+void grTmuVertices_set_sync_ref(GrTmuVertex* my, _GrTmuVertex* to);
 
 void flush_grTmuVertices(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer);
 
