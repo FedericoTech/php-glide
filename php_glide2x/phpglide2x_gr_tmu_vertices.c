@@ -14,12 +14,17 @@ ZEND_FUNCTION(testGrTmuVertices)
     _GrTmuVertices* config = O_EMBEDDED_P(_GrTmuVertices, grTmuVertices_zo);
 
     GrTmuVertex *grTmuVertices = config->gtvArray;
-    /*
-    for(int cont = 0; cont < GLIDE_NUM_TMU; cont++){
-        flush_grTmuVertex(O_EMBEDDED_P(_GrTmuVertex, Z_OBJ_P(&config->tmu[cont])), &grTmuVertices[cont]);
-    }
-    */
     
+    for(int idx = 0; idx < GLIDE_NUM_TMU; idx++){
+        //if the zval is a GrTmuVertix...
+        if (!Z_ISUNDEF(config->tmu[idx])) {
+            flush_grTmuVertex(
+                Z_EMBEDDED_P(_GrTmuVertex, &config->tmu[idx]),
+                &grTmuVertices[idx]
+            );
+        }
+    }
+       
     php_printf(
         "tmu[0]: sow: %f, tow: %f, oow: %f\n"
         "tmu[1]: sow: %f, tow: %f, oow: %f\n",
@@ -254,11 +259,13 @@ void flush_grTmuVertices(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffe
         //if the tmu is not set...
         if (Z_ISUNDEF(grTmuVertices->tmu[cont])) {
             //we restart the memory
-            memset(&buffer[cont], 0, sizeof(GrTmuVertex));
+            buffer[cont] = (GrTmuVertex){ 0 };
             continue;
         }
 
-        flush_grTmuVertex(Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]), &buffer[cont]);
+        buffer[cont] = *gr_tmuVertex_auto_flush(Z_OBJ_P(&grTmuVertices->tmu[cont]));
+
+        //flush_grTmuVertex(Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]), &buffer[cont]);
     }
 }
 

@@ -317,26 +317,39 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 {
     zval* value = NULL;
-
+        
     //we go through the inner float zvals
     for (int cont = 0; cont < props_num; cont++) {
 
         //if the property was referenced...
         if (grTmuVertex->referenced_mask & (1u << cont)) {
+
             value = OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets.arr[cont]);
 
 #ifdef DEBUG_HANDLERS
             php_printf(
-                "[%d][%d][%d] \n", 
-                cont, 
-                Z_TYPE_P(value), 
+                "[%d][%d][%d] \n",
+                cont,
+                Z_TYPE_P(value),
                 grTmuVertex->referenced_mask
             );
 #endif // DEBUG_HANDLERS
 
             ((FxFloat*)&buffer->sow)[cont] = (FxFloat)zval_get_double(value);
+            /*
+            //if there are syncers...
+            for (int cont2 = 0, found = 0; found < grTmuVertex->sync_count && cont2 < MAX_SYNCERS; cont2++) {
+                //if we find a syncer...
+                if (grTmuVertex->sync_references[cont2] != NULL) {
+                    ++found;
+                    //we update the secific member
+                    //((FxFloat *) grTmuVertex->sync_references[cont2])[cont] = ((FxFloat*)&buffer->sow)[cont];
+                }
+            }
+            */
         }
     }
+    
 }
 
 void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
