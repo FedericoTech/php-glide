@@ -64,7 +64,7 @@ void GrTMUConfig_flush(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
     if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRam = Z_LVAL_P(value); }
 }
 
-void GrTMUConfig_hydrate(const GrTMUConfig_t* tmuConfig, _GrTMUConfig_t* obj)
+void GrTMUConfig_hydrate(_GrTMUConfig_t* obj, const GrTMUConfig_t* tmuConfig)
 {
     zend_update_property_long(grTMUConfig_ce, obj, "tmuRev", sizeof("tmuRev") - 1, tmuConfig->tmuRev);
 

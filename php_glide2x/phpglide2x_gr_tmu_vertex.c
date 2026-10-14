@@ -352,7 +352,7 @@ void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
     
 }
 
-void GrTmuVertex_hydrate(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
+void GrTmuVertex_hydrate(_GrTmuVertex* grTmuVertex, const GrTmuVertex* buffer)
 {
     for (int cont = 0; cont < props_num; cont++) {
         ZVAL_DOUBLE(

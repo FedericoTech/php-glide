@@ -109,7 +109,7 @@ void GrState_flush(const _GrState* obj, GrState* buffer)
     }
 }
 
-void GrState_hydrate(const GrState* buffer, _GrState* obj)
+void GrState_hydrate(_GrState* obj, const GrState* buffer)
 {
     zend_update_property_stringl(
         grState_ce,

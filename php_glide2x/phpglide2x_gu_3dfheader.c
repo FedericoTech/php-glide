@@ -117,7 +117,7 @@ void Gu3dfHeader_flush(const _Gu3dfHeader* obj, Gu3dfHeader* buffer)
     if (Z_TYPE_P(value) != IS_NULL) { buffer->format = enum_to_int(Z_OBJ_P(value)); }
 }
 
-void Gu3dfHeader_hydrate(const Gu3dfHeader* buffer, _Gu3dfHeader* obj)
+void Gu3dfHeader_hydrate(_Gu3dfHeader* obj, const Gu3dfHeader* buffer)
 {
     zend_update_property_long(
         gu3dfHeader_ce,

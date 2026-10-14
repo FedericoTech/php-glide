@@ -184,7 +184,7 @@ void GrLfbInfo_flush(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
     buffer->origin = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
 }
 
-void GrLfbInfo_hydrate(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
+void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool read)
 {
     if (buffer->lfbPtr) {
 

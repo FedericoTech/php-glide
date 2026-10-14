@@ -99,7 +99,7 @@ void GrSstPerfStats_flush(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer
     if (Z_TYPE_P(value) != IS_NULL) { buffer->pixelsOut = (FxU32)Z_LVAL_P(value); }
 }
 
-void GrSstPerfStats_hydrate(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj)
+void GrSstPerfStats_hydrate(_GrSstPerfStats_t* obj, const GrSstPerfStats_t* buffer)
 {
 
     zend_update_property_long(gr_SstPerfStats_ce, obj, "pixelsIn", sizeof("pixelsIn") - 1, buffer->pixelsIn);

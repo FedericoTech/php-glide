@@ -46,7 +46,7 @@ PHP_FUNCTION(grSstPerfStats)
 
 	grSstPerfStats(&gsps);
 
-	GrSstPerfStats_hydrate(&gsps, pStats);
+	GrSstPerfStats_hydrate(pStats, &gsps);
 }
 
 PHP_FUNCTION(grSstQueryBoards) {
@@ -62,7 +62,7 @@ PHP_FUNCTION(grSstQueryBoards) {
 
 	result = grSstQueryBoards(&ghcf);
 
-	GrHwConfiguration_hydrate(&ghcf, grHwConfiguration_obj);
+	GrHwConfiguration_hydrate(grHwConfiguration_obj, &ghcf);
 
 	RETURN_BOOL(result);
 }
@@ -80,7 +80,7 @@ PHP_FUNCTION(grSstQueryHardware) {
 
 	result = grSstQueryHardware(&ghcf);
 
-	GrHwConfiguration_hydrate(&ghcf, grHwConfiguration_obj);
+	GrHwConfiguration_hydrate(grHwConfiguration_obj, &ghcf);
 
 	RETURN_BOOL(result);
 }

@@ -135,7 +135,7 @@ PHP_METHOD(GrVertex, fromString)
 
     _GrVertex* grv = O_EMBEDDED_P(_GrVertex, obj);
 
-    GrVertex_hydrate((GrVertex*)string, grv);
+    GrVertex_hydrate(grv, (GrVertex*)string);
 
     memcpy(&grv->grVertex, string, sizeof(GrVertex));
 
@@ -597,7 +597,7 @@ void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer)
     }
 }
 
-void GrVertex_hydrate(const GrVertex* buffer, _GrVertex* grVertex)
+void GrVertex_hydrate(_GrVertex* grVertex, const GrVertex* buffer)
 {
     //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
@@ -612,7 +612,7 @@ void GrVertex_hydrate(const GrVertex* buffer, _GrVertex* grVertex)
 
     object_init_ex(&grTmuVertices, grTmuVertices_ce);
 
-    GrTmuVertices_hydrate(&buffer->tmuvtx[0], Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices));
+    GrTmuVertices_hydrate(Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices) , &buffer->tmuvtx[0]);
 
     zend_update_property(grVertex_ce, &grVertex->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
 

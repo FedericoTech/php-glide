@@ -179,7 +179,7 @@ void GrVoodooConfig_flush(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
     }
 }
 
-void GrVoodooConfig_hydrate(const GrVoodooConfig_t* buffer, _GrVoodooConfig_t* obj)
+void GrVoodooConfig_hydrate(_GrVoodooConfig_t* obj, const GrVoodooConfig_t* buffer)
 {
     zend_update_property_long(grVoodooConfig_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
     
@@ -197,7 +197,7 @@ void GrVoodooConfig_hydrate(const GrVoodooConfig_t* buffer, _GrVoodooConfig_t* o
 
         object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
         
-        GrTMUConfig_hydrate(&buffer->tmuConfig[cont2], (_GrTMUConfig_t *) Z_OBJ_P(&grTMUConfig_t));
+        GrTMUConfig_hydrate((_GrTMUConfig_t*)Z_OBJ_P(&grTMUConfig_t), &buffer->tmuConfig[cont2]);
 
         add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
@@ -292,7 +292,7 @@ void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
     }
 }
 
-void GrVoodoo2Config_hydrate(const GrVoodoo2Config_t* buffer, _GrVoodoo2Config_t* obj)
+void GrVoodoo2Config_hydrate(_GrVoodoo2Config_t* obj, const GrVoodoo2Config_t* buffer)
 {
     zend_update_property_long(grVoodoo2Config_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
 
@@ -309,7 +309,7 @@ void GrVoodoo2Config_hydrate(const GrVoodoo2Config_t* buffer, _GrVoodoo2Config_t
         zval grTMUConfig_t;
         object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
 
-        GrTMUConfig_hydrate(&buffer->tmuConfig[cont2], (_GrTMUConfig_t *)&Z_OBJ(grTMUConfig_t));
+        GrTMUConfig_hydrate((_GrTMUConfig_t*)&Z_OBJ(grTMUConfig_t), &buffer->tmuConfig[cont2]);
 
         add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }

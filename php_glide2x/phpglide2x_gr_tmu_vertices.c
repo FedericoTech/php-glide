@@ -79,7 +79,7 @@ PHP_METHOD(GrTmuVertices, offsetSet)
     if (!Z_ISUNDEF(self->tmu[idx])) {
 
         //remove sync pointer from the object
-        GrTmuVertices_removeSyncRef(&self->gtvArray[idx], Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]));
+        GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
 
         zval_ptr_dtor(&self->tmu[idx]); //remove reference to the GrTmyVertex object
     }
@@ -88,7 +88,7 @@ PHP_METHOD(GrTmuVertices, offsetSet)
     ZVAL_OBJ(&self->tmu[idx], grTmuVertex_zo);
 
     //subscribe to the sync pointer of the GrTmyVertex object
-    GrTmuVertices_setSyncRef(&self->gtvArray[idx], Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]));
+    GrTmuVertices_setSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
 
     //we copy the data as soon as it's set
     self->gtvArray[idx] = O_EMBEDDED_P(_GrTmuVertex, grTmuVertex_zo)->tmuVertex.tmu;
@@ -137,7 +137,7 @@ PHP_METHOD(GrTmuVertices, offsetUnset)
     if (!Z_ISUNDEF(self->tmu[idx])) {
 
         //remove sync pointer from the object
-        GrTmuVertices_removeSyncRef(&self->gtvArray[idx], Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]));
+        GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
         
         zval_ptr_dtor(&self->tmu[idx]); //remove reference to the GrTmyVertex object
 
@@ -205,7 +205,7 @@ static void gr_free_obj(zend_object* object)
     for (int idx = 0; idx < GLIDE_NUM_TMU; idx++) {
         if (!Z_ISUNDEF(self->tmu[idx])) {
             //remove sync pointer from the object
-            GrTmuVertices_removeSyncRef(&self->gtvArray[idx], Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]));
+            GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
 
             zval_ptr_dtor(&self->tmu[idx]);    //we remove one reference count
         }
@@ -214,7 +214,7 @@ static void gr_free_obj(zend_object* object)
     zend_object_std_dtor(object);
 }
 
-void GrTmuVertices_removeSyncRef(GrTmuVertex* my, _GrTmuVertex* from)
+void GrTmuVertices_removeSyncRef(_GrTmuVertex* from, GrTmuVertex* my)
 {
     for (int cont = 0; cont < MAX_SYNCERS; cont++) {
         if (from->sync_references[cont] == my) {
@@ -226,7 +226,7 @@ void GrTmuVertices_removeSyncRef(GrTmuVertex* my, _GrTmuVertex* from)
     }
 }
 
-void GrTmuVertices_setSyncRef(GrTmuVertex* my, _GrTmuVertex* to)
+void GrTmuVertices_setSyncRef(_GrTmuVertex* to, GrTmuVertex* my)
 {
     for (int cont = 0; cont < MAX_SYNCERS; cont++) {
         if (to->sync_references[cont] == NULL) {
@@ -269,7 +269,7 @@ void GrTmuVertices_flush(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffe
     }
 }
 
-void GrTmuVertices_hydrate(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices)
+void GrTmuVertices_hydrate(_GrTmuVertices* grTmuVertices, const GrTmuVertex* buffer)
 {
     //we go through the tmus
     for (int cont = 0; cont < GLIDE_NUM_TMU; cont++) {
@@ -279,6 +279,6 @@ void GrTmuVertices_hydrate(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVerti
             object_init_ex(&grTmuVertices->tmu[cont], grTmuVertex_ce);
         }
 
-        GrTmuVertex_hydrate(&buffer[cont], Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]));
+        GrTmuVertex_hydrate(Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]) , &buffer[cont]);
     }
 }

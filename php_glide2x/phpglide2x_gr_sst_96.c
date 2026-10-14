@@ -83,7 +83,7 @@ void GrSst96Config_flush(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
     }
 }
 
-void GrSst96Config_hydrate(const GrSst96Config_t* buffer, _GrSst96Config_t* obj)
+void GrSst96Config_hydrate(_GrSst96Config_t* obj, const GrSst96Config_t* buffer)
 {
     zend_update_property_long(grSst96Config_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
 
@@ -93,7 +93,7 @@ void GrSst96Config_hydrate(const GrSst96Config_t* buffer, _GrSst96Config_t* obj)
 
     object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
 
-    GrTMUConfig_hydrate(&buffer->tmuConfig, (_GrTMUConfig_t *)&Z_OBJ(grTMUConfig_t));
+    GrTMUConfig_hydrate((_GrTMUConfig_t*)&Z_OBJ(grTMUConfig_t), &buffer->tmuConfig);
 
     zend_update_property(grSst96Config_ce, obj, "tmuConfig", sizeof("tmuConfig") - 1, &grTMUConfig_t);
 

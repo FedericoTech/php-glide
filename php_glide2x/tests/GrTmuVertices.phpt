@@ -2,8 +2,6 @@
 GrTmuVertices
 --FILE--
 <?php
-echo 'we create an empty object' . PHP_EOL;
-<?php
 //we create an empty GrTmuVertex to check the default values.
 $gtvs = new GrTmuVertices;
 

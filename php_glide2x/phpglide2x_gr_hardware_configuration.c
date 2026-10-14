@@ -151,7 +151,7 @@ void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* b
     }
 }
 
-void GrHwConfiguration_hydrate(const GrHwConfiguration* buffer, _GrHwConfiguration* obj)
+void GrHwConfiguration_hydrate(_GrHwConfiguration* obj, const GrHwConfiguration* buffer)
 {
     zend_update_property_long(
         grHwConfiguration_ce, obj,
@@ -169,7 +169,7 @@ void GrHwConfiguration_hydrate(const GrHwConfiguration* buffer, _GrHwConfigurati
         //we instantiate the SST_t class
         object_init_ex(&sst_obj, sST_ce);
 
-        SST_hydrate((SST_t*) &buffer->SSTs[cont], (_SST_t *)Z_OBJ(sst_obj));
+        SST_hydrate((_SST_t*)Z_OBJ(sst_obj), (SST_t*) &buffer->SSTs[cont]);
         
         add_next_index_zval(&sSTs_arr_zval, &sst_obj);
     }

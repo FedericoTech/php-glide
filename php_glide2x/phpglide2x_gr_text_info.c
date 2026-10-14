@@ -194,7 +194,7 @@ void GrTexInfo_flush(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
     */
 }
 
-void GrTexInfo_hydrate(const GrTexInfo* buffer, _GrTexInfo* obj /*, bool read*/)
+void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
 {
     /*
     if (buffer->data) {
