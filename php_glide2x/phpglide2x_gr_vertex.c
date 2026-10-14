@@ -17,7 +17,7 @@ ZEND_FUNCTION(testGrVertex)
         Z_PARAM_OBJ_OF_CLASS(grVertex_zo, grVertex_ce)
         ZEND_PARSE_PARAMETERS_END();
 
-    GrVertex *vertex = gr_vertex_auto_flush(grVertex_zo);
+    GrVertex *vertex = GrVertex_autoFlush(grVertex_zo);
 
     php_printf(
         "x: %f, y: %f, z: %f, r: %f, g: %f, b: %f, ooz: %f, a: %f, oow: %f\n",
@@ -51,7 +51,7 @@ PHP_METHOD(GrVertex, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    GrVertex* vertex = gr_vertex_auto_flush(Z_OBJ_P(ZEND_THIS));
+    GrVertex* vertex = GrVertex_autoFlush(Z_OBJ_P(ZEND_THIS));
 
     zend_string* bin = zend_string_alloc(sizeof(GrVertex), 0);
 
@@ -135,7 +135,7 @@ PHP_METHOD(GrVertex, fromString)
 
     _GrVertex* grv = O_EMBEDDED_P(_GrVertex, obj);
 
-    hydrate_grVertex((GrVertex*)string, grv);
+    GrVertex_hydrate((GrVertex*)string, grv);
 
     memcpy(&grv->grVertex, string, sizeof(GrVertex));
 
@@ -245,7 +245,7 @@ static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
     switch (type) {
 
     case IS_STRING: {
-        GrVertex* vertex = gr_vertex_auto_flush(readobj);
+        GrVertex* vertex = GrVertex_autoFlush(readobj);
 
         // produce binary representation
         zend_string* bin = zend_string_alloc(sizeof(GrVertex), 0);
@@ -565,7 +565,7 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     
 }
 
-void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
+void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer)
 {
     zval rv, *value = NULL;
     
@@ -593,11 +593,11 @@ void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer)
         memset(&buffer->tmuvtx, 0, sizeof(GrTmuVertex) * 2);
     }
     else {
-        flush_grTmuVertices(Z_EMBEDDED_P(_GrTmuVertices, value), buffer->tmuvtx);
+        GrTmuVertices_flush(Z_EMBEDDED_P(_GrTmuVertices, value), buffer->tmuvtx);
     }
 }
 
-void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
+void GrVertex_hydrate(const GrVertex* buffer, _GrVertex* grVertex)
 {
     //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
@@ -612,7 +612,7 @@ void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex)
 
     object_init_ex(&grTmuVertices, grTmuVertices_ce);
 
-    hydrate_grTmuVertices(&buffer->tmuvtx[0], Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices));
+    GrTmuVertices_hydrate(&buffer->tmuvtx[0], Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices));
 
     zend_update_property(grVertex_ce, &grVertex->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
 

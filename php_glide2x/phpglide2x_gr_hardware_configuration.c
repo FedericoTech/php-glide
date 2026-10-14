@@ -15,7 +15,7 @@ ZEND_FUNCTION(testGrHwConfiguration)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_GrHwConfiguration(grHwConfiguration_zo, &buffer);
+    GrHwConfiguration_flush(grHwConfiguration_zo, &buffer);
 
     php_printf("num_sst: %d\n", buffer.num_sst);
     for (int cont = 0; cont < buffer.num_sst; cont++) {
@@ -96,14 +96,14 @@ PHP_METHOD(GrHwConfiguration, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrHwConfiguration), 0);
 
-    flush_GrHwConfiguration((_GrHwConfiguration *)Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
+    GrHwConfiguration_flush((_GrHwConfiguration *)Z_OBJ_P(ZEND_THIS), (GrHwConfiguration*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrHwConfiguration)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
 
-void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* buffer)
+void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* buffer)
 {
     zval* value = zend_read_property(
         grHwConfiguration_ce,       // zend_class_entry* of the object
@@ -141,7 +141,7 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* b
             */
 
             if (Z_TYPE_P(val) == IS_OBJECT && instanceof_function(Z_OBJCE_P(val), sST_ce)) {
-                flush_SST((_SST_t *)Z_OBJ_P(val), (SST_t*)&buffer->SSTs[cont++]);
+                SST_flush((_SST_t *)Z_OBJ_P(val), (SST_t*)&buffer->SSTs[cont++]);
             }
             else {
                 //memset(&buffer->SSTs[cont++], 0, sizeof(SST_t));
@@ -151,7 +151,7 @@ void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* b
     }
 }
 
-void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* obj)
+void GrHwConfiguration_hydrate(const GrHwConfiguration* buffer, _GrHwConfiguration* obj)
 {
     zend_update_property_long(
         grHwConfiguration_ce, obj,
@@ -169,7 +169,7 @@ void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfigurati
         //we instantiate the SST_t class
         object_init_ex(&sst_obj, sST_ce);
 
-        hydrate_SST((SST_t*) &buffer->SSTs[cont], (_SST_t *)Z_OBJ(sst_obj));
+        SST_hydrate((SST_t*) &buffer->SSTs[cont], (_SST_t *)Z_OBJ(sst_obj));
         
         add_next_index_zval(&sSTs_arr_zval, &sst_obj);
     }

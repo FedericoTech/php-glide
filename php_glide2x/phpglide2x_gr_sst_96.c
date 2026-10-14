@@ -15,7 +15,7 @@ ZEND_FUNCTION(testGrSst96Config_t)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_GrSst96Config(grSst96Config_zo, &buffer);
+    GrSst96Config_flush(grSst96Config_zo, &buffer);
 
     php_printf(
         "fbRam: %d, nTexelfx: %d, tmuConfig: [tmuRev: %d, tmuRam: %d]\n",
@@ -33,7 +33,7 @@ PHP_METHOD(GrSst96Config_t, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t), 0);
 
-    flush_GrSst96Config(Z_OBJ_P(ZEND_THIS), (GrSst96Config_t*)ZSTR_VAL(bin));
+    GrSst96Config_flush(Z_OBJ_P(ZEND_THIS), (GrSst96Config_t*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrAT3DConfig_t)] = '\0'; // null terminator (optional for binary)
 
@@ -41,7 +41,7 @@ PHP_METHOD(GrSst96Config_t, flush)
 }
 
 
-void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
+void GrSst96Config_flush(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
 {
     zval* value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
@@ -79,11 +79,11 @@ void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
     }
     else {
 
-        flush_grTMUConfig((_GrTMUConfig_t*) Z_OBJ_P(value), &buffer->tmuConfig);
+        GrTMUConfig_flush((_GrTMUConfig_t*) Z_OBJ_P(value), &buffer->tmuConfig);
     }
 }
 
-void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* obj)
+void GrSst96Config_hydrate(const GrSst96Config_t* buffer, _GrSst96Config_t* obj)
 {
     zend_update_property_long(grSst96Config_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
 
@@ -93,7 +93,7 @@ void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* obj)
 
     object_init_ex(&grTMUConfig_t, grTMUConfig_ce);
 
-    hydrate_grTMUConfig(&buffer->tmuConfig, (_GrTMUConfig_t *)&Z_OBJ(grTMUConfig_t));
+    GrTMUConfig_hydrate(&buffer->tmuConfig, (_GrTMUConfig_t *)&Z_OBJ(grTMUConfig_t));
 
     zend_update_property(grSst96Config_ce, obj, "tmuConfig", sizeof("tmuConfig") - 1, &grTMUConfig_t);
 

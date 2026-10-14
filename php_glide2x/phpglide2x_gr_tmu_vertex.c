@@ -14,7 +14,7 @@ ZEND_FUNCTION(testGrTmuVertex)
         Z_PARAM_OBJ_OF_CLASS(grTmuVertex_zo, grTmuVertex_ce)
         ZEND_PARSE_PARAMETERS_END();
 
-    GrTmuVertex *grTmuVertex = gr_tmuVertex_auto_flush(grTmuVertex_zo);
+    GrTmuVertex *grTmuVertex = GrTmuVertex_autoFlush(grTmuVertex_zo);
 
     php_printf(
         "referenced_mask: %d\n"
@@ -31,7 +31,7 @@ PHP_METHOD(GrTmuVertex, flush)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
-    GrTmuVertex* grTmuVertex = gr_tmuVertex_auto_flush(Z_OBJ_P(ZEND_THIS));
+    GrTmuVertex* grTmuVertex = GrTmuVertex_autoFlush(Z_OBJ_P(ZEND_THIS));
 
     zend_string* bin = zend_string_alloc(sizeof(GrTmuVertex), 0);
 
@@ -148,7 +148,7 @@ static zend_result gr_cast_object(zend_object* readobj, zval* retval, int type)
     switch (type) {
 
     case IS_STRING: {
-        GrTmuVertex* vertex = gr_tmuVertex_auto_flush(readobj);
+        GrTmuVertex* vertex = GrTmuVertex_autoFlush(readobj);
 
         // produce binary representation
         zend_string* bin = zend_string_alloc(sizeof(GrTmuVertex), 0);
@@ -314,7 +314,7 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
     
 }
 
-void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
+void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
 {
     zval* value = NULL;
         
@@ -352,7 +352,7 @@ void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
     
 }
 
-void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
+void GrTmuVertex_hydrate(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex)
 {
     for (int cont = 0; cont < props_num; cont++) {
         ZVAL_DOUBLE(

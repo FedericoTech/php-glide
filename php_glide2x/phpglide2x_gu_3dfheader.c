@@ -16,7 +16,7 @@ ZEND_FUNCTION(testGu3dfHeader)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_gu3dfHeader(gu3dfHeader_zo, &buffer);
+    Gu3dfHeader_flush(gu3dfHeader_zo, &buffer);
 
     php_printf(
         "width: %d, height: %d, small_lod: %d, large_lod: %d, aspect_ratio: %d, format: %d\n",
@@ -36,14 +36,14 @@ PHP_METHOD(Gu3dfHeader, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(Gu3dfHeader), 0);
 
-    flush_gu3dfHeader(Z_OBJ_P(ZEND_THIS), (Gu3dfHeader*)ZSTR_VAL(bin));
+    Gu3dfHeader_flush(Z_OBJ_P(ZEND_THIS), (Gu3dfHeader*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(Gu3dfHeader)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
 
-void flush_gu3dfHeader(const _Gu3dfHeader* obj, Gu3dfHeader* buffer)
+void Gu3dfHeader_flush(const _Gu3dfHeader* obj, Gu3dfHeader* buffer)
 {
     zval* value = zend_read_property(
         gu3dfHeader_ce,                     // zend_class_entry* of the object
@@ -117,7 +117,7 @@ void flush_gu3dfHeader(const _Gu3dfHeader* obj, Gu3dfHeader* buffer)
     if (Z_TYPE_P(value) != IS_NULL) { buffer->format = enum_to_int(Z_OBJ_P(value)); }
 }
 
-void hydrate_gu3dfHeader(const Gu3dfHeader* buffer, _Gu3dfHeader* obj)
+void Gu3dfHeader_hydrate(const Gu3dfHeader* buffer, _Gu3dfHeader* obj)
 {
     zend_update_property_long(
         gu3dfHeader_ce,

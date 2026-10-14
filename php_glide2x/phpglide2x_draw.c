@@ -38,8 +38,8 @@ PHP_FUNCTION(grAADrawLine)
 		ZEND_PARSE_PARAMETERS_END();
 
 	grAADrawLine(
-		gr_vertex_auto_flush(zva),
-		gr_vertex_auto_flush(zvb)
+		GrVertex_autoFlush(zva),
+		GrVertex_autoFlush(zvb)
 	);
 }
 
@@ -51,7 +51,7 @@ PHP_FUNCTION(grAADrawPoint)
 		Z_PARAM_OBJ_OF_CLASS(p, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grAADrawPoint(gr_vertex_auto_flush(p));
+	grAADrawPoint(GrVertex_autoFlush(p));
 }
 
 PHP_FUNCTION(grAADrawPolygon)
@@ -132,7 +132,7 @@ PHP_FUNCTION(grAADrawPolygon)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)), 
+			GrVertex_autoFlush(Z_OBJ_P(val)), 
 			sizeof(GrVertex)
 		);
 
@@ -181,7 +181,7 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)), 
+			GrVertex_autoFlush(Z_OBJ_P(val)), 
 			sizeof(GrVertex)
 		);
 
@@ -213,9 +213,9 @@ PHP_FUNCTION(grAADrawTriangle)
 		ZEND_PARSE_PARAMETERS_END();
 
 	grAADrawTriangle(
-		gr_vertex_auto_flush(a),
-		gr_vertex_auto_flush(b),
-		gr_vertex_auto_flush(c),
+		GrVertex_autoFlush(a),
+		GrVertex_autoFlush(b),
+		GrVertex_autoFlush(c),
 		antialiasAB, 
 		antialiasBC, 
 		antialiasCA
@@ -233,8 +233,8 @@ PHP_FUNCTION(grDrawLine)
 		ZEND_PARSE_PARAMETERS_END();
 
 	grDrawLine(
-		gr_vertex_auto_flush(zva),
-		gr_vertex_auto_flush(zvb)
+		GrVertex_autoFlush(zva),
+		GrVertex_autoFlush(zvb)
 	);
 }
 
@@ -316,7 +316,7 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)),
+			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
 
@@ -365,7 +365,7 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)),
+			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
 
@@ -384,7 +384,7 @@ PHP_FUNCTION(grDrawPoint)
 		Z_PARAM_OBJ_OF_CLASS(p, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grDrawPoint(gr_vertex_auto_flush(p));
+	grDrawPoint(GrVertex_autoFlush(p));
 }
 
 PHP_FUNCTION(grDrawPolygon)
@@ -465,7 +465,7 @@ PHP_FUNCTION(grDrawPolygon)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)),
+			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
 
@@ -514,7 +514,7 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 
 		memcpy(
 			&vertices[i++], 
-			gr_vertex_auto_flush(Z_OBJ_P(val)),
+			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
 
@@ -538,8 +538,8 @@ PHP_FUNCTION(grDrawTriangle)
 	ZEND_PARSE_PARAMETERS_END();
 
 	grDrawTriangle(
-		gr_vertex_auto_flush(a),
-		gr_vertex_auto_flush(b),
-		gr_vertex_auto_flush(c)
+		GrVertex_autoFlush(a),
+		GrVertex_autoFlush(b),
+		GrVertex_autoFlush(c)
 	);
 }

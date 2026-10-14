@@ -15,7 +15,7 @@ ZEND_FUNCTION(testGrTMUConfig_t)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_grTMUConfig(grTMUConfig_zo, &buffer);
+    GrTMUConfig_flush(grTMUConfig_zo, &buffer);
 
     php_printf(
         "tmuRev: %d, tmuRam: %d\n",
@@ -31,14 +31,14 @@ PHP_METHOD(GrTMUConfig_t, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrTMUConfig_t), 0);
 
-    flush_grTMUConfig(Z_OBJ_P(ZEND_THIS), (GrTMUConfig_t*)ZSTR_VAL(bin));
+    GrTMUConfig_flush(Z_OBJ_P(ZEND_THIS), (GrTMUConfig_t*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrTMUConfig_t)] = '\0'; // null terminator (optional for binary)
     
     RETURN_STR(bin);
 }
 
-void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
+void GrTMUConfig_flush(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
 {
     zval* value = zend_read_property(
         grTMUConfig_ce,             // zend_class_entry* of the object
@@ -64,7 +64,7 @@ void flush_grTMUConfig(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
     if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRam = Z_LVAL_P(value); }
 }
 
-void hydrate_grTMUConfig(const GrTMUConfig_t* tmuConfig, _GrTMUConfig_t* obj)
+void GrTMUConfig_hydrate(const GrTMUConfig_t* tmuConfig, _GrTMUConfig_t* obj)
 {
     zend_update_property_long(grTMUConfig_ce, obj, "tmuRev", sizeof("tmuRev") - 1, tmuConfig->tmuRev);
 

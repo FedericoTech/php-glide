@@ -56,7 +56,7 @@ PHP_FUNCTION(grLfbLock)
 		&grLfbInfo->grLfbInfo
 	));
 
-	hydrate_grLfbInfo(
+	GrLfbInfo_hydrate(
 		&grLfbInfo->grLfbInfo, 
 		grLfbInfo, 
 		lock_type == GR_LFB_READ_ONLY

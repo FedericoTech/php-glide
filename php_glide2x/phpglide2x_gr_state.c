@@ -26,7 +26,7 @@ PHP_METHOD(GrState, flush)
 
     _GrState* obj = O_EMBEDDED_P(_GrState, Z_OBJ_P(ZEND_THIS));
 
-    flush_grState(obj, &obj->grState);
+    GrState_flush(obj, &obj->grState);
 
     zend_string* bin = zend_string_alloc(sizeof(GrState), 0);
 
@@ -84,7 +84,7 @@ void phpglide2x_register_grState(INIT_FUNC_ARGS)
     object_handlers.clone_obj = gr_clone_obj;
 }
 
-void flush_grState(const _GrState* obj, GrState* buffer)
+void GrState_flush(const _GrState* obj, GrState* buffer)
 {
     zval* value = zend_read_property(
         grState_ce,         // zend_class_entry* of the object
@@ -109,7 +109,7 @@ void flush_grState(const _GrState* obj, GrState* buffer)
     }
 }
 
-void hydrate_grState(const GrState* buffer, _GrState* obj)
+void GrState_hydrate(const GrState* buffer, _GrState* obj)
 {
     zend_update_property_stringl(
         grState_ce,

@@ -13,7 +13,7 @@ ZEND_FUNCTION(testGrAT3DConfig_t)
 
     GrAT3DConfig_t buffer = { 0xffffffff };
 
-    flush_GrAT3DConfig(grAT3DConfig_zo, &buffer);
+    GrAT3DConfig_flush(grAT3DConfig_zo, &buffer);
 
     php_printf(
         "rev: %d\n",
@@ -28,14 +28,14 @@ PHP_METHOD(GrAT3DConfig_t, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrAT3DConfig_t), 0);
 
-    flush_GrAT3DConfig(Z_OBJ_P(ZEND_THIS), (GrAT3DConfig_t *) ZSTR_VAL(bin));
+    GrAT3DConfig_flush(Z_OBJ_P(ZEND_THIS), (GrAT3DConfig_t *) ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrAT3DConfig_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
 
-void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
+void GrAT3DConfig_flush(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
 {
     zval* value = zend_read_property(
         grAT3DConfig_ce,                // zend_class_entry* of the object
@@ -49,7 +49,7 @@ void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer)
     if (Z_TYPE_P(value) != IS_NULL) { buffer->rev = Z_LVAL_P(value); }
 }
 
-void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj)
+void GrAT3DConfig_hydrate(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj)
 {
     zend_update_property_long(
         grAT3DConfig_ce, 

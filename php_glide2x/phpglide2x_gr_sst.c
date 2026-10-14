@@ -16,7 +16,7 @@ ZEND_FUNCTION(testSST_t)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_SST(sST_zo, &buffer);
+    SST_flush(sST_zo, &buffer);
 
     php_printf("type: %d,", buffer.type);
 
@@ -88,14 +88,14 @@ PHP_METHOD(SST_t, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(SST_t), 0);
     
-    flush_SST(Z_OBJ_P(ZEND_THIS), (SST_t*)ZSTR_VAL(bin));
+    SST_flush(Z_OBJ_P(ZEND_THIS), (SST_t*)ZSTR_VAL(bin));
     
     ZSTR_VAL(bin)[sizeof(SST_t)] = '\0'; // null terminator (optional for binary)
     
     RETURN_STR(bin);
 }
 
-void flush_SST(const _SST_t* obj, SST_t* buffer)
+void SST_flush(const _SST_t* obj, SST_t* buffer)
 {
     zval* value = zend_read_property(
         sST_ce,             // zend_class_entry* of the object
@@ -123,22 +123,22 @@ void flush_SST(const _SST_t* obj, SST_t* buffer)
     else {
         switch (buffer->type) {
         case GR_SSTTYPE_VOODOO:
-            flush_grVoodooConfig((_GrVoodooConfig_t *) Z_OBJ_P(value), &buffer->sstBoard.VoodooConfig);
+            GrVoodooConfig_flush((_GrVoodooConfig_t *) Z_OBJ_P(value), &buffer->sstBoard.VoodooConfig);
             break;
         case GR_SSTTYPE_SST96:
-            flush_GrSst96Config((_GrSst96Config_t *) Z_OBJ_P(value), &buffer->sstBoard.SST96Config);
+            GrSst96Config_flush((_GrSst96Config_t *) Z_OBJ_P(value), &buffer->sstBoard.SST96Config);
             break;
         case GR_SSTTYPE_AT3D:
-            flush_GrAT3DConfig((_GrAT3DConfig_t*) Z_OBJ_P(value), &buffer->sstBoard.AT3DConfig);
+            GrAT3DConfig_flush((_GrAT3DConfig_t*) Z_OBJ_P(value), &buffer->sstBoard.AT3DConfig);
             break;
         case GR_SSTTYPE_Voodoo2:
-            flush_grVoodoo2Config((_GrVoodoo2Config_t *) Z_OBJ_P(value), &buffer->sstBoard.Voodoo2Config);
+            GrVoodoo2Config_flush((_GrVoodoo2Config_t *) Z_OBJ_P(value), &buffer->sstBoard.Voodoo2Config);
             break;
         }
     }
 }
 
-void hydrate_SST(const SST_t* buffer, _SST_t* obj)
+void SST_hydrate(const SST_t* buffer, _SST_t* obj)
 {
     zval sst_board, val_zv;
     zend_object* enum_case = NULL, * sst_board_zo = NULL;
@@ -151,7 +151,7 @@ void hydrate_SST(const SST_t* buffer, _SST_t* obj)
 
         object_init_ex(&sst_board, grVoodooConfig_ce);
         
-        hydrate_grVoodooConfig(&buffer->sstBoard.VoodooConfig, (_GrVoodooConfig_t *)Z_OBJ_P(&sst_board));
+        GrVoodooConfig_hydrate(&buffer->sstBoard.VoodooConfig, (_GrVoodooConfig_t *)Z_OBJ_P(&sst_board));
         break;
     
     case GR_SSTTYPE_Voodoo2:
@@ -159,21 +159,21 @@ void hydrate_SST(const SST_t* buffer, _SST_t* obj)
 
         object_init_ex(&sst_board, grVoodoo2Config_ce);
 
-        hydrate_grVoodoo2Config(&buffer->sstBoard.Voodoo2Config, (_GrVoodoo2Config_t *)Z_OBJ_P(&sst_board));
+        GrVoodoo2Config_hydrate(&buffer->sstBoard.Voodoo2Config, (_GrVoodoo2Config_t *)Z_OBJ_P(&sst_board));
         break;
     case GR_SSTTYPE_SST96:
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_SST96");
 
         object_init_ex(&sst_board, grSst96Config_ce);
 
-        hydrate_GrSst96Config(&buffer->sstBoard.SST96Config, (_GrSst96Config_t *) Z_OBJ_P(&sst_board));
+        GrSst96Config_hydrate(&buffer->sstBoard.SST96Config, (_GrSst96Config_t *) Z_OBJ_P(&sst_board));
         break;
     case GR_SSTTYPE_AT3D:
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_AT3D");
 
         object_init_ex(&sst_board, grAT3DConfig_ce);
 
-        hydrate_GrAT3DConfig(&buffer->sstBoard.AT3DConfig, (_GrAT3DConfig_t*) Z_OBJ_P(&sst_board));
+        GrAT3DConfig_hydrate(&buffer->sstBoard.AT3DConfig, (_GrAT3DConfig_t*) Z_OBJ_P(&sst_board));
         break;
     case 4: //Banshee, and others. not garanteed it will work
         enum_case = zend_enum_get_case_cstr(grSstType_ce, "GR_SSTTYPE_Banshe");

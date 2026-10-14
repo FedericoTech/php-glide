@@ -15,7 +15,7 @@ ZEND_FUNCTION(testGrSstPerfStats_t)
 
     memset(&buffer, 0xff, sizeof buffer);
 
-    flush_grSstPerfStats(grSstPerfStats_zo, &buffer);
+    GrSstPerfStats_flush(grSstPerfStats_zo, &buffer);
 
     php_printf(
         "pixelsIn: %u, chromaFail: %u, zFuncFail: %u, aFuncFail: %u, pixelsOut: %u\n",
@@ -34,14 +34,14 @@ PHP_METHOD(GrSstPerfStats_t, flush)
 
     zend_string* bin = zend_string_alloc(sizeof(GrSstPerfStats_t), 0);
 
-    flush_grSstPerfStats(Z_OBJ_P(ZEND_THIS), (GrSstPerfStats_t*)ZSTR_VAL(bin));
+    GrSstPerfStats_flush(Z_OBJ_P(ZEND_THIS), (GrSstPerfStats_t*)ZSTR_VAL(bin));
 
     ZSTR_VAL(bin)[sizeof(GrSstPerfStats_t)] = '\0'; // null terminator (optional for binary)
 
     RETURN_STR(bin);
 }
 
-void flush_grSstPerfStats(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer)
+void GrSstPerfStats_flush(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer)
 {
     zval* value = zend_read_property(
         gr_SstPerfStats_ce,            // zend_class_entry* of the object
@@ -99,7 +99,7 @@ void flush_grSstPerfStats(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer
     if (Z_TYPE_P(value) != IS_NULL) { buffer->pixelsOut = (FxU32)Z_LVAL_P(value); }
 }
 
-void hydrate_grSstPerfStats(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj)
+void GrSstPerfStats_hydrate(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj)
 {
 
     zend_update_property_long(gr_SstPerfStats_ce, obj, "pixelsIn", sizeof("pixelsIn") - 1, buffer->pixelsIn);

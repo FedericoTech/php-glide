@@ -20,32 +20,32 @@ zend_class_entry* gr_flushable_ce;
 
 extern zend_class_entry* grTMUConfig_ce;
 typedef zend_object _GrTMUConfig_t;
-void flush_grTMUConfig(const _GrTMUConfig_t* obj, GrTMUConfig_t* buffer);
-void hydrate_grTMUConfig(const GrTMUConfig_t* buffer, _GrTMUConfig_t* obj);
+void GrTMUConfig_flush(const _GrTMUConfig_t* obj, GrTMUConfig_t* buffer);
+void GrTMUConfig_hydrate(const GrTMUConfig_t* buffer, _GrTMUConfig_t* obj);
 
 
 extern zend_class_entry* grVoodooConfig_ce;
 typedef zend_object _GrVoodooConfig_t;
-void flush_grVoodooConfig(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer);
-void hydrate_grVoodooConfig(const GrVoodooConfig_t* buffer, _GrVoodooConfig_t* obj);
+void GrVoodooConfig_flush(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer);
+void GrVoodooConfig_hydrate(const GrVoodooConfig_t* buffer, _GrVoodooConfig_t* obj);
 
 
 extern zend_class_entry* grVoodoo2Config_ce;
 typedef zend_object _GrVoodoo2Config_t;
-void flush_grVoodoo2Config(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t* buffer);
-void hydrate_grVoodoo2Config(const GrVoodoo2Config_t* buffer, _GrVoodoo2Config_t* obj);
+void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t* buffer);
+void GrVoodoo2Config_hydrate(const GrVoodoo2Config_t* buffer, _GrVoodoo2Config_t* obj);
 
 
 extern zend_class_entry* grSst96Config_ce;
 typedef zend_object _GrSst96Config_t;
-void flush_GrSst96Config(const _GrSst96Config_t* obj, GrSst96Config_t* buffer);
-void hydrate_GrSst96Config(const GrSst96Config_t* buffer, _GrSst96Config_t* obj);
+void GrSst96Config_flush(const _GrSst96Config_t* obj, GrSst96Config_t* buffer);
+void GrSst96Config_hydrate(const GrSst96Config_t* buffer, _GrSst96Config_t* obj);
 
 
 extern zend_class_entry* grAT3DConfig_ce;
 typedef zend_object _GrAT3DConfig_t;
-void flush_GrAT3DConfig(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer);
-void hydrate_GrAT3DConfig(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj);
+void GrAT3DConfig_flush(const _GrAT3DConfig_t* obj, GrAT3DConfig_t* buffer);
+void GrAT3DConfig_hydrate(const GrAT3DConfig_t* buffer, _GrAT3DConfig_t* obj);
 
 
 extern zend_class_entry* sST_ce;
@@ -60,14 +60,14 @@ typedef struct SST_t {
 } SST_t;
 
 typedef zend_object _SST_t;
-void flush_SST(const _SST_t* obj, SST_t* buffer);
-void hydrate_SST(const SST_t* buffer, _SST_t* obj);
+void SST_flush(const _SST_t* obj, SST_t* buffer);
+void SST_hydrate(const SST_t* buffer, _SST_t* obj);
 
 
 extern zend_class_entry* grHwConfiguration_ce;
 typedef zend_object _GrHwConfiguration;
-void flush_GrHwConfiguration(const _GrHwConfiguration* obj, GrHwConfiguration* buffer);
-void hydrate_GrHwConfiguration(const GrHwConfiguration* buffer, _GrHwConfiguration* obj);
+void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* buffer);
+void GrHwConfiguration_hydrate(const GrHwConfiguration* buffer, _GrHwConfiguration* obj);
 
 
 
@@ -93,19 +93,19 @@ typedef struct _GrTmuVertex {
     zend_object std;
 } _GrTmuVertex;
 
-void flush_grTmuVertex(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer);
+void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer);
 
-void hydrate_grTmuVertex(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex);
+void GrTmuVertex_hydrate(const GrTmuVertex* buffer, _GrTmuVertex* grTmuVertex);
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS);
 
-static inline GrTmuVertex* gr_tmuVertex_auto_flush(zend_object* zo)
+static inline GrTmuVertex* GrTmuVertex_autoFlush(zend_object* zo)
 {
     _GrTmuVertex* v = O_EMBEDDED_P(_GrTmuVertex, zo);
 
     //if any difference property escaped...
     if (v->referenced_mask) {
-        flush_grTmuVertex(v, &v->tmuVertex.tmu);
+        GrTmuVertex_flush(v, &v->tmuVertex.tmu);
     }
 
     return &v->tmuVertex.tmu;
@@ -125,12 +125,12 @@ typedef struct _GrTmuVertices {
     zend_object std;
 } _GrTmuVertices;
 
-void grTmuVertices_remove_sync_ref(GrTmuVertex* my, _GrTmuVertex* from);
-void grTmuVertices_set_sync_ref(GrTmuVertex* my, _GrTmuVertex* to);
+void GrTmuVertices_removeSyncRef(GrTmuVertex* my, _GrTmuVertex* from);
+void GrTmuVertices_setSyncRef(GrTmuVertex* my, _GrTmuVertex* to);
 
-void flush_grTmuVertices(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer);
+void GrTmuVertices_flush(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer);
 
-void hydrate_grTmuVertices(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices);
+void GrTmuVertices_hydrate(const GrTmuVertex* buffer, _GrTmuVertices* grTmuVertices);
 
 void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS);
 
@@ -173,19 +173,19 @@ typedef struct _GrVertex {
     zend_object std;
 } _GrVertex;
 
-void flush_grVertex(const _GrVertex* grVertex, GrVertex* buffer);
+void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer);
 
-void hydrate_grVertex(const GrVertex* buffer, _GrVertex* grVertex);
+void GrVertex_hydrate(const GrVertex* buffer, _GrVertex* grVertex);
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS);
 
-static inline GrVertex* gr_vertex_auto_flush(zend_object* zo)
+static inline GrVertex* GrVertex_autoFlush(zend_object* zo)
 {
     _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
 
     //if any difference property escaped...
     if (v->referenced_mask) {
-        flush_grVertex(v, &v->grVertex.vertex);
+        GrVertex_flush(v, &v->grVertex.vertex);
     }
 
     return &v->grVertex.vertex;
@@ -200,9 +200,9 @@ typedef struct _GrState {
     zend_object std;
 } _GrState;
 
-void flush_grState(const _GrState* grState, GrState* buffer);
+void GrState_flush(const _GrState* grState, GrState* buffer);
 
-void hydrate_grState(const GrState* buffer, _GrState* grState);
+void GrState_hydrate(const GrState* buffer, _GrState* grState);
 
 void phpglide2x_register_grState(INIT_FUNC_ARGS);
 
@@ -215,9 +215,9 @@ typedef struct _GrLfbInfo_t {
     zend_object std;	// it is important that the zend_object goes last
 } _GrLfbInfo_t;
 
-void flush_grLfbInfo(const _GrLfbInfo_t* grLfbInfo, GrLfbInfo_t* buffer, bool write);
+void GrLfbInfo_flush(const _GrLfbInfo_t* grLfbInfo, GrLfbInfo_t* buffer, bool write);
 
-void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read);
+void GrLfbInfo_hydrate(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read);
 
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
 
@@ -227,8 +227,8 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS);
 
 extern zend_class_entry* gr_SstPerfStats_ce;
 typedef zend_object _GrSstPerfStats_t;
-void flush_grSstPerfStats(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer);
-void hydrate_grSstPerfStats(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj);
+void GrSstPerfStats_flush(const _GrSstPerfStats_t* obj, GrSstPerfStats_t* buffer);
+void GrSstPerfStats_hydrate(const GrSstPerfStats_t* buffer, _GrSstPerfStats_t* obj);
 
 
 
@@ -241,9 +241,9 @@ typedef struct _GrTexInfo {
     zend_object std;	// it is important that the zend_object goes last
 } _GrTexInfo;
 
-void flush_grTexInfo(const _GrTexInfo* grTexInfo, GrTexInfo* buffer);
+void GrTexInfo_flush(const _GrTexInfo* grTexInfo, GrTexInfo* buffer);
 
-void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* grTexInfo);
+void GrTexInfo_hydrate(const GrTexInfo* buffer, _GrTexInfo* grTexInfo);
 
 void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
@@ -252,8 +252,8 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS);
 
 extern zend_class_entry* gu3dfHeader_ce;
 typedef zend_object _Gu3dfHeader;
-void flush_gu3dfHeader(const _Gu3dfHeader* obj, Gu3dfHeader* buffer);
-void hydrate_gu3dfHeader(const Gu3dfHeader* buffer, _Gu3dfHeader* obj);
+void Gu3dfHeader_flush(const _Gu3dfHeader* obj, Gu3dfHeader* buffer);
+void Gu3dfHeader_hydrate(const Gu3dfHeader* buffer, _Gu3dfHeader* obj);
 
 
 

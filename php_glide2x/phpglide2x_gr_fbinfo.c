@@ -40,7 +40,7 @@ PHP_METHOD(GrLfbInfo_t, flush)
     _GrLfbInfo_t* obj = O_EMBEDDED_P(_GrLfbInfo_t, Z_OBJ_P(ZEND_THIS));
       
 
-    flush_grLfbInfo(obj, &obj->grLfbInfo, write);
+    GrLfbInfo_flush(obj, &obj->grLfbInfo, write);
 
     zend_string* bin = zend_string_alloc(sizeof(GrLfbInfo_t) + 1, 0);
 
@@ -124,7 +124,7 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
     //object_handlers.free_obj = gr_free_obj;
 }
 
-void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
+void GrLfbInfo_flush(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
 {
     zval* value = zend_read_property(
         obj->std.ce,            // zend_class_entry* of the object
@@ -184,7 +184,7 @@ void flush_grLfbInfo(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
     buffer->origin = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
 }
 
-void hydrate_grLfbInfo(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
+void GrLfbInfo_hydrate(const GrLfbInfo_t* buffer, _GrLfbInfo_t* grLfbInfo, bool read)
 {
     if (buffer->lfbPtr) {
 

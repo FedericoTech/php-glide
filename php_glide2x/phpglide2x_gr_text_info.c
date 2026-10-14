@@ -40,7 +40,7 @@ PHP_METHOD(GrTexInfo, flush)
     _GrTexInfo* obj = O_EMBEDDED_P(_GrTexInfo, Z_OBJ_P(ZEND_THIS));
 
 
-    flush_grTexInfo(obj, &obj->grTexInfo /*, write*/);
+    GrTexInfo_flush(obj, &obj->grTexInfo /*, write*/);
 
     zend_string* bin = zend_string_alloc(sizeof(GrTexInfo), 0);
 
@@ -116,7 +116,7 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
     object_handlers.free_obj = gr_free_obj;
 }
 
-void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
+void GrTexInfo_flush(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
 {
     zval* value = NULL;
         
@@ -194,7 +194,7 @@ void flush_grTexInfo(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
     */
 }
 
-void hydrate_grTexInfo(const GrTexInfo* buffer, _GrTexInfo* obj /*, bool read*/)
+void GrTexInfo_hydrate(const GrTexInfo* buffer, _GrTexInfo* obj /*, bool read*/)
 {
     /*
     if (buffer->data) {
