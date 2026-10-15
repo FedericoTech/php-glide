@@ -95,11 +95,11 @@ PHP_METHOD(SST_t, flush)
     RETURN_STR(bin);
 }
 
-void SST_flush(const _SST_t* obj, SST_t* buffer)
+void SST_flush(const _SST_t* self, SST_t* buffer)
 {
     zval* value = zend_read_property(
         sST_ce,             // zend_class_entry* of the object
-        (zend_object*)obj,  // zval* or zend_object* (see below)
+        (zend_object*)self,  // zval* or zend_object* (see below)
         "type",             // property name
         sizeof("type") - 1,
         1,                  // silent (1 = don't emit notice if not found)
@@ -110,7 +110,7 @@ void SST_flush(const _SST_t* obj, SST_t* buffer)
 
     value = zend_read_property(
         sST_ce,             // zend_class_entry* of the object
-        (zend_object*)obj,  // zval* or zend_object* (see below)
+        (zend_object*)self,  // zval* or zend_object* (see below)
         "sstBoard",         // property name
         sizeof("sstBoard") - 1,
         1,                  // silent (1 = don't emit notice if not found)
@@ -138,7 +138,7 @@ void SST_flush(const _SST_t* obj, SST_t* buffer)
     }
 }
 
-void SST_hydrate(_SST_t* obj, const SST_t* buffer)
+void SST_hydrate(_SST_t* self, const SST_t* buffer)
 {
     zval sst_board, val_zv;
     zend_object* enum_case = NULL, * sst_board_zo = NULL;
@@ -187,13 +187,13 @@ void SST_hydrate(_SST_t* obj, const SST_t* buffer)
      
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        sST_ce, obj,
+        sST_ce, self,
         "type", sizeof("type") - 1,
         &val_zv
     );
 
     zend_update_property(
-        sST_ce, obj,
+        sST_ce, self,
         "sstBoard", sizeof("sstBoard") - 1,
         &sst_board
     );

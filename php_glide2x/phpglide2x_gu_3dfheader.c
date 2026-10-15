@@ -43,92 +43,92 @@ PHP_METHOD(Gu3dfHeader, flush)
     RETURN_STR(bin);
 }
 
-void Gu3dfHeader_flush(const _Gu3dfHeader* obj, Gu3dfHeader* buffer)
+void Gu3dfHeader_flush(const _Gu3dfHeader* self, Gu3dfHeader* buffer)
 {
     zval* value = zend_read_property(
-        gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
-        "width",                            // property name
+        gu3dfHeader_ce,                 // zend_class_entry* of the object
+        (zend_object*)self,             // zval* or zend_object* (see below)
+        "width",                        // property name
         sizeof("width") - 1,
-        1,                                  // silent (1 = don't emit notice if not found)
-        NULL                                // Optional return zval ptr, or NULL
+        1,                              // silent (1 = don't emit notice if not found)
+        NULL                            // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->width = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->width = Z_LVAL_P(value); }
 
 
     value = zend_read_property(
         gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
+        (zend_object*)self,    // zval* or zend_object* (see below)
         "height",                            // property name
         sizeof("height") - 1,
         1,                                  // silent (1 = don't emit notice if not found)
         NULL                                // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->height = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->height = Z_LVAL_P(value); }
 
 
     value = zend_read_property(
-        gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
-        "small_lod",                            // property name
+        gu3dfHeader_ce,                 // zend_class_entry* of the object
+        (zend_object*)self,             // zval* or zend_object* (see below)
+        "small_lod",                    // property name
         sizeof("small_lod") - 1,
-        1,                                  // silent (1 = don't emit notice if not found)
-        NULL                                // Optional return zval ptr, or NULL
+        1,                              // silent (1 = don't emit notice if not found)
+        NULL                            // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->small_lod = enum_to_int(Z_OBJ_P(value)); }
+    if (!Z_ISNULL_P(value)) { buffer->small_lod = enum_to_int(Z_OBJ_P(value)); }
 
 
     value = zend_read_property(
-        gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
-        "large_lod",                            // property name
+        gu3dfHeader_ce,                 // zend_class_entry* of the object
+        (zend_object*)self,             // zval* or zend_object* (see below)
+        "large_lod",                    // property name
         sizeof("large_lod") - 1,
-        1,                                  // silent (1 = don't emit notice if not found)
-        NULL                                // Optional return zval ptr, or NULL
+        1,                              // silent (1 = don't emit notice if not found)
+        NULL                            // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->large_lod = enum_to_int(Z_OBJ_P(value)); }
+    if (!Z_ISNULL_P(value)) { buffer->large_lod = enum_to_int(Z_OBJ_P(value)); }
 
 
     value = zend_read_property(
         gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
+        (zend_object*)self,    // zval* or zend_object* (see below)
         "aspect_ratio",                            // property name
         sizeof("aspect_ratio") - 1,
         1,                                  // silent (1 = don't emit notice if not found)
         NULL                                // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->aspect_ratio = enum_to_int(Z_OBJ_P(value)); }
+    if (!Z_ISNULL_P(value)) { buffer->aspect_ratio = enum_to_int(Z_OBJ_P(value)); }
 
 
     value = zend_read_property(
         gu3dfHeader_ce,                     // zend_class_entry* of the object
-        (zend_object*)obj,    // zval* or zend_object* (see below)
+        (zend_object*)self,    // zval* or zend_object* (see below)
         "format",                            // property name
         sizeof("format") - 1,
         1,                                  // silent (1 = don't emit notice if not found)
         NULL                                // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->format = enum_to_int(Z_OBJ_P(value)); }
+    if (!Z_ISNULL_P(value)) { buffer->format = enum_to_int(Z_OBJ_P(value)); }
 }
 
-void Gu3dfHeader_hydrate(_Gu3dfHeader* obj, const Gu3dfHeader* buffer)
+void Gu3dfHeader_hydrate(_Gu3dfHeader* self, const Gu3dfHeader* buffer)
 {
     zend_update_property_long(
         gu3dfHeader_ce,
-        obj,
+        self,
         "width",
         sizeof("width") - 1, buffer->width
     );
 
     zend_update_property_long(
         gu3dfHeader_ce,
-        obj,
+        self,
         "height",
         sizeof("height") - 1, buffer->height
     );
@@ -136,28 +136,28 @@ void Gu3dfHeader_hydrate(_Gu3dfHeader* obj, const Gu3dfHeader* buffer)
     zval val_zv;
     ZVAL_OBJ(&val_zv, int_to_enum(buffer->small_lod, grLOD_ce));
     zend_update_property(
-        gu3dfHeader_ce, obj,
+        gu3dfHeader_ce, self,
         "small_lod", sizeof("small_lod") - 1,
         &val_zv
     );
 
     ZVAL_OBJ(&val_zv, int_to_enum(buffer->large_lod, grLOD_ce));
     zend_update_property(
-        gu3dfHeader_ce, obj,
+        gu3dfHeader_ce, self,
         "large_lod", sizeof("large_lod") - 1,
         &val_zv
     );
 
     ZVAL_OBJ(&val_zv, int_to_enum(buffer->aspect_ratio, grAspectRatio_ce));
     zend_update_property(
-        gu3dfHeader_ce, obj,
+        gu3dfHeader_ce, self,
         "aspect_ratio", sizeof("aspect_ratio") - 1,
         &val_zv
     );
 
     ZVAL_OBJ(&val_zv, int_to_enum(buffer->format, grTextureFormat_ce));
     zend_update_property(
-        gu3dfHeader_ce, obj,
+        gu3dfHeader_ce, self,
         "format", sizeof("format") - 1,
         &val_zv
     );

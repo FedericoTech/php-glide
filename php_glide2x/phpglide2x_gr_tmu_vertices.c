@@ -214,25 +214,25 @@ static void gr_free_obj(zend_object* object)
     zend_object_std_dtor(object);
 }
 
-void GrTmuVertices_removeSyncRef(_GrTmuVertex* from, GrTmuVertex* my)
+void GrTmuVertices_removeSyncRef(_GrTmuVertex* self, GrTmuVertex* my)
 {
     for (int cont = 0; cont < MAX_SYNCERS; cont++) {
-        if (from->sync_references[cont] == my) {
+        if (self->sync_references[cont] == my) {
 
-            from->sync_references[cont] = NULL;
-            --from->sync_count; //we substract a sync count
+            self->sync_references[cont] = NULL;
+            --self->sync_count; //we substract a sync count
             break;
         }
     }
 }
 
-void GrTmuVertices_setSyncRef(_GrTmuVertex* to, GrTmuVertex* my)
+void GrTmuVertices_setSyncRef(_GrTmuVertex* self, GrTmuVertex* my)
 {
     for (int cont = 0; cont < MAX_SYNCERS; cont++) {
-        if (to->sync_references[cont] == NULL) {
+        if (self->sync_references[cont] == NULL) {
 
-            to->sync_references[cont] = my;
-            ++to->sync_count; //we add a sync count
+            self->sync_references[cont] = my;
+            ++self->sync_count; //we add a sync count
             break;
         }
     }
@@ -251,34 +251,34 @@ void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS)
     object_handlers.free_obj = gr_free_obj;
 }
 
-void GrTmuVertices_flush(const _GrTmuVertices* grTmuVertices, GrTmuVertex* buffer)
+void GrTmuVertices_flush(const _GrTmuVertices* self, GrTmuVertex* buffer)
 {
     //we go through the tmus
     for (int cont = 0; cont < GLIDE_NUM_TMU; cont++) {
         
         //if the tmu is not set...
-        if (Z_ISUNDEF(grTmuVertices->tmu[cont])) {
+        if (Z_ISUNDEF(self->tmu[cont])) {
             //we restart the memory
             buffer[cont] = (GrTmuVertex){ 0 };
             continue;
         }
 
-        buffer[cont] = *GrTmuVertex_autoFlush(Z_OBJ_P(&grTmuVertices->tmu[cont]));
+        buffer[cont] = *GrTmuVertex_autoFlush(Z_OBJ_P(&self->tmu[cont]));
 
-        //GrTmuVertex_flush(Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]), &buffer[cont]);
+        //GrTmuVertex_flush(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[cont]), &buffer[cont]);
     }
 }
 
-void GrTmuVertices_hydrate(_GrTmuVertices* grTmuVertices, const GrTmuVertex* buffer)
+void GrTmuVertices_hydrate(_GrTmuVertices* self, const GrTmuVertex* buffer)
 {
     //we go through the tmus
     for (int cont = 0; cont < GLIDE_NUM_TMU; cont++) {
 
         //if the tmu is not set...
-        if (Z_ISUNDEF(grTmuVertices->tmu[cont])) {
-            object_init_ex(&grTmuVertices->tmu[cont], grTmuVertex_ce);
+        if (Z_ISUNDEF(self->tmu[cont])) {
+            object_init_ex(&self->tmu[cont], grTmuVertex_ce);
         }
 
-        GrTmuVertex_hydrate(Z_EMBEDDED_P(_GrTmuVertex, &grTmuVertices->tmu[cont]) , &buffer[cont]);
+        GrTmuVertex_hydrate(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[cont]) , &buffer[cont]);
     }
 }

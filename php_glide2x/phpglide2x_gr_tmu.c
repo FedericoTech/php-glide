@@ -38,11 +38,11 @@ PHP_METHOD(GrTMUConfig_t, flush)
     RETURN_STR(bin);
 }
 
-void GrTMUConfig_flush(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
+void GrTMUConfig_flush(const _GrTMUConfig_t * self, GrTMUConfig_t* buffer)
 {
     zval* value = zend_read_property(
         grTMUConfig_ce,             // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "tmuRev",                   // property name
         sizeof("tmuRev") - 1,
         1,                          // silent (1 = don't emit notice if not found)
@@ -50,23 +50,23 @@ void GrTMUConfig_flush(const _GrTMUConfig_t *obj, GrTMUConfig_t* buffer)
     );
 
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRev = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->tmuRev = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grTMUConfig_ce,             // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "tmuRam",                   // property name
         sizeof("tmuRam") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->tmuRam = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->tmuRam = Z_LVAL_P(value); }
 }
 
-void GrTMUConfig_hydrate(_GrTMUConfig_t* obj, const GrTMUConfig_t* tmuConfig)
+void GrTMUConfig_hydrate(_GrTMUConfig_t* self, const GrTMUConfig_t* tmuConfig)
 {
-    zend_update_property_long(grTMUConfig_ce, obj, "tmuRev", sizeof("tmuRev") - 1, tmuConfig->tmuRev);
+    zend_update_property_long(grTMUConfig_ce, self, "tmuRev", sizeof("tmuRev") - 1, tmuConfig->tmuRev);
 
-    zend_update_property_long(grTMUConfig_ce, obj, "tmuRam", sizeof("tmuRam") - 1, tmuConfig->tmuRam);
+    zend_update_property_long(grTMUConfig_ce, self, "tmuRam", sizeof("tmuRam") - 1, tmuConfig->tmuRam);
 }

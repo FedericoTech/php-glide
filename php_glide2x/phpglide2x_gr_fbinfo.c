@@ -124,23 +124,23 @@ void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
     //object_handlers.free_obj = gr_free_obj;
 }
 
-void GrLfbInfo_flush(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
+void GrLfbInfo_flush(const _GrLfbInfo_t* self, GrLfbInfo_t* buffer, bool write)
 {
     zval* value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grLfbInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "size",   // property name
         sizeof("size") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->size = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->size = Z_ISNULL_P(value) ? 0 : Z_LVAL_P(value);
 
     if (write && buffer->lfbPtr) {
         value = zend_read_property(
-            obj->std.ce,            // zend_class_entry* of the object
-            (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+            grLfbInfo_ce,            // zend_class_entry* of the object
+            (zend_object*)&self->std,           // zval* or zend_object* (see below)
             "lfbPtr",   // property name
             sizeof("lfbPtr") - 1,
             1,             // silent (1 = don't emit notice if not found)
@@ -151,40 +151,40 @@ void GrLfbInfo_flush(const _GrLfbInfo_t* obj, GrLfbInfo_t* buffer, bool write)
     }
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grLfbInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "strideInBytes",   // property name
         sizeof("strideInBytes") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->strideInBytes = Z_TYPE_P(value) == IS_NULL ? 0 : Z_LVAL_P(value);
+    buffer->strideInBytes = Z_ISNULL_P(value) ? 0 : Z_LVAL_P(value);
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grLfbInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "writeMode",   // property name
         sizeof("writeMode") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->writeMode = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->writeMode = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grLfbInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "origin",   // property name
         sizeof("origin") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->origin = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->origin = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 }
 
-void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool read)
+void GrLfbInfo_hydrate(_GrLfbInfo_t* self, const GrLfbInfo_t* buffer, bool read)
 {
     if (buffer->lfbPtr) {
 
@@ -211,7 +211,7 @@ void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool 
 
         zend_update_property_str(
             grLfbInfo_ce,
-            &grLfbInfo->std,
+            &self->std,
             "lfbPtr",
             sizeof("lfbPtr") - 1,
             zstr
@@ -222,7 +222,7 @@ void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool 
 
     zend_update_property_long(
         grLfbInfo_ce,
-        &grLfbInfo->std,
+        &self->std,
         "strideInBytes",
         sizeof("strideInBytes") - 1,
         buffer->strideInBytes
@@ -235,7 +235,7 @@ void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool 
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grLfbInfo_ce, &grLfbInfo->std,
+        grLfbInfo_ce, &self->std,
         "writeMode", sizeof("writeMode") - 1,
         &val_zv
     );
@@ -245,7 +245,7 @@ void GrLfbInfo_hydrate(_GrLfbInfo_t* grLfbInfo, const GrLfbInfo_t* buffer, bool 
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grLfbInfo_ce, &grLfbInfo->std,
+        grLfbInfo_ce, &self->std,
         "origin", sizeof("origin") - 1,
         &val_zv
     );

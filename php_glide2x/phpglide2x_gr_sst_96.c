@@ -41,40 +41,40 @@ PHP_METHOD(GrSst96Config_t, flush)
 }
 
 
-void GrSst96Config_flush(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
+void GrSst96Config_flush(const _GrSst96Config_t* self, GrSst96Config_t* buffer)
 {
     zval* value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
-        (zend_object*)obj,           // zval* or zend_object* (see below)
+        (zend_object*)self,           // zval* or zend_object* (see below)
         "fbRam",   // property name
         sizeof("fbRam") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->fbRam = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
-        (zend_object*)obj,           // zval* or zend_object* (see below)
+        (zend_object*)self,           // zval* or zend_object* (see below)
         "nTexelfx",   // property name
         sizeof("nTexelfx") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->nTexelfx = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grSst96Config_ce,            // zend_class_entry* of the object
-        (zend_object*)obj,           // zval* or zend_object* (see below)
+        (zend_object*)self,           // zval* or zend_object* (see below)
         "tmuConfig",   // property name
         sizeof("tmuConfig") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISNULL_P(value)) {
         //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t));
     }
     else {
@@ -83,11 +83,11 @@ void GrSst96Config_flush(const _GrSst96Config_t* obj, GrSst96Config_t* buffer)
     }
 }
 
-void GrSst96Config_hydrate(_GrSst96Config_t* obj, const GrSst96Config_t* buffer)
+void GrSst96Config_hydrate(_GrSst96Config_t* self, const GrSst96Config_t* buffer)
 {
-    zend_update_property_long(grSst96Config_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
+    zend_update_property_long(grSst96Config_ce, self, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
 
-    zend_update_property_long(grSst96Config_ce, obj, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
+    zend_update_property_long(grSst96Config_ce, self, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
 
     zval grTMUConfig_t;
 
@@ -95,7 +95,7 @@ void GrSst96Config_hydrate(_GrSst96Config_t* obj, const GrSst96Config_t* buffer)
 
     GrTMUConfig_hydrate((_GrTMUConfig_t*)&Z_OBJ(grTMUConfig_t), &buffer->tmuConfig);
 
-    zend_update_property(grSst96Config_ce, obj, "tmuConfig", sizeof("tmuConfig") - 1, &grTMUConfig_t);
+    zend_update_property(grSst96Config_ce, self, "tmuConfig", sizeof("tmuConfig") - 1, &grTMUConfig_t);
 
     //zval_ptr_dtor(&grTMUConfig_t); //destroy the local pointer
 

@@ -98,55 +98,55 @@ PHP_METHOD(GrVoodoo2Config_t, flush)
     RETURN_STR(bin);
 }
 
-void GrVoodooConfig_flush(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer)
+void GrVoodooConfig_flush(const _GrVoodooConfig_t* self, GrVoodooConfig_t* buffer)
 {
     zval* value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "fbRam",                    // property name
         sizeof("fbRam") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->fbRam = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "fbiRev",                   // property name
         sizeof("fbiRev") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbiRev = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->fbiRev = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "nTexelfx",                 // property name
         sizeof("nTexelfx") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->nTexelfx = Z_LVAL_P(value); }
     
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "sliDetect",                // property name
         sizeof("sliDetect") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
+    if (!Z_ISNULL_P(value)) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
 
     value = zend_read_property(
         grVoodooConfig_ce,          // zend_class_entry* of the object
-        (zend_object*)obj,         // zval* or zend_object* (see below)
+        (zend_object*)self,         // zval* or zend_object* (see below)
         "tmuConfig",                // property name
         sizeof("tmuConfig") - 1,
         1,                          // silent (1 = don't emit notice if not found)
@@ -154,7 +154,7 @@ void GrVoodooConfig_flush(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
     );
     
     //the array is not initialized...
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISNULL_P(value)) {
         //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
@@ -179,15 +179,15 @@ void GrVoodooConfig_flush(const _GrVoodooConfig_t* obj, GrVoodooConfig_t* buffer
     }
 }
 
-void GrVoodooConfig_hydrate(_GrVoodooConfig_t* obj, const GrVoodooConfig_t* buffer)
+void GrVoodooConfig_hydrate(_GrVoodooConfig_t* self, const GrVoodooConfig_t* buffer)
 {
-    zend_update_property_long(grVoodooConfig_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
+    zend_update_property_long(grVoodooConfig_ce, self, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
     
-    zend_update_property_long(grVoodooConfig_ce, obj, "fbiRev", sizeof("fbiRev") - 1, buffer->fbiRev);
+    zend_update_property_long(grVoodooConfig_ce, self, "fbiRev", sizeof("fbiRev") - 1, buffer->fbiRev);
 
-    zend_update_property_long(grVoodooConfig_ce, obj, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
+    zend_update_property_long(grVoodooConfig_ce, self, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
 
-    zend_update_property_bool(grVoodooConfig_ce, obj, "sliDetect", sizeof("sliDetect") - 1, buffer->sliDetect);
+    zend_update_property_bool(grVoodooConfig_ce, self, "sliDetect", sizeof("sliDetect") - 1, buffer->sliDetect);
 
     zval tmuConfig_arr_zval;
     array_init_size(&tmuConfig_arr_zval, buffer->nTexelfx);
@@ -204,7 +204,7 @@ void GrVoodooConfig_hydrate(_GrVoodooConfig_t* obj, const GrVoodooConfig_t* buff
 
     zend_update_property(
         grVoodooConfig_ce,
-        obj,
+        self,
         "tmuConfig",
         sizeof("tmuConfig") - 1,
         &tmuConfig_arr_zval
@@ -213,54 +213,54 @@ void GrVoodooConfig_hydrate(_GrVoodooConfig_t* obj, const GrVoodooConfig_t* buff
     zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
 }
 
-void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buffer) {
+void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* self, GrVoodoo2Config_t *buffer) {
     zval* value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "fbRam",                    // property name
         sizeof("fbRam") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbRam = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->fbRam = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "fbiRev",                   // property name
         sizeof("fbiRev") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->fbiRev = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->fbiRev = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "nTexelfx",                 // property name
         sizeof("nTexelfx") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->nTexelfx = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->nTexelfx = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "sliDetect",                // property name
         sizeof("sliDetect") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
+    if (!Z_ISNULL_P(value)) { buffer->sliDetect = Z_TYPE_P(value) == IS_TRUE; }
 
     value = zend_read_property(
         grVoodoo2Config_ce,         // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "tmuConfig",                // property name
         sizeof("tmuConfig") - 1,
         1,                          // silent (1 = don't emit notice if not found)
@@ -268,7 +268,7 @@ void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
     );
 
     //the array is not initialized...
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISNULL_P(value)) {
         //memset(&buffer->tmuConfig, 0, sizeof(GrTMUConfig_t) * 2);
     }
     else {
@@ -292,15 +292,15 @@ void GrVoodoo2Config_flush(const _GrVoodoo2Config_t* obj, GrVoodoo2Config_t *buf
     }
 }
 
-void GrVoodoo2Config_hydrate(_GrVoodoo2Config_t* obj, const GrVoodoo2Config_t* buffer)
+void GrVoodoo2Config_hydrate(_GrVoodoo2Config_t* self, const GrVoodoo2Config_t* buffer)
 {
-    zend_update_property_long(grVoodoo2Config_ce, obj, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
+    zend_update_property_long(grVoodoo2Config_ce, self, "fbRam", sizeof("fbRam") - 1, buffer->fbRam);
 
-    zend_update_property_long(grVoodoo2Config_ce, obj, "fbiRev", sizeof("fbiRev") - 1, buffer->fbiRev);
+    zend_update_property_long(grVoodoo2Config_ce, self, "fbiRev", sizeof("fbiRev") - 1, buffer->fbiRev);
 
-    zend_update_property_long(grVoodoo2Config_ce, obj, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
+    zend_update_property_long(grVoodoo2Config_ce, self, "nTexelfx", sizeof("nTexelfx") - 1, buffer->nTexelfx);
 
-    zend_update_property_bool(grVoodoo2Config_ce, obj, "sliDetect", sizeof("sliDetect") - 1, buffer->sliDetect);
+    zend_update_property_bool(grVoodoo2Config_ce, self, "sliDetect", sizeof("sliDetect") - 1, buffer->sliDetect);
 
     zval tmuConfig_arr_zval;
     array_init_size(&tmuConfig_arr_zval, buffer->nTexelfx);
@@ -314,7 +314,7 @@ void GrVoodoo2Config_hydrate(_GrVoodoo2Config_t* obj, const GrVoodoo2Config_t* b
         add_next_index_zval(&tmuConfig_arr_zval, &grTMUConfig_t);
     }
 
-    zend_update_property(grVoodoo2Config_ce, obj, "tmuConfig", sizeof("tmuConfig") - 1, &tmuConfig_arr_zval);
+    zend_update_property(grVoodoo2Config_ce, self, "tmuConfig", sizeof("tmuConfig") - 1, &tmuConfig_arr_zval);
 
     zval_ptr_dtor(&tmuConfig_arr_zval); //destroy the local pointer
 }

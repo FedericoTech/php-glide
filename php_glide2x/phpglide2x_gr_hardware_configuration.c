@@ -103,22 +103,22 @@ PHP_METHOD(GrHwConfiguration, flush)
     RETURN_STR(bin);
 }
 
-void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* buffer)
+void GrHwConfiguration_flush(const _GrHwConfiguration* self, GrHwConfiguration* buffer)
 {
     zval* value = zend_read_property(
         grHwConfiguration_ce,       // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "num_sst",                  // property name
         sizeof("num_sst") - 1,
         1,                          // silent (1 = don't emit notice if not found)
         NULL                        // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) != IS_NULL) { buffer->num_sst = Z_LVAL_P(value); }
+    if (!Z_ISNULL_P(value)) { buffer->num_sst = Z_LVAL_P(value); }
 
     value = zend_read_property(
         grHwConfiguration_ce,       // zend_class_entry* of the object
-        (zend_object*)obj,          // zval* or zend_object* (see below)
+        (zend_object*)self,          // zval* or zend_object* (see below)
         "SSTs",                     // property name
         sizeof("SSTs") - 1,
         1,                          // silent (1 = don't emit notice if not found)
@@ -126,7 +126,7 @@ void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* b
     );
 
     //the array is not initialized...
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISNULL_P(value)) {
         //memset(&buffer->SSTs, 0, sizeof(SST_t) * 2);
     }
     else {
@@ -151,10 +151,10 @@ void GrHwConfiguration_flush(const _GrHwConfiguration* obj, GrHwConfiguration* b
     }
 }
 
-void GrHwConfiguration_hydrate(_GrHwConfiguration* obj, const GrHwConfiguration* buffer)
+void GrHwConfiguration_hydrate(_GrHwConfiguration* self, const GrHwConfiguration* buffer)
 {
     zend_update_property_long(
-        grHwConfiguration_ce, obj,
+        grHwConfiguration_ce, self,
         "num_sst", sizeof("num_sst") - 1,
         buffer->num_sst
     );
@@ -175,7 +175,7 @@ void GrHwConfiguration_hydrate(_GrHwConfiguration* obj, const GrHwConfiguration*
     }
 
     zend_update_property(
-        grHwConfiguration_ce, obj,
+        grHwConfiguration_ce, self,
         "SSTs", sizeof("SSTs") - 1,
         &sSTs_arr_zval
     );

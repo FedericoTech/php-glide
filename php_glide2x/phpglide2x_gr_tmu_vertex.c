@@ -314,7 +314,7 @@ void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
     
 }
 
-void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
+void GrTmuVertex_flush(const _GrTmuVertex* self, GrTmuVertex* buffer)
 {
     zval* value = NULL;
         
@@ -322,28 +322,28 @@ void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
     for (int cont = 0; cont < props_num; cont++) {
 
         //if the property was referenced...
-        if (grTmuVertex->referenced_mask & (1u << cont)) {
+        if (self->referenced_mask & (1u << cont)) {
 
-            value = OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets.arr[cont]);
+            value = OBJ_PROP(&self->std, self->offsets.arr[cont]);
 
 #ifdef DEBUG_HANDLERS
             php_printf(
                 "[%d][%d][%d] \n",
                 cont,
                 Z_TYPE_P(value),
-                grTmuVertex->referenced_mask
+                self->referenced_mask
             );
 #endif // DEBUG_HANDLERS
 
             ((FxFloat*)&buffer->sow)[cont] = (FxFloat)zval_get_double(value);
             /*
             //if there are syncers...
-            for (int cont2 = 0, found = 0; found < grTmuVertex->sync_count && cont2 < MAX_SYNCERS; cont2++) {
+            for (int cont2 = 0, found = 0; found < self->sync_count && cont2 < MAX_SYNCERS; cont2++) {
                 //if we find a syncer...
-                if (grTmuVertex->sync_references[cont2] != NULL) {
+                if (self->sync_references[cont2] != NULL) {
                     ++found;
                     //we update the secific member
-                    //((FxFloat *) grTmuVertex->sync_references[cont2])[cont] = ((FxFloat*)&buffer->sow)[cont];
+                    //((FxFloat *) self->sync_references[cont2])[cont] = ((FxFloat*)&buffer->sow)[cont];
                 }
             }
             */
@@ -352,11 +352,11 @@ void GrTmuVertex_flush(const _GrTmuVertex* grTmuVertex, GrTmuVertex* buffer)
     
 }
 
-void GrTmuVertex_hydrate(_GrTmuVertex* grTmuVertex, const GrTmuVertex* buffer)
+void GrTmuVertex_hydrate(_GrTmuVertex* self, const GrTmuVertex* buffer)
 {
     for (int cont = 0; cont < props_num; cont++) {
         ZVAL_DOUBLE(
-            OBJ_PROP(&grTmuVertex->std, grTmuVertex->offsets.arr[cont]),
+            OBJ_PROP(&self->std, self->offsets.arr[cont]),
             ((FxFloat*)buffer)[cont]
         );
     }   

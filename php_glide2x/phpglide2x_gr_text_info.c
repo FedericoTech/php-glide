@@ -116,58 +116,58 @@ void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
     object_handlers.free_obj = gr_free_obj;
 }
 
-void GrTexInfo_flush(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
+void GrTexInfo_flush(const _GrTexInfo* self, GrTexInfo* buffer /*, bool write*/ )
 {
     zval* value = NULL;
         
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grTexInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "smallLod",   // property name
         sizeof("smallLod") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->smallLod = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->smallLod = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grTexInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "largeLod",   // property name
         sizeof("largeLod") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->largeLod = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->largeLod = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grTexInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "aspectRatio",   // property name
         sizeof("aspectRatio") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->aspectRatio = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->aspectRatio = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grTexInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "format",   // property name
         sizeof("format") - 1,
         1,             // silent (1 = don't emit notice if not found)
         NULL           // Optional return zval ptr, or NULL
     );
 
-    buffer->format = Z_TYPE_P(value) == IS_NULL ? 0 : enum_to_int(Z_OBJ_P(value));
+    buffer->format = Z_ISNULL_P(value) ? 0 : enum_to_int(Z_OBJ_P(value));
 
     value = zend_read_property(
-        obj->std.ce,            // zend_class_entry* of the object
-        (zend_object*)&obj->std,           // zval* or zend_object* (see below)
+        grTexInfo_ce,            // zend_class_entry* of the object
+        (zend_object*)&self->std,           // zval* or zend_object* (see below)
         "data",   // property name
         sizeof("data") - 1,
         1,             // silent (1 = don't emit notice if not found)
@@ -194,7 +194,7 @@ void GrTexInfo_flush(const _GrTexInfo* obj, GrTexInfo* buffer /*, bool write*/ )
     */
 }
 
-void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
+void GrTexInfo_hydrate(_GrTexInfo* self, const GrTexInfo* buffer /*, bool read*/)
 {
     /*
     if (buffer->data) {
@@ -239,7 +239,7 @@ void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grTexInfo_ce, &obj->std,
+        grTexInfo_ce, &self->std,
         "smallLod", sizeof("smallLod") - 1,
         &val_zv
     );
@@ -249,7 +249,7 @@ void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grTexInfo_ce, &obj->std,
+        grTexInfo_ce, &self->std,
         "largeLod", sizeof("largeLod") - 1,
         &val_zv
     );
@@ -259,7 +259,7 @@ void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grTexInfo_ce, &obj->std,
+        grTexInfo_ce, &self->std,
         "aspectRatio", sizeof("aspectRatio") - 1,
         &val_zv
     );
@@ -269,7 +269,7 @@ void GrTexInfo_hydrate(_GrTexInfo* obj, const GrTexInfo* buffer /*, bool read*/)
 
     ZVAL_OBJ(&val_zv, enum_case);
     zend_update_property(
-        grTexInfo_ce, &obj->std,
+        grTexInfo_ce, &self->std,
         "format", sizeof("format") - 1,
         &val_zv
     );

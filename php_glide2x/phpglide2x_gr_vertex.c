@@ -565,15 +565,15 @@ void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
     
 }
 
-void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer)
+void GrVertex_flush(const _GrVertex* self, GrVertex* buffer)
 {
     zval rv, *value = NULL;
     
     //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
         //if the property was referenced...
-        if (grVertex->referenced_mask & (1u << cont)) {
-            value = OBJ_PROP(&grVertex->std, grVertex->offsets.arr[cont]);
+        if (self->referenced_mask & (1u << cont)) {
+            value = OBJ_PROP(&self->std, self->offsets.arr[cont]);
 
             //php_printf("[%d] \n", Z_TYPE_P(value));
 
@@ -582,7 +582,7 @@ void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer)
     }
 
     value = zend_read_property(
-        grVertex_ce, (zend_object *) & grVertex->std,
+        grVertex_ce, (zend_object *) &self->std,
         "tmuvtx", sizeof("tmuvtx") - 1,
         0, &rv
     );
@@ -597,13 +597,13 @@ void GrVertex_flush(const _GrVertex* grVertex, GrVertex* buffer)
     }
 }
 
-void GrVertex_hydrate(_GrVertex* grVertex, const GrVertex* buffer)
+void GrVertex_hydrate(_GrVertex* self, const GrVertex* buffer)
 {
     //we go through the inner float zvals
     for (int cont = 0; cont < floats_num; cont++) {
 
         ZVAL_DOUBLE(
-            OBJ_PROP(&grVertex->std, grVertex->offsets.arr[cont]),
+            OBJ_PROP(&self->std, self->offsets.arr[cont]),
             ((FxFloat*)buffer)[cont]
         );
     }
@@ -614,7 +614,7 @@ void GrVertex_hydrate(_GrVertex* grVertex, const GrVertex* buffer)
 
     GrTmuVertices_hydrate(Z_EMBEDDED_P(_GrTmuVertices, &grTmuVertices) , &buffer->tmuvtx[0]);
 
-    zend_update_property(grVertex_ce, &grVertex->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
+    zend_update_property(grVertex_ce, &self->std, "tmuvtx", sizeof("tmuvtx") - 1, &grTmuVertices);
 
     zval_ptr_dtor(&grTmuVertices); //destroy the local pointer
     

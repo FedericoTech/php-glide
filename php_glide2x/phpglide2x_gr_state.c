@@ -84,18 +84,18 @@ void phpglide2x_register_grState(INIT_FUNC_ARGS)
     object_handlers.clone_obj = gr_clone_obj;
 }
 
-void GrState_flush(const _GrState* obj, GrState* buffer)
+void GrState_flush(const _GrState* self, GrState* buffer)
 {
     zval* value = zend_read_property(
         grState_ce,         // zend_class_entry* of the object
-        (zend_object*)&obj->std,  // zval* or zend_object* (see below)
+        (zend_object*)&self->std,  // zval* or zend_object* (see below)
         "pad",              // property name
         sizeof("pad") - 1,
         1,                  // silent (1 = don't emit notice if not found)
         NULL                // Optional return zval ptr, or NULL
     );
 
-    if (Z_TYPE_P(value) == IS_NULL) {
+    if (Z_ISNULL_P(value)) {
         memset(buffer->pad, 0, sizeof(buffer->pad));
     }
     else {
@@ -109,11 +109,11 @@ void GrState_flush(const _GrState* obj, GrState* buffer)
     }
 }
 
-void GrState_hydrate(_GrState* obj, const GrState* buffer)
+void GrState_hydrate(_GrState* self, const GrState* buffer)
 {
     zend_update_property_stringl(
         grState_ce,
-        &obj->std,
+        &self->std,
         "pad",
         sizeof("pad") - 1,
         buffer->pad, 
