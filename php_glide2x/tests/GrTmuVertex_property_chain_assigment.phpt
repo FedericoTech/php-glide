@@ -47,7 +47,6 @@ GrTmuVertex Object
     [tow] => 1.3
     [oow] => 1.3
 )
-referenced_mask: 0
 sow: 1.300000, tow: 1.300000, oow: 1.300000
 float(2.6)
 float(2.6)
@@ -66,5 +65,4 @@ GrTmuVertex Object
     [tow] => 2.6
     [oow] => 2.6
 )
-referenced_mask: 0
 sow: 2.600000, tow: 2.600000, oow: 2.600000

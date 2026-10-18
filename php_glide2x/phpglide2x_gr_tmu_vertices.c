@@ -13,7 +13,7 @@ ZEND_FUNCTION(testGrTmuVertices)
 
     _GrTmuVertices* config = O_EMBEDDED_P(_GrTmuVertices, grTmuVertices_zo);
 
-    GrTmuVertex *grTmuVertices = config->gtvArray;
+    GrTmuVertex grTmuVertices[GLIDE_NUM_TMU] = {0};
     
     for(int idx = 0; idx < GLIDE_NUM_TMU; idx++){
         //if the zval is a GrTmuVertix...
@@ -78,20 +78,11 @@ PHP_METHOD(GrTmuVertices, offsetSet)
     // If there's already an object at this index, release it
     if (!Z_ISUNDEF(self->tmu[idx])) {
 
-        //remove sync pointer from the object
-        GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
-
         zval_ptr_dtor(&self->tmu[idx]); //remove reference to the GrTmyVertex object
     }
 
     // Assign the new object and increment refcount
     ZVAL_OBJ(&self->tmu[idx], grTmuVertex_zo);
-
-    //subscribe to the sync pointer of the GrTmyVertex object
-    GrTmuVertices_setSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
-
-    //we copy the data as soon as it's set
-    self->gtvArray[idx] = O_EMBEDDED_P(_GrTmuVertex, grTmuVertex_zo)->tmuVertex.tmu;
 
     GC_ADDREF(Z_OBJ(self->tmu[idx]));   //we add a reference counting
 }
@@ -136,12 +127,9 @@ PHP_METHOD(GrTmuVertices, offsetUnset)
     // If there's already an object at this index, release it
     if (!Z_ISUNDEF(self->tmu[idx])) {
 
-        //remove sync pointer from the object
-        GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
         
         zval_ptr_dtor(&self->tmu[idx]); //remove reference to the GrTmyVertex object
 
-        self->gtvArray[idx] = (GrTmuVertex){ 0 };   //we zero the buffer
 
         ZVAL_UNDEF(&self->tmu[idx]);    //we make the element undefined
     }
@@ -203,39 +191,13 @@ static void gr_free_obj(zend_object* object)
     _GrTmuVertices* self = O_EMBEDDED_P(_GrTmuVertices, object);
 
     for (int idx = 0; idx < GLIDE_NUM_TMU; idx++) {
+        //if it is defined...
         if (!Z_ISUNDEF(self->tmu[idx])) {
-            //remove sync pointer from the object
-            GrTmuVertices_removeSyncRef(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[idx]), &self->gtvArray[idx]);
-
             zval_ptr_dtor(&self->tmu[idx]);    //we remove one reference count
         }
     }
 
     zend_object_std_dtor(object);
-}
-
-void GrTmuVertices_removeSyncRef(_GrTmuVertex* self, GrTmuVertex* my)
-{
-    for (int cont = 0; cont < MAX_SYNCERS; cont++) {
-        if (self->sync_references[cont] == my) {
-
-            self->sync_references[cont] = NULL;
-            --self->sync_count; //we substract a sync count
-            break;
-        }
-    }
-}
-
-void GrTmuVertices_setSyncRef(_GrTmuVertex* self, GrTmuVertex* my)
-{
-    for (int cont = 0; cont < MAX_SYNCERS; cont++) {
-        if (self->sync_references[cont] == NULL) {
-
-            self->sync_references[cont] = my;
-            ++self->sync_count; //we add a sync count
-            break;
-        }
-    }
 }
 
 void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS)
@@ -262,8 +224,6 @@ void GrTmuVertices_flush(const _GrTmuVertices* self, GrTmuVertex* buffer)
             buffer[cont] = (GrTmuVertex){ 0 };
             continue;
         }
-
-        //buffer[cont] = *GrTmuVertex_autoFlush(Z_OBJ_P(&self->tmu[cont]));
 
         GrTmuVertex_flush(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[cont]), &buffer[cont]);
     }

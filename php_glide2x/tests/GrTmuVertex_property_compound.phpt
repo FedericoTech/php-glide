@@ -62,7 +62,6 @@ GrTmuVertex Object
     [tow] => 2
     [oow] => 3
 )
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 3.000000
 post-increment
 object(GrTmuVertex)#1 (3) {
@@ -79,7 +78,6 @@ GrTmuVertex Object
     [tow] => 3
     [oow] => 4
 )
-referenced_mask: 7
 sow: 2.000000, tow: 3.000000, oow: 4.000000
 addition assignment
 object(GrTmuVertex)#1 (3) {
@@ -96,7 +94,6 @@ GrTmuVertex Object
     [tow] => 5
     [oow] => 6
 )
-referenced_mask: 7
 sow: 4.000000, tow: 5.000000, oow: 6.000000
 Pre-increment
 object(GrTmuVertex)#1 (3) {
@@ -113,7 +110,6 @@ GrTmuVertex Object
     [tow] => 6
     [oow] => 7
 )
-referenced_mask: 7
 sow: 5.000000, tow: 6.000000, oow: 7.000000
 re-assign a value to unflag the property in the mask
 object(GrTmuVertex)#1 (3) {
@@ -130,5 +126,4 @@ GrTmuVertex Object
     [tow] => 8
     [oow] => 7
 )
-referenced_mask: 5
 sow: 5.000000, tow: 8.000000, oow: 7.000000

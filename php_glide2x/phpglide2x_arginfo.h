@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 8d7e5eb777fdc5ce2a58d6ed743f361f588e4c04 */
+ * Stub hash: 7eca3cd6e78bd2a597a4591219aeb2f48eef61a1 */
 
 #if defined(_DEBUG)
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_testGrState, 0, 1, IS_VOID, 0)
@@ -617,12 +617,6 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_GrVertex_flush arginfo_class_GrState_flush
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_GrVertex_setAutoload, 0, 0, IS_VOID, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, IS_LONG, 0, "0")
-ZEND_END_ARG_INFO()
-
-#define arginfo_class_GrVertex_isAutoload arginfo_grBufferNumPending
-
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_GrVertex_fromString, 0, 1, GrVertex, 0)
 	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -802,8 +796,6 @@ ZEND_METHOD(GrTmuVertices, offsetUnset);
 ZEND_METHOD(GrTmuVertices, __debugInfo);
 ZEND_METHOD(GrVertex, getLength);
 ZEND_METHOD(GrVertex, flush);
-ZEND_METHOD(GrVertex, setAutoload);
-ZEND_METHOD(GrVertex, isAutoload);
 ZEND_METHOD(GrVertex, fromString);
 ZEND_METHOD(GrLfbInfo_t, flush);
 ZEND_METHOD(GrSstPerfStats_t, flush);
@@ -1186,8 +1178,6 @@ static const zend_function_entry class_GrTmuVertices_methods[] = {
 static const zend_function_entry class_GrVertex_methods[] = {
 	ZEND_ME(GrVertex, getLength, arginfo_class_GrVertex_getLength, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, flush, arginfo_class_GrVertex_flush, ZEND_ACC_PUBLIC)
-	ZEND_ME(GrVertex, setAutoload, arginfo_class_GrVertex_setAutoload, ZEND_ACC_PUBLIC)
-	ZEND_ME(GrVertex, isAutoload, arginfo_class_GrVertex_isAutoload, ZEND_ACC_PUBLIC)
 	ZEND_ME(GrVertex, fromString, arginfo_class_GrVertex_fromString, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	ZEND_FE_END
 };

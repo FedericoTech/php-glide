@@ -19,5 +19,4 @@ object(GrTmuVertex)#1 (0) {
 GrTmuVertex Object
 (
 )
-referenced_mask: 0
 sow: 0.000000, tow: 0.000000, oow: 0.000000

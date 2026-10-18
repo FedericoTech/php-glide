@@ -132,7 +132,6 @@ object(GrTmuVertex)#2 (0) {
 GrTmuVertex Object
 (
 )
-referenced_mask: 0
 sow: 0.000000, tow: 0.000000, oow: 0.000000
 object(GrTmuVertices)#1 (2) {
   [0]=>
@@ -222,7 +221,6 @@ GrTmuVertices Object
 )
 tmu[0]: sow: 1.000000, tow: 0.000000, oow: 0.000000
 tmu[1]: sow: 1.000000, tow: 0.000000, oow: 0.000000
-referenced_mask: 0
 sow: 1.000000, tow: 0.000000, oow: 0.000000
 object(GrTmuVertices)#1 (2) {
   [0]=>
@@ -261,7 +259,6 @@ GrTmuVertices Object
 )
 tmu[0]: sow: 1.000000, tow: 2.000000, oow: 0.000000
 tmu[1]: sow: 1.000000, tow: 2.000000, oow: 0.000000
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 0.000000
 object(GrTmuVertices)#1 (2) {
   [0]=>
@@ -302,7 +299,6 @@ GrTmuVertices Object
 )
 tmu[0]: sow: 1.000000, tow: 2.000000, oow: 3.000000
 tmu[1]: sow: 1.000000, tow: 2.000000, oow: 3.000000
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 3.000000
 object(GrTmuVertices)#1 (2) {
   [1]=>
@@ -327,7 +323,6 @@ GrTmuVertices Object
 )
 tmu[0]: sow: 0.000000, tow: 0.000000, oow: 0.000000
 tmu[1]: sow: 1.000000, tow: 2.000000, oow: 3.000000
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 3.000000
 object(GrTmuVertices)#1 (2) {
   [0]=>
@@ -368,7 +363,6 @@ GrTmuVertices Object
 )
 tmu[0]: sow: 4.000000, tow: 5.000000, oow: 6.000000
 tmu[1]: sow: 1.000000, tow: 2.000000, oow: 3.000000
-referenced_mask: 0
 sow: 4.000000, tow: 5.000000, oow: 6.000000
 tmu[0]: sow: 1.000000, tow: 2.000000, oow: 3.000000
 tmu[1]: sow: 4.000000, tow: 5.000000, oow: 6.000000
@@ -418,11 +412,9 @@ tmu[0]: sow: 90.000000, tow: 5.000000, oow: 6.000000
 tmu[1]: sow: 7.000000, tow: 8.000000, oow: 9.000000
 bool(true)
 bool(true)
-referenced_mask: 1
 sow: 90.000000, tow: 5.000000, oow: 6.000000
 tmu[0]: sow: 90.000000, tow: 5.000000, oow: 6.000000
 tmu[1]: sow: 90.000000, tow: 5.000000, oow: 6.000000
-referenced_mask: 0
 sow: 88.000000, tow: 88.000000, oow: 88.000000
 tmu[0]: sow: 88.000000, tow: 88.000000, oow: 88.000000
 tmu[1]: sow: 7.000000, tow: 8.000000, oow: 9.000000

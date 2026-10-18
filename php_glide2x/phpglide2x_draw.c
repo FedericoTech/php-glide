@@ -37,10 +37,12 @@ PHP_FUNCTION(grAADrawLine)
 		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grAADrawLine(
-		GrVertex_autoFlush(zva),
-		GrVertex_autoFlush(zvb)
-	);
+	GrVertex v1, v2;
+
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zva), &v1),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvb), &v2),
+
+	grAADrawLine(&v1, &v2);
 }
 
 PHP_FUNCTION(grAADrawPoint)
@@ -51,7 +53,10 @@ PHP_FUNCTION(grAADrawPoint)
 		Z_PARAM_OBJ_OF_CLASS(p, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grAADrawPoint(GrVertex_autoFlush(p));
+	GrVertex v;
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, p), &v),
+
+	grAADrawPoint(&v);
 }
 
 PHP_FUNCTION(grAADrawPolygon)
@@ -129,12 +134,14 @@ PHP_FUNCTION(grAADrawPolygon)
 			return;
 		}
 
-
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)), 
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -179,7 +186,8 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 			return;
 		}
 
-		vertices[i++] = *GrVertex_autoFlush(Z_OBJ_P(val));
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+
 		/*
 		memcpy(
 			&vertices[i++], 
@@ -199,26 +207,30 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 
 PHP_FUNCTION(grAADrawTriangle)
 {
-	zend_object* a = NULL;
-	zend_object* b = NULL;
-	zend_object* c = NULL;
+	zend_object* zva = NULL;
+	zend_object* zvb = NULL;
+	zend_object* zvc = NULL;
 	zend_bool antialiasAB;
 	zend_bool antialiasBC;
 	zend_bool antialiasCA;
 
 	ZEND_PARSE_PARAMETERS_START(6, 6)
-		Z_PARAM_OBJ_OF_CLASS(a, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(b, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(c, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zva, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvc, grVertex_ce)
 		Z_PARAM_BOOL(antialiasAB)
 		Z_PARAM_BOOL(antialiasBC)
 		Z_PARAM_BOOL(antialiasCA)
 		ZEND_PARSE_PARAMETERS_END();
 
+	GrVertex v1, v2, v3;
+
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zva), &v1),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvb), &v2),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvc), &v3),
+
 	grAADrawTriangle(
-		GrVertex_autoFlush(a),
-		GrVertex_autoFlush(b),
-		GrVertex_autoFlush(c),
+		&v1, &v2, &v3,
 		antialiasAB, 
 		antialiasBC, 
 		antialiasCA
@@ -235,10 +247,12 @@ PHP_FUNCTION(grDrawLine)
 		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grDrawLine(
-		GrVertex_autoFlush(zva),
-		GrVertex_autoFlush(zvb)
-	);
+	GrVertex v1, v2;
+
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zva), &v1),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvb), &v2),
+
+	grDrawLine(&v1, &v2);
 }
 
 PHP_FUNCTION(grDrawPlanarPolygon)
@@ -259,7 +273,6 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 	zend_long vertex_count = zend_array_count(Z_ARRVAL_P(vlist));
 
 	GrVertex* vertices = glide_ensure_vertex_buffer(vertex_count);
-	//GrVertex* vertices = emalloc(sizeof(GrVertex) * vertex_count);
 
 	zval* val;
 	zend_ulong i = 0;
@@ -317,11 +330,15 @@ PHP_FUNCTION(grDrawPlanarPolygon)
 			return;
 		}
 
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -366,11 +383,15 @@ PHP_FUNCTION(grDrawPlanarPolygonVertexList)
 			return;
 		}
 
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -387,7 +408,10 @@ PHP_FUNCTION(grDrawPoint)
 		Z_PARAM_OBJ_OF_CLASS(p, grVertex_ce)
 		ZEND_PARSE_PARAMETERS_END();
 
-	grDrawPoint(GrVertex_autoFlush(p));
+	GrVertex v;
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, p), &v),
+
+	grDrawPoint(&v);
 }
 
 PHP_FUNCTION(grDrawPolygon)
@@ -466,11 +490,14 @@ PHP_FUNCTION(grDrawPolygon)
 			return;
 		}
 
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -515,11 +542,14 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 			return;
 		}
 
+		GrVertex_flush(Z_EMBEDDED_P(_GrVertex, val), &vertices[i++]);
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)),
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
@@ -530,19 +560,21 @@ PHP_FUNCTION(grDrawPolygonVertexList)
 
 PHP_FUNCTION(grDrawTriangle)
 {
-	zend_object* a = NULL;
-	zend_object* b = NULL;
-	zend_object* c = NULL;
+	zend_object* zva = NULL;
+	zend_object* zvb = NULL;
+	zend_object* zvc = NULL;
 
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJ_OF_CLASS(a, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(b, grVertex_ce)
-		Z_PARAM_OBJ_OF_CLASS(c, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zva, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvb, grVertex_ce)
+		Z_PARAM_OBJ_OF_CLASS(zvc, grVertex_ce)
 	ZEND_PARSE_PARAMETERS_END();
 
-	grDrawTriangle(
-		GrVertex_autoFlush(a),
-		GrVertex_autoFlush(b),
-		GrVertex_autoFlush(c)
-	);
+	GrVertex v1, v2, v3;
+
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zva), &v1),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvb), &v2),
+	GrVertex_flush(O_EMBEDDED_P(_GrVertex, zvc), &v3),
+
+	grDrawTriangle(&v1, &v2, &v3);
 }

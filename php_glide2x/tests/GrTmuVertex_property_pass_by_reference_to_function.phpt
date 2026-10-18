@@ -35,5 +35,4 @@ GrTmuVertex Object
 (
     [sow] => 42
 )
-referenced_mask: 1
 sow: 42.000000, tow: 0.000000, oow: 0.000000

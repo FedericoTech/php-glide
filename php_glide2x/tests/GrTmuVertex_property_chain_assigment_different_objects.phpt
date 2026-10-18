@@ -42,7 +42,6 @@ GrTmuVertex Object
 (
     [sow] => 1.3
 )
-referenced_mask: 0
 sow: 1.300000, tow: 0.000000, oow: 0.000000
 object(GrTmuVertex)#2 (1) {
   ["sow"]=>
@@ -56,7 +55,6 @@ GrTmuVertex Object
 (
     [sow] => 1.3
 )
-referenced_mask: 0
 sow: 1.300000, tow: 0.000000, oow: 0.000000
 object(GrTmuVertex)#3 (1) {
   ["sow"]=>
@@ -70,5 +68,4 @@ GrTmuVertex Object
 (
     [sow] => 1.3
 )
-referenced_mask: 0
 sow: 1.300000, tow: 0.000000, oow: 0.000000

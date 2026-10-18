@@ -691,10 +691,6 @@ final class GrVertex implements flushable {
 
     public function flush() : string;
 
-    public function setAutoload(int $autoload = 0) : void;
-
-    public function isAutoload() : int;
-
     public static function fromString(string $string) : GrVertex;
 }
 

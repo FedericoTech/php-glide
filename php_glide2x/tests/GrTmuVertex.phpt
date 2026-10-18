@@ -86,7 +86,6 @@ object(GrTmuVertex)#1 (0) {
   ["oow"]=>
   uninitialized(float)
 }
-referenced_mask: 0
 sow: 0.000000, tow: 0.000000, oow: 0.000000
 we clone the empty object
 object(GrTmuVertex)#2 (0) {
@@ -99,7 +98,6 @@ object(GrTmuVertex)#2 (0) {
 }
 bool(true)
 bool(false)
-referenced_mask: 0
 sow: 0.000000, tow: 0.000000, oow: 0.000000
 we set values in the original object
 object(GrTmuVertex)#1 (3) {
@@ -110,7 +108,6 @@ object(GrTmuVertex)#1 (3) {
   ["oow"]=>
   float(3)
 }
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 3.000000
 we set values in the cloned object
 object(GrTmuVertex)#2 (3) {
@@ -121,7 +118,6 @@ object(GrTmuVertex)#2 (3) {
   ["oow"]=>
   float(3.3)
 }
-referenced_mask: 0
 sow: 1.100000, tow: 2.200000, oow: 3.300000
 we clone the cloned object
 object(GrTmuVertex)#3 (3) {
@@ -134,7 +130,6 @@ object(GrTmuVertex)#3 (3) {
 }
 bool(true)
 bool(false)
-referenced_mask: 0
 sow: 1.100000, tow: 2.200000, oow: 3.300000
 we modify the cloned cloned object
 object(GrTmuVertex)#3 (3) {
@@ -145,7 +140,6 @@ object(GrTmuVertex)#3 (3) {
   ["oow"]=>
   float(4.4)
 }
-referenced_mask: 0
 sow: 2.200000, tow: 3.300000, oow: 4.400000
 now copy on wirte
 $grtv4:
@@ -157,7 +151,6 @@ object(GrTmuVertex)#3 (3) {
   ["oow"]=>
   float(4.4)
 }
-referenced_mask: 0
 sow: 2.200000, tow: 3.300000, oow: 4.400000
 $grtv5
 object(GrTmuVertex)#3 (3) {
@@ -168,7 +161,6 @@ object(GrTmuVertex)#3 (3) {
   ["oow"]=>
   float(4.4)
 }
-referenced_mask: 0
 sow: 2.200000, tow: 3.300000, oow: 4.400000
 list $grtv5 properties
 sow: 2.2

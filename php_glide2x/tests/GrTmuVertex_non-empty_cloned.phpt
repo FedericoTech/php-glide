@@ -33,7 +33,6 @@ GrTmuVertex Object
     [tow] => 2
     [oow] => 3
 )
-referenced_mask: 0
 sow: 1.000000, tow: 2.000000, oow: 3.000000
 bool(true)
 bool(false)
