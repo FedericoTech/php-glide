@@ -183,7 +183,7 @@ static inline GrVertex* GrVertex_autoFlush(zend_object* zo)
     _GrVertex* v = O_EMBEDDED_P(_GrVertex, zo);
 
     //if any difference property escaped...
-    if (v->referenced_mask) {
+    if (1 || v->referenced_mask) {
         GrVertex_flush(v, &v->grVertex.vertex);
     }
 

@@ -226,8 +226,12 @@ static zval* gr_write_property(zend_object* object, zend_string* name, zval* val
                     : zval_get_double(value)
             );
 
-            //we clear the bit as the zval is now a value
-            v->referenced_mask &= ~(1u << cont);
+            //value is the value being assigned to the property, not the property
+            //we test if the zval in the class is still a reference...
+            if (!Z_ISREF_P(OBJ_PROP(object, v->offsets.arr[cont]))) {
+                //we clear the bit as the zval is now a value
+                v->referenced_mask &= ~(1u << cont);
+            }
 
             //if any syncrhonization...
             //if (v->sync_count) {
@@ -322,7 +326,7 @@ void GrTmuVertex_flush(const _GrTmuVertex* self, GrTmuVertex* buffer)
     for (int cont = 0; cont < props_num; cont++) {
 
         //if the property was referenced...
-        if (self->referenced_mask & (1u << cont)) {
+        if (1 || self->referenced_mask & (1u << cont)) {
 
             value = OBJ_PROP(&self->std, self->offsets.arr[cont]);
 
@@ -335,7 +339,9 @@ void GrTmuVertex_flush(const _GrTmuVertex* self, GrTmuVertex* buffer)
             );
 #endif // DEBUG_HANDLERS
 
-            ((FxFloat*)&buffer->sow)[cont] = (FxFloat)zval_get_double(value);
+            ((FxFloat*)&buffer->sow)[cont] = (FxFloat) (Z_ISUNDEF_P(value)
+                ? 0.0
+                : zval_get_double(value));
             /*
             //if there are syncers...
             for (int cont2 = 0, found = 0; found < self->sync_count && cont2 < MAX_SYNCERS; cont2++) {

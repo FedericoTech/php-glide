@@ -263,9 +263,9 @@ void GrTmuVertices_flush(const _GrTmuVertices* self, GrTmuVertex* buffer)
             continue;
         }
 
-        buffer[cont] = *GrTmuVertex_autoFlush(Z_OBJ_P(&self->tmu[cont]));
+        //buffer[cont] = *GrTmuVertex_autoFlush(Z_OBJ_P(&self->tmu[cont]));
 
-        //GrTmuVertex_flush(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[cont]), &buffer[cont]);
+        GrTmuVertex_flush(Z_EMBEDDED_P(_GrTmuVertex, &self->tmu[cont]), &buffer[cont]);
     }
 }
 

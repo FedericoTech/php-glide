@@ -67,6 +67,7 @@ $angle = 0.0;
 
 $event = new sfEvent;
 
+$count = 0;
 while(sfWindow_isOpen($window)) {
 
     $time = microtime(true);
@@ -102,6 +103,22 @@ while(sfWindow_isOpen($window)) {
     );
 
     $vtr1 = rotate_point($vtx1, $angle, $centre);
+/*
+    testGrVertex($vtx1);
+    testGrVertex($vtr1);
+    echo PHP_EOL;
+*/
+    if(false && $count == 3) {
+        var_dump($vtr1);
+        testGrVertex($vtr1);
+        $vtr1->flush();
+        testGrVertex($vtr1);
+        echo PHP_EOL;
+        exit();
+    }
+    echo "$count\n";
+    $count++;
+
     $vtr2 = rotate_point($vtx2, $angle, $centre);
     $vtr3 = rotate_point($vtx3, $angle, $centre);
 

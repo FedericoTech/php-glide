@@ -144,6 +144,7 @@ function shade(array $normal, array $light, array $baseColor): array
 
 function rotate_point(GrVertex $point, float $angle_rad, $origin = null)
 {
+    //echo __FUNCTION__ . PHP_EOL;
 	if ($origin === null) {
 		$origin = new GrVertex;
 		$origin->x = 0.0;
@@ -163,10 +164,17 @@ function rotate_point(GrVertex $point, float $angle_rad, $origin = null)
 	
 	$new = clone $point;
 	//$new = new GrVertex;
+
 	
 	$new->x = $x_new + $origin->x;
 	$new->y = $y_new + $origin->y;
 
+/*
+    testGrVertex($new);
+    testGrVertex($point);
+    echo PHP_EOL;
+    exit();
+*/
     // Translate back
     return $new;
 }

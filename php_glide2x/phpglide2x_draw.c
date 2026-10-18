@@ -179,11 +179,14 @@ PHP_FUNCTION(grAADrawPolygonVertexList)
 			return;
 		}
 
+		vertices[i++] = *GrVertex_autoFlush(Z_OBJ_P(val));
+		/*
 		memcpy(
 			&vertices[i++], 
 			GrVertex_autoFlush(Z_OBJ_P(val)), 
 			sizeof(GrVertex)
 		);
+		*/
 
 	} ZEND_HASH_FOREACH_END();
 
