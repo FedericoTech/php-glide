@@ -5,7 +5,7 @@ GrVoodooConfig_t
 grGlideInit();
 
 $gvc = new GrVoodooConfig_t;
-$gvc->flush();
+$gvc->toBinary();
 var_dump($gvc);
 
 try{
@@ -55,7 +55,7 @@ $gvc->fbiRev = 4;
 $gvc->sliDetect = true;
 $gvc->tmuConfig = [$gtmc, $gtmc2];
 $gvc->nTexelfx = count($gvc->tmuConfig);
-$gvc->flush();
+$gvc->toBinary();
 var_dump(
 	$gvc,
 	$gvc->fbRam,

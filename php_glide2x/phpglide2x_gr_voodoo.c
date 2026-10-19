@@ -72,7 +72,7 @@ ZEND_FUNCTION(testGrVoodoo2Config_t)
 
 #endif // _DEBUG
 
-PHP_METHOD(GrVoodooConfig_t, flush)
+PHP_METHOD(GrVoodooConfig_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
@@ -85,7 +85,7 @@ PHP_METHOD(GrVoodooConfig_t, flush)
     RETURN_STR(bin);
 }
 
-PHP_METHOD(GrVoodoo2Config_t, flush)
+PHP_METHOD(GrVoodoo2Config_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

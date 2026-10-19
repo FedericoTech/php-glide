@@ -82,7 +82,7 @@ ZEND_FUNCTION(testSST_t)
 }
 #endif // _DEBUG
 
-PHP_METHOD(SST_t, flush)
+PHP_METHOD(SST_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

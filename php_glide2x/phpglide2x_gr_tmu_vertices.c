@@ -40,6 +40,19 @@ ZEND_FUNCTION(testGrTmuVertices)
 }
 #endif // _DEBUG
 
+PHP_METHOD(GrTmuVertices, toBinary)
+{
+    ZEND_PARSE_PARAMETERS_NONE();
+
+    zend_string* bin = zend_string_alloc(sizeof(GrTmuVertex[GLIDE_NUM_TMU]), 0);
+
+    GrTmuVertices_flush(Z_EMBEDDED_P(_GrTmuVertices, ZEND_THIS), (GrTmuVertex*)ZSTR_VAL(bin));
+
+    ZSTR_VAL(bin)[sizeof(GrTmuVertex[GLIDE_NUM_TMU])] = '\0';
+
+    RETURN_STR(bin);
+}
+
 PHP_METHOD(GrTmuVertices, __construct)
 {
     //zend_throw_error(NULL, "Cannot instantiate GrTmuVertices directly");
@@ -143,6 +156,7 @@ PHP_METHOD(GrTmuVertices, __debugInfo)
 
     for (int i = 0; i < GLIDE_NUM_TMU; i++) {
         Z_TRY_ADDREF(obj->tmu[i]);
+
         zend_hash_index_add(
             Z_ARRVAL_P(return_value),
             i,
@@ -173,6 +187,8 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
     zend_object_std_init(&grTmuVertices->std, ce);
     object_properties_init(&grTmuVertices->std, ce);
 
+    
+
     //it sets the handlers
     grTmuVertices->std.handlers = &object_handlers;
 
@@ -202,7 +218,7 @@ static void gr_free_obj(zend_object* object)
 
 void phpglide2x_register_grTmuVertices(INIT_FUNC_ARGS)
 {
-    grTmuVertices_ce = register_class_GrTmuVertices(zend_ce_arrayaccess);
+    grTmuVertices_ce = register_class_GrTmuVertices(zend_ce_arrayaccess, gr_Binarizable_ce);
     grTmuVertices_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

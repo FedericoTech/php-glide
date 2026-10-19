@@ -91,7 +91,7 @@ $info->largeLod = GrLOD_t::GR_LOD_64;
 $info->aspectRatio = GrAspectRatio_t::GR_ASPECT_1x1;
 $info->format = GrTextureFormat_t::GR_TEXFMT_RGB_565;
 $info->data = $ello;
-$info->flush();
+$info->toBinary();
 
 testGrTexInfo($info);
 
@@ -126,7 +126,7 @@ guTexCombineFunction(
 );
 
 $aux = [$vtx1, $vtx2, $vtx3];
-array_walk($aux, fn($v) => $v->flush());
+array_walk($aux, fn($v) => $v->toBinary());
 
 testGrVertex($vtx1);
 testGrVertex($vtx2);

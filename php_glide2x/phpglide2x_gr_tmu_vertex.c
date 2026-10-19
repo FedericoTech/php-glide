@@ -27,7 +27,7 @@ ZEND_FUNCTION(testGrTmuVertex)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrTmuVertex, flush)
+PHP_METHOD(GrTmuVertex, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
@@ -81,7 +81,7 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
 {
     //it allocates memory
     _GrTmuVertex* grTmuVertex = zend_object_alloc(sizeof(_GrTmuVertex), ce);
-
+    
     //it initializes the object
     zend_object_std_init(&grTmuVertex->std, ce);
     object_properties_init(&grTmuVertex->std, ce);
@@ -143,7 +143,7 @@ static zend_result gr_cast_object(zend_object* object, zval* retval, int type)
 
 void phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS)
 {
-    grTmuVertex_ce = register_class_GrTmuVertex(gr_flushable_ce);
+    grTmuVertex_ce = register_class_GrTmuVertex(gr_Binarizable_ce);
     grTmuVertex_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

@@ -27,7 +27,7 @@ ZEND_FUNCTION(testGrSst96Config_t)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrSst96Config_t, flush)
+PHP_METHOD(GrSst96Config_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

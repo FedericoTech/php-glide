@@ -38,7 +38,7 @@ $centre = new GrVertex;
 $centre->x = 0;
 $centre->y = -4;
 $centre->z = 0;
-//$centre->flush();
+//$centre->toBinary();
 
 $step = .02;
 
@@ -103,7 +103,7 @@ function draw()
                 )
             );
 
-            //$vert->flush();
+            //$vert->toBinary();
 
             //echo 'before '; testGrVertex($vert);
 
@@ -130,7 +130,7 @@ function draw()
             $vert->y = (1.0 - $vert->y) * 480.0;
 
 
-            //$vert->flush();
+            //$vert->toBinary();
 
             return $vert;
 

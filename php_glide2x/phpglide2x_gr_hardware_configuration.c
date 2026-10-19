@@ -90,7 +90,7 @@ ZEND_FUNCTION(testGrHwConfiguration)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrHwConfiguration, flush)
+PHP_METHOD(GrHwConfiguration, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

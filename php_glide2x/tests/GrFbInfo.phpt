@@ -15,7 +15,7 @@ $ello->lfbPtr = '1234567890';
 $ello->strideInBytes = 4;
 $ello->writeMode = GrLfbWriteMode_t::GR_LFBWRITEMODE_RESERVED1;
 $ello->origin = GrOriginLocation_t::GR_ORIGIN_LOWER_LEFT;
-$ello->flush();
+$ello->toBinary();
 
 var_dump($ello);
 
@@ -24,7 +24,7 @@ testGrLfbInfo_t($ello);
 
 //$ello->size = 9;
 $ello->lfbPtr = '1444567890';
-$ello->flush();
+$ello->toBinary();
 
 var_dump($ello);
 

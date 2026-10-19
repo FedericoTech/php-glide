@@ -28,7 +28,7 @@ ZEND_FUNCTION(testGrLfbInfo_t)
 
 
 
-PHP_METHOD(GrLfbInfo_t, flush)
+PHP_METHOD(GrLfbInfo_t, toBinary)
 {
     zend_bool write = true;
 
@@ -112,7 +112,7 @@ static void gr_free_obj(zend_object* object)
 
 void phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS)
 {
-    grLfbInfo_ce = register_class_GrLfbInfo_t(gr_flushable_ce);
+    grLfbInfo_ce = register_class_GrLfbInfo_t(gr_Binarizable_ce);
     grLfbInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

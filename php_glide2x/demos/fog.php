@@ -36,7 +36,7 @@ grFogTable($fogTable);
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
-$centre->flush();
+//$centre->toBinary();
 
 $vtx1 = new GrVertex;
 $vtx1->x = '160';
@@ -91,7 +91,7 @@ while(sfWindow_isOpen($window)) {
     $vtr3 = rotate_point($vtx3, $angle, $centre);
 
     $aux = [$vtr1, $vtr2, $vtr3];
-    array_walk($aux, fn($v) => $v->flush());
+    //array_walk($aux, fn($v) => $v->toBinary());
 
     //testGrVertex($vtr3);
 

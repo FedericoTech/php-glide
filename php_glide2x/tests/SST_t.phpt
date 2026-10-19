@@ -5,7 +5,7 @@ SST_t
 grGlideInit();
 
 $sst = new SST_t;
-$sst->flush();
+$sst->toBinary();
 
 var_dump($sst);
 
@@ -42,7 +42,7 @@ $gvc->tmuConfig = [$gtmc, $gtmc2];
 
 $sst->type = GrSstType::GR_SSTTYPE_VOODOO;
 $sst->sstBoard = $gvc;
-$sst->flush();
+$sst->toBinary();
 
 var_dump($sst);
 testSST_t($sst);
@@ -57,7 +57,7 @@ $gs9c->tmuConfig = $gtmc2;
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_SST96;
 $sst->sstBoard = $gs9c;
-$sst->flush();
+$sst->toBinary();
 
 var_dump($sst);
 testSST_t($sst);
@@ -70,7 +70,7 @@ $ga3c->rev = 1;
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_AT3D;
 $sst->sstBoard = $ga3c;
-$sst->flush();
+$sst->toBinary();
 
 var_dump($sst);
 testSST_t($sst);
@@ -88,7 +88,7 @@ $gv2c->tmuConfig = [$gtmc, $gtmc2];
 $sst = new SST_t;
 $sst->type = GrSstType::GR_SSTTYPE_Voodoo2;
 $sst->sstBoard = $gv2c;
-$sst->flush();
+$sst->toBinary();
 
 var_dump($sst);
 testSST_t($sst);

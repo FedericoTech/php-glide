@@ -22,7 +22,7 @@ ZEND_FUNCTION(testGrAT3DConfig_t)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrAT3DConfig_t, flush)
+PHP_METHOD(GrAT3DConfig_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

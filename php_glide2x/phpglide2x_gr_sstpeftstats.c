@@ -28,7 +28,7 @@ ZEND_FUNCTION(testGrSstPerfStats_t)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrSstPerfStats_t, flush)
+PHP_METHOD(GrSstPerfStats_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

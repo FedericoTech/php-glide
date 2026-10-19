@@ -25,7 +25,7 @@ ZEND_FUNCTION(testGrTMUConfig_t)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrTMUConfig_t, flush)
+PHP_METHOD(GrTMUConfig_t, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

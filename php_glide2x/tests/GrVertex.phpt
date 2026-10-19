@@ -5,7 +5,7 @@ GrVertex
 
 //we create an empty GrTmuVertex to check the default values.
 $gtv = new GrTmuVertex;
-//$gtv->flush();
+//$gtv->toBinary();
 
 var_dump($gtv);
 testGrTmuVertex($gtv);
@@ -17,7 +17,7 @@ echo PHP_EOL;
 $gtv->sow = 0;
 $gtv->tow = 0.1;
 $gtv->oow = '0.2';
-//$gtv->flush();
+//$gtv->toBinary();
 
 var_dump($gtv);
 testGrTmuVertex($gtv);
@@ -37,7 +37,7 @@ echo PHP_EOL;
 
 $vertex = new GrVertex;
 
-//$vertex->flush();
+//$vertex->toBinary();
 var_dump($vertex);
 testGrVertex($vertex);
 
@@ -58,15 +58,15 @@ $vertex->a = 0.7;
 $vertex->oow = '0.8';
 
 /*
-$gtv->flush();
-$gtv2->flush();
+$gtv->toBinary();
+$gtv2->toBinary();
 */
 
 //and assign the two GrTmuVertex objects with this method as the array is read only
 $vertex->tmuvtx[0] = $gtv;
 
 
-//$vertex->flush();
+//$vertex->toBinary();
 
 var_dump($vertex);
 testGrVertex($vertex);

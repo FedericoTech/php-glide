@@ -5,7 +5,7 @@ GrAT3DConfig_t
 grGlideInit();
 
 $ga3dc = new GrAT3DConfig_t;
-$ga3dc->flush();
+$ga3dc->toBinary();
 var_dump($ga3dc);
 
 try{
@@ -19,7 +19,7 @@ testGrAT3DConfig_t($ga3dc);
 echo PHP_EOL;
 
 $ga3dc->rev = 1;
-$ga3dc->flush();
+$ga3dc->toBinary();
 var_dump(
 	$ga3dc,
 	$ga3dc->rev
@@ -29,7 +29,7 @@ testGrAT3DConfig_t($ga3dc);
 echo PHP_EOL;
 
 $ga3dc->rev = 2;
-$ga3dc->flush();
+$ga3dc->toBinary();
 
 var_dump(
 	$ga3dc,

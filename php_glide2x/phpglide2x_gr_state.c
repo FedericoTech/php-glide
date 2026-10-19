@@ -20,7 +20,7 @@ ZEND_FUNCTION(testGrState)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrState, flush)
+PHP_METHOD(GrState, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
@@ -73,7 +73,7 @@ static zend_object* gr_clone_obj(zend_object* object)
 
 void phpglide2x_register_grState(INIT_FUNC_ARGS)
 {
-    grState_ce = register_class_GrState(gr_flushable_ce);
+    grState_ce = register_class_GrState(gr_Binarizable_ce);
     grState_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

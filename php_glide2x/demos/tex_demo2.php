@@ -40,7 +40,7 @@ $zoom = 100;
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
-//$centre->flush();
+//$centre->toBinary();
 
 
 $vtx0 = new GrVertex;
@@ -118,7 +118,7 @@ $info->largeLod = GrLOD_t::GR_LOD_256;
 $info->aspectRatio = GrAspectRatio_t::GR_ASPECT_1x1;
 $info->format = GrTextureFormat_t::GR_TEXFMT_RGB_565;
 $info->data = $ello;
-$info->flush();
+$info->toBinary();
 
 testGrTexInfo($info);
 
@@ -159,7 +159,7 @@ grTexMipMapMode(
 );
 
 $aux = [$vtx0, $vtx1, $vtx2, $vtx3];
-array_walk($aux, fn($v) => $v->flush());
+array_walk($aux, fn($v) => $v->toBinary());
 
 testGrVertex($vtx0);
 testGrVertex($vtx1);
@@ -194,7 +194,7 @@ function draw()
             $v->x += $centre->x;
             $v->y += $centre->y;
             $v = rotate_point($v, $angle, $centre);
-            //$v->flush();
+            //$v->toBinary();
             return $v;
         },
         $aux

@@ -14,7 +14,7 @@ ZEND_FUNCTION(testGu3dfHeader)
 
     Gu3dfHeader buffer;
 
-    memset(&buffer, 0xff, sizeof buffer);
+    memset(&buffer, 0xff, sizeof buffer);   //has to be with memset
 
     Gu3dfHeader_flush(gu3dfHeader_zo, &buffer);
 
@@ -30,7 +30,7 @@ ZEND_FUNCTION(testGu3dfHeader)
 }
 #endif // _DEBUG
 
-PHP_METHOD(Gu3dfHeader, flush)
+PHP_METHOD(Gu3dfHeader, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 

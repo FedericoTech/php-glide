@@ -109,7 +109,7 @@ while(sfWindow_isOpen($window)) {
 
         $v->oow = 1.0 / ($v->z + 0.00001);
 
-        //$v->flush();
+        //$v->toBinary();
 
         //$transformed[$index] = $v;
     }

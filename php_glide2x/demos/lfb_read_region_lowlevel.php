@@ -9,7 +9,7 @@ guColorCombineFunction( GrColorCombineFnc_t::GR_COLORCOMBINE_ITRGB );
 $centre = new GrVertex;
 $centre->x = 320;
 $centre->y = 240;
-$centre->flush();
+$centre->toBinary();
 
 $vtx1 = new GrVertex;
 $vtx1->x = '160';
@@ -36,7 +36,7 @@ $vtx3->b = $color;
 $vtx3->a = 255.0;
 
 $aux = [$vtx1, $vtx2, $vtx3];
-array_walk($aux, fn($v) => $v->flush());
+array_walk($aux, fn($v) => $v->toBinary());
 
 grRenderBuffer(GrBuffer_t::GR_BUFFER_BACKBUFFER);
 

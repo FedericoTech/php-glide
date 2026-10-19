@@ -16,7 +16,7 @@ static void handle_property_error(zend_object* object, zend_string* member) {
 #define Z_EMBEDDED_P(t, zv) \
 	O_EMBEDDED_P(t, Z_OBJ_P(zv))
 
-zend_class_entry* gr_flushable_ce;
+zend_class_entry* gr_Binarizable_ce;
 
 extern zend_class_entry* grTMUConfig_ce;
 typedef zend_object _GrTMUConfig_t;

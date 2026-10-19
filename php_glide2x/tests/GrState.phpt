@@ -7,7 +7,7 @@ grGlideInit();
 $ello = new GrState;
 
 $ello->pad = 'bobo';
-$ello->flush();
+$ello->toBinary();
 
 var_dump($ello);
 

@@ -5,7 +5,7 @@ GrHwConfiguration
 grGlideInit();
 
 $ghc = new GrHwConfiguration;
-$ghc->flush();
+$ghc->toBinary();
 var_dump($ghc);
 testGrHwConfiguration($ghc);
 
@@ -36,7 +36,7 @@ $arr[] = $sst;
 $ghc->num_sst = count($arr);
 $ghc->SSTs = $arr;
 
-$ghc->flush();
+$ghc->toBinary();
 var_dump($ghc);
 testGrHwConfiguration($ghc);
 
@@ -104,7 +104,7 @@ $arr[] = $sst;
 $ghc->num_sst = count($arr);
 $ghc->SSTs = $arr;
 
-$ghc->flush();
+$ghc->toBinary();
 
 var_dump($ghc);
 testGrHwConfiguration($ghc);

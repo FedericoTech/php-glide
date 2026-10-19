@@ -6,7 +6,7 @@ grGlideInit();
 
 //show the object empty. 
 $gs9c = new GrSst96Config_t;
-$gs9c->flush();
+$gs9c->toBinary();
 var_dump($gs9c);	//it shows uninitialized properties
 
 try{
@@ -39,7 +39,7 @@ $gs9c->fbRam = 3;
 $gs9c->nTexelfx = 4;
 $gs9c->tmuConfig = $gtmc;
 
-$gs9c->flush();
+$gs9c->toBinary();
 
 var_dump(
 	$gs9c,
@@ -57,7 +57,7 @@ $gs9c->nTexelfx = 6;
 $gs9c->tmuConfig->tmuRev = 7;	//the change is not being communicated to GrSst96Config_t
 $gs9c->tmuConfig->tmuRam = 8;	//the change is not being communicated to GrSst96Config_t
 
-$gs9c->flush();
+$gs9c->toBinary();
 
 var_dump(
 	$gs9c,

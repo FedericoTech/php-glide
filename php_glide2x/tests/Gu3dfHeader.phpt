@@ -6,7 +6,7 @@ grGlideInit();
 
 //show the object empty. 
 $g3dfh = new Gu3dfHeader;
-$g3dfh->flush();
+$g3dfh->toBinary();
 var_dump($g3dfh);	//it shows uninitialized properties
 
 try{
@@ -38,7 +38,7 @@ $g3dfh->large_lod = GrLOD_t::GR_LOD_256;
 $g3dfh->aspect_ratio = GrAspectRatio_t::GR_ASPECT_2x1;
 $g3dfh->format = GrTextureFormat_t::GR_TEXFMT_RGB_332;
 
-$g3dfh->flush();
+$g3dfh->toBinary();
 
 var_dump(
 	$g3dfh,

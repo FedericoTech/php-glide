@@ -53,7 +53,7 @@ for ($j = 0; $j < $size; $j++) {
     }
 }
 
-$info->flush(); //apply changes in the underlying memory.
+$info->toBinary(); //apply changes in the underlying memory.
 
 // Unlock when done
 grLfbUnlock(GrLock_t::GR_LFB_WRITE_ONLY, GrBuffer_t::GR_BUFFER_BACKBUFFER);

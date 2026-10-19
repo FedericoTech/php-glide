@@ -56,7 +56,7 @@ ZEND_FUNCTION(testGrVertex)
 }
 #endif // _DEBUG
 
-PHP_METHOD(GrVertex, flush)
+PHP_METHOD(GrVertex, toBinary)
 {
     ZEND_PARSE_PARAMETERS_NONE();
 
@@ -161,25 +161,25 @@ static zend_object* gr_new_obj(zend_class_entry* ce)
         grVertex->offsets.arr[cont] = info->offset;
     }
 
-
     zval* tmuvtx = OBJ_PROP(
         &grVertex->std,
-        grVertex->offsets.fields.tmuvtx
+        grVertex->offsets.fields.tmuvtx //this is the index of tmuvtx
     );
 
     zval_ptr_dtor(tmuvtx); //we remove this reference count so that it's only own by the property
 
     // Create GrTmuVertices object
     object_init_ex(tmuvtx, grTmuVertices_ce);
-
+    
     _GrTmuVertices* tmuvtx_obj = Z_EMBEDDED_P(_GrTmuVertices, tmuvtx);
-
+    
     //we create the GrTmuVertex instances
     for (int i = 0; i < GLIDE_NUM_TMU; i++) {
         object_init_ex(&tmuvtx_obj->tmu[i], grTmuVertex_ce);
     }
-   
-
+    
+    
+    
     //it returns the zend object
     return &grVertex->std;
 }
@@ -392,7 +392,7 @@ static zend_result gr_operation(uint8_t opcode, zval* result, zval* op1, zval* o
 
 void phpglide2x_register_grVertex(INIT_FUNC_ARGS)
 {
-    grVertex_ce = register_class_GrVertex(gr_flushable_ce);
+    grVertex_ce = register_class_GrVertex(gr_Binarizable_ce);
     grVertex_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

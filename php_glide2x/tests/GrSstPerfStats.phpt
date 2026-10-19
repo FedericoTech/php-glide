@@ -15,7 +15,7 @@ $gsps->chromaFail = 2;
 $gsps->zFuncFail = -2;
 $gsps->aFuncFail = 3;
 $gsps->pixelsOut = -4;
-$gsps->flush();
+$gsps->toBinary();
 
 var_dump($gsps);
 

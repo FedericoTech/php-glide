@@ -28,7 +28,7 @@ ZEND_FUNCTION(testGrTexInfo)
 
 
 
-PHP_METHOD(GrTexInfo, flush)
+PHP_METHOD(GrTexInfo, toBinary)
 {
     zend_bool write = true;
 
@@ -104,7 +104,7 @@ static void gr_free_obj(zend_object* object)
 
 void phpglide2x_register_grTexInfo(INIT_FUNC_ARGS)
 {
-    grTexInfo_ce = register_class_GrTexInfo(gr_flushable_ce);
+    grTexInfo_ce = register_class_GrTexInfo(gr_Binarizable_ce);
     grTexInfo_ce->create_object = gr_new_obj; //asign an internal constructor
 
     object_handlers = std_object_handlers;

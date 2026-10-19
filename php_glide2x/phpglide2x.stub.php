@@ -438,10 +438,10 @@ enum GrTexBaseRange_t {
 	public function toInt() : int;
 }
 
-final class GrState implements flushable {
+final class GrState implements Binarizable {
     public string $pad;
 
-    public function flush() : string;
+    public function toBinary() : string;
 }
 
 #ifdef _DEBUG
@@ -533,20 +533,20 @@ function intToEnumTest (int $value, string $enumClass): UnitEnum {};
 
 //CLASSES AND STRUCTS START
 
-interface flushable {
-	public function flush() : string;
+interface Binarizable {
+	public function toBinary() : string;
 }
 
 interface hydratable {
     public function hydrate(string $data) : void;
 }
 
-final class GrTMUConfig_t implements flushable
+final class GrTMUConfig_t implements Binarizable
 {
 	public int $tmuRev;
 	public int $tmuRam;
 	//public function __construct(int $tmuRev, int $tmuRam){}
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
@@ -555,7 +555,7 @@ function testGrTMUConfig_t(GrTMUConfig_t $gtmu) : void {};
 
 
 
-final class GrVoodooConfig_t implements flushable
+final class GrVoodooConfig_t implements Binarizable
 {
 	public int $fbRam;
 	public int $fbiRev;
@@ -565,14 +565,14 @@ final class GrVoodooConfig_t implements flushable
 	/** @var GrTMUConfig_t[] */
 	public array $tmuConfig;
 	
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrVoodooConfig_t(GrVoodooConfig_t $gvc) : void {};
 #endif
 
-final class GrVoodoo2Config_t implements flushable
+final class GrVoodoo2Config_t implements Binarizable
 {
 	public int $fbRam;
 	public int $fbiRev;
@@ -582,77 +582,77 @@ final class GrVoodoo2Config_t implements flushable
 	/** @var GrTMUConfig_t[] */
 	public array $tmuConfig;
 	
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrVoodoo2Config_t(GrVoodoo2Config_t $gv2c) : void {};
 #endif
 
-final class GrSst96Config_t implements flushable
+final class GrSst96Config_t implements Binarizable
 {
 	public int $fbRam;
 	public int $nTexelfx;
 	public GrTMUConfig_t $tmuConfig;
 	
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrSst96Config_t(GrSst96Config_t $gs9c) : void {};
 #endif
 
-final class GrAT3DConfig_t implements flushable
+final class GrAT3DConfig_t implements Binarizable
 {
 	public int $rev;
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrAT3DConfig_t(GrAT3DConfig_t $ga4dc) : void {};
 #endif
 
-final class SST_t implements flushable
+final class SST_t implements Binarizable
 {
 	public ?GrSstType $type;
 	public GrVoodooConfig_t|GrSst96Config_t|GrAT3DConfig_t|GrVoodoo2Config_t|null $sstBoard;
 	
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testSST_t(SST_t $sst) : void {};
 #endif
 
-final class GrHwConfiguration implements flushable
+final class GrHwConfiguration implements Binarizable
 {
 	public int $num_sst;
 	
 	/** @var SST_t[] */
 	public array $SSTs;
 	
-	public function flush() : string;
+	public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrHwConfiguration(GrHwConfiguration $chc) : void {};
 #endif
 
-final class GrTmuVertex implements flushable {
+final class GrTmuVertex implements Binarizable {
 	public float  $sow;
 	public float  $tow;
 	public float  $oow;
 
     //public function copyFrom(GrTmuVertex $other): void {}
 	
-	public function flush() : string {}
+	public function toBinary() : string {}
 }
 
 #ifdef _DEBUG
 function testGrTmuVertex(GrTmuVertex $gtv) : void {};
 #endif
 
-final class GrTmuVertices implements ArrayAccess
+final class GrTmuVertices implements ArrayAccess, Binarizable
 {
     public function __construct() {}
 
@@ -665,6 +665,8 @@ final class GrTmuVertices implements ArrayAccess
     public function offsetUnset(mixed $offset): void;
 
     public function __debugInfo(): array;
+
+    public function toBinary() : string {}
 }
 
 #ifdef _DEBUG
@@ -672,7 +674,7 @@ function testGrTmuVertices(GrTmuVertices $gtv) : void {};
 #endif
 
 
-final class GrVertex implements flushable {
+final class GrVertex implements Binarizable {
 	public float $x;
 	public float $y;
 	public float $z;
@@ -689,7 +691,7 @@ final class GrVertex implements flushable {
 
     public function getLength() : float;
 
-    public function flush() : string;
+    public function toBinary() : string;
 
     public static function fromString(string $string) : GrVertex;
 }
@@ -698,14 +700,14 @@ final class GrVertex implements flushable {
 function testGrVertex(GrVertex $chc) : void {};
 #endif
 
-final class GrLfbInfo_t implements flushable {
+final class GrLfbInfo_t implements Binarizable {
     public int $size = 20;
     public string $lfbPtr;
     public int $strideInBytes;
     public GrLfbWriteMode_t $writeMode;
     public GrOriginLocation_t $origin;
 
-    public function flush(bool $write = true) : string;
+    public function toBinary(bool $write = true) : string;
 }
 
 #ifdef _DEBUG
@@ -713,7 +715,7 @@ function testGrLfbInfo_t(GrLfbInfo_t $gli) : void {};
 #endif
 
 
-final class GrSstPerfStats_t implements flushable
+final class GrSstPerfStats_t implements Binarizable
 {
     public int $pixelsIn;              /* # pixels processed (minus buffer clears) */
     public int $chromaFail;            /* # pixels not drawn due to chroma key */
@@ -721,28 +723,28 @@ final class GrSstPerfStats_t implements flushable
     public int $aFuncFail;             /* # pixels not drawn due to alpha comparison */
     public int $pixelsOut;             /* # pixels drawn (including buffer clears) */
 
-    public function flush() : string;
+    public function toBinary() : string;
 };
 
 #ifdef _DEBUG
 function testGrSstPerfStats_t(GrSstPerfStats_t $gsps) : void {};
 #endif
 
-final class GrTexInfo implements flushable
+final class GrTexInfo implements Binarizable
 {
     public GrLOD_t              $smallLod;
     public GrLOD_t              $largeLod;
     public GrAspectRatio_t      $aspectRatio;
     public GrTextureFormat_t    $format;
     public string               $data;
-    public function flush() : string;
+    public function toBinary() : string;
 }
 
 #ifdef _DEBUG
 function testGrTexInfo(GrTexInfo $gti) : void {};
 #endif
 
-final class Gu3dfHeader implements flushable
+final class Gu3dfHeader implements Binarizable
 {
     public int                  $width;
     public int                  $height;
@@ -750,7 +752,7 @@ final class Gu3dfHeader implements flushable
     public GrLOD_t              $large_lod;
     public GrAspectRatio_t      $aspect_ratio;
     public GrTextureFormat_t    $format;
-    public function flush() : string;
+    public function toBinary() : string;
 }
 
 #ifdef _DEBUG
@@ -759,9 +761,9 @@ function testGu3dfHeader(Gu3dfHeader $g3dfh) : void {};
 
 
 /*
-final class GuNccTable implements flushable
+final class GuNccTable implements Binarizable
 {
-    public function flush() : string;
+    public function toBinary() : string;
 }
 */
 

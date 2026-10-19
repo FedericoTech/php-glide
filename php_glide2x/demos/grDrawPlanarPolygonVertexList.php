@@ -92,7 +92,7 @@ while(sfWindow_isOpen($window)) {
     $vtr6 = rotate_point($vtx6, $angle_minus, $centre);
 
     //$aux = [$vtr1, $vtr2, $vtr3, $vtr4, $vtr5, $vtr6];
-    //array_walk($aux, fn($v) => $v->flush());
+    //array_walk($aux, fn($v) => $v->toBinary());
 
     $vertices = [$centre, $vtr1, $vtr2, $centre, $vtr3, $vtr4, $vtr5, $vtr6, $centre];
 
@@ -110,7 +110,7 @@ while(sfWindow_isOpen($window)) {
     $vtr6 = rotate_point($vtx6, $angle, $centre);
 
     $vertices = [$centre, $vtr1, $vtr2, $vtr3, $vtr4, $centre, $vtr5, $vtr6, $centre];
-    //array_walk($vertices, fn($v) => $v->flush());
+    //array_walk($vertices, fn($v) => $v->toBinary());
 
     grDrawPlanarPolygonVertexList(
         count($vertices), 	//whatever is highter whether indices or vertices

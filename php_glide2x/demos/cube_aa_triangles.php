@@ -26,7 +26,7 @@ $vertices = array_map(function($item){
 
 		list($vertex->x, $vertex->y, $vertex->z, $vertex->r, $vertex->g, $vertex->b) = $item;
 		
-		//$vertex->flush();
+		//$vertex->toBinary();
 		
 		return $vertex;
 	},
@@ -81,7 +81,7 @@ while(sfWindow_isOpen($window)) {
         $v->z = (1.0 - $v->z) * 240.0;
         $v->oow = 1.0 / ($v->z + 0.00001);
 
-        //$v->flush();
+        //$v->toBinary();
 
         $transformed[] = $v;
     }

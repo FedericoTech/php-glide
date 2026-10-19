@@ -6,7 +6,7 @@ grGlideInit();
 
 //show the object empty. 
 $gtmc = new GrTMUConfig_t;
-$gtmc->flush();
+$gtmc->toBinary();
 var_dump($gtmc);	//it shows uninitialized properties
 
 try{
@@ -28,7 +28,7 @@ echo PHP_EOL;
 $gtmc->tmuRev = 1;
 //$gtmc->tmuRam = 2;
 
-$gtmc->flush();
+$gtmc->toBinary();
 
 var_dump(
 	$gtmc,
@@ -50,7 +50,7 @@ echo PHP_EOL;
 
 $gtmc->tmuRev = 3;
 $gtmc->tmuRam = 4;
-$gtmc->flush();
+$gtmc->toBinary();
 
 var_dump(
 	$gtmc,

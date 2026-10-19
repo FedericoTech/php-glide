@@ -59,21 +59,21 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	
 	phpglide2x_register_enums(INIT_FUNC_ARGS_PASSTHRU);
 
-	gr_flushable_ce = register_class_flushable();
+	gr_Binarizable_ce = register_class_Binarizable();
 	
-	grTMUConfig_ce = register_class_GrTMUConfig_t(gr_flushable_ce);
+	grTMUConfig_ce = register_class_GrTMUConfig_t(gr_Binarizable_ce);
 
-	grVoodooConfig_ce = register_class_GrVoodooConfig_t(gr_flushable_ce);
+	grVoodooConfig_ce = register_class_GrVoodooConfig_t(gr_Binarizable_ce);
 
-	grVoodoo2Config_ce = register_class_GrVoodoo2Config_t(gr_flushable_ce);
+	grVoodoo2Config_ce = register_class_GrVoodoo2Config_t(gr_Binarizable_ce);
 
-	grSst96Config_ce = register_class_GrSst96Config_t(gr_flushable_ce);
+	grSst96Config_ce = register_class_GrSst96Config_t(gr_Binarizable_ce);
 
-	grAT3DConfig_ce = register_class_GrAT3DConfig_t(gr_flushable_ce);
+	grAT3DConfig_ce = register_class_GrAT3DConfig_t(gr_Binarizable_ce);
 
-	sST_ce = register_class_SST_t(gr_flushable_ce);
+	sST_ce = register_class_SST_t(gr_Binarizable_ce);
 
-	grHwConfiguration_ce = register_class_GrHwConfiguration(gr_flushable_ce);
+	grHwConfiguration_ce = register_class_GrHwConfiguration(gr_Binarizable_ce);
 
 	phpglide2x_register_grTmuVertex(INIT_FUNC_ARGS_PASSTHRU);
 
@@ -85,11 +85,11 @@ PHP_MINIT_FUNCTION(phpglide2x)
 	
 	phpglide2x_register_grLfbInfo(INIT_FUNC_ARGS_PASSTHRU);
 
-	gr_SstPerfStats_ce = register_class_GrSstPerfStats_t(gr_flushable_ce);
+	gr_SstPerfStats_ce = register_class_GrSstPerfStats_t(gr_Binarizable_ce);
 	
 	phpglide2x_register_grTexInfo(INIT_FUNC_ARGS_PASSTHRU);
 
-	gu3dfHeader_ce = register_class_Gu3dfHeader(gr_flushable_ce);
+	gu3dfHeader_ce = register_class_Gu3dfHeader(gr_Binarizable_ce);
 
 	return SUCCESS;
 }
